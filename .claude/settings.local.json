@@ -1,0 +1,42 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Read(//home/runner/Desktop/**)",
+      "Read(//home/runner/**)",
+      "Bash(rm -f .replit .replitignore replit.md)",
+      "Bash(rm -rf artifacts/groovelab/.replit-artifact artifacts/api-server/.replit-artifact artifacts/mockup-sandbox/.replit-artifact)",
+      "Bash(pnpm run:*)",
+      "Bash(pnpm install:*)",
+      "Bash(pnpm add:*)",
+      "Bash(DATABASE_URL='postgresql://neondb_owner:npg_cIi2a3hsUrYF@ep-purple-lake-a1yqrwgu-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require' pnpm --filter @workspace/db push)",
+      "Bash(git:*)",
+      "Bash(gh auth:*)",
+      "Bash(npx vercel:*)",
+      "Bash(npm install:*)",
+      "Bash(vercel whoami:*)",
+      "Bash(vercel link:*)",
+      "Bash(vercel env:*)",
+      "Bash(vercel deploy:*)",
+      "Bash(node -e ':*)",
+      "Bash(npx tsc:*)",
+      "Bash(curl:*)",
+      "Bash(vercel logs:*)",
+      "Bash(DATABASE_URL='postgresql://neondb_owner:npg_cIi2a3hsUrYF@ep-purple-lake-a1yqrwgu-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require' node:*)",
+      "Bash(vercel inspect:*)",
+      "Bash(node:*)",
+      "Bash(DATABASE_URL='postgresql://neondb_owner:npg_cIi2a3hsUrYF@ep-purple-lake-a1yqrwgu-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require' npx tsx:*)",
+      "Bash(DATABASE_URL='postgresql://neondb_owner:npg_cIi2a3hsUrYF@ep-purple-lake-a1yqrwgu-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require' pnpm exec:*)",
+      "Bash(pnpm --filter scripts exec tsx --version)",
+      "Bash(DATABASE_URL='postgresql://neondb_owner:npg_cIi2a3hsUrYF@ep-purple-lake-a1yqrwgu-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require' pnpm:*)",
+      "Bash(python3 -m json.tool)",
+      "Bash(DATABASE_URL='postgresql://neondb_owner:npg_cIi2a3hsUrYF@ep-purple-lake-a1yqrwgu-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require' YOUTUBE_API_KEY='AIzaSyDrfI7LiYQvzQyiW0Cs1VdmG4r1eW78IPs' pnpm:*)",
+      "Bash(ls /home/runner/workspace/api/live/sessions/*/state.ts)",
+      "Bash(npm ls:*)",
+      "Bash(echo \"EXIT: $?\")",
+      "Bash(npx vite:*)",
+      "Bash(ls /home/runner/workspace/scripts/src/seed-full*)",
+      "Bash(awk '{print $5, \"bytes\"}')"
+    ]
+  }
+}
