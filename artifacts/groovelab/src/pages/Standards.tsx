@@ -1251,7 +1251,7 @@ export default function Standards() {
                       const curatedQueries = CURATED_BACKING_QUERIES[name];
                       const fallbackQuery = curatedQueries
                         ? curatedQueries[0]
-                        : `${name} ${key} backing track jazz`;
+                        : `${name} ${displayKey} backing track jazz`;
                       return (
                         <div className="rounded-lg border border-border overflow-hidden">
                           <div className="aspect-video bg-muted">
