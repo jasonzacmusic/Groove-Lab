@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { GraduationCap, BookOpen, Music, ExternalLink } from 'lucide-react';
 import {
@@ -11,23 +10,28 @@ import {
 
 function YouTubeEmbed({ query, title }: { query: string; title: string }) {
   return (
-    <Card className="overflow-hidden hover:border-primary/30 transition-colors">
-      <div className="aspect-video">
+    <div className="rounded-lg border border-border overflow-hidden">
+      <div className="aspect-video bg-muted">
         <iframe
-          src={`https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(query)}`}
+          src={`https://www.youtube-nocookie.com/embed?search_query=${encodeURIComponent(query)}`}
           className="w-full h-full"
-          allow="autoplay; encrypted-media"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
           title={title}
         />
       </div>
-      <CardContent className="p-3 flex items-center justify-between gap-2">
-        <div className="min-w-0">
-          <p className="text-sm font-medium truncate">{title}</p>
-          <p className="text-[10px] text-muted-foreground font-mono truncate">"{query}"</p>
-        </div>
-      </CardContent>
-    </Card>
+      <div className="px-3 py-1.5 flex items-center justify-between bg-card">
+        <p className="text-[10px] text-muted-foreground font-mono truncate mr-2">"{query}"</p>
+        <a
+          href={`https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex-shrink-0 flex items-center gap-1 text-[10px] text-red-500 hover:text-red-600 font-medium whitespace-nowrap"
+        >
+          <ExternalLink className="w-2.5 h-2.5" /> Open in YouTube
+        </a>
+      </div>
+    </div>
   );
 }
 
@@ -56,19 +60,13 @@ function MethodBookSection({ methods, instrument }: { methods: typeof PIANO_METH
                 </div>
               </button>
               {expandedMethod === method.name && (
-                <div className="border-t border-border p-3 space-y-3">
+                <div className="border-t border-border p-3 space-y-4">
                   {method.levels.slice(0, 3).map((level) => {
                     const query = `${method.searchPrefix} ${level} play along`;
                     return (
                       <div key={level} className="space-y-1">
                         <p className="text-xs font-medium text-muted-foreground">{level}</p>
-                        <iframe
-                          src={`https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(query)}`}
-                          className="w-full aspect-video rounded-lg border border-border"
-                          allow="autoplay; encrypted-media"
-                          allowFullScreen
-                          title={`${method.name} ${level}`}
-                        />
+                        <YouTubeEmbed query={query} title={`${method.name} ${level}`} />
                       </div>
                     );
                   })}
@@ -90,18 +88,15 @@ export default function PlayAlong() {
   const isFiltered = instrument !== 'All Instruments' || grade !== 'All Grades' || board !== 'All';
   const isMethodBooks = board === 'Methods';
 
-  // Get available grades for the selected board
   const availableGrades = useMemo(() => {
     if (board === 'All' || board === 'Methods') return ['All Grades', 'Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5', 'Grade 6', 'Grade 7', 'Grade 8'];
     return ['All Grades', ...(GRADES[board] || [])];
   }, [board]);
 
-  // Generate search content
   const searchContent = useMemo(() => {
-    if (isMethodBooks) return []; // handled by MethodBookSection
+    if (isMethodBooks) return [];
 
     if (!isFiltered) {
-      // Default: show popular combinations
       return [
         { title: 'ABRSM Grade 1 Piano', queries: generateSearchQueries('ABRSM', 'Piano', 'Grade 1') },
         { title: 'Trinity Grade 3 Guitar', queries: generateSearchQueries('Trinity', 'Guitar', 'Grade 3') },
@@ -135,7 +130,7 @@ export default function PlayAlong() {
 
   const subtitle = isMethodBooks ? 'Traditional Method Books & Studies'
     : [board !== 'All' ? board : null, instrument !== 'All Instruments' ? instrument : null, grade !== 'All Grades' ? grade : null]
-      .filter(Boolean).join(' · ') || 'Select an exam board and instrument';
+      .filter(Boolean).join(' · ') || 'Popular Play-Along Content';
 
   const methodBooks = isMethodBooks ? getMethodBooks(instrument) : [];
 
@@ -148,7 +143,6 @@ export default function PlayAlong() {
             <GraduationCap className="w-5 h-5 text-primary" /> Play-Alongs
           </h2>
 
-          {/* Board */}
           <div className="mb-4">
             <label className="text-xs uppercase font-bold text-muted-foreground tracking-wider mb-2 block">Exam Board / Method</label>
             <div className="flex flex-wrap gap-1.5">
@@ -165,7 +159,6 @@ export default function PlayAlong() {
             </div>
           </div>
 
-          {/* Instrument */}
           {!isMethodBooks && (
             <div className="mb-4">
               <label className="text-xs uppercase font-bold text-muted-foreground tracking-wider mb-2 block">Instrument</label>
@@ -180,7 +173,6 @@ export default function PlayAlong() {
             </div>
           )}
 
-          {/* Instrument for Methods */}
           {isMethodBooks && (
             <div className="mb-4">
               <label className="text-xs uppercase font-bold text-muted-foreground tracking-wider mb-2 block">Instrument</label>
@@ -195,7 +187,6 @@ export default function PlayAlong() {
             </div>
           )}
 
-          {/* Grade */}
           {!isMethodBooks && (
             <div className="mb-4">
               <label className="text-xs uppercase font-bold text-muted-foreground tracking-wider mb-2 block">Grade / Level</label>
@@ -219,7 +210,6 @@ export default function PlayAlong() {
             </button>
           )}
 
-          {/* Board info */}
           {board !== 'All' && (
             <div className="mt-4 p-3 bg-muted/30 rounded-lg">
               <p className="text-xs font-medium">{EXAM_BOARDS.find(b => b.id === board)?.fullName}</p>
@@ -236,16 +226,14 @@ export default function PlayAlong() {
           <p className="text-xs text-muted-foreground mt-1">
             {isMethodBooks
               ? 'Browse traditional method books with embedded YouTube play-along content.'
-              : 'YouTube play-along videos for exam preparation. Videos play directly on the page.'}
+              : 'YouTube play-along videos for exam preparation. Videos play directly — use "Open in YouTube" for more results.'}
           </p>
         </div>
 
-        {/* Method Books */}
         {isMethodBooks && methodBooks.length > 0 && (
           <MethodBookSection methods={methodBooks} instrument={instrument} />
         )}
 
-        {/* Exam content */}
         {!isMethodBooks && searchContent.length > 0 && (
           <div className="space-y-8">
             {searchContent.map((entry, idx) => (

@@ -26,6 +26,51 @@ const TRANSPOSITION_PRESETS = [
   { label: 'Bass Clef (Concert) \u2014 Bass, Trombone, Tuba, Cello', semitones: 0 },
 ];
 
+// Curated backing track queries — specific enough to reliably surface the correct content.
+// These build on title + key + style for the best search results.
+const CURATED_BACKING_QUERIES: Record<string, string[]> = {
+  'Autumn Leaves': [
+    'Autumn Leaves jazz backing track Gm piano',
+    'Autumn Leaves play along Bb jazz standard',
+  ],
+  'All The Things You Are': [
+    'All The Things You Are jazz backing track Ab',
+    'All The Things You Are play along ii V I',
+  ],
+  'Blue Bossa': [
+    'Blue Bossa backing track bossa nova jazz Cm',
+    'Blue Bossa play along bass piano',
+  ],
+  'Take Five': [
+    'Take Five backing track 5/4 jazz Dave Brubeck Eb minor',
+    'Take Five play along drum kit jazz',
+  ],
+  'So What': [
+    'So What Miles Davis backing track modal jazz Dm',
+    'So What play along Dorian jazz',
+  ],
+  'Summertime': [
+    'Summertime jazz backing track Am Gershwin',
+    'Summertime play along blues jazz standard',
+  ],
+  'Misty': [
+    'Misty Erroll Garner jazz backing track Eb',
+    'Misty play along piano jazz standard',
+  ],
+  'Giant Steps': [
+    'Giant Steps Coltrane backing track Cb modulation',
+    'Giant Steps jazz play along chords',
+  ],
+  'Stella By Starlight': [
+    'Stella By Starlight jazz backing track Bb',
+    'Stella By Starlight play along jazz standard',
+  ],
+  'There Will Never Be Another You': [
+    'There Will Never Be Another You jazz backing Eb',
+    'There Will Never Be Another You play along piano',
+  ],
+};
+
 const GROOVES = [
   { name: 'Swing', description: 'Medium swing feel', swing: 60 },
   { name: 'Bossa Nova', description: 'Latin bossa feel', swing: 0 },
@@ -802,6 +847,57 @@ export default function Standards() {
         {selectedStandard ? (
           <div className="max-w-4xl mx-auto p-4 md:p-8 space-y-0">
 
+            {/* ── Transposition — top of detail pane ─────────────────────────── */}
+            <div className="mb-4 p-4 bg-card border border-border rounded-xl flex flex-wrap items-center gap-3">
+              <span className="text-sm font-medium text-foreground">Concert / Bb / Eb key:</span>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-8 px-3 text-muted-foreground hover:text-foreground"
+                  onClick={() => setTransposition(prev => ((prev - 1) + 12) % 12)}
+                >
+                  <ArrowDown className="w-3.5 h-3.5 mr-1" /> Down
+                </Button>
+                <span className="font-mono text-xl font-bold text-primary px-3 py-1.5 bg-primary/10 rounded-lg border border-primary/30 min-w-[3rem] text-center">
+                  {displayKey}
+                </span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-8 px-3 text-muted-foreground hover:text-foreground"
+                  onClick={() => setTransposition(prev => (prev + 1) % 12)}
+                >
+                  <ArrowUp className="w-3.5 h-3.5 mr-1" /> Up
+                </Button>
+              </div>
+              <Select
+                value={String(transposition)}
+                onValueChange={(val) => setTransposition(Number(val))}
+              >
+                <SelectTrigger className="w-[180px] h-8 text-sm bg-background border-border">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {TRANSPOSITION_PRESETS.map(p => (
+                    <SelectItem key={p.label} value={String(p.semitones)}>
+                      {p.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {transposition !== 0 && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 text-muted-foreground hover:text-foreground text-xs"
+                  onClick={() => setTransposition(0)}
+                >
+                  Reset
+                </Button>
+              )}
+            </div>
+
             {/* ── Real Book Title Area ─────────────────────────────────────────── */}
             <div className="bg-[#f5f0e1] dark:bg-[#2a2520] rounded-t-xl px-6 md:px-10 pt-8 pb-4 border border-b-0 border-[#d4c9a8] dark:border-[#4a3f30]">
               <h1 className="font-serif text-3xl md:text-5xl text-[#2c1810] dark:text-[#e8d5b5] text-center leading-tight tracking-tight">
@@ -1115,33 +1211,35 @@ export default function Standards() {
               {(() => {
                 const name = selectedStandard.name;
                 const key = displayKey;
-                const searches = [
-                  { label: `${name} in ${key} — backing track`, query: `${name} ${key} backing track jazz` },
-                  { label: `${name} — play along`, query: `${name} jazz play along ${key}` },
-                  { label: `${name} — full band backing`, query: `${name} jazz trio backing track` },
+                const curated = CURATED_BACKING_QUERIES[name];
+                const queries: string[] = curated ?? [
+                  `${name} ${key} backing track jazz`,
+                  `${name} jazz play along ${key}`,
                 ];
                 return (
-                  <div className="flex flex-col gap-3">
-                    {searches.map(({ label, query }, idx) => (
-                      <div key={idx} className="rounded-lg border border-border bg-muted/30 flex items-center gap-3 p-3">
-                        <div className="w-8 h-8 rounded-md bg-red-600/20 flex items-center justify-center flex-shrink-0">
-                          <svg viewBox="0 0 24 24" className="w-4 h-4 text-red-500" fill="currentColor">
-                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                          </svg>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {queries.slice(0, 2).map((query, idx) => (
+                      <div key={idx} className="rounded-lg border border-border overflow-hidden">
+                        <div className="aspect-video bg-muted">
+                          <iframe
+                            src={`https://www.youtube-nocookie.com/embed?search_query=${encodeURIComponent(query)}`}
+                            className="w-full h-full"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            title={`${name} backing track ${idx + 1}`}
+                          />
                         </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-xs font-medium text-foreground truncate">{label}</p>
-                          <p className="text-[10px] text-muted-foreground font-mono truncate">"{query}"</p>
+                        <div className="px-3 py-1.5 flex items-center justify-between bg-card">
+                          <p className="text-[10px] text-muted-foreground font-mono truncate mr-2">"{query}"</p>
+                          <a
+                            href={`https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex-shrink-0 flex items-center gap-1 text-[10px] text-red-500 hover:text-red-600 font-medium whitespace-nowrap"
+                          >
+                            <ExternalLink className="w-2.5 h-2.5" /> Open in YouTube
+                          </a>
                         </div>
-                        <a
-                          href={`https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-shrink-0 flex items-center gap-1.5 text-xs bg-red-600 hover:bg-red-700 text-white rounded-md px-2.5 py-1.5 font-medium transition-colors"
-                        >
-                          <ExternalLink className="w-3 h-3" />
-                          Search
-                        </a>
                       </div>
                     ))}
                   </div>

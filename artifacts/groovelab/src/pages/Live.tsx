@@ -345,7 +345,7 @@ export default function Live() {
                 </div>
               </div>
               <div className="p-6 bg-card">
-                <h3 className="font-medium text-2xl mb-1">{session.title || 'Live Session'}</h3>
+                <h3 className="font-serif font-medium text-2xl mb-1">{session.title || 'Live Session'}</h3>
                 <p className="text-muted-foreground mb-6">
                   Share code <span className="font-mono text-primary font-bold">{session.roomCode}</span> with your students
                 </p>
