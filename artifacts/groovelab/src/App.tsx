@@ -15,6 +15,8 @@ import Chords from "@/pages/Chords";
 import Standards from "@/pages/Standards";
 import Live from "@/pages/Live";
 import Practice from "@/pages/Practice";
+import Metronome from "@/pages/Metronome";
+import CreatorProfile from "@/pages/CreatorProfile";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -36,6 +38,8 @@ function Router() {
         <Route path="/chords" component={Chords} />
         <Route path="/standards" component={Standards} />
         <Route path="/live" component={Live} />
+        <Route path="/metronome" component={Metronome} />
+        <Route path="/creators/:id" component={CreatorProfile} />
         <Route path="/practice" component={Practice} />
         <Route component={NotFound} />
       </Switch>

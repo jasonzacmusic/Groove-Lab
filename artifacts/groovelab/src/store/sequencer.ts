@@ -11,6 +11,7 @@ interface SequencerState {
   selectedKit: Kit;
   selectedInstrument: Instrument;
   subdivisions: number[]; // e.g. [4, 4, 4, 4] for 4/4 with 4 slices per beat
+  currentStep: number; // global slice index currently playing (-1 when stopped)
   setBpm: (bpm: number) => void;
   setTimeSignature: (numerator: number, denominator: number) => void;
   setSwing: (swing: number) => void;
@@ -18,6 +19,7 @@ interface SequencerState {
   setSelectedInstrument: (instrument: Instrument) => void;
   setSubdivision: (beatIndex: number, slices: number) => void;
   toggleHit: (beatIndex: number, sliceIndex: number) => void;
+  setCurrentStep: (step: number) => void;
   clearAll: () => void;
 }
 
@@ -29,6 +31,7 @@ export const useSequencerStore = create<SequencerState>((set) => ({
   selectedKit: 'jazz',
   selectedInstrument: 'kick',
   subdivisions: [4, 4, 4, 4],
+  currentStep: -1,
   setBpm: (bpm) => set({ bpm }),
   setTimeSignature: (numerator, denominator) => set((state) => {
     const newBeats = Array.from({ length: numerator }, (_, i) => 
@@ -59,6 +62,7 @@ export const useSequencerStore = create<SequencerState>((set) => ({
     }
     return { beats: newBeats };
   }),
+  setCurrentStep: (step) => set({ currentStep: step }),
   clearAll: () => set((state) => ({
     beats: Array.from({ length: state.timeSignature.numerator }, (_, i) => Array(state.subdivisions[i] || 4).fill({ instrument: null }))
   }))

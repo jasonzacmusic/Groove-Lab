@@ -169,18 +169,19 @@ export function PizzaSequencer({ size = 480 }: PizzaSequencerProps) {
               const hit = store.beats[beat]?.[slice];
               const isActive = hit?.instrument === instrumentName;
               const isBeatStart = slice === 0;
+              const isPlayhead = store.currentStep === globalIdx;
 
               return (
                 <path
                   key={`${instrumentName}-${beat}-${slice}`}
                   d={arcPath(cx, cy, r, startDeg, endDeg, ringW - 2)}
-                  fill={isActive ? color : 'rgba(255,255,255,0.04)'}
-                  stroke={isSelected && isBeatStart ? color : 'rgba(255,255,255,0.08)'}
-                  strokeWidth={isSelected ? 1.5 : 0.5}
+                  fill={isPlayhead ? (isActive ? color : 'rgba(226,168,50,0.25)') : (isActive ? color : 'rgba(255,255,255,0.04)')}
+                  stroke={isPlayhead ? '#e2a832' : (isSelected && isBeatStart ? color : 'rgba(255,255,255,0.08)')}
+                  strokeWidth={isPlayhead ? 2 : (isSelected ? 1.5 : 0.5)}
                   style={{
                     cursor: 'pointer',
-                    transition: 'fill 0.1s ease',
-                    filter: isActive ? `drop-shadow(0 0 4px ${color}88)` : undefined,
+                    transition: 'fill 0.05s ease',
+                    filter: isPlayhead ? 'drop-shadow(0 0 6px rgba(226,168,50,0.6))' : (isActive ? `drop-shadow(0 0 4px ${color}88)` : undefined),
                   }}
                   onClick={() => handleArcClick(instrumentName, beat, slice)}
                 />

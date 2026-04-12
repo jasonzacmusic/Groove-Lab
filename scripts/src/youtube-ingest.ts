@@ -8,6 +8,7 @@ const { Pool } = pg;
 const DATA_DIR = path.resolve(import.meta.dirname, "../../data");
 const PROGRESS_FILE = path.join(DATA_DIR, "youtube-ingest-progress.json");
 const QUERIES_FILE = path.join(DATA_DIR, "youtube-search-queries.json");
+const DEEP_QUERIES_FILE = path.join(DATA_DIR, "youtube-deep-queries.json");
 
 const DAILY_QUOTA_LIMIT = 10_000;
 const SEARCH_COST = 100;
@@ -115,13 +116,30 @@ function calculateQualityScore(
   const pool = new Pool({ connectionString: databaseUrl });
   const progress = loadProgress();
 
-  // Load all queries (combine all query arrays)
+  // Load queries from the primary search-queries file
   const queriesData = JSON.parse(fs.readFileSync(QUERIES_FILE, "utf-8"));
-  const allQueries: string[] = [
+  const baseQueries: string[] = [
     ...(queriesData.loopQueries || []),
     ...(queriesData.examQueries || []),
     ...(queriesData.standardsQueries || []),
   ];
+
+  // Load queries from the deep-queries file (categories object with arrays)
+  let deepQueries: string[] = [];
+  try {
+    if (fs.existsSync(DEEP_QUERIES_FILE)) {
+      const deepData = JSON.parse(fs.readFileSync(DEEP_QUERIES_FILE, "utf-8"));
+      const categories: Record<string, string[]> = deepData.categories || {};
+      for (const categoryQueries of Object.values(categories)) {
+        deepQueries.push(...categoryQueries);
+      }
+    }
+  } catch {
+    console.warn("Warning: could not load deep queries file, continuing with base queries only.");
+  }
+
+  // Merge and deduplicate
+  const allQueries: string[] = [...new Set([...baseQueries, ...deepQueries])];
 
   const pendingQueries = allQueries.filter((q) => !progress.completedQueries.includes(q));
 

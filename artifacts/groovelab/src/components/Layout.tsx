@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'wouter';
-import { Compass, Music, Cpu, Piano, BookOpen, Radio, Target, Search, Sun, Moon, Play, Pause, Disc3 } from 'lucide-react';
+import { Compass, Music, Cpu, Piano, BookOpen, Radio, Target, Search, Sun, Moon, Play, Pause, Disc3, Timer } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 const NAV_ITEMS = [
   { path: '/', label: 'Explore', icon: Compass },
   { path: '/sequencer', label: 'Sequencer', icon: Music },
+  { path: '/metronome', label: 'Metronome', icon: Timer },
   { path: '/midi', label: 'MIDI', icon: Cpu },
   { path: '/chords', label: 'Chords', icon: Piano },
   { path: '/standards', label: 'Standards', icon: BookOpen },
