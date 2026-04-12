@@ -369,52 +369,37 @@ export default function Chords() {
                   </Button>
                 </div>
 
-                {/* Backing Tracks Section */}
-                {expandedId === prog.id && (
-                  <div className="mt-4 pt-4 border-t border-border space-y-3">
-                    <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                      <Youtube className="w-4 h-4" /> Backing Tracks
-                    </h4>
-                    {backingTracksLoading ? (
-                      <div className="space-y-3">
-                        <Skeleton className="w-full aspect-video rounded-lg" />
-                        <Skeleton className="w-full aspect-video rounded-lg" />
-                      </div>
-                    ) : backingTracks.length > 0 ? (
-                      <div className="space-y-3">
-                        {backingTracks.map((loop: any) => (
-                          <div key={loop.id} className="space-y-1">
-                            <iframe
-                              src={`https://www.youtube.com/embed/${loop.youtubeVideoId}`}
-                              className="w-full aspect-video rounded-lg"
-                              allow="autoplay; encrypted-media"
-                              allowFullScreen
-                              title={loop.title || 'Backing Track'}
-                            />
-                            {loop.title && (
-                              <p className="text-xs text-muted-foreground truncate">{loop.title}</p>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="text-center py-4 space-y-3">
-                        <p className="text-sm text-muted-foreground">No matching backing tracks found in our library.</p>
-                        <a
-                          href={`https://www.youtube.com/results?search_query=${encodeURIComponent(
-                            `${prog.name} ${prog.keySignature || ''} backing track`.trim()
-                          )}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white text-sm font-medium transition-colors"
-                        >
-                          <ExternalLink className="w-4 h-4" />
-                          Search YouTube for Backing Tracks
-                        </a>
-                      </div>
-                    )}
-                  </div>
-                )}
+                {/* Backing Tracks Section - YouTube Search Embeds */}
+                {expandedId === prog.id && (() => {
+                  // Build search query using the TRANSPOSED key
+                  const transAmt = transpositions[prog.id] || 0;
+                  const origKey = prog.keySignature || 'C';
+                  const displayKey = transAmt !== 0 ? transposeChordSymbol(origKey, transAmt) : origKey;
+                  const genre = (prog as any).genre?.name || 'jazz';
+                  const searches = [
+                    `${prog.name} ${displayKey} backing track`,
+                    `${displayKey} ${genre} backing track`,
+                  ];
+                  return (
+                    <div className="mt-4 pt-4 border-t border-border space-y-3">
+                      <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                        <Youtube className="w-4 h-4" /> Backing Tracks in {displayKey}
+                      </h4>
+                      {searches.map((query, idx) => (
+                        <div key={idx} className="space-y-1">
+                          <iframe
+                            src={`https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(query)}`}
+                            className="w-full aspect-video rounded-lg"
+                            allow="autoplay; encrypted-media"
+                            allowFullScreen
+                            title={query}
+                          />
+                          <p className="text-xs text-muted-foreground font-mono">"{query}"</p>
+                        </div>
+                      ))}
+                    </div>
+                  );
+                })()}
               </CardContent>
             </Card>
           ))
