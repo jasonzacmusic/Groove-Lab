@@ -147,9 +147,11 @@ function getSectionLabel(barIndex: number, totalBars: number, formType: string |
 
 // ── Transposition Presets ───────────────────────────────────────────────────────
 const TRANSPOSITION_PRESETS = [
-  { label: 'Concert Pitch (C)', semitones: 0 },
-  { label: 'Bb Instruments (+2)', semitones: 2 },
-  { label: 'Eb Instruments (+9)', semitones: 9 },
+  { label: 'Concert Pitch (C) — Piano, Guitar, Bass, Flute, Violin, Cello, Trombone', semitones: 0 },
+  { label: 'Bb Instruments (+2) — Trumpet, Tenor Sax, Clarinet, Soprano Sax', semitones: 2 },
+  { label: 'Eb Instruments (+9) — Alto Sax, Baritone Sax', semitones: 9 },
+  { label: 'F Instruments (+7) — French Horn, English Horn', semitones: 7 },
+  { label: 'Bass Clef (Concert) — Bass, Trombone, Tuba, Cello', semitones: 0 },
 ];
 
 // ── Component ───────────────────────────────────────────────────────────────────
