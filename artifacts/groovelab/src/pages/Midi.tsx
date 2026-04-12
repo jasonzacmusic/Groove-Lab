@@ -3,7 +3,7 @@ import { Midi } from '@tonejs/midi';
 import * as Tone from 'tone';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Upload, Cpu, Play, Pause, Square, SkipBack, RefreshCw, Volume2, VolumeX, Scissors, Undo2, Download } from 'lucide-react';
+import { Upload, Cpu, Play, Pause, Square, SkipBack, RefreshCw, Volume2, VolumeX, Scissors, Undo2, Download, Music } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { Slider } from '@/components/ui/slider';
@@ -54,6 +54,234 @@ const GM_DRUM_MAP: Record<number, string> = {
   43: 'tomLow', 41: 'tomLow',
   39: 'clap',
   56: 'cowbell',
+};
+
+// ---- Starter Patterns ----
+
+interface StarterPattern {
+  name: string;
+  genre: string;
+  bpm: number;
+  timeSig: string;
+  description: string;
+}
+
+const STARTER_PATTERNS: StarterPattern[] = [
+  { name: 'Basic Rock Beat', genre: 'Rock', bpm: 120, timeSig: '4/4', description: 'Kick on 1&3, snare on 2&4, hihats on 8ths' },
+  { name: 'Jazz Swing', genre: 'Jazz', bpm: 140, timeSig: '4/4', description: 'Ride cymbal swing pattern with kick/snare comping' },
+  { name: 'Bossa Nova', genre: 'Latin', bpm: 130, timeSig: '4/4', description: 'Classic bossa cross-stick pattern' },
+  { name: 'Shuffle Blues', genre: 'Blues', bpm: 100, timeSig: '12/8', description: 'Triplet shuffle with walking bass drum' },
+  { name: 'Funk Groove', genre: 'Funk', bpm: 110, timeSig: '4/4', description: 'Syncopated 16th note hihat with ghost notes' },
+  { name: 'Reggae One Drop', genre: 'Reggae', bpm: 80, timeSig: '4/4', description: 'Kick and snare on beat 3, cross-stick on 2&4' },
+  { name: 'Afrobeat 12/8', genre: 'Afrobeat', bpm: 120, timeSig: '12/8', description: 'Tony Allen inspired pattern with bell' },
+  { name: '5/4 Odd Meter', genre: 'Progressive', bpm: 120, timeSig: '5/4', description: 'Take Five inspired pattern' },
+];
+
+function generateMidiPattern(pattern: StarterPattern): Midi {
+  const midi = new Midi();
+  midi.header.setTempo(pattern.bpm);
+  const track = midi.addTrack();
+  track.channel = 9; // drums
+
+  const beat = 60 / pattern.bpm; // seconds per beat
+
+  // GM drum map note numbers
+  const KICK = 36, SNARE = 38, HIHAT = 42, HIHAT_OPEN = 46, RIDE = 51, CROSS = 37, COWBELL = 56;
+
+  switch (pattern.name) {
+    case 'Basic Rock Beat': {
+      for (let bar = 0; bar < 4; bar++) {
+        const o = bar * 4 * beat;
+        // Kick on 1, 3
+        track.addNote({ midi: KICK, time: o, duration: 0.1, velocity: 0.9 });
+        track.addNote({ midi: KICK, time: o + 2 * beat, duration: 0.1, velocity: 0.9 });
+        // Snare on 2, 4
+        track.addNote({ midi: SNARE, time: o + beat, duration: 0.1, velocity: 0.8 });
+        track.addNote({ midi: SNARE, time: o + 3 * beat, duration: 0.1, velocity: 0.8 });
+        // Hihats on 8ths
+        for (let i = 0; i < 8; i++) {
+          track.addNote({ midi: HIHAT, time: o + i * beat / 2, duration: 0.05, velocity: 0.6 });
+        }
+      }
+      break;
+    }
+    case 'Jazz Swing': {
+      for (let bar = 0; bar < 4; bar++) {
+        const o = bar * 4 * beat;
+        for (let b = 0; b < 4; b++) {
+          const t = o + b * beat;
+          // Ride on beat and swung "and" (triplet feel)
+          track.addNote({ midi: RIDE, time: t, duration: 0.05, velocity: 0.7 });
+          track.addNote({ midi: RIDE, time: t + beat * 2 / 3, duration: 0.05, velocity: 0.5 });
+        }
+        // Kick comping on 1 and 3
+        track.addNote({ midi: KICK, time: o, duration: 0.1, velocity: 0.6 });
+        track.addNote({ midi: KICK, time: o + 2 * beat, duration: 0.1, velocity: 0.5 });
+        // Snare comping on 4-and (swung)
+        track.addNote({ midi: SNARE, time: o + 3 * beat + beat * 2 / 3, duration: 0.1, velocity: 0.45 });
+        // Hihat on 2 and 4 (foot)
+        track.addNote({ midi: HIHAT, time: o + beat, duration: 0.05, velocity: 0.4 });
+        track.addNote({ midi: HIHAT, time: o + 3 * beat, duration: 0.05, velocity: 0.4 });
+      }
+      break;
+    }
+    case 'Bossa Nova': {
+      for (let bar = 0; bar < 4; bar++) {
+        const o = bar * 4 * beat;
+        // Cross-stick pattern: classic bossa "1-and 2-and-a 3-and 4-and-a" feel
+        track.addNote({ midi: CROSS, time: o, duration: 0.05, velocity: 0.7 });
+        track.addNote({ midi: CROSS, time: o + beat * 1.5, duration: 0.05, velocity: 0.6 });
+        track.addNote({ midi: CROSS, time: o + 2 * beat, duration: 0.05, velocity: 0.5 });
+        track.addNote({ midi: CROSS, time: o + beat * 3.5, duration: 0.05, velocity: 0.6 });
+        // Kick: bossa pattern
+        track.addNote({ midi: KICK, time: o, duration: 0.1, velocity: 0.8 });
+        track.addNote({ midi: KICK, time: o + beat * 1.5, duration: 0.1, velocity: 0.6 });
+        track.addNote({ midi: KICK, time: o + 3 * beat, duration: 0.1, velocity: 0.7 });
+        // Hihats on 8ths, soft
+        for (let i = 0; i < 8; i++) {
+          track.addNote({ midi: HIHAT, time: o + i * beat / 2, duration: 0.04, velocity: 0.35 });
+        }
+      }
+      break;
+    }
+    case 'Shuffle Blues': {
+      // 12/8 feel: triplet subdivision, 4 bars
+      const triplet = beat / 3;
+      for (let bar = 0; bar < 4; bar++) {
+        const o = bar * 4 * beat;
+        for (let b = 0; b < 4; b++) {
+          const t = o + b * beat;
+          // Hihats on triplets
+          track.addNote({ midi: HIHAT, time: t, duration: 0.04, velocity: 0.6 });
+          track.addNote({ midi: HIHAT, time: t + triplet, duration: 0.04, velocity: 0.35 });
+          track.addNote({ midi: HIHAT, time: t + 2 * triplet, duration: 0.04, velocity: 0.5 });
+        }
+        // Walking kick: 1, 2-and (triplet), 3, 4-and (triplet)
+        track.addNote({ midi: KICK, time: o, duration: 0.1, velocity: 0.9 });
+        track.addNote({ midi: KICK, time: o + beat + 2 * triplet, duration: 0.1, velocity: 0.6 });
+        track.addNote({ midi: KICK, time: o + 2 * beat, duration: 0.1, velocity: 0.85 });
+        track.addNote({ midi: KICK, time: o + 3 * beat + 2 * triplet, duration: 0.1, velocity: 0.6 });
+        // Snare on 2, 4
+        track.addNote({ midi: SNARE, time: o + beat, duration: 0.1, velocity: 0.8 });
+        track.addNote({ midi: SNARE, time: o + 3 * beat, duration: 0.1, velocity: 0.8 });
+      }
+      break;
+    }
+    case 'Funk Groove': {
+      const sixteenth = beat / 4;
+      for (let bar = 0; bar < 4; bar++) {
+        const o = bar * 4 * beat;
+        // Hihats on 16ths with accents
+        for (let i = 0; i < 16; i++) {
+          const vel = (i % 2 === 0) ? 0.6 : 0.35;
+          track.addNote({ midi: HIHAT, time: o + i * sixteenth, duration: 0.03, velocity: vel });
+        }
+        // Open hihat on the "and" of 2 and "and" of 4
+        track.addNote({ midi: HIHAT_OPEN, time: o + beat + 2 * sixteenth, duration: 0.08, velocity: 0.65 });
+        track.addNote({ midi: HIHAT_OPEN, time: o + 3 * beat + 2 * sixteenth, duration: 0.08, velocity: 0.65 });
+        // Syncopated kick
+        track.addNote({ midi: KICK, time: o, duration: 0.1, velocity: 0.9 });
+        track.addNote({ midi: KICK, time: o + beat * 0.75, duration: 0.1, velocity: 0.7 });
+        track.addNote({ midi: KICK, time: o + 2 * beat + sixteenth, duration: 0.1, velocity: 0.85 });
+        track.addNote({ midi: KICK, time: o + 3 * beat, duration: 0.1, velocity: 0.7 });
+        // Snare on 2 and 4 with ghost notes
+        track.addNote({ midi: SNARE, time: o + beat, duration: 0.1, velocity: 0.85 });
+        track.addNote({ midi: SNARE, time: o + 3 * beat, duration: 0.1, velocity: 0.85 });
+        // Ghost notes
+        track.addNote({ midi: SNARE, time: o + beat * 0.5, duration: 0.05, velocity: 0.25 });
+        track.addNote({ midi: SNARE, time: o + beat * 1.75, duration: 0.05, velocity: 0.2 });
+        track.addNote({ midi: SNARE, time: o + beat * 2.5, duration: 0.05, velocity: 0.25 });
+        track.addNote({ midi: SNARE, time: o + beat * 3.75, duration: 0.05, velocity: 0.2 });
+      }
+      break;
+    }
+    case 'Reggae One Drop': {
+      for (let bar = 0; bar < 4; bar++) {
+        const o = bar * 4 * beat;
+        // Kick and snare together on beat 3 (the "drop")
+        track.addNote({ midi: KICK, time: o + 2 * beat, duration: 0.1, velocity: 0.9 });
+        track.addNote({ midi: SNARE, time: o + 2 * beat, duration: 0.1, velocity: 0.8 });
+        // Cross-stick on 2 and 4
+        track.addNote({ midi: CROSS, time: o + beat, duration: 0.05, velocity: 0.7 });
+        track.addNote({ midi: CROSS, time: o + 3 * beat, duration: 0.05, velocity: 0.7 });
+        // Hihats on 8ths
+        for (let i = 0; i < 8; i++) {
+          track.addNote({ midi: HIHAT, time: o + i * beat / 2, duration: 0.04, velocity: 0.5 });
+        }
+      }
+      break;
+    }
+    case 'Afrobeat 12/8': {
+      // 12/8 feel with bell pattern (Tony Allen style)
+      const triplet = beat / 3;
+      for (let bar = 0; bar < 4; bar++) {
+        const o = bar * 4 * beat;
+        // Bell pattern (standard 12/8 timeline): x.x.xx.x.x.x
+        const bellPattern = [0, 2, 4, 5, 7, 9, 10];
+        bellPattern.forEach(pos => {
+          track.addNote({ midi: COWBELL, time: o + pos * triplet, duration: 0.04, velocity: 0.7 });
+        });
+        // Kick pattern
+        track.addNote({ midi: KICK, time: o, duration: 0.1, velocity: 0.9 });
+        track.addNote({ midi: KICK, time: o + 3 * triplet, duration: 0.1, velocity: 0.6 });
+        track.addNote({ midi: KICK, time: o + 6 * triplet, duration: 0.1, velocity: 0.85 });
+        track.addNote({ midi: KICK, time: o + 10 * triplet, duration: 0.1, velocity: 0.6 });
+        // Snare on beats 2 and 4
+        track.addNote({ midi: SNARE, time: o + beat, duration: 0.1, velocity: 0.75 });
+        track.addNote({ midi: SNARE, time: o + 3 * beat, duration: 0.1, velocity: 0.75 });
+        // Hihats on triplets, soft
+        for (let i = 0; i < 12; i++) {
+          track.addNote({ midi: HIHAT, time: o + i * triplet, duration: 0.03, velocity: 0.3 });
+        }
+      }
+      break;
+    }
+    case '5/4 Odd Meter': {
+      // 5/4 time, 4 bars - Take Five inspired
+      for (let bar = 0; bar < 4; bar++) {
+        const o = bar * 5 * beat;
+        // Ride on all 5 beats
+        for (let b = 0; b < 5; b++) {
+          track.addNote({ midi: RIDE, time: o + b * beat, duration: 0.05, velocity: 0.65 });
+        }
+        // Kick on 1 and 4
+        track.addNote({ midi: KICK, time: o, duration: 0.1, velocity: 0.85 });
+        track.addNote({ midi: KICK, time: o + 3 * beat, duration: 0.1, velocity: 0.75 });
+        // Snare on 3 and 5
+        track.addNote({ midi: SNARE, time: o + 2 * beat, duration: 0.1, velocity: 0.75 });
+        track.addNote({ midi: SNARE, time: o + 4 * beat, duration: 0.1, velocity: 0.7 });
+        // Hihat on "and" of each beat
+        for (let b = 0; b < 5; b++) {
+          track.addNote({ midi: HIHAT, time: o + b * beat + beat / 2, duration: 0.04, velocity: 0.4 });
+        }
+      }
+      break;
+    }
+  }
+
+  return midi;
+}
+
+function downloadMidi(pattern: StarterPattern) {
+  const midi = generateMidiPattern(pattern);
+  const blob = new Blob([midi.toArray() as unknown as BlobPart], { type: 'audio/midi' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `groovelab-${pattern.name.toLowerCase().replace(/\s+/g, '-')}.mid`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+const GENRE_COLORS: Record<string, string> = {
+  Rock: 'bg-red-500/15 text-red-400 border-red-500/30',
+  Jazz: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
+  Latin: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30',
+  Blues: 'bg-indigo-500/15 text-indigo-400 border-indigo-500/30',
+  Funk: 'bg-orange-500/15 text-orange-400 border-orange-500/30',
+  Reggae: 'bg-green-500/15 text-green-400 border-green-500/30',
+  Afrobeat: 'bg-yellow-500/15 text-yellow-400 border-yellow-500/30',
+  Progressive: 'bg-purple-500/15 text-purple-400 border-purple-500/30',
 };
 
 export default function MidiPage() {
@@ -590,7 +818,7 @@ export default function MidiPage() {
       });
     });
 
-    const blob = new Blob([midi.toArray() as unknown as ArrayBuffer], { type: 'audio/midi' });
+    const blob = new Blob([midi.toArray() as unknown as BlobPart], { type: 'audio/midi' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -836,24 +1064,50 @@ export default function MidiPage() {
         </Card>
       )}
 
-      {/* Library Grid */}
+      {/* Starter Patterns */}
       <div>
-        <h3 className="font-serif text-2xl mb-4">Community Patterns</h3>
+        <h3 className="font-serif text-2xl mb-2">Starter Patterns</h3>
+        <p className="text-sm text-muted-foreground mb-4">Real MIDI drum patterns you can download or load into the editor above.</p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <Card key={i} className="overflow-hidden border-border bg-card hover:border-primary/50 transition-colors cursor-pointer group vinyl-hover">
-              <CardContent className="p-4">
-                <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center mb-4 text-muted-foreground group-hover:text-primary group-hover:bg-primary/10 transition-colors">
-                  <Cpu className="w-6 h-6" />
+          {STARTER_PATTERNS.map((pat, i) => (
+            <Card key={i} className="overflow-hidden border-border bg-card hover:border-primary/50 transition-colors group">
+              <CardContent className="p-4 flex flex-col h-full">
+                <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center mb-3 text-muted-foreground group-hover:text-primary group-hover:bg-primary/10 transition-colors">
+                  <Music className="w-5 h-5" />
                 </div>
-                <h4 className="font-medium text-lg truncate mb-2">Groove Pattern #{i + 1}</h4>
-                <div className="flex flex-wrap items-center gap-2 mb-3">
-                  <Badge variant="secondary" className="font-mono text-xs bg-primary/10 text-primary">{(100 + i * 5)} BPM</Badge>
-                  <Badge variant="outline" className="font-mono text-xs">4/4</Badge>
+                <h4 className="font-medium text-lg mb-2">{pat.name}</h4>
+                <div className="flex flex-wrap items-center gap-1.5 mb-2">
+                  <Badge variant="outline" className={`text-xs border ${GENRE_COLORS[pat.genre] || ''}`}>{pat.genre}</Badge>
+                  <Badge variant="secondary" className="font-mono text-xs bg-primary/10 text-primary">{pat.bpm} BPM</Badge>
+                  <Badge variant="outline" className="font-mono text-xs">{pat.timeSig}</Badge>
                 </div>
-                <div className="text-xs text-muted-foreground mt-4 pt-4 border-t border-border flex justify-between">
-                  <span>2 Tracks</span>
-                  <span>0:14</span>
+                <p className="text-xs text-muted-foreground mb-4 flex-1">{pat.description}</p>
+                <div className="flex gap-2 pt-3 border-t border-border">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex-1 text-xs h-8"
+                    onClick={() => {
+                      const midi = generateMidiPattern(pat);
+                      setParsedMidi(midi);
+                      setUploadedFile(new File([midi.toArray() as unknown as BlobPart], `${pat.name}.mid`, { type: 'audio/midi' }));
+                      setTrackMix(midi.tracks.map(() => ({ muted: false, solo: false })));
+                      setPlayheadTime(0);
+                      setDeletedNotes(new Set());
+                      baseBpmRef.current = pat.bpm;
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                  >
+                    <Play className="w-3 h-3 mr-1" /> Load in Editor
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="text-xs h-8 px-2"
+                    onClick={() => downloadMidi(pat)}
+                  >
+                    <Download className="w-3 h-3" />
+                  </Button>
                 </div>
               </CardContent>
             </Card>

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { useGetChordProgressions } from '@workspace/api-client-react';
 import type { ChordEntry } from '@workspace/api-client-react';
 import { Card, CardContent } from '@/components/ui/card';
@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Piano, Play, Square, Music, ArrowUp, ArrowDown, Star } from 'lucide-react';
+import { Piano, Play, Square, ArrowUp, ArrowDown, Star, ChevronUp, ExternalLink, Youtube } from 'lucide-react';
 import * as Tone from 'tone';
 
 const CHORD_TABS = ['All', 'ii-V-I', 'I-vi-ii-V', 'Blues', 'Rhythm Changes', 'Modal'];
@@ -75,6 +75,9 @@ export default function Chords() {
   const [playingId, setPlayingId] = useState<string | null>(null);
   const [playingChordIndex, setPlayingChordIndex] = useState<number>(-1);
   const [transpositions, setTranspositions] = useState<Record<string, number>>({});
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [backingTracks, setBackingTracks] = useState<any[]>([]);
+  const [backingTracksLoading, setBackingTracksLoading] = useState(false);
   const synthRef = useRef<Tone.PolySynth | null>(null);
   const playTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const chordTimersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
@@ -87,6 +90,65 @@ export default function Chords() {
     difficulty: difficultyFilter,
     isJazzStandard: false,
   });
+
+  // Fetch backing tracks when a progression card is expanded
+  useEffect(() => {
+    if (!expandedId || !progressions) return;
+    const prog = progressions.find(p => p.id === expandedId);
+    if (!prog) return;
+
+    let cancelled = false;
+    setBackingTracksLoading(true);
+    setBackingTracks([]);
+
+    const searchTerm = `${prog.name} ${prog.keySignature || ''}`.trim();
+    const genreTerm = prog.genre?.name || '';
+
+    // Try specific search first, then fallback to genre-based search
+    const doSearch = async () => {
+      try {
+        // First try: search by progression name
+        let res = await fetch(`/api/loops?search=${encodeURIComponent(searchTerm)}&limit=3`);
+        let data = await res.json();
+        let loops = (data.loops || []).filter((l: any) => l.youtubeVideoId);
+
+        // Second try: search by genre + "backing track"
+        if (loops.length === 0 && genreTerm) {
+          res = await fetch(`/api/loops?search=${encodeURIComponent(genreTerm + ' backing track')}&limit=3`);
+          data = await res.json();
+          loops = (data.loops || []).filter((l: any) => l.youtubeVideoId);
+        }
+
+        // Third try: search by genre + key
+        if (loops.length === 0 && genreTerm) {
+          const keyTerm = prog.keySignature || 'C';
+          res = await fetch(`/api/loops?search=${encodeURIComponent(genreTerm + ' ' + keyTerm)}&limit=3`);
+          data = await res.json();
+          loops = (data.loops || []).filter((l: any) => l.youtubeVideoId);
+        }
+
+        // Last resort: just get featured loops
+        if (loops.length === 0) {
+          res = await fetch(`/api/loops?featured=true&limit=3`);
+          data = await res.json();
+          loops = (data.loops || []).filter((l: any) => l.youtubeVideoId);
+        }
+
+        if (!cancelled) {
+          setBackingTracks(loops);
+          setBackingTracksLoading(false);
+        }
+      } catch {
+        if (!cancelled) {
+          setBackingTracks([]);
+          setBackingTracksLoading(false);
+        }
+      }
+    };
+
+    doSearch();
+    return () => { cancelled = true; };
+  }, [expandedId, progressions]);
 
   const transpose = useCallback((progId: string, direction: 1 | -1) => {
     setTranspositions(prev => ({
@@ -138,8 +200,8 @@ export default function Chords() {
     const synth = new Tone.PolySynth(Tone.Synth, {
       oscillator: { type: 'triangle' as const },
       envelope: { attack: 0.02, decay: 0.3, sustain: 0.4, release: 0.8 },
-      volume: -8,
     }).toDestination();
+    synth.volume.value = -8;
     synthRef.current = synth;
 
     const now = Tone.now();
@@ -293,10 +355,66 @@ export default function Chords() {
                       <Badge variant="secondary" className="font-mono text-xs">{transpositions[prog.id] > 0 ? '+' : ''}{transpositions[prog.id]}</Badge>
                     )}
                   </div>
-                  <Button variant="secondary" size="sm" className="h-8 bg-primary/10 text-primary hover:bg-primary hover:text-white">
-                    <Music className="w-4 h-4 mr-2" /> Find Loops
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    className="h-8 bg-primary/10 text-primary hover:bg-primary hover:text-white"
+                    onClick={() => setExpandedId(expandedId === prog.id ? null : prog.id)}
+                  >
+                    {expandedId === prog.id ? (
+                      <><ChevronUp className="w-4 h-4 mr-2" /> Hide Tracks</>
+                    ) : (
+                      <><Youtube className="w-4 h-4 mr-2" /> Backing Tracks</>
+                    )}
                   </Button>
                 </div>
+
+                {/* Backing Tracks Section */}
+                {expandedId === prog.id && (
+                  <div className="mt-4 pt-4 border-t border-border space-y-3">
+                    <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                      <Youtube className="w-4 h-4" /> Backing Tracks
+                    </h4>
+                    {backingTracksLoading ? (
+                      <div className="space-y-3">
+                        <Skeleton className="w-full aspect-video rounded-lg" />
+                        <Skeleton className="w-full aspect-video rounded-lg" />
+                      </div>
+                    ) : backingTracks.length > 0 ? (
+                      <div className="space-y-3">
+                        {backingTracks.map((loop: any) => (
+                          <div key={loop.id} className="space-y-1">
+                            <iframe
+                              src={`https://www.youtube.com/embed/${loop.youtubeVideoId}`}
+                              className="w-full aspect-video rounded-lg"
+                              allow="autoplay; encrypted-media"
+                              allowFullScreen
+                              title={loop.title || 'Backing Track'}
+                            />
+                            {loop.title && (
+                              <p className="text-xs text-muted-foreground truncate">{loop.title}</p>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-center py-4 space-y-3">
+                        <p className="text-sm text-muted-foreground">No matching backing tracks found in our library.</p>
+                        <a
+                          href={`https://www.youtube.com/results?search_query=${encodeURIComponent(
+                            `${prog.name} ${prog.keySignature || ''} backing track`.trim()
+                          )}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white text-sm font-medium transition-colors"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          Search YouTube for Backing Tracks
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                )}
               </CardContent>
             </Card>
           ))

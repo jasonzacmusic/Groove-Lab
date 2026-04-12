@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Skeleton } from '@/components/ui/skeleton';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Slider } from '@/components/ui/slider';
-import { BookOpen, Search, Play, Square, ChevronRight, ArrowUp, ArrowDown, ExternalLink, Music } from 'lucide-react';
+import { BookOpen, Search, Play, Square, ChevronRight, ArrowUp, ArrowDown, Music } from 'lucide-react';
 import * as Tone from 'tone';
 
 // ── Transposition Logic ─────────────────────────────────────────────────────────
@@ -347,9 +347,80 @@ export default function Standards() {
       : (selectedStandard.keySignature || 'C')
     : '';
 
-  const youtubeSearchUrl = selectedStandard
-    ? `https://www.youtube.com/results?search_query=${encodeURIComponent(selectedStandard.name + ' ' + (selectedStandard.keySignature || '') + ' backing track jazz')}`
-    : '';
+  // ── YouTube Backing Track Embeds ─────────────────────────────────────────────
+  const [backingTracks, setBackingTracks] = useState<Array<{
+    id: string;
+    title: string;
+    youtubeVideoId: string;
+    creatorName: string;
+    bpm: number | null;
+  }>>([]);
+  const [tracksLoading, setTracksLoading] = useState(false);
+
+  useEffect(() => {
+    if (!selectedStandard) {
+      setBackingTracks([]);
+      return;
+    }
+
+    let cancelled = false;
+    const fetchTracks = async () => {
+      setTracksLoading(true);
+      setBackingTracks([]);
+
+      // First try: search by standard name + backing track
+      const searchQuery = selectedStandard.name + ' backing track';
+      try {
+        const res = await fetch('/api/loops?search=' + encodeURIComponent(searchQuery) + '&limit=3');
+        if (res.ok) {
+          const data = await res.json();
+          const loops = (data.data || data || []);
+          const withVideo = loops.filter((l: any) => l.youtubeVideoId);
+
+          if (!cancelled && withVideo.length > 0) {
+            setBackingTracks(withVideo.slice(0, 3).map((l: any) => ({
+              id: l.id,
+              title: l.title,
+              youtubeVideoId: l.youtubeVideoId,
+              creatorName: l.creator?.channelName || 'Unknown',
+              bpm: l.bpm || null,
+            })));
+            setTracksLoading(false);
+            return;
+          }
+        }
+      } catch (e) {
+        // fall through to broader search
+      }
+
+      // Fallback: broader search with just genre
+      try {
+        const fallbackRes = await fetch('/api/loops?search=' + encodeURIComponent('jazz backing track') + '&limit=3');
+        if (fallbackRes.ok) {
+          const fallbackData = await fallbackRes.json();
+          const fallbackLoops = (fallbackData.data || fallbackData || []);
+          const fallbackWithVideo = fallbackLoops.filter((l: any) => l.youtubeVideoId);
+
+          if (!cancelled && fallbackWithVideo.length > 0) {
+            setBackingTracks(fallbackWithVideo.slice(0, 3).map((l: any) => ({
+              id: l.id,
+              title: l.title,
+              youtubeVideoId: l.youtubeVideoId,
+              creatorName: l.creator?.channelName || 'Unknown',
+              bpm: l.bpm || null,
+            })));
+          }
+        }
+      } catch (e) {
+        // no results available
+      }
+
+      if (!cancelled) setTracksLoading(false);
+    };
+
+    fetchTracks();
+    return () => { cancelled = true; };
+  }, [selectedStandard?.id, selectedStandard?.name]);
 
   return (
     <div className="flex flex-col md:flex-row h-[calc(100vh-144px)]">
@@ -634,68 +705,60 @@ export default function Standards() {
               </div>
             </div>
 
-            {/* ── YouTube Backing Tracks ────────────────────────────────────────── */}
-            <div className="space-y-3">
-              <h3 className="font-serif text-xl text-foreground">Practice Resources</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <a
-                  href={youtubeSearchUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-4 rounded-lg border border-border bg-muted/20 hover:bg-muted/40 hover:border-amber-500/30 transition-colors group"
-                >
-                  <div className="w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center flex-shrink-0">
-                    <Play className="w-5 h-5 text-red-500" fill="currentColor" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground group-hover:text-amber-400 transition-colors">
-                      Backing Tracks
-                    </p>
-                    <p className="text-xs text-muted-foreground truncate">
-                      Search YouTube for {selectedStandard.name} play-alongs
-                    </p>
-                  </div>
-                  <ExternalLink className="w-4 h-4 text-muted-foreground flex-shrink-0" />
-                </a>
-                <a
-                  href={`https://www.youtube.com/results?search_query=${encodeURIComponent(selectedStandard.name + ' jazz tutorial how to play')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-4 rounded-lg border border-border bg-muted/20 hover:bg-muted/40 hover:border-amber-500/30 transition-colors group"
-                >
-                  <div className="w-10 h-10 rounded-full bg-amber-500/10 flex items-center justify-center flex-shrink-0">
-                    <BookOpen className="w-5 h-5 text-amber-500" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground group-hover:text-amber-400 transition-colors">
-                      Tutorials
-                    </p>
-                    <p className="text-xs text-muted-foreground truncate">
-                      Learn how to play {selectedStandard.name}
-                    </p>
-                  </div>
-                  <ExternalLink className="w-4 h-4 text-muted-foreground flex-shrink-0" />
-                </a>
-                <a
-                  href={`https://www.youtube.com/results?search_query=${encodeURIComponent(selectedStandard.name + ' ' + (selectedStandard.composer || '') + ' original recording')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-4 rounded-lg border border-border bg-muted/20 hover:bg-muted/40 hover:border-amber-500/30 transition-colors group"
-                >
-                  <div className="w-10 h-10 rounded-full bg-purple-500/10 flex items-center justify-center flex-shrink-0">
-                    <Music className="w-5 h-5 text-purple-500" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground group-hover:text-amber-400 transition-colors">
-                      Original Recording
-                    </p>
-                    <p className="text-xs text-muted-foreground truncate">
-                      Listen to {selectedStandard.composer || 'the original'}
-                    </p>
-                  </div>
-                  <ExternalLink className="w-4 h-4 text-muted-foreground flex-shrink-0" />
-                </a>
-              </div>
+            {/* ── YouTube Backing Tracks (Embedded) ─────────────────────────────── */}
+            <div className="space-y-4">
+              <h3 className="font-serif text-xl text-foreground flex items-center gap-2">
+                <Play className="w-5 h-5 text-red-500" fill="currentColor" />
+                Backing Tracks
+              </h3>
+
+              {tracksLoading && (
+                <div className="grid grid-cols-1 gap-4">
+                  {Array.from({ length: 2 }).map((_, i) => (
+                    <div key={i} className="space-y-2">
+                      <Skeleton className="w-full aspect-video rounded-lg" />
+                      <Skeleton className="h-4 w-2/3" />
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {!tracksLoading && backingTracks.length > 0 && (
+                <div className="grid grid-cols-1 gap-6">
+                  {backingTracks.map((track) => (
+                    <div key={track.id} className="space-y-2">
+                      <iframe
+                        src={`https://www.youtube.com/embed/${track.youtubeVideoId}`}
+                        className="w-full aspect-video rounded-lg border border-border"
+                        allow="autoplay; encrypted-media"
+                        allowFullScreen
+                        title={track.title}
+                      />
+                      <div className="flex items-center justify-between px-1">
+                        <div className="min-w-0 flex-1">
+                          <p className="text-sm font-medium text-foreground truncate">
+                            {track.title}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            {track.creatorName}
+                          </p>
+                        </div>
+                        {track.bpm && (
+                          <Badge variant="outline" className="font-mono text-xs flex-shrink-0 ml-2">
+                            {track.bpm} BPM
+                          </Badge>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {!tracksLoading && backingTracks.length === 0 && (
+                <p className="text-sm text-muted-foreground italic">
+                  No embedded backing tracks available for this standard.
+                </p>
+              )}
             </div>
           </div>
         ) : (
