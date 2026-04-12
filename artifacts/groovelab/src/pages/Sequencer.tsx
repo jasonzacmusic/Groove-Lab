@@ -1,14 +1,17 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSequencerStore, Instrument } from '../store/sequencer';
 import { useAudioEngine } from '../context/AudioEngineContext';
 import { usePracticeTracker } from '@/hooks/use-practice-tracker';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Play, Square, Download, Plus, Minus, Trash2 } from 'lucide-react';
+import { Play, Square, Download, Plus, Minus, Trash2, Circle, Disc } from 'lucide-react';
 import { Midi } from '@tonejs/midi';
 
-// Instrument color map
+// ---------------------------------------------------------------------------
+// Constants
+// ---------------------------------------------------------------------------
+
 const INSTRUMENT_COLORS: Record<string, string> = {
   kick:        '#e2a832',
   snare:       '#e74c3c',
@@ -46,8 +49,159 @@ const INSTRUMENT_LABELS: Record<string, string> = {
   crossStick:  'X-Stick',
 };
 
+const INSTRUMENT_SHORTCUTS: Record<string, string> = {
+  kick:        'K',
+  snare:       'S',
+  hihatClosed: 'H',
+  hihatOpen:   'O',
+  ride:        'R',
+  crash:       'C',
+  tomHigh:     '1',
+  tomMid:      '2',
+  tomLow:      '3',
+  cowbell:     'B',
+  clap:        'P',
+  crossStick:  'X',
+};
+
+const KEY_TO_INSTRUMENT: Record<string, Instrument> = {
+  k: 'kick',
+  s: 'snare',
+  h: 'hihatClosed',
+  o: 'hihatOpen',
+  r: 'ride',
+  c: 'crash',
+  '1': 'tomHigh',
+  '2': 'tomMid',
+  '3': 'tomLow',
+  b: 'cowbell',
+  p: 'clap',
+  x: 'crossStick',
+};
+
 // ---------------------------------------------------------------------------
-// PizzaBeat - a single pizza-circle representing one beat
+// Groove Presets
+// ---------------------------------------------------------------------------
+
+interface GroovePreset {
+  name: string;
+  kit: 'jazz' | 'rock' | '808' | 'latin';
+  bpm: number;
+  timeSig: [number, number];
+  subdivisions: number[];
+  pattern: (string | null)[][];
+}
+
+const GROOVE_PRESETS: GroovePreset[] = [
+  {
+    name: 'Basic Rock',
+    kit: 'rock',
+    bpm: 120,
+    timeSig: [4, 4],
+    subdivisions: [4, 4, 4, 4],
+    pattern: [
+      ['kick', 'hihatClosed', null, 'hihatClosed'],
+      ['snare', 'hihatClosed', null, 'hihatClosed'],
+      ['kick', 'hihatClosed', null, 'hihatClosed'],
+      ['snare', 'hihatClosed', null, 'hihatClosed'],
+    ],
+  },
+  {
+    name: 'Jazz Swing',
+    kit: 'jazz',
+    bpm: 140,
+    timeSig: [4, 4],
+    subdivisions: [3, 3, 3, 3],
+    pattern: [
+      ['ride', null, 'ride'],
+      ['ride', null, 'ride'],
+      ['ride', null, 'ride'],
+      ['ride', null, 'ride'],
+    ],
+  },
+  {
+    name: 'Bossa Nova',
+    kit: 'jazz',
+    bpm: 130,
+    timeSig: [4, 4],
+    subdivisions: [4, 4, 4, 4],
+    pattern: [
+      ['kick', 'hihatClosed', null, 'hihatClosed'],
+      [null, 'hihatClosed', 'crossStick', 'hihatClosed'],
+      [null, 'hihatClosed', 'kick', 'hihatClosed'],
+      ['crossStick', 'hihatClosed', null, 'hihatClosed'],
+    ],
+  },
+  {
+    name: 'Funk Groove',
+    kit: 'rock',
+    bpm: 100,
+    timeSig: [4, 4],
+    subdivisions: [4, 4, 4, 4],
+    pattern: [
+      ['kick', 'hihatClosed', 'hihatClosed', 'hihatClosed'],
+      ['snare', 'hihatClosed', null, 'kick'],
+      ['hihatClosed', 'hihatClosed', 'kick', 'hihatClosed'],
+      ['snare', 'hihatClosed', 'hihatClosed', null],
+    ],
+  },
+  {
+    name: '808 Trap',
+    kit: '808',
+    bpm: 140,
+    timeSig: [4, 4],
+    subdivisions: [4, 4, 4, 4],
+    pattern: [
+      ['kick', null, null, 'hihatClosed'],
+      [null, 'hihatClosed', 'snare', 'hihatClosed'],
+      [null, 'hihatClosed', null, 'hihatClosed'],
+      ['kick', 'hihatClosed', 'snare', null],
+    ],
+  },
+  {
+    name: 'Reggae One Drop',
+    kit: 'rock',
+    bpm: 80,
+    timeSig: [4, 4],
+    subdivisions: [4, 4, 4, 4],
+    pattern: [
+      [null, 'hihatClosed', null, 'hihatClosed'],
+      [null, 'hihatClosed', null, 'hihatClosed'],
+      ['kick', 'hihatClosed', 'snare', 'hihatClosed'],
+      [null, 'hihatClosed', null, 'hihatClosed'],
+    ],
+  },
+  {
+    name: 'Shuffle Blues',
+    kit: 'jazz',
+    bpm: 100,
+    timeSig: [4, 4],
+    subdivisions: [3, 3, 3, 3],
+    pattern: [
+      ['kick', null, 'hihatClosed'],
+      ['snare', null, 'hihatClosed'],
+      ['kick', null, 'hihatClosed'],
+      ['snare', null, 'hihatClosed'],
+    ],
+  },
+  {
+    name: '5/4 Take Five',
+    kit: 'jazz',
+    bpm: 170,
+    timeSig: [5, 4],
+    subdivisions: [4, 4, 4, 4, 4],
+    pattern: [
+      ['ride', null, null, 'ride'],
+      [null, 'ride', null, null],
+      ['snare', null, 'ride', null],
+      [null, null, 'ride', null],
+      ['kick', null, null, 'ride'],
+    ],
+  },
+];
+
+// ---------------------------------------------------------------------------
+// PizzaBeat - horizontal circles view (one circle per beat)
 // ---------------------------------------------------------------------------
 
 interface PizzaBeatProps {
@@ -75,7 +229,6 @@ function PizzaBeat({
 
   return (
     <div className="flex flex-col items-center gap-1.5">
-      {/* Beat number label */}
       <span className="font-mono text-xs font-bold text-primary/70 select-none">
         {beatIndex + 1}
       </span>
@@ -86,7 +239,6 @@ function PizzaBeat({
         viewBox={`0 0 ${size} ${size}`}
         className="select-none"
       >
-        {/* Background circle */}
         <circle
           cx={cx}
           cy={cy}
@@ -95,7 +247,6 @@ function PizzaBeat({
           stroke="rgba(255,255,255,0.1)"
           strokeWidth="1"
         />
-        {/* Vinyl groove rings */}
         {[r * 0.3, r * 0.5, r * 0.7, r * 0.85].map((gr, i) => (
           <circle
             key={i}
@@ -107,10 +258,8 @@ function PizzaBeat({
             strokeWidth="0.5"
           />
         ))}
-        {/* Center dot */}
         <circle cx={cx} cy={cy} r={2} fill="rgba(226,168,50,0.3)" />
 
-        {/* Pie slices */}
         {slices.map((slice, i) => {
           const startAngle = (i / subdivisionCount) * 360 - 90;
           const endAngle = ((i + 1) / subdivisionCount) * 360 - 90;
@@ -135,7 +284,7 @@ function PizzaBeat({
           } else if (isPlaying) {
             fill = 'rgba(226,168,50,0.25)';
           } else if (color) {
-            fill = color + 'cc'; // slight transparency
+            fill = color + 'cc';
           }
 
           return (
@@ -159,7 +308,6 @@ function PizzaBeat({
           );
         })}
 
-        {/* Slice divider lines (on top, for clarity) */}
         {Array.from({ length: subdivisionCount }).map((_, i) => {
           const angle = (i / subdivisionCount) * 360 - 90;
           const rad = (angle * Math.PI) / 180;
@@ -178,12 +326,11 @@ function PizzaBeat({
         })}
       </svg>
 
-      {/* Subdivision selector */}
       <Select
         value={subdivisionCount.toString()}
         onValueChange={(v) => {
-          const store = useSequencerStore.getState();
-          store.setSubdivision(beatIndex, parseInt(v));
+          const s = useSequencerStore.getState();
+          s.setSubdivision(beatIndex, parseInt(v));
         }}
       >
         <SelectTrigger className="w-14 h-6 text-[10px] px-1 font-mono">
@@ -191,11 +338,7 @@ function PizzaBeat({
         </SelectTrigger>
         <SelectContent>
           {[2, 3, 4, 5, 6, 8].map((n) => (
-            <SelectItem
-              key={n}
-              value={n.toString()}
-              className="text-xs font-mono"
-            >
+            <SelectItem key={n} value={n.toString()} className="text-xs font-mono">
               /{n}
             </SelectItem>
           ))}
@@ -206,8 +349,230 @@ function PizzaBeat({
 }
 
 // ---------------------------------------------------------------------------
+// RadialView - concentric rings (one ring per instrument)
+// ---------------------------------------------------------------------------
+
+function polarToXY(cx: number, cy: number, r: number, angleDeg: number) {
+  const rad = ((angleDeg - 90) * Math.PI) / 180;
+  return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+}
+
+function arcPath(cx: number, cy: number, r: number, startDeg: number, endDeg: number, ringW: number) {
+  const outerR = r;
+  const innerR = r - ringW;
+  const start = polarToXY(cx, cy, outerR, startDeg);
+  const end = polarToXY(cx, cy, outerR, endDeg);
+  const iStart = polarToXY(cx, cy, innerR, startDeg);
+  const iEnd = polarToXY(cx, cy, innerR, endDeg);
+  const large = endDeg - startDeg > 180 ? 1 : 0;
+  return [
+    `M ${start.x} ${start.y}`,
+    `A ${outerR} ${outerR} 0 ${large} 1 ${end.x} ${end.y}`,
+    `L ${iEnd.x} ${iEnd.y}`,
+    `A ${innerR} ${innerR} 0 ${large} 0 ${iStart.x} ${iStart.y}`,
+    'Z',
+  ].join(' ');
+}
+
+interface RadialViewProps {
+  instruments: string[];
+  beats: { instrument: Instrument | null }[][];
+  subdivisions: number[];
+  currentStep: number;
+  onSliceClick: (beatIndex: number, sliceIndex: number, instrument: string) => void;
+}
+
+function RadialView({ instruments, beats, subdivisions, currentStep, onSliceClick }: RadialViewProps) {
+  const SIZE = 480;
+  const cx = SIZE / 2;
+  const cy = SIZE / 2;
+  const RING_W = 24;
+  const RING_GAP = 3;
+  const CORE_R = 36;
+
+  // Total number of steps (all slices across all beats)
+  const totalSteps = subdivisions.reduce((sum, n) => sum + n, 0);
+
+  // Build a flat list of { beatIndex, sliceIndex } for each global step
+  const stepLookup: { beatIndex: number; sliceIndex: number }[] = [];
+  for (let b = 0; b < beats.length; b++) {
+    for (let s = 0; s < beats[b].length; s++) {
+      stepLookup.push({ beatIndex: b, sliceIndex: s });
+    }
+  }
+
+  // Compute beat boundary global indices (start index of each beat)
+  const beatBoundaries: number[] = [];
+  let idx = 0;
+  for (let b = 0; b < beats.length; b++) {
+    beatBoundaries.push(idx);
+    idx += beats[b].length;
+  }
+
+  return (
+    <div className="flex justify-center">
+      <svg
+        width={SIZE}
+        height={SIZE}
+        viewBox={`0 0 ${SIZE} ${SIZE}`}
+        className="select-none"
+      >
+        {/* Background */}
+        <circle cx={cx} cy={cy} r={SIZE / 2 - 2} fill="rgba(22,33,62,0.3)" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+
+        {/* Instrument rings (outermost = first instrument) */}
+        {instruments.map((inst, ringIdx) => {
+          const outerR = SIZE / 2 - 12 - ringIdx * (RING_W + RING_GAP);
+          const color = INSTRUMENT_COLORS[inst] || '#888';
+
+          return (
+            <g key={inst}>
+              {/* Ring background */}
+              <circle cx={cx} cy={cy} r={outerR} fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth={RING_W} />
+
+              {/* Arc segments for each step */}
+              {stepLookup.map((step, globalIdx) => {
+                const startDeg = (globalIdx / totalSteps) * 360;
+                const endDeg = ((globalIdx + 1) / totalSteps) * 360;
+                const sliceData = beats[step.beatIndex]?.[step.sliceIndex];
+                const hasHit = sliceData?.instrument === inst;
+                const isPlaying = currentStep === globalIdx;
+
+                let fill = 'transparent';
+                if (hasHit && isPlaying) {
+                  fill = color;
+                } else if (hasHit) {
+                  fill = color + 'bb';
+                } else if (isPlaying) {
+                  fill = 'rgba(226,168,50,0.18)';
+                }
+
+                return (
+                  <path
+                    key={`${inst}-${globalIdx}`}
+                    d={arcPath(cx, cy, outerR, startDeg, endDeg, RING_W)}
+                    fill={fill}
+                    stroke={isPlaying && hasHit ? '#e2a832' : 'rgba(255,255,255,0.08)'}
+                    strokeWidth={isPlaying && hasHit ? 1.5 : 0.5}
+                    style={{
+                      cursor: 'pointer',
+                      transition: 'fill 0.06s ease',
+                      filter: isPlaying && hasHit
+                        ? 'drop-shadow(0 0 6px rgba(226,168,50,0.5))'
+                        : hasHit
+                          ? `drop-shadow(0 0 2px ${color}44)`
+                          : undefined,
+                    }}
+                    onClick={() => onSliceClick(step.beatIndex, step.sliceIndex, inst)}
+                  />
+                );
+              })}
+
+              {/* Instrument label on the left side of the ring */}
+              <text
+                x={cx - outerR + RING_W / 2}
+                y={cy}
+                textAnchor="middle"
+                dominantBaseline="central"
+                className="fill-foreground/60"
+                style={{ fontSize: '7px', fontFamily: 'monospace', pointerEvents: 'none' }}
+              >
+                {INSTRUMENT_LABELS[inst]}
+              </text>
+            </g>
+          );
+        })}
+
+        {/* Beat separator lines */}
+        {beatBoundaries.map((globalIdx, b) => {
+          const angleDeg = (globalIdx / totalSteps) * 360;
+          const outerR = SIZE / 2 - 12;
+          const innerR = SIZE / 2 - 12 - instruments.length * (RING_W + RING_GAP) + RING_GAP;
+          const outerPt = polarToXY(cx, cy, outerR + 6, angleDeg);
+          const innerPt = polarToXY(cx, cy, Math.max(innerR, CORE_R + 4), angleDeg);
+
+          return (
+            <line
+              key={`beat-sep-${b}`}
+              x1={outerPt.x}
+              y1={outerPt.y}
+              x2={innerPt.x}
+              y2={innerPt.y}
+              stroke="rgba(255,255,255,0.25)"
+              strokeWidth="1.5"
+              strokeDasharray="4 2"
+              style={{ pointerEvents: 'none' }}
+            />
+          );
+        })}
+
+        {/* Beat number labels around the outside */}
+        {beatBoundaries.map((globalIdx, b) => {
+          const midStepIdx = globalIdx + beats[b].length / 2;
+          const angleDeg = (midStepIdx / totalSteps) * 360;
+          const labelR = SIZE / 2 - 2;
+          const pt = polarToXY(cx, cy, labelR, angleDeg);
+
+          return (
+            <text
+              key={`beat-label-${b}`}
+              x={pt.x}
+              y={pt.y}
+              textAnchor="middle"
+              dominantBaseline="central"
+              className="fill-primary/70"
+              style={{ fontSize: '11px', fontWeight: 'bold', fontFamily: 'monospace', pointerEvents: 'none' }}
+            >
+              {b + 1}
+            </text>
+          );
+        })}
+
+        {/* Playhead glow line across all rings */}
+        {currentStep >= 0 && currentStep < totalSteps && (() => {
+          const midDeg = ((currentStep + 0.5) / totalSteps) * 360;
+          const outerR = SIZE / 2 - 12;
+          const innerR = SIZE / 2 - 12 - instruments.length * (RING_W + RING_GAP) + RING_GAP;
+          const outerPt = polarToXY(cx, cy, outerR + 2, midDeg);
+          const innerPt = polarToXY(cx, cy, Math.max(innerR, CORE_R + 2), midDeg);
+          return (
+            <line
+              x1={outerPt.x}
+              y1={outerPt.y}
+              x2={innerPt.x}
+              y2={innerPt.y}
+              stroke="rgba(226,168,50,0.6)"
+              strokeWidth="2"
+              style={{ pointerEvents: 'none', filter: 'drop-shadow(0 0 4px rgba(226,168,50,0.4))' }}
+            />
+          );
+        })()}
+
+        {/* Core circle with vinyl grooves */}
+        <circle cx={cx} cy={cy} r={CORE_R} fill="rgba(22,33,62,0.6)" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+        {[CORE_R * 0.4, CORE_R * 0.6, CORE_R * 0.8].map((gr, i) => (
+          <circle key={`groove-${i}`} cx={cx} cy={cy} r={gr} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" />
+        ))}
+        <text
+          x={cx}
+          y={cy}
+          textAnchor="middle"
+          dominantBaseline="central"
+          className="fill-primary/60"
+          style={{ fontSize: '14px', fontWeight: 'bold', fontFamily: 'serif', letterSpacing: '2px' }}
+        >
+          RC
+        </text>
+      </svg>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Sequencer page (default export)
 // ---------------------------------------------------------------------------
+
+type ViewMode = 'circles' | 'radial';
 
 export default function Sequencer() {
   usePracticeTracker('sequencer');
@@ -221,7 +586,7 @@ export default function Sequencer() {
     playPreview,
   } = useAudioEngine();
 
-  const [measures, setMeasures] = useState(1);
+  const [viewMode, setViewMode] = useState<ViewMode>('circles');
 
   const instruments = KIT_INSTRUMENTS[store.selectedKit];
 
@@ -234,20 +599,39 @@ export default function Sequencer() {
   }
 
   // Handle start / play
-  const handleStart = async () => {
+  const handleStart = useCallback(async () => {
     if (!isInitialized) {
       await startEngine();
     }
     togglePlayback();
-  };
+  }, [isInitialized, startEngine, togglePlayback]);
 
-  // Handle slice click
+  // Handle slice click (circles view)
   const handleSliceClick = useCallback(
     (beatIndex: number, sliceIndex: number) => {
       store.toggleHit(beatIndex, sliceIndex);
-      if (store.beats[beatIndex][sliceIndex]?.instrument !== store.selectedInstrument) {
-        // We just placed a hit; preview the sound
-        playPreview(store.selectedInstrument);
+      // Preview the sound when placing a hit
+      const sliceAfter = useSequencerStore.getState().beats[beatIndex][sliceIndex];
+      if (sliceAfter?.instrument) {
+        playPreview(sliceAfter.instrument);
+      }
+    },
+    [store, playPreview]
+  );
+
+  // Handle slice click (radial view) - needs to set instrument first
+  const handleRadialSliceClick = useCallback(
+    (beatIndex: number, sliceIndex: number, instrument: string) => {
+      const currentSlice = store.beats[beatIndex]?.[sliceIndex];
+      if (currentSlice?.instrument === instrument) {
+        // Remove the hit - set instrument to match so toggleHit removes it
+        store.setSelectedInstrument(instrument as Instrument);
+        store.toggleHit(beatIndex, sliceIndex);
+      } else {
+        // Place hit for this specific instrument
+        store.setSelectedInstrument(instrument as Instrument);
+        store.toggleHit(beatIndex, sliceIndex);
+        playPreview(instrument as Instrument);
       }
     },
     [store, playPreview]
@@ -267,6 +651,66 @@ export default function Sequencer() {
       store.setTimeSignature(newNum, store.timeSignature.denominator);
     }
   };
+
+  // Load a groove preset
+  const loadPreset = useCallback((preset: GroovePreset) => {
+    store.setSelectedKit(preset.kit);
+    store.setBpm(preset.bpm);
+    store.setTimeSignature(preset.timeSig[0], preset.timeSig[1]);
+
+    // Need to wait for time signature to take effect, then set subdivisions and pattern
+    setTimeout(() => {
+      const s = useSequencerStore.getState();
+      for (let b = 0; b < preset.subdivisions.length; b++) {
+        s.setSubdivision(b, preset.subdivisions[b]);
+      }
+
+      // Clear and set pattern
+      setTimeout(() => {
+        const s2 = useSequencerStore.getState();
+        s2.clearAll();
+
+        setTimeout(() => {
+          for (let b = 0; b < preset.pattern.length; b++) {
+            for (let sl = 0; sl < preset.pattern[b].length; sl++) {
+              const inst = preset.pattern[b][sl];
+              if (inst) {
+                const s3 = useSequencerStore.getState();
+                s3.setSelectedInstrument(inst as Instrument);
+                s3.toggleHit(b, sl);
+              }
+            }
+          }
+        }, 10);
+      }, 10);
+    }, 10);
+  }, [store]);
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement)?.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+
+      // Space = play/stop
+      if (e.code === 'Space') {
+        e.preventDefault();
+        handleStart();
+        return;
+      }
+
+      const key = e.key.toLowerCase();
+      const instrument = KEY_TO_INSTRUMENT[key];
+      if (instrument) {
+        e.preventDefault();
+        store.setSelectedInstrument(instrument);
+        playPreview(instrument);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [handleStart, store, playPreview]);
 
   // MIDI export
   const exportMidi = () => {
@@ -321,12 +765,49 @@ export default function Sequencer() {
   return (
     <div className="flex flex-col h-[calc(100vh-144px)] max-w-7xl mx-auto w-full">
       {/* ---- Header ---- */}
-      <div className="px-4 md:px-6 pt-4 md:pt-6 flex items-center justify-between">
+      <div className="px-4 md:px-6 pt-4 md:pt-6 flex items-center justify-between flex-wrap gap-2">
         <h2 className="font-serif text-2xl md:text-3xl">Rhythm Circles</h2>
-        <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground">
-          <span className="hidden md:inline opacity-60">
-            Q/W/E/R/T = instruments | Space = play
-          </span>
+
+        <div className="flex items-center gap-3">
+          {/* Preset selector */}
+          <Select onValueChange={(v) => loadPreset(GROOVE_PRESETS[parseInt(v)])}>
+            <SelectTrigger className="w-[180px] h-8 text-xs font-mono">
+              <SelectValue placeholder="Load Groove..." />
+            </SelectTrigger>
+            <SelectContent>
+              {GROOVE_PRESETS.map((p, i) => (
+                <SelectItem key={i} value={i.toString()} className="text-xs font-mono">
+                  {p.name} ({p.bpm} BPM)
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          {/* View mode toggle */}
+          <div className="flex items-center bg-muted rounded-lg p-0.5">
+            <button
+              onClick={() => setViewMode('circles')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-mono transition-all ${
+                viewMode === 'circles'
+                  ? 'bg-card text-foreground shadow-sm'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              <Circle className="w-3.5 h-3.5" />
+              Circles
+            </button>
+            <button
+              onClick={() => setViewMode('radial')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-mono transition-all ${
+                viewMode === 'radial'
+                  ? 'bg-card text-foreground shadow-sm'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              <Disc className="w-3.5 h-3.5" />
+              Radial
+            </button>
+          </div>
         </div>
       </div>
 
@@ -369,26 +850,67 @@ export default function Sequencer() {
           </div>
         </div>
 
-        {/* ---- Pizza Row ---- */}
+        {/* ---- Sequencer View ---- */}
         <div className="bg-card border border-border rounded-xl shadow-md p-4 md:p-6 overflow-x-auto vinyl-texture">
-          <div
-            className="flex items-start justify-center gap-3 md:gap-5 min-w-min mx-auto"
-            style={{ maxWidth: '100%' }}
-          >
+          {viewMode === 'circles' ? (
+            /* Circles view: horizontal row of pizza beats */
+            <div
+              className="flex items-start justify-center gap-3 md:gap-5 min-w-min mx-auto"
+              style={{ maxWidth: '100%' }}
+            >
+              {store.beats.map((beatSlices, b) => (
+                <PizzaBeat
+                  key={b}
+                  beatIndex={b}
+                  slices={beatSlices}
+                  subdivisionCount={beatSlices.length}
+                  currentStep={store.currentStep}
+                  globalStartIndex={globalStartIndices[b]}
+                  onSliceClick={handleSliceClick}
+                  size={pizzaSize}
+                />
+              ))}
+            </div>
+          ) : (
+            /* Radial view: concentric rings */
+            <RadialView
+              instruments={instruments}
+              beats={store.beats}
+              subdivisions={store.subdivisions}
+              currentStep={store.currentStep}
+              onSliceClick={handleRadialSliceClick}
+            />
+          )}
+        </div>
+
+        {/* ---- Subdivision selectors (for radial view) ---- */}
+        {viewMode === 'radial' && (
+          <div className="flex items-center justify-center gap-3 flex-wrap">
             {store.beats.map((beatSlices, b) => (
-              <PizzaBeat
-                key={b}
-                beatIndex={b}
-                slices={beatSlices}
-                subdivisionCount={beatSlices.length}
-                currentStep={store.currentStep}
-                globalStartIndex={globalStartIndices[b]}
-                onSliceClick={handleSliceClick}
-                size={pizzaSize}
-              />
+              <div key={b} className="flex items-center gap-1">
+                <span className="font-mono text-[10px] text-muted-foreground">Beat {b + 1}:</span>
+                <Select
+                  value={beatSlices.length.toString()}
+                  onValueChange={(v) => {
+                    const s = useSequencerStore.getState();
+                    s.setSubdivision(b, parseInt(v));
+                  }}
+                >
+                  <SelectTrigger className="w-14 h-6 text-[10px] px-1 font-mono">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {[2, 3, 4, 5, 6, 8].map((n) => (
+                      <SelectItem key={n} value={n.toString()} className="text-xs font-mono">
+                        /{n}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             ))}
           </div>
-        </div>
+        )}
 
         {/* ---- Instrument Palette ---- */}
         <div className="bg-card border border-border rounded-xl shadow-md p-3 md:p-4">
@@ -399,6 +921,7 @@ export default function Sequencer() {
             {instruments.map((inst) => {
               const color = INSTRUMENT_COLORS[inst] || '#888';
               const isSelected = store.selectedInstrument === inst;
+              const shortcut = INSTRUMENT_SHORTCUTS[inst];
               return (
                 <button
                   key={inst}
@@ -432,9 +955,36 @@ export default function Sequencer() {
                   <span className="whitespace-nowrap">
                     {INSTRUMENT_LABELS[inst]}
                   </span>
+                  {shortcut && (
+                    <span className="text-[9px] bg-muted rounded px-1 ml-auto opacity-60">
+                      {shortcut}
+                    </span>
+                  )}
                 </button>
               );
             })}
+          </div>
+
+          {/* Keyboard shortcut legend */}
+          <div className="mt-3 pt-3 border-t border-border/50">
+            <p className="text-[9px] uppercase font-bold text-muted-foreground tracking-widest mb-1.5 font-mono">
+              Keyboard Shortcuts
+            </p>
+            <div className="flex flex-wrap gap-x-4 gap-y-1 text-[10px] font-mono text-muted-foreground/70">
+              <span><kbd className="bg-muted px-1 rounded text-foreground/60">K</kbd> Kick</span>
+              <span><kbd className="bg-muted px-1 rounded text-foreground/60">S</kbd> Snare</span>
+              <span><kbd className="bg-muted px-1 rounded text-foreground/60">H</kbd> HH Closed</span>
+              <span><kbd className="bg-muted px-1 rounded text-foreground/60">O</kbd> HH Open</span>
+              <span><kbd className="bg-muted px-1 rounded text-foreground/60">R</kbd> Ride</span>
+              <span><kbd className="bg-muted px-1 rounded text-foreground/60">C</kbd> Crash</span>
+              <span><kbd className="bg-muted px-1 rounded text-foreground/60">1</kbd> Tom Hi</span>
+              <span><kbd className="bg-muted px-1 rounded text-foreground/60">2</kbd> Tom Mid</span>
+              <span><kbd className="bg-muted px-1 rounded text-foreground/60">3</kbd> Tom Low</span>
+              <span><kbd className="bg-muted px-1 rounded text-foreground/60">B</kbd> Cowbell</span>
+              <span><kbd className="bg-muted px-1 rounded text-foreground/60">P</kbd> Clap</span>
+              <span><kbd className="bg-muted px-1 rounded text-foreground/60">X</kbd> X-Stick</span>
+              <span><kbd className="bg-muted px-1 rounded text-foreground/60">Space</kbd> Play/Stop</span>
+            </div>
           </div>
         </div>
       </div>
