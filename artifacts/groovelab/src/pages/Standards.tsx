@@ -231,11 +231,11 @@ export default function Standards() {
   const [chorusCount, setChorusCount] = useState(1);
 
   // Refs for instruments
-  const pianoRef = useRef<Tone.PolySynth | null>(null);
+  const pianoRef = useRef<Tone.Sampler | null>(null);
   const bassRef = useRef<Tone.MonoSynth | null>(null);
-  const rideRef = useRef<Tone.Synth | null>(null);
-  const hihatRef = useRef<Tone.Synth | null>(null);
-  const kickRef = useRef<Tone.Synth | null>(null);
+  const rideRef = useRef<Tone.MetalSynth | null>(null);
+  const hihatRef = useRef<Tone.MetalSynth | null>(null);
+  const kickRef = useRef<Tone.MembraneSynth | null>(null);
   const transportStartedRef = useRef(false);
   const isLoopingRef = useRef(false);
   const chartRef = useRef<HTMLDivElement>(null);
@@ -262,13 +262,19 @@ export default function Standards() {
 
       let matchStyle = true;
       if (styleFilter !== 'all') {
-        const ptype = s.progressionType?.toLowerCase() || '';
-        const tags = s.genre?.name?.toLowerCase() || '';
-        if (styleFilter === 'blues') matchStyle = ptype.includes('blues') || ptype.includes('12-bar');
-        else if (styleFilter === 'bossa') matchStyle = tags.includes('bossa') || tags.includes('latin');
-        else if (styleFilter === 'ballad') matchStyle = tags.includes('ballad');
-        else if (styleFilter === 'modal') matchStyle = tags.includes('modal');
-        else if (styleFilter === 'swing') matchStyle = tags.includes('swing') || tags.includes('jazz');
+        const name = s.name.toLowerCase();
+        const composer = (s.composer || '').toLowerCase();
+        const key = (s.keySignature || '').toLowerCase();
+        // Classify by standard name and known musical characteristics
+        const BLUES_STANDARDS = ['blues','c jam','freddie freeloader','now\'s the time','billie\'s bounce','blue monk','bags\' groove','straight no chaser','tenor madness','watermelon man','blue bossa','dig','oscar peterson blues','blues for alice'];
+        const BOSSA_STANDARDS = ['bossa','ipanema','wave','desafinado','corcovado','meditation','triste','how insensitive','quiet nights','one note samba','once i loved','black orpheus','estate','brazil'];
+        const BALLAD_STANDARDS = ['ballad','body and soul','misty','my funny valentine','round midnight','in a sentimental mood','lush life','darn that dream','my one and only','angel eyes','skylark','tenderly','prelude to a kiss','unforgettable','when i fall','nearness of you','star dust','emily','beautiful love','polka dots','never let me go','easy living','my foolish heart','here\'s that rainy day','but beautiful','everything happens','i fall in love','laura','lover man','smoke gets','willow weep','you don\'t know what love is','cry me a river'];
+        const MODAL_STANDARDS = ['modal','so what','impressions','maiden voyage','footprints','cantaloupe','naima','blue in green','milestones','nefertiti','inner urge','night dreamer','speak no evil','search for peace','passion dance','freedom jazz dance'];
+        if (styleFilter === 'blues') matchStyle = BLUES_STANDARDS.some(b => name.includes(b));
+        else if (styleFilter === 'bossa') matchStyle = BOSSA_STANDARDS.some(b => name.includes(b));
+        else if (styleFilter === 'ballad') matchStyle = BALLAD_STANDARDS.some(b => name.includes(b));
+        else if (styleFilter === 'modal') matchStyle = MODAL_STANDARDS.some(b => name.includes(b));
+        else if (styleFilter === 'swing') matchStyle = !BLUES_STANDARDS.some(b => name.includes(b)) && !BOSSA_STANDARDS.some(b => name.includes(b)) && !BALLAD_STANDARDS.some(b => name.includes(b)) && !MODAL_STANDARDS.some(b => name.includes(b));
       }
 
       return matchSearch && matchDifficulty && matchStyle;
@@ -352,6 +358,10 @@ export default function Standards() {
     }
   }, [currentBarIdx]);
 
+  // ── Sampler loading state ──────────────────────────────────────────────────────
+  const [samplerLoading, setSamplerLoading] = useState(false);
+  const [samplerReady, setSamplerReady] = useState(false);
+
   // ── Create instruments (once) ──────────────────────────────────────────────────
   const createInstruments = useCallback(() => {
     // Dispose any existing
@@ -361,42 +371,67 @@ export default function Standards() {
     hihatRef.current?.dispose();
     kickRef.current?.dispose();
 
-    // Piano comping - triangle wave for warm jazz tone
-    pianoRef.current = new Tone.PolySynth(Tone.Synth, {
-      oscillator: { type: 'triangle' },
-      envelope: { attack: 0.02, decay: 0.3, sustain: 0.2, release: 0.8 },
+    setSamplerLoading(true);
+
+    // Salamander Grand Piano sampler (hosted by Tone.js project)
+    // Uses multi-sampled real piano with velocity layers
+    const baseUrl = 'https://tonejs.github.io/audio/salamander/';
+    pianoRef.current = new Tone.Sampler({
+      urls: {
+        A1: 'A1.mp3', A2: 'A2.mp3', A3: 'A3.mp3', A4: 'A4.mp3', A5: 'A5.mp3',
+        C2: 'C2.mp3', C3: 'C3.mp3', C4: 'C4.mp3', C5: 'C5.mp3',
+        'D#2': 'Ds2.mp3', 'D#3': 'Ds3.mp3', 'D#4': 'Ds4.mp3',
+        'F#2': 'Fs2.mp3', 'F#3': 'Fs3.mp3', 'F#4': 'Fs4.mp3',
+      },
+      baseUrl,
+      release: 1.2,
+      volume: -8,
+      onload: () => {
+        setSamplerLoading(false);
+        setSamplerReady(true);
+      },
+    }).toDestination();
+
+    // Upright bass - deeper, warmer MonoSynth with envelope shaped like a plucked bass
+    bassRef.current = new Tone.MonoSynth({
+      oscillator: { type: 'fmsawtooth', modulationType: 'sine', modulationIndex: 0.8 },
+      filter: { type: 'lowpass', frequency: 600, Q: 2, rolloff: -24 },
+      envelope: { attack: 0.01, decay: 0.4, sustain: 0.3, release: 0.5 },
+      filterEnvelope: { attack: 0.01, decay: 0.15, sustain: 0.3, release: 0.4, baseFrequency: 150, octaves: 2.5 },
+      volume: -6,
+    }).toDestination();
+
+    // Jazz ride cymbal - metallic noise burst with long ring
+    rideRef.current = new Tone.MetalSynth({
+      harmonicity: 5.1,
+      modulationIndex: 16,
+      resonance: 3000,
+      octaves: 1.5,
+      envelope: { attack: 0.001, decay: 1.4, sustain: 0, release: 0.6 },
+      volume: -20,
+    }).toDestination();
+
+    // Jazz hihat / cross-stick - short metallic
+    hihatRef.current = new Tone.MetalSynth({
+      harmonicity: 5.1,
+      modulationIndex: 32,
+      resonance: 4000,
+      octaves: 1.5,
+      envelope: { attack: 0.001, decay: 0.08, sustain: 0, release: 0.05 },
+      volume: -24,
+    }).toDestination();
+
+    // Jazz kick - warm thump with MembraneSynth
+    kickRef.current = new Tone.MembraneSynth({
+      pitchDecay: 0.05,
+      octaves: 4,
+      oscillator: { type: 'sine' },
+      envelope: { attack: 0.001, decay: 0.2, sustain: 0, release: 0.2 },
       volume: -14,
     }).toDestination();
 
-    // Walking bass - sawtooth with low-pass filter
-    bassRef.current = new Tone.MonoSynth({
-      oscillator: { type: 'sawtooth' },
-      filter: { type: 'lowpass', frequency: 800, Q: 1 },
-      envelope: { attack: 0.01, decay: 0.2, sustain: 0.6, release: 0.3 },
-      filterEnvelope: { attack: 0.01, decay: 0.1, sustain: 0.5, release: 0.2, baseFrequency: 200, octaves: 2 },
-      volume: -10,
-    }).toDestination();
-
-    // Ride cymbal - high sine
-    rideRef.current = new Tone.Synth({
-      oscillator: { type: 'sine' },
-      envelope: { attack: 0.001, decay: 0.4, sustain: 0, release: 0.3 },
-      volume: -22,
-    }).toDestination();
-
-    // Hihat / cross-stick
-    hihatRef.current = new Tone.Synth({
-      oscillator: { type: 'square' },
-      envelope: { attack: 0.001, decay: 0.05, sustain: 0, release: 0.05 },
-      volume: -28,
-    }).toDestination();
-
-    // Kick (soft)
-    kickRef.current = new Tone.Synth({
-      oscillator: { type: 'sine' },
-      envelope: { attack: 0.001, decay: 0.15, sustain: 0, release: 0.1 },
-      volume: -18,
-    }).toDestination();
+    // If sampler doesn't load in 5s, fall back to ready state anyway
+    setTimeout(() => { setSamplerLoading(false); setSamplerReady(true); }, 5000);
   }, []);
 
   // ── Dispose instruments ────────────────────────────────────────────────────────
