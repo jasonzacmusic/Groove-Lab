@@ -22,7 +22,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   res.json({
     ...cp,
-    chords: cp.chords as Array<{ chord: string; beats: number; measure?: number }>,
+    chords: (cp.chords as Array<any>).map((c: any) => ({
+      chord: c.chord || c.symbol || '',
+      beats: c.beats || 4,
+      measure: c.measure ?? null,
+    })),
     timeSignature: ts ?? null,
     genre: genre ? { ...genre, parentGenreId: genre.parentGenreId ?? null } : null,
   });

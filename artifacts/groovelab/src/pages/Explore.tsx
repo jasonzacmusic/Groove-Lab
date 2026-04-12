@@ -341,7 +341,7 @@ function GrooveMatchPanel({ loopId, loopTitle, onClose, onMatchClick }: GrooveMa
 export default function Explore() {
   const [viewMode, setViewMode] = useState<'list' | 'map'>('list');
   const [search, setSearch] = useState('');
-  const [bpmRange, setBpmRange] = useState([60, 200]);
+  const [bpmRange, setBpmRange] = useState([40, 300]);
   const [selectedLoopId, setSelectedLoopId] = useState<string | null>(null);
   const [selectedLoopTitle, setSelectedLoopTitle] = useState('');
   const [genreFilter, setGenreFilter] = useState<string | null>(null);
@@ -406,10 +406,10 @@ export default function Explore() {
   );
 
   const { data: taxonomy, isLoading: isTaxonomyLoading } = useGetTaxonomy();
+  const bpmFilterActive = bpmRange[0] > 40 || bpmRange[1] < 300;
   const { data: loopsData, isLoading: isLoopsLoading } = useGetLoops({
     search: search || undefined,
-    bpmMin: bpmRange[0],
-    bpmMax: bpmRange[1]
+    ...(bpmFilterActive ? { bpmMin: bpmRange[0], bpmMax: bpmRange[1] } : {}),
   });
   const { data: genreMap } = useGetGenreMap();
 
@@ -586,7 +586,7 @@ export default function Explore() {
                     <Music className="w-12 h-12 mb-4 opacity-50" />
                     <h3 className="text-xl font-serif mb-2">No loops found</h3>
                     <p className="text-sm">Try broadening your search or adjusting filters.</p>
-                    <Button variant="outline" className="mt-4" onClick={() => { setSearch(''); setBpmRange([60, 200]); setGenreFilter(null); }}>
+                    <Button variant="outline" className="mt-4" onClick={() => { setSearch(''); setBpmRange([40, 300]); setGenreFilter(null); }}>
                       Clear Filters
                     </Button>
                   </div>
@@ -623,7 +623,7 @@ export default function Explore() {
                       <CardContent className="p-4">
                         <h4 className="font-medium text-lg truncate mb-2">{loop.title}</h4>
                         <div className="flex flex-wrap items-center gap-2 mb-3">
-                          <Badge variant="secondary" className="font-mono text-xs bg-primary/10 text-primary">{loop.bpm} BPM</Badge>
+                          {loop.bpm && <Badge variant="secondary" className="font-mono text-xs bg-primary/10 text-primary">{loop.bpm} BPM</Badge>}
                           {loop.timeSignatures?.[0] && <Badge variant="outline" className="font-mono text-xs">{loop.timeSignatures[0].displayName}</Badge>}
                           {loop.feels?.[0] && <Badge variant="outline" className="text-[10px]">{loop.feels[0].name}</Badge>}
                         </div>
