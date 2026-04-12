@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'wouter';
-import { Compass, Music, Cpu, Piano, BookOpen, Radio, Target, Search, Sun, Moon, Play, Pause, Disc3, Timer, LogOut, User, ListMusic, GraduationCap } from 'lucide-react';
+import { Compass, Music, Cpu, Piano, BookOpen, Radio, Target, Search, Sun, Moon, Play, Pause, Disc3, Timer, LogOut, User, ListMusic, GraduationCap, Headphones } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useAuth } from '@/context/AuthContext';
 import { usePlayer } from '@/context/PlayerContext';
@@ -18,6 +18,7 @@ import {
 
 const NAV_ITEMS = [
   { path: '/', label: 'Explore', icon: Compass },
+  { path: '/loop-library', label: 'Loop Library', icon: Headphones },
   { path: '/sequencer', label: 'Sequencer', icon: Music },
   { path: '/metronome', label: 'Metronome', icon: Timer },
   { path: '/midi', label: 'MIDI', icon: Cpu },

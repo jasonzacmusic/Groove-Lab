@@ -221,6 +221,48 @@ export const chordProgressions = pgTable("chord_progressions", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+// ── Audio Loops (Native CDN-hosted loops) ─────────────────────────────────────
+
+export const audioLoops = pgTable("audio_loops", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  title: text("title").notNull(),
+  artist: text("artist").notNull(),
+  collection: text("collection"),
+  grooveName: text("groove_name").notNull(),
+  instrumentCategory: text("instrument_category").notNull(),
+  genre: text("genre").notNull(),
+  subGenre: text("sub_genre"),
+  bpm: integer("bpm"),
+  bpmRangeLow: integer("bpm_range_low"),
+  bpmRangeHigh: integer("bpm_range_high"),
+  keySignature: text("key_signature"),
+  timeSignature: text("time_signature").default("4/4"),
+  feel: text("feel"),
+  intensity: text("intensity"),
+  sectionType: text("section_type"),
+  sectionNumber: integer("section_number"),
+  hasKick: boolean("has_kick").default(false),
+  hasSnare: boolean("has_snare").default(false),
+  hasHihat: boolean("has_hihat").default(false),
+  hasToms: boolean("has_toms").default(false),
+  hasCymbals: boolean("has_cymbals").default(false),
+  hasPercussion: boolean("has_percussion").default(false),
+  isMultitrack: boolean("is_multitrack").default(false),
+  stems: jsonb("stems").default([]),
+  wavUrl: text("wav_url").notNull(),
+  previewUrl: text("preview_url"),
+  waveformPeaks: jsonb("waveform_peaks"),
+  durationSeconds: decimal("duration_seconds", { precision: 10, scale: 2 }),
+  fileSizeBytes: bigint("file_size_bytes", { mode: "number" }),
+  sampleRate: integer("sample_rate").default(44100),
+  bitDepth: integer("bit_depth").default(24),
+  downloadCount: integer("download_count").default(0),
+  playCount: integer("play_count").default(0),
+  tags: text("tags").array(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
 // ── Insert Schemas ────────────────────────────────────────────────────────────
 
 export const insertLoopSchema = createInsertSchema(loops).omit({
@@ -252,3 +294,13 @@ export const insertPracticeLogSchema = createInsertSchema(practiceLogs).omit({
 });
 export type InsertPracticeLog = z.infer<typeof insertPracticeLogSchema>;
 export type PracticeLog = typeof practiceLogs.$inferSelect;
+
+export const insertAudioLoopSchema = createInsertSchema(audioLoops).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+  downloadCount: true,
+  playCount: true,
+});
+export type InsertAudioLoop = z.infer<typeof insertAudioLoopSchema>;
+export type AudioLoop = typeof audioLoops.$inferSelect;
