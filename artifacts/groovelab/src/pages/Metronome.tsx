@@ -61,6 +61,31 @@ const SUBDIVISION_COUNTS: Record<Subdivision, number> = {
   none: 1, '8th': 2, '16th': 4, triplet: 3, quintuplet: 5, septuplet: 7,
 };
 
+const TEMPO_PRESETS = [
+  { label: 'Largo', bpm: 50 },
+  { label: 'Adagio', bpm: 72 },
+  { label: 'Andante', bpm: 92 },
+  { label: 'Moderato', bpm: 108 },
+  { label: 'Allegro', bpm: 132 },
+  { label: 'Vivace', bpm: 168 },
+  { label: 'Presto', bpm: 190 },
+];
+
+const METRONOME_PRESETS = [
+  { name: 'Basic 4/4', bpm: 120, timeSig: [4, 4] as [number, number], subdivision: 'none' as Subdivision, swing: 0, accents: ['f','mf','mf','mf'] as AccentLevel[] },
+  { name: 'Waltz 3/4', bpm: 108, timeSig: [3, 4] as [number, number], subdivision: 'none' as Subdivision, swing: 0, accents: ['f','p','p'] as AccentLevel[] },
+  { name: 'Jazz Swing', bpm: 140, timeSig: [4, 4] as [number, number], subdivision: 'triplet' as Subdivision, swing: 40, accents: ['f','mf','mf','mf'] as AccentLevel[] },
+  { name: 'March 2/4', bpm: 120, timeSig: [2, 4] as [number, number], subdivision: 'none' as Subdivision, swing: 0, accents: ['f','mf'] as AccentLevel[] },
+  { name: '6/8 Compound', bpm: 80, timeSig: [6, 8] as [number, number], subdivision: 'none' as Subdivision, swing: 0, accents: ['f','p','p','mf','p','p'] as AccentLevel[] },
+  { name: '5/4 Odd Meter', bpm: 160, timeSig: [5, 4] as [number, number], subdivision: 'none' as Subdivision, swing: 0, accents: ['f','mf','mf','mf','mf'] as AccentLevel[] },
+  { name: '7/8 Balkan', bpm: 140, timeSig: [7, 8] as [number, number], subdivision: 'none' as Subdivision, swing: 0, accents: ['f','mf','mf','mf','p','mf','p'] as AccentLevel[] },
+  { name: 'Blues Shuffle', bpm: 100, timeSig: [4, 4] as [number, number], subdivision: 'triplet' as Subdivision, swing: 60, accents: ['f','mf','mf','mf'] as AccentLevel[] },
+  { name: 'Bossa 2-feel', bpm: 130, timeSig: [4, 4] as [number, number], subdivision: '8th' as Subdivision, swing: 0, accents: ['f','p','mf','p'] as AccentLevel[] },
+  { name: 'Fast Bebop', bpm: 220, timeSig: [4, 4] as [number, number], subdivision: 'none' as Subdivision, swing: 30, accents: ['f','p','mf','p'] as AccentLevel[] },
+  { name: '12/8 Slow Blues', bpm: 60, timeSig: [12, 8] as [number, number], subdivision: 'none' as Subdivision, swing: 0, accents: ['f','p','p','mf','p','p','mf','p','p','mf','p','p'] as AccentLevel[] },
+  { name: 'Samba', bpm: 100, timeSig: [2, 4] as [number, number], subdivision: '16th' as Subdivision, swing: 0, accents: ['f','mf'] as AccentLevel[] },
+];
+
 function buildAccents(numerator: number): AccentLevel[] {
   return Array.from({ length: numerator }, (_, i) => (i === 0 ? 'f' : 'mf'));
 }
@@ -128,11 +153,17 @@ export default function Metronome() {
   const [rampStartBpm, setRampStartBpm] = useState(80);
   const [rampEndBpm, setRampEndBpm] = useState(160);
   const [rampDurationBars, setRampDurationBars] = useState(8);
+  const [rampLooping, setRampLooping] = useState(false);
+  const [rampProgress, setRampProgress] = useState<{ bar: number; currentBpm: number } | null>(null);
 
   // --- Trainer state ---
   const [trainerPlay, setTrainerPlay] = useState(2);
   const [trainerMute, setTrainerMute] = useState(2);
   const [isTrainerMode, setIsTrainerMode] = useState(false);
+  const [trainerPhase, setTrainerPhase] = useState<'playing' | 'muted'>('playing');
+
+  // --- Bar counter ---
+  const [barCount, setBarCount] = useState(0);
 
   // --- Practice timer ---
   const [practiceSeconds, setPracticeSeconds] = useState(0);
@@ -163,6 +194,8 @@ export default function Metronome() {
   const isTrainerModeRef = useRef(isTrainerMode);
   const trainerPlayRef = useRef(trainerPlay);
   const trainerMuteRef = useRef(trainerMute);
+  const rampLoopingRef = useRef(rampLooping);
+  const isRampingRef = useRef(isRamping);
 
   // Keep refs in sync
   useEffect(() => { accentsRef.current = accents; }, [accents]);
@@ -174,6 +207,8 @@ export default function Metronome() {
   useEffect(() => { isTrainerModeRef.current = isTrainerMode; }, [isTrainerMode]);
   useEffect(() => { trainerPlayRef.current = trainerPlay; }, [trainerPlay]);
   useEffect(() => { trainerMuteRef.current = trainerMute; }, [trainerMute]);
+  useEffect(() => { rampLoopingRef.current = rampLooping; }, [rampLooping]);
+  useEffect(() => { isRampingRef.current = isRamping; }, [isRamping]);
 
   // Sync accents when numerator changes
   useEffect(() => {
@@ -189,7 +224,7 @@ export default function Metronome() {
     });
   }, [timeSignature.numerator]);
 
-  // --- Create / recreate synth ---
+  // --- Pre-create synth pool for instant playback ---
   const ensureSynth = useCallback(() => {
     if (synthRef.current) {
       synthRef.current.dispose();
@@ -199,7 +234,16 @@ export default function Metronome() {
       oscillator: { type: beatSoundRef.current === 'cowbell' ? 'square' : 'sine' },
       envelope: env as any,
     }).toDestination();
+    // Warm up the synth with a silent trigger to avoid first-note latency
+    synthRef.current.triggerAttackRelease(1, '128n', Tone.now(), 0);
   }, []);
+
+  // Pre-init synth on first Tone.start so it's ready instantly
+  useEffect(() => {
+    if (toneStarted && !synthRef.current) {
+      ensureSynth();
+    }
+  }, [toneStarted, ensureSynth]);
 
   // --- Play a click ---
   const playClick = useCallback(
@@ -233,6 +277,12 @@ export default function Metronome() {
         const barInCycle = barCountRef.current % totalCycle;
         muted = barInCycle >= trainerPlayRef.current;
         trainerMutedRef.current = muted;
+        if (beat === 0) {
+          const phase = muted ? 'muted' as const : 'playing' as const;
+          Tone.Draw.schedule(() => {
+            setTrainerPhase(phase);
+          }, time);
+        }
       }
 
       // Main beat
@@ -264,11 +314,48 @@ export default function Metronome() {
       beatRef.current = (beat + 1) % ts.numerator;
       if (beatRef.current === 0) {
         barCountRef.current++;
+        const bc = barCountRef.current;
+        Tone.Draw.schedule(() => {
+          setBarCount(bc);
+        }, time);
       }
     }, `${timeSignatureRef.current.denominator}n`);
 
     scheduleIdRef.current = id;
   }, [playClick]);
+
+  // --- Ramp cycle helper ---
+  const startRampCycle = useCallback((transport: ReturnType<typeof Tone.getTransport>, startBpm: number, endBpm: number, durationBars: number, numerator: number) => {
+    const totalBeats = durationBars * numerator;
+    const beatDuration = 60 / startBpm;
+    const totalTime = totalBeats * beatDuration;
+    transport.bpm.value = startBpm;
+    setBpm(startBpm);
+    transport.bpm.rampTo(endBpm, totalTime);
+    setRampProgress({ bar: 1, currentBpm: startBpm });
+
+    const startTime = Date.now();
+    if (rampIntervalRef.current) clearInterval(rampIntervalRef.current);
+    rampIntervalRef.current = window.setInterval(() => {
+      const elapsed = (Date.now() - startTime) / 1000;
+      const progress = Math.min(elapsed / totalTime, 1);
+      const currentBpmVal = startBpm + (endBpm - startBpm) * progress;
+      const currentBar = Math.min(Math.floor(progress * durationBars) + 1, durationBars);
+      setBpm(Math.round(currentBpmVal));
+      setRampProgress({ bar: currentBar, currentBpm: Math.round(currentBpmVal) });
+      if (progress >= 1) {
+        if (rampIntervalRef.current) clearInterval(rampIntervalRef.current);
+        if (rampLoopingRef.current) {
+          // Restart
+          startRampCycle(transport, startBpm, endBpm, durationBars, numerator);
+        } else {
+          setBpm(endBpm);
+          setIsRamping(false);
+          setRampProgress(null);
+        }
+      }
+    }, 200);
+  }, []);
 
   // --- Start / Stop ---
   const startMetronome = useCallback(async () => {
@@ -290,7 +377,9 @@ export default function Metronome() {
 
     scheduleLoop();
 
-    transport.start('+0.05');
+    // Start with minimal lookahead for instant playback
+    Tone.getContext().lookAhead = 0.01;
+    transport.start('+0.01');
     setIsPlaying(true);
     setPracticeSeconds(0);
 
@@ -300,27 +389,10 @@ export default function Metronome() {
     }, 1000);
 
     // Ramp logic
-    if (isRamping) {
-      const totalBeats = rampDurationBars * timeSignature.numerator;
-      const beatDuration = 60 / rampStartBpm;
-      const totalTime = totalBeats * beatDuration;
-      transport.bpm.value = rampStartBpm;
-      setBpm(rampStartBpm);
-      transport.bpm.rampTo(rampEndBpm, totalTime);
-      // Track ramp progress
-      const startTime = Date.now();
-      rampIntervalRef.current = window.setInterval(() => {
-        const elapsed = (Date.now() - startTime) / 1000;
-        const progress = Math.min(elapsed / totalTime, 1);
-        const currentBpmVal = rampStartBpm + (rampEndBpm - rampStartBpm) * progress;
-        setBpm(Math.round(currentBpmVal));
-        if (progress >= 1) {
-          if (rampIntervalRef.current) clearInterval(rampIntervalRef.current);
-          setIsRamping(false);
-        }
-      }, 200);
+    if (isRampingRef.current) {
+      startRampCycle(transport, rampStartBpm, rampEndBpm, rampDurationBars, timeSignature.numerator);
     }
-  }, [bpm, toneStarted, ensureSynth, scheduleLoop, timeSignature, isRamping, rampStartBpm, rampEndBpm, rampDurationBars]);
+  }, [bpm, toneStarted, ensureSynth, scheduleLoop, timeSignature, rampStartBpm, rampEndBpm, rampDurationBars, startRampCycle]);
 
   const stopMetronome = useCallback(() => {
     const transport = Tone.getTransport();
@@ -339,6 +411,9 @@ export default function Metronome() {
     }
     setIsPlaying(false);
     setCurrentBeat(-1);
+    setBarCount(0);
+    setRampProgress(null);
+    setTrainerPhase('playing');
   }, []);
 
   const togglePlay = useCallback(() => {
@@ -388,6 +463,56 @@ export default function Metronome() {
     };
   }, []);
 
+  // --- Tap tempo ---
+  const [tapInfo, setTapInfo] = useState<{ count: number; avgBpm: number | null }>({ count: 0, avgBpm: null });
+  const tapResetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleTapTempo = useCallback(async () => {
+    if (!toneStarted) {
+      await Tone.start();
+      setToneStarted(true);
+    }
+    // Play a click on each tap for feedback
+    if (synthRef.current) {
+      try {
+        const freqs = SOUND_FREQS[beatSoundRef.current];
+        synthRef.current.triggerAttackRelease(freqs.accent, '32n', Tone.now(), 0.5);
+      } catch {}
+    }
+
+    const now = performance.now();
+    const taps = tapTimesRef.current;
+    // Reset if more than 2.5 seconds since last tap
+    if (taps.length > 0 && now - taps[taps.length - 1] > 2500) {
+      tapTimesRef.current = [now];
+      setTapInfo({ count: 1, avgBpm: null });
+      return;
+    }
+    taps.push(now);
+    if (taps.length > 12) taps.shift(); // keep last 12 taps for better averaging
+
+    // Auto-clear tap display after 3 seconds of no taps
+    if (tapResetTimerRef.current) clearTimeout(tapResetTimerRef.current);
+    tapResetTimerRef.current = setTimeout(() => {
+      setTapInfo({ count: 0, avgBpm: null });
+    }, 3000);
+
+    if (taps.length >= 2) {
+      const intervals: number[] = [];
+      for (let i = 1; i < taps.length; i++) {
+        intervals.push(taps[i] - taps[i - 1]);
+      }
+      const avg = intervals.reduce((a, b) => a + b, 0) / intervals.length;
+      const tapBpm = Math.round(60000 / avg);
+      if (tapBpm >= 20 && tapBpm <= 300) {
+        setBpm(tapBpm);
+        setTapInfo({ count: taps.length, avgBpm: tapBpm });
+      }
+    } else {
+      setTapInfo({ count: 1, avgBpm: null });
+    }
+  }, [toneStarted]);
+
   // --- Keyboard shortcuts ---
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -401,39 +526,23 @@ export default function Metronome() {
       } else if (e.code === 'ArrowDown') {
         e.preventDefault();
         setBpm((b) => Math.max(20, b - 1));
+      } else if (e.key === 't' || e.key === 'T') {
+        handleTapTempo();
+      } else if (e.key === 'r' || e.key === 'R') {
+        setSwing(0);
+      } else if (e.code === 'Escape') {
+        stopMetronome();
+      } else if (e.key === '[') {
+        e.preventDefault();
+        setBpm((b) => Math.max(20, b - 5));
+      } else if (e.key === ']') {
+        e.preventDefault();
+        setBpm((b) => Math.min(300, b + 5));
       }
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [togglePlay]);
-
-  // --- Tap tempo ---
-  const handleTapTempo = useCallback(async () => {
-    if (!toneStarted) {
-      await Tone.start();
-      setToneStarted(true);
-    }
-    const now = performance.now();
-    const taps = tapTimesRef.current;
-    // Reset if more than 2 seconds since last tap
-    if (taps.length > 0 && now - taps[taps.length - 1] > 2000) {
-      tapTimesRef.current = [now];
-      return;
-    }
-    taps.push(now);
-    if (taps.length > 8) taps.shift();
-    if (taps.length >= 2) {
-      const intervals: number[] = [];
-      for (let i = 1; i < taps.length; i++) {
-        intervals.push(taps[i] - taps[i - 1]);
-      }
-      const avg = intervals.reduce((a, b) => a + b, 0) / intervals.length;
-      const tapBpm = Math.round(60000 / avg);
-      if (tapBpm >= 20 && tapBpm <= 300) {
-        setBpm(tapBpm);
-      }
-    }
-  }, [toneStarted]);
+  }, [togglePlay, handleTapTempo, stopMetronome]);
 
   // --- Accent cycling ---
   const cycleAccent = useCallback((index: number) => {
@@ -453,6 +562,16 @@ export default function Metronome() {
       return Math.max(20, Math.min(300, next));
     });
   }, []);
+
+  // --- Load metronome preset ---
+  const loadPreset = useCallback((preset: typeof METRONOME_PRESETS[0]) => {
+    if (isPlaying) stopMetronome();
+    setBpm(preset.bpm);
+    setTimeSignature({ numerator: preset.timeSig[0], denominator: preset.timeSig[1] });
+    setSubdivision(preset.subdivision);
+    setSwing(preset.swing);
+    setAccents(preset.accents);
+  }, [isPlaying, stopMetronome]);
 
   // --- Format time ---
   const formatTime = (secs: number) => {
@@ -487,6 +606,21 @@ export default function Metronome() {
         <p className="text-muted-foreground text-sm mt-1">
           Precision practice tool
         </p>
+        {/* Metronome Presets */}
+        <div className="mt-3">
+          <Select onValueChange={(v) => loadPreset(METRONOME_PRESETS[Number(v)])}>
+            <SelectTrigger className="w-56 mx-auto font-mono text-xs">
+              <SelectValue placeholder="Load Preset..." />
+            </SelectTrigger>
+            <SelectContent>
+              {METRONOME_PRESETS.map((p, i) => (
+                <SelectItem key={p.name} value={String(i)}>
+                  {p.name} ({p.bpm} BPM)
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       {/* ====== BPM DISPLAY ====== */}
@@ -563,8 +697,32 @@ export default function Metronome() {
               className="mt-4 font-mono text-sm tracking-wide border-primary/40 hover:bg-primary/10"
               onClick={handleTapTempo}
             >
-              TAP TEMPO
+              TAP TEMPO {tapInfo.count > 0 && <span className="ml-1 opacity-70">({tapInfo.count} taps{tapInfo.avgBpm ? ` = ${tapInfo.avgBpm}` : ''})</span>}
             </Button>
+            {tapInfo.count >= 2 && tapInfo.avgBpm && (
+              <p className="text-xs text-muted-foreground mt-1 font-mono">
+                Average of {tapInfo.count} taps: {tapInfo.avgBpm} BPM
+              </p>
+            )}
+
+            {/* Tempo Presets */}
+            <div className="mt-4 flex flex-wrap justify-center gap-1.5">
+              {TEMPO_PRESETS.map((p) => (
+                <button
+                  key={p.label}
+                  onClick={() => setBpm(p.bpm)}
+                  className={`
+                    px-2.5 py-1 rounded-full text-[10px] font-mono font-medium transition-colors
+                    ${Math.abs(bpm - p.bpm) < 5
+                      ? 'bg-primary text-primary-foreground'
+                      : 'bg-muted/50 text-muted-foreground hover:bg-muted'
+                    }
+                  `}
+                >
+                  {p.label} {p.bpm}
+                </button>
+              ))}
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -619,11 +777,23 @@ export default function Metronome() {
             })}
           </div>
 
+          {/* Bar counter */}
+          {isPlaying && (
+            <div className="text-center mt-3">
+              <span className="font-mono text-xs text-muted-foreground">Bar: </span>
+              <span className="font-mono text-sm font-bold text-foreground tabular-nums">{barCount + 1}</span>
+            </div>
+          )}
+
           {/* Trainer status */}
           {isTrainerMode && isPlaying && (
-            <div className="text-center mt-3">
-              <Badge variant={trainerMutedRef.current ? 'destructive' : 'secondary'} className="font-mono text-xs">
-                {trainerMutedRef.current ? 'MUTED' : 'PLAYING'}
+            <div className={`text-center mt-3 py-2 rounded-md transition-colors ${
+              trainerPhase === 'muted'
+                ? 'bg-destructive/15'
+                : 'bg-green-500/15'
+            }`}>
+              <Badge variant={trainerPhase === 'muted' ? 'destructive' : 'secondary'} className="font-mono text-sm px-4 py-1">
+                {trainerPhase === 'muted' ? 'MUTED' : 'PLAYING'}
               </Badge>
             </div>
           )}
@@ -837,13 +1007,59 @@ export default function Metronome() {
                   />
                 </div>
               </div>
+              {/* Loop Ramp checkbox */}
+              <div className="flex items-center gap-2 mb-3">
+                <input
+                  type="checkbox"
+                  id="ramp-loop"
+                  checked={rampLooping}
+                  onChange={(e) => setRampLooping(e.target.checked)}
+                  className="rounded border-border"
+                />
+                <label htmlFor="ramp-loop" className="text-[10px] text-muted-foreground uppercase tracking-wide">
+                  Loop Ramp
+                </label>
+              </div>
+              {/* Ramp progress indicator */}
+              {isRamping && rampProgress && (
+                <div className="mb-3 text-center">
+                  <p className="font-mono text-xs text-primary font-medium">
+                    Bar {rampProgress.bar}/{rampDurationBars} &mdash; {rampProgress.currentBpm} BPM &rarr; {rampEndBpm} BPM
+                  </p>
+                  <div className="mt-1.5 w-full bg-muted/30 rounded-full h-1.5 overflow-hidden">
+                    <div
+                      className="h-full bg-primary rounded-full transition-all duration-200"
+                      style={{ width: `${(rampProgress.bar / rampDurationBars) * 100}%` }}
+                    />
+                  </div>
+                </div>
+              )}
               <Button
-                variant={isRamping ? 'default' : 'outline'}
+                variant={isRamping ? 'destructive' : 'default'}
                 size="sm"
                 className="w-full font-mono text-xs"
-                onClick={() => setIsRamping(!isRamping)}
+                onClick={() => {
+                  if (isRamping) {
+                    // Stop ramp
+                    if (rampIntervalRef.current) clearInterval(rampIntervalRef.current);
+                    setIsRamping(false);
+                    isRampingRef.current = false;
+                    setRampProgress(null);
+                  } else {
+                    // Start ramp (immediately starts the metronome)
+                    setIsRamping(true);
+                    isRampingRef.current = true;
+                    if (!isPlaying) {
+                      startMetronome();
+                    } else {
+                      // Already playing, just start the ramp on the existing transport
+                      const transport = Tone.getTransport();
+                      startRampCycle(transport, rampStartBpm, rampEndBpm, rampDurationBars, timeSignature.numerator);
+                    }
+                  }
+                }}
               >
-                {isRamping ? 'Ramp Active' : 'Enable Ramp'}
+                {isRamping ? 'Stop Ramp' : 'Start Ramp'}
               </Button>
             </CardContent>
           </Card>
@@ -889,6 +1105,20 @@ export default function Metronome() {
               <p className="text-[10px] text-muted-foreground mt-2">
                 Alternates between audible and silent bars to test your internal pulse.
               </p>
+              <p className="text-[10px] text-muted-foreground mt-1 font-mono">
+                Cycle: Play {trainerPlay} &rarr; Mute {trainerMute} &rarr; Play {trainerPlay} &rarr; Mute {trainerMute}...
+              </p>
+              <div className="flex gap-0.5 mt-2">
+                {Array.from({ length: trainerPlay + trainerMute }).map((_, i) => (
+                  <div
+                    key={i}
+                    className={`h-3 flex-1 rounded-sm ${
+                      i < trainerPlay ? 'bg-green-500/60' : 'bg-destructive/40'
+                    }`}
+                    title={i < trainerPlay ? `Play bar ${i + 1}` : `Mute bar ${i - trainerPlay + 1}`}
+                  />
+                ))}
+              </div>
             </CardContent>
           </Card>
 
@@ -960,9 +1190,10 @@ export default function Metronome() {
       </div>
 
       {/* Keyboard hints */}
-      <p className="text-center text-[10px] text-muted-foreground/50 font-mono">
-        SPACE play/stop &middot; ARROWS +/- BPM
-      </p>
+      <div className="text-center text-[10px] text-muted-foreground/50 font-mono space-y-0.5">
+        <p>Space = Play/Stop | T = Tap Tempo | R = Reset Swing</p>
+        <p>&uarr;/&darr; = BPM &plusmn;1 | [/] = BPM &plusmn;5 | Esc = Stop</p>
+      </div>
     </div>
   );
 }
