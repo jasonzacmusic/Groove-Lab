@@ -953,44 +953,6 @@ export default function Standards() {
                 </Select>
               </div>
 
-              {/* Transposition compact */}
-              <div className="flex items-center gap-1.5">
-                <span className="text-[11px] text-[#b8a080] font-mono">Key:</span>
-                <Select
-                  value={String(transposition)}
-                  onValueChange={(val) => setTransposition(Number(val))}
-                >
-                  <SelectTrigger className="w-[100px] h-8 text-xs bg-[#2a2018] border-[#5a4a38] text-[#e8d5b5]">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {TRANSPOSITION_PRESETS.map(p => (
-                      <SelectItem key={p.label} value={String(p.semitones)}>
-                        {p.label.split(' \u2014 ')[0]}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-7 w-7 p-0 text-[#b8a080] hover:text-[#e8d5b5] hover:bg-[#5a4a38]"
-                  onClick={() => setTransposition(prev => ((prev - 1) + 12) % 12)}
-                >
-                  <ArrowDown className="w-3 h-3" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-7 w-7 p-0 text-[#b8a080] hover:text-[#e8d5b5] hover:bg-[#5a4a38]"
-                  onClick={() => setTransposition(prev => (prev + 1) % 12)}
-                >
-                  <ArrowUp className="w-3 h-3" />
-                </Button>
-              </div>
-
-              <div className="w-px h-6 bg-[#5a4a38] hidden md:block" />
-
               {/* Tempo */}
               <div className="flex items-center gap-1.5">
                 <Button
