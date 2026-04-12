@@ -175,7 +175,7 @@ export default function PlayAlong() {
           )}
           <div className="mt-4 p-3 bg-primary/5 border border-primary/20 rounded-lg">
             <p className="text-[11px] text-muted-foreground">
-              Cards with inline players show verified YouTube videos. Others open YouTube search in a new tab. Run the fetch script to add more inline videos.
+              Cards with the play icon embed verified YouTube videos inline. Others open YouTube search in a new tab.
             </p>
           </div>
         </div>
