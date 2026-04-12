@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { cors } from "../_lib/cors";
-import { db } from "@workspace/db";
-import { chordProgressions, timeSignatures, genres } from "@workspace/db";
+import { db } from "../_lib/db";
+import { chordProgressions, timeSignatures, genres } from "../_lib/db";
 import { eq, and } from "drizzle-orm";
 
 async function enrichChordProgression(cp: typeof chordProgressions.$inferSelect) {

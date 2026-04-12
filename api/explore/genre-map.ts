@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { cors } from "../_lib/cors";
-import { db } from "@workspace/db";
-import { genres, feels, loopGenres, loopFeels } from "@workspace/db";
+import { db } from "../_lib/db";
+import { genres, feels, loopGenres, loopFeels } from "../_lib/db";
 import { eq, sql } from "drizzle-orm";
 
 const GENRE_MAP_POSITIONS: Record<string, { x: number; y: number }> = {

@@ -1,8 +1,8 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { cors } from "../_lib/cors";
 import { enrichLoop } from "../_lib/enrich";
-import { db } from "@workspace/db";
-import { playlists, playlistItems, loops } from "@workspace/db";
+import { db } from "../_lib/db";
+import { playlists, playlistItems, loops } from "../_lib/db";
 import { eq, inArray, asc } from "drizzle-orm";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {

@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { cors } from "../../_lib/cors";
-import { db } from "@workspace/db";
-import { liveSessions } from "@workspace/db";
+import { db } from "../../_lib/db";
+import { liveSessions } from "../../_lib/db";
 import { eq } from "drizzle-orm";
 
 function generateRoomCode(): string {

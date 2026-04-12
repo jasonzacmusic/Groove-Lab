@@ -1,4 +1,4 @@
-import { db } from "@workspace/db";
+import { db } from "./db";
 import {
   loops,
   creators,
@@ -12,7 +12,7 @@ import {
   loopGenres,
   loopInstrumentTypes,
   loopContentTypes,
-} from "@workspace/db";
+} from "./db";
 import { eq } from "drizzle-orm";
 
 export async function enrichLoop(loop: typeof loops.$inferSelect) {

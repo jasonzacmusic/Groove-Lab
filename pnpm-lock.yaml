@@ -68,6 +68,19 @@ overrides:
 importers:
 
   .:
+    dependencies:
+      drizzle-orm:
+        specifier: ^0.45.1
+        version: 0.45.1(@types/pg@8.18.0)(pg@8.20.0)
+      drizzle-zod:
+        specifier: ^0.8.3
+        version: 0.8.3(drizzle-orm@0.45.1(@types/pg@8.18.0)(pg@8.20.0))(zod@3.25.76)
+      pg:
+        specifier: ^8.20.0
+        version: 8.20.0
+      zod:
+        specifier: ^3.25.76
+        version: 3.25.76
     devDependencies:
       '@vercel/node':
         specifier: ^5.7.4

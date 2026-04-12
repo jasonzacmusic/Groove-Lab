@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { cors } from "../../_lib/cors";
-import { db } from "@workspace/db";
-import { liveSessions, sessionParticipants } from "@workspace/db";
+import { db } from "../../_lib/db";
+import { liveSessions, sessionParticipants } from "../../_lib/db";
 import { eq, sql } from "drizzle-orm";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {

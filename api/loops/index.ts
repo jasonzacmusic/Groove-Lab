@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { cors } from "../_lib/cors";
 import { enrichLoop } from "../_lib/enrich";
-import { db } from "@workspace/db";
+import { db } from "../_lib/db";
 import {
   loops,
   loopTimeSignatures,
@@ -9,11 +9,11 @@ import {
   loopGenres,
   loopInstrumentTypes,
   loopContentTypes,
-} from "@workspace/db";
+} from "../_lib/db";
 import {
   GetLoopsQueryParams,
   CreateLoopBody,
-} from "@workspace/api-zod";
+} from "../_lib/api-zod";
 import { eq, and, gte, lte, sql, inArray, desc, asc } from "drizzle-orm";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
