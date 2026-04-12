@@ -890,7 +890,7 @@ export default function MidiPage() {
           {/* Header with metadata */}
           <div className="bg-muted p-4 border-b border-border flex items-center justify-between">
             <div>
-              <h3 className="font-medium text-lg text-foreground">{uploadedFile.name}</h3>
+              <h3 className="font-serif font-medium text-lg text-foreground">{uploadedFile.name}</h3>
               <div className="flex gap-2 mt-1 flex-wrap">
                 <Badge variant="secondary" className="font-mono text-xs bg-primary/10 text-primary">
                   {Math.round(bpm)} BPM

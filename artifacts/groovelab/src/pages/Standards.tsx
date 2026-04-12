@@ -1217,6 +1217,11 @@ export default function Standards() {
                   'Summertime': [{ id: 'aaRxHmUeQC4', title: 'Summertime - Jazz Backing Track' }],
                   'So What': [{ id: 'vRJfV4pG3Do', title: 'So What - Modal Jazz Backing Track' }],
                   'Misty': [{ id: 'L9PeqG9C5os', title: 'Misty - Ballad Backing Track' }],
+                  'All The Things You Are': [{ id: 'ylXk1LBvIqU', title: 'All The Things You Are - Jazz Backing Track' }],
+                  'Take Five': [{ id: 'vJnv4bHHxq4', title: 'Take Five (5/4) - Backing Track' }],
+                  'Giant Steps': [{ id: 'FsijyBivMgg', title: 'Giant Steps - Jazz Backing Track' }],
+                  'Stella By Starlight': [{ id: '7qvZpIKa5aA', title: 'Stella By Starlight - Jazz Backing Track' }],
+                  'There Will Never Be Another You': [{ id: 'kFLJ3OFbWe8', title: 'There Will Never Be Another You - Backing Track' }],
                 };
 
                 const name = selectedStandard.name;
@@ -1241,28 +1246,37 @@ export default function Standards() {
                       </div>
                     )}
 
-                    {/* Search link for all standards */}
-                    <a
-                      href={`https://www.youtube.com/results?search_query=${encodeURIComponent(name + ' backing track')}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-3 p-3 rounded-lg border border-border hover:border-primary/50 transition-colors group"
-                    >
-                      <div className="w-10 h-10 rounded-lg bg-red-600/15 border border-red-500/20 flex items-center justify-center flex-shrink-0 group-hover:bg-red-600/25 transition-colors">
-                        <svg viewBox="0 0 24 24" className="w-5 h-5 text-red-500" fill="currentColor">
-                          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                        </svg>
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
-                          Search YouTube for backing tracks
-                        </p>
-                        <p className="text-xs text-muted-foreground font-mono mt-0.5 truncate">
-                          "{name} backing track"
-                        </p>
-                      </div>
-                      <ExternalLink className="w-4 h-4 text-muted-foreground flex-shrink-0" />
-                    </a>
+                    {/* Embedded search-query fallback — uses curated query when available */}
+                    {(() => {
+                      const curatedQueries = CURATED_BACKING_QUERIES[name];
+                      const fallbackQuery = curatedQueries
+                        ? curatedQueries[0]
+                        : `${name} ${key} backing track jazz`;
+                      return (
+                        <div className="rounded-lg border border-border overflow-hidden">
+                          <div className="aspect-video bg-muted">
+                            <iframe
+                              src={`https://www.youtube-nocookie.com/embed?search_query=${encodeURIComponent(fallbackQuery)}`}
+                              className="w-full h-full"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
+                              title={`${name} backing track`}
+                            />
+                          </div>
+                          <div className="px-3 py-1.5 flex items-center justify-between bg-card">
+                            <p className="text-[10px] text-muted-foreground font-mono truncate mr-2">"{fallbackQuery}"</p>
+                            <a
+                              href={`https://www.youtube.com/results?search_query=${encodeURIComponent(fallbackQuery)}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex-shrink-0 flex items-center gap-1 text-[10px] text-red-500 hover:text-red-600 font-medium whitespace-nowrap"
+                            >
+                              <ExternalLink className="w-2.5 h-2.5" /> Open in YouTube
+                            </a>
+                          </div>
+                        </div>
+                      );
+                    })()}
                   </div>
                 );
               })()}

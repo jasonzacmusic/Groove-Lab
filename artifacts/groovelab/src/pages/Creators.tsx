@@ -76,7 +76,7 @@ export default function Creators() {
                       </AvatarFallback>
                     </Avatar>
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-medium text-base truncate group-hover:text-primary transition-colors">
+                      <h3 className="font-serif font-medium text-base truncate group-hover:text-primary transition-colors">
                         {creator.channelName}
                       </h3>
                       <div className="flex items-center gap-3 mt-1 text-xs text-muted-foreground">
