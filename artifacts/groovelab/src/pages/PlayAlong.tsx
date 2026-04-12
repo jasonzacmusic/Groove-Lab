@@ -98,12 +98,12 @@ export default function PlayAlong() {
 
     if (!isFiltered) {
       return [
-        { title: 'ABRSM Grade 1 Piano', queries: generateSearchQueries('ABRSM', 'Piano', 'Grade 1') },
-        { title: 'Trinity Grade 3 Guitar', queries: generateSearchQueries('Trinity', 'Guitar', 'Grade 3') },
-        { title: 'Rockschool Grade 2 Drums', queries: generateSearchQueries('Rockschool', 'Drums', 'Grade 2') },
-        { title: 'ABRSM Grade 5 Violin', queries: generateSearchQueries('ABRSM', 'Violin', 'Grade 5') },
-        { title: 'Trinity Grade 4 Saxophone', queries: generateSearchQueries('Trinity', 'Saxophone', 'Grade 4') },
-        { title: 'RCM Level 3 Piano', queries: generateSearchQueries('RCM', 'Piano', 'Level 3') },
+        { title: 'Piano — ABRSM Grade 3', queries: generateSearchQueries('ABRSM', 'Piano', 'Grade 3') },
+        { title: 'Guitar — Trinity Grade 3', queries: generateSearchQueries('Trinity', 'Guitar', 'Grade 3') },
+        { title: 'Drums — Rockschool Grade 2', queries: generateSearchQueries('Rockschool', 'Drums', 'Grade 2') },
+        { title: 'Violin — ABRSM Grade 5', queries: generateSearchQueries('ABRSM', 'Violin', 'Grade 5') },
+        { title: 'Flute — Trinity Grade 4', queries: generateSearchQueries('Trinity', 'Flute', 'Grade 4') },
+        { title: 'Trumpet — ABRSM Grade 4', queries: generateSearchQueries('ABRSM', 'Trumpet', 'Grade 4') },
       ];
     }
 
@@ -243,7 +243,7 @@ export default function PlayAlong() {
                   {entry.title}
                 </h4>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  {entry.queries.slice(0, 4).map((q, qi) => (
+                  {entry.queries.slice(0, isFiltered ? 4 : 1).map((q, qi) => (
                     <YouTubeSearchCard key={qi} query={q} title={`${entry.title} - ${qi + 1}`} />
                   ))}
                 </div>

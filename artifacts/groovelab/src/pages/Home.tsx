@@ -87,7 +87,7 @@ export default function Home() {
               <Card className="hover:border-primary/50 transition-all cursor-pointer h-full group">
                 <CardContent className="p-4 text-center">
                   <tool.icon className={`w-8 h-8 mx-auto mb-2 ${tool.color} group-hover:scale-110 transition-transform`} />
-                  <h3 className="font-medium text-sm">{tool.name}</h3>
+                  <h3 className="font-serif font-medium text-sm">{tool.name}</h3>
                   <p className="text-[10px] text-muted-foreground mt-1">{tool.desc}</p>
                 </CardContent>
               </Card>
