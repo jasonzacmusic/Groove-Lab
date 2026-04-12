@@ -1,0 +1,45 @@
+{
+  "site": {
+    "title": "GrooveLab — Music Education & Practice Platform",
+    "description": "Interactive music education platform for drummers and musicians. Beat sequencer, metronome, MIDI library, chord progressions, jazz standards, and live practice sessions.",
+    "keywords": ["music education", "drum loops", "beat sequencer", "metronome", "MIDI", "chord progressions", "jazz standards", "practice tools", "music practice", "drum practice", "Tone.js", "Web Audio"],
+    "author": "Nathaniel School of Music",
+    "url": "https://groovelab.nathanielschool.com",
+    "ogImage": "/logo.png",
+    "themeColor": "#e2a832"
+  },
+  "pages": {
+    "/": {
+      "title": "GrooveLab — Explore Loops & Grooves",
+      "description": "Discover drum loops, backing tracks, and play-along content organized by genre, feel, and time signature."
+    },
+    "/sequencer": {
+      "title": "The Pizza Lab — Beat Sequencer | GrooveLab",
+      "description": "Create beats with the circular pizza sequencer. 4 drum kits, any time signature, swing control, and MIDI export."
+    },
+    "/metronome": {
+      "title": "Pro Metronome | GrooveLab",
+      "description": "Professional metronome with accent patterns, subdivisions, polyrhythm mode, tempo ramp, and rhythm trainer."
+    },
+    "/midi": {
+      "title": "MIDI Library | GrooveLab",
+      "description": "Upload, visualize, and play MIDI files. Piano roll editor, track mixer, and loop surgery tools."
+    },
+    "/chords": {
+      "title": "Chord Lab — Progressions | GrooveLab",
+      "description": "Browse and play chord progressions. ii-V-I, blues, rhythm changes, and more with key transposition."
+    },
+    "/standards": {
+      "title": "The Real Book — Jazz Standards | GrooveLab",
+      "description": "99 jazz standards with chord charts, backing tracks, and key transposition for practice."
+    },
+    "/live": {
+      "title": "Live Sessions | GrooveLab",
+      "description": "Host synchronized practice sessions for your classroom. Share room codes and control playback in real-time."
+    },
+    "/explore": {
+      "title": "Explore Loops | GrooveLab",
+      "description": "Search and filter drum loops by BPM, time signature, feel, and genre. Interactive genre map visualization."
+    }
+  }
+}

@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import { Layout } from "@/components/Layout";
 import { AudioEngineProvider } from "@/context/AudioEngineContext";
+import { AuthProvider } from "@/context/AuthContext";
 import { ThemeProvider } from "next-themes";
 
 import Home from "@/pages/Home";
@@ -17,6 +18,8 @@ import Live from "@/pages/Live";
 import Practice from "@/pages/Practice";
 import Metronome from "@/pages/Metronome";
 import CreatorProfile from "@/pages/CreatorProfile";
+import Auth from "@/pages/Auth";
+import Playlists from "@/pages/Playlists";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -39,7 +42,9 @@ function Router() {
         <Route path="/standards" component={Standards} />
         <Route path="/live" component={Live} />
         <Route path="/metronome" component={Metronome} />
+        <Route path="/auth" component={Auth} />
         <Route path="/creators/:id" component={CreatorProfile} />
+        <Route path="/playlists" component={Playlists} />
         <Route path="/practice" component={Practice} />
         <Route component={NotFound} />
       </Switch>
@@ -52,11 +57,13 @@ function App() {
     <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
-          <AudioEngineProvider>
-            <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-              <Router />
-            </WouterRouter>
-          </AudioEngineProvider>
+          <AuthProvider>
+            <AudioEngineProvider>
+              <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+                <Router />
+              </WouterRouter>
+            </AudioEngineProvider>
+          </AuthProvider>
           <Toaster />
         </TooltipProvider>
       </QueryClientProvider>

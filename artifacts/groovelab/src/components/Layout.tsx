@@ -1,10 +1,19 @@
 import React from 'react';
 import { Link, useLocation } from 'wouter';
-import { Compass, Music, Cpu, Piano, BookOpen, Radio, Target, Search, Sun, Moon, Play, Pause, Disc3, Timer } from 'lucide-react';
+import { Compass, Music, Cpu, Piano, BookOpen, Radio, Target, Search, Sun, Moon, Play, Pause, Disc3, Timer, LogOut, User, ListMusic } from 'lucide-react';
 import { useTheme } from 'next-themes';
+import { useAuth } from '@/context/AuthContext';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 const NAV_ITEMS = [
   { path: '/', label: 'Explore', icon: Compass },
@@ -14,12 +23,14 @@ const NAV_ITEMS = [
   { path: '/chords', label: 'Chords', icon: Piano },
   { path: '/standards', label: 'Standards', icon: BookOpen },
   { path: '/live', label: 'Live', icon: Radio },
+  { path: '/playlists', label: 'Playlists', icon: ListMusic },
   { path: '/practice', label: 'Practice', icon: Target },
 ];
 
 export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [location] = useLocation();
+  const [location, navigate] = useLocation();
   const { theme, setTheme } = useTheme();
+  const { user, logout, isLoading } = useAuth();
   
   return (
     <div className="flex h-[100dvh] w-full bg-background overflow-hidden flex-col md:flex-row">
@@ -66,10 +77,51 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
             <Button variant="ghost" size="icon" onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
               {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </Button>
-            <Avatar className="w-8 h-8 cursor-pointer vinyl-texture">
-              <AvatarImage src="" />
-              <AvatarFallback>GL</AvatarFallback>
-            </Avatar>
+            {!isLoading && user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Avatar className="w-8 h-8 cursor-pointer vinyl-texture">
+                    <AvatarImage src="" />
+                    <AvatarFallback>
+                      {user.name
+                        ? user.name.slice(0, 2).toUpperCase()
+                        : user.email.slice(0, 2).toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col gap-1">
+                      {user.name && (
+                        <p className="text-sm font-medium">{user.name}</p>
+                      )}
+                      <p className="text-xs text-muted-foreground">
+                        {user.email}
+                      </p>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onClick={() => {
+                      logout();
+                    }}
+                    className="cursor-pointer"
+                  >
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Sign Out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : !isLoading ? (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => navigate("/auth")}
+                className="text-sm"
+              >
+                Sign In
+              </Button>
+            ) : null}
           </div>
         </header>
 

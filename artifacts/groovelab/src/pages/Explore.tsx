@@ -8,8 +8,10 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Slider } from '@/components/ui/slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Play, Music, Map as MapIcon, List, Search, X } from 'lucide-react';
+import { Play, Music, Map as MapIcon, List, Search, X, Heart } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { useAuth } from '@/context/AuthContext';
+import { useToast } from '@/hooks/use-toast';
 
 /* ------------------------------------------------------------------ */
 /*  Genre Map Component (SVG-based 2D interactive map)                */
@@ -343,6 +345,65 @@ export default function Explore() {
   const [selectedLoopId, setSelectedLoopId] = useState<string | null>(null);
   const [selectedLoopTitle, setSelectedLoopTitle] = useState('');
   const [genreFilter, setGenreFilter] = useState<string | null>(null);
+  const [favoritedIds, setFavoritedIds] = useState<Set<string>>(new Set());
+
+  const { user } = useAuth();
+  const { toast } = useToast();
+
+  // Fetch user's favorites on mount
+  useEffect(() => {
+    if (!user?.id) return;
+    fetch(`/api/favorites?userId=${user.id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setFavoritedIds(new Set(data.map((f: any) => f.loopId)));
+        }
+      })
+      .catch(() => {});
+  }, [user?.id]);
+
+  const toggleFavorite = useCallback(
+    async (e: React.MouseEvent, loopId: string) => {
+      e.stopPropagation();
+      if (!user?.id) {
+        toast({ title: 'Sign in to save favorites' });
+        return;
+      }
+      const isFavorited = favoritedIds.has(loopId);
+      // Optimistic update
+      setFavoritedIds((prev) => {
+        const next = new Set(prev);
+        if (isFavorited) next.delete(loopId);
+        else next.add(loopId);
+        return next;
+      });
+      try {
+        if (isFavorited) {
+          await fetch('/api/favorites', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId: user.id, loopId }),
+          });
+        } else {
+          await fetch('/api/favorites', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId: user.id, loopId }),
+          });
+        }
+      } catch {
+        // Revert on error
+        setFavoritedIds((prev) => {
+          const next = new Set(prev);
+          if (isFavorited) next.add(loopId);
+          else next.delete(loopId);
+          return next;
+        });
+      }
+    },
+    [user?.id, favoritedIds, toast]
+  );
 
   const { data: taxonomy, isLoading: isTaxonomyLoading } = useGetTaxonomy();
   const { data: loopsData, isLoading: isLoopsLoading } = useGetLoops({
@@ -547,6 +608,17 @@ export default function Explore() {
                         <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                           <Play className="w-12 h-12 text-white drop-shadow-md" fill="currentColor" />
                         </div>
+                        <button
+                          className="absolute top-2 right-2 z-10 p-1.5 rounded-full bg-black/50 hover:bg-black/70 transition-colors"
+                          onClick={(e) => toggleFavorite(e, loop.id)}
+                          aria-label={favoritedIds.has(loop.id) ? 'Remove from favorites' : 'Add to favorites'}
+                        >
+                          <Heart
+                            className={`w-4 h-4 transition-colors ${
+                              favoritedIds.has(loop.id) ? 'text-red-500 fill-red-500' : 'text-white'
+                            }`}
+                          />
+                        </button>
                       </div>
                       <CardContent className="p-4">
                         <h4 className="font-medium text-lg truncate mb-2">{loop.title}</h4>

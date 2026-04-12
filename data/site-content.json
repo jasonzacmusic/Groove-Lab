@@ -1,0 +1,74 @@
+{
+  "branding": {
+    "name": "GrooveLab",
+    "tagline": "Where Rhythm Meets Discovery",
+    "description": "An interactive music education platform designed for drummers, percussionists, and rhythm enthusiasts of all skill levels.",
+    "school": "Nathaniel School of Music",
+    "schoolUrl": "https://nathanielschool.com"
+  },
+  "features": [
+    {
+      "name": "The Pizza Lab",
+      "icon": "music",
+      "description": "A circular beat sequencer inspired by BeatScholar. Create patterns using pizza-slice subdivisions with 4 drum kits.",
+      "path": "/sequencer"
+    },
+    {
+      "name": "Pro Metronome",
+      "icon": "timer",
+      "description": "Professional-grade metronome with accent patterns, subdivisions, tempo ramp, rhythm trainer, and practice timer.",
+      "path": "/metronome"
+    },
+    {
+      "name": "MIDI Library",
+      "icon": "cpu",
+      "description": "Upload and visualize MIDI files with a piano roll editor. Play back with synthesized instruments, mute/solo tracks.",
+      "path": "/midi"
+    },
+    {
+      "name": "Chord Lab",
+      "icon": "piano",
+      "description": "Browse 143 chord progressions with playback and key transposition. From ii-V-I to 12-bar blues.",
+      "path": "/chords"
+    },
+    {
+      "name": "The Real Book",
+      "icon": "book-open",
+      "description": "99 jazz standards with chord charts, backing tracks, and practice tools for aspiring jazz musicians.",
+      "path": "/standards"
+    },
+    {
+      "name": "Live Sessions",
+      "icon": "radio",
+      "description": "Host synchronized practice sessions for classrooms. Share a room code and control what everyone hears.",
+      "path": "/live"
+    },
+    {
+      "name": "Genre Map",
+      "icon": "map",
+      "description": "Explore genres on a 2D map from Straight to Swung, Simple to Complex. Discover loops by genre.",
+      "path": "/explore"
+    },
+    {
+      "name": "Groove Match",
+      "icon": "git-merge",
+      "description": "Find loops that groove together — matched by time signature, BPM, and feel.",
+      "path": "/explore"
+    }
+  ],
+  "drumKits": {
+    "jazz": { "name": "Jazz Acoustic", "description": "Warmer tones, longer sustain, more dynamic range" },
+    "rock": { "name": "Rock Studio", "description": "Punchier attack, compressed feel, powerful kicks" },
+    "808": { "name": "808 Electronic", "description": "Deep sub kick, sharp clap, crispy hi-hats" },
+    "latin": { "name": "Latin Percussion", "description": "Congas, bongos, timbales, clave, shaker" }
+  },
+  "footer": {
+    "copyright": "Nathaniel School of Music",
+    "links": [
+      { "label": "About", "url": "https://nathanielschool.com/about" },
+      { "label": "Contact", "url": "https://nathanielschool.com/contact" },
+      { "label": "Privacy Policy", "url": "/privacy" },
+      { "label": "Terms of Service", "url": "/terms" }
+    ]
+  }
+}

@@ -5,6 +5,7 @@ import { useSequencerStore, Kit, Instrument } from '../store/sequencer';
 interface AudioEngineContextType {
   isInitialized: boolean;
   isPlaying: boolean;
+  midiConnected: boolean;
   startEngine: () => Promise<void>;
   togglePlayback: () => void;
   playPreview: (instrument: Instrument) => void;
@@ -109,6 +110,22 @@ function getPitch(instrument: Instrument, kit: Kit): string {
 
 // ---------- Keyboard-to-instrument map ----------
 
+// ---------- MIDI note-to-instrument map ----------
+
+const MIDI_NOTE_MAP: Record<number, Instrument> = {
+  36: 'kick',
+  38: 'snare',
+  42: 'hihatClosed',
+  46: 'hihatOpen',
+  51: 'ride',
+  49: 'crash',
+  48: 'tomHigh',
+  45: 'tomMid',
+  41: 'tomLow',
+  39: 'clap',
+  56: 'cowbell',
+};
+
 const KEY_MAP: Record<string, Instrument> = {
   q: 'kick',
   w: 'snare',
@@ -127,6 +144,7 @@ const KEY_MAP: Record<string, Instrument> = {
 export const AudioEngineProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isInitialized, setIsInitialized] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [midiConnected, setMidiConnected] = useState(false);
 
   const synths = useRef<Record<string, any>>({});
   const scheduledEventId = useRef<number | null>(null);
@@ -156,6 +174,47 @@ export const AudioEngineProvider: React.FC<{ children: React.ReactNode }> = ({ c
     currentKitRef.current = store.selectedKit;
   }, [store.selectedKit, isInitialized]);
 
+  // ---------- handleMIDIMessage ----------
+
+  const handleMIDIMessage = useCallback((event: any) => {
+    const [status, note, velocity] = event.data;
+    // Note-on message with velocity > 0
+    if ((status & 0xf0) === 0x90 && velocity > 0) {
+      const instrument = MIDI_NOTE_MAP[note];
+      if (instrument) {
+        // Play preview sound
+        const kit = storeRef.current.selectedKit;
+        const synth = synths.current[instrument];
+        if (synth) {
+          if (synth instanceof Tone.MembraneSynth) {
+            synth.triggerAttackRelease(getPitch(instrument, kit), '8n');
+          } else if (synth instanceof Tone.NoiseSynth) {
+            synth.triggerAttackRelease('16n');
+          } else if (synth instanceof Tone.MetalSynth) {
+            synth.triggerAttackRelease(getPitch(instrument, kit), '16n');
+          }
+        }
+
+        // If playing, record the hit at the current step position
+        const currentState = storeRef.current;
+        if (Tone.Transport.state === 'started' && currentState.currentStep >= 0) {
+          // Find beat and slice from global step
+          let globalIdx = 0;
+          for (let b = 0; b < currentState.beats.length; b++) {
+            for (let s = 0; s < currentState.beats[b].length; s++) {
+              if (globalIdx === currentState.currentStep) {
+                currentState.setSelectedInstrument(instrument);
+                currentState.toggleHit(b, s);
+                return;
+              }
+              globalIdx++;
+            }
+          }
+        }
+      }
+    }
+  }, []);
+
   // ---------- startEngine ----------
 
   const startEngine = async () => {
@@ -167,6 +226,25 @@ export const AudioEngineProvider: React.FC<{ children: React.ReactNode }> = ({ c
       setIsInitialized(true);
     }
   };
+
+  // ---------- Web MIDI Access ----------
+
+  useEffect(() => {
+    if (!isInitialized) return;
+    if (!(navigator as any).requestMIDIAccess) return;
+
+    (navigator as any).requestMIDIAccess().then((midi: any) => {
+      midi.inputs.forEach((input: any) => {
+        input.onmidimessage = handleMIDIMessage;
+      });
+      midi.onstatechange = () => {
+        setMidiConnected(Array.from(midi.inputs.values()).some((i: any) => (i as any).state === 'connected'));
+      };
+      setMidiConnected(midi.inputs.size > 0);
+    }).catch(() => {
+      console.log('MIDI not available');
+    });
+  }, [isInitialized, handleMIDIMessage]);
 
   // ---------- setupSequence ----------
 
@@ -343,7 +421,7 @@ export const AudioEngineProvider: React.FC<{ children: React.ReactNode }> = ({ c
   }, [isInitialized]);
 
   return (
-    <AudioEngineContext.Provider value={{ isInitialized, isPlaying, startEngine, togglePlayback, playPreview }}>
+    <AudioEngineContext.Provider value={{ isInitialized, isPlaying, midiConnected, startEngine, togglePlayback, playPreview }}>
       {children}
     </AudioEngineContext.Provider>
   );

@@ -3,7 +3,8 @@ import { Midi } from '@tonejs/midi';
 import * as Tone from 'tone';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Upload, Cpu, Play, Pause, Square, SkipBack, RefreshCw, Volume2, VolumeX } from 'lucide-react';
+import { Upload, Cpu, Play, Pause, Square, SkipBack, RefreshCw, Volume2, VolumeX, Scissors, Undo2, Download } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { Slider } from '@/components/ui/slider';
 
@@ -64,6 +65,8 @@ export default function MidiPage() {
   const [speed, setSpeed] = useState(1);
   const [playheadTime, setPlayheadTime] = useState(0);
   const [trackMix, setTrackMix] = useState<TrackMixState[]>([]);
+  const [deletedNotes, setDeletedNotes] = useState<Set<string>>(new Set());
+  const [surgeryMode, setSurgeryMode] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -133,6 +136,8 @@ export default function MidiPage() {
     setParsedMidi(null);
     setTrackMix([]);
     setPlayheadTime(0);
+    setDeletedNotes(new Set());
+    setSurgeryMode(false);
   };
 
   // ---- determine which tracks are audible based on mute/solo ----
@@ -207,7 +212,9 @@ export default function MidiPage() {
 
       if (isDrum) {
         synthsRef.current.push(null);
-        track.notes.forEach(note => {
+        track.notes.forEach((note, ni) => {
+          const noteId = `${ti}-${ni}`;
+          if (deletedNotes.has(noteId)) return; // skip deleted
           const id = Tone.Transport.schedule((time) => {
             triggerDrumNote(note.midi, time);
           }, note.time);
@@ -220,7 +227,9 @@ export default function MidiPage() {
         }).toDestination();
         synthsRef.current.push(synth);
 
-        track.notes.forEach(note => {
+        track.notes.forEach((note, ni) => {
+          const noteId = `${ti}-${ni}`;
+          if (deletedNotes.has(noteId)) return; // skip deleted
           const noteName = midiNoteName(note.midi);
           const dur = Math.max(note.duration, 0.01);
           const id = Tone.Transport.schedule((time) => {
@@ -230,7 +239,7 @@ export default function MidiPage() {
         });
       }
     });
-  }, [parsedMidi, tracks, getAudibleTracks, triggerDrumNote]);
+  }, [parsedMidi, tracks, getAudibleTracks, triggerDrumNote, deletedNotes]);
 
   const handlePlay = async () => {
     if (!parsedMidi) return;
@@ -458,22 +467,39 @@ export default function MidiPage() {
     // Draw notes
     tracks.forEach((track, ti) => {
       const color = TRACK_COLORS[ti % TRACK_COLORS.length];
-      track.notes.forEach(note => {
+      track.notes.forEach((note, ni) => {
+        const noteId = `${ti}-${ni}`;
+        const isDeleted = deletedNotes.has(noteId);
         const row = maxNote - note.midi;
         if (row < 0 || row >= noteRange) return;
         const x = PIANO_KEY_WIDTH + note.time * PIXELS_PER_SECOND;
         const w = Math.max(2, note.duration * PIXELS_PER_SECOND);
         const y = row * ROW_HEIGHT;
 
-        ctx.fillStyle = color;
-        ctx.globalAlpha = 0.5 + note.velocity * 0.5;
-        ctx.fillRect(x, y + 1, w, ROW_HEIGHT - 2);
-        ctx.globalAlpha = 1;
+        if (isDeleted) {
+          // Draw dimmed with strikethrough
+          ctx.fillStyle = 'rgba(120,120,120,0.2)';
+          ctx.globalAlpha = 0.3;
+          ctx.fillRect(x, y + 1, w, ROW_HEIGHT - 2);
+          ctx.globalAlpha = 1;
+          // Strikethrough line
+          ctx.strokeStyle = 'rgba(239,68,68,0.5)';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(x, y + ROW_HEIGHT / 2);
+          ctx.lineTo(x + w, y + ROW_HEIGHT / 2);
+          ctx.stroke();
+        } else {
+          ctx.fillStyle = color;
+          ctx.globalAlpha = 0.5 + note.velocity * 0.5;
+          ctx.fillRect(x, y + 1, w, ROW_HEIGHT - 2);
+          ctx.globalAlpha = 1;
 
-        // Subtle border
-        ctx.strokeStyle = 'rgba(255,255,255,0.15)';
-        ctx.lineWidth = 0.5;
-        ctx.strokeRect(x, y + 1, w, ROW_HEIGHT - 2);
+          // Subtle border
+          ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+          ctx.lineWidth = 0.5;
+          ctx.strokeRect(x, y + 1, w, ROW_HEIGHT - 2);
+        }
       });
     });
 
@@ -497,7 +523,81 @@ export default function MidiPage() {
         container.scrollLeft = Math.max(0, pxPos - containerWidth / 3);
       }
     }
-  }, [parsedMidi, tracks, playheadTime, minNote, maxNote, noteRange, duration, isPlaying]);
+  }, [parsedMidi, tracks, playheadTime, minNote, maxNote, noteRange, duration, isPlaying, deletedNotes]);
+
+  // ---- canvas click handler for surgery mode ----
+
+  const handleCanvasClick = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
+    if (!surgeryMode || !parsedMidi || !canvasRef.current) return;
+    const canvas = canvasRef.current;
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const clickX = (e.clientX - rect.left) * scaleX;
+    const clickY = (e.clientY - rect.top) * scaleY;
+
+    const container = pianoRollContainerRef.current;
+    const containerWidth = container ? container.clientWidth : 800;
+    const PIANO_KEY_WIDTH = 48;
+    const ROW_HEIGHT = Math.max(6, Math.min(18, Math.floor(280 / noteRange)));
+    const PIXELS_PER_SECOND = Math.max(80, Math.min(200, containerWidth / Math.max(duration, 1)));
+
+    // Find which note was clicked
+    for (let ti = 0; ti < tracks.length; ti++) {
+      const track = tracks[ti];
+      for (let ni = 0; ni < track.notes.length; ni++) {
+        const note = track.notes[ni];
+        const noteId = `${ti}-${ni}`;
+        if (deletedNotes.has(noteId)) continue;
+        const row = maxNote - note.midi;
+        if (row < 0 || row >= noteRange) continue;
+        const x = PIANO_KEY_WIDTH + note.time * PIXELS_PER_SECOND;
+        const w = Math.max(2, note.duration * PIXELS_PER_SECOND);
+        const y = row * ROW_HEIGHT;
+
+        if (clickX >= x && clickX <= x + w && clickY >= y + 1 && clickY <= y + ROW_HEIGHT - 1) {
+          setDeletedNotes(prev => {
+            const next = new Set(prev);
+            next.add(noteId);
+            return next;
+          });
+          return;
+        }
+      }
+    }
+  }, [surgeryMode, parsedMidi, tracks, deletedNotes, maxNote, noteRange, duration]);
+
+  // ---- export simplified MIDI (without deleted notes) ----
+
+  const exportSimplified = useCallback(() => {
+    if (!parsedMidi) return;
+    const midi = new Midi();
+    midi.header.setTempo(bpm);
+
+    tracks.forEach((track, ti) => {
+      const newTrack = midi.addTrack();
+      newTrack.name = track.name;
+      newTrack.channel = track.channel;
+      track.notes.forEach((note, ni) => {
+        const noteId = `${ti}-${ni}`;
+        if (deletedNotes.has(noteId)) return;
+        newTrack.addNote({
+          midi: note.midi,
+          time: note.time,
+          duration: note.duration,
+          velocity: note.velocity,
+        });
+      });
+    });
+
+    const blob = new Blob([midi.toArray() as unknown as ArrayBuffer], { type: 'audio/midi' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `groovelab-simplified.mid`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }, [parsedMidi, tracks, deletedNotes, bpm]);
 
   // ---- track mixer ----
 
@@ -585,7 +685,48 @@ export default function MidiPage() {
               ref={pianoRollContainerRef}
               className="h-72 w-full bg-black/20 border-b border-border overflow-x-auto overflow-y-auto relative"
             >
-              <canvas ref={canvasRef} className="block min-w-full" style={{ imageRendering: 'pixelated' }} />
+              <canvas
+                ref={canvasRef}
+                className="block min-w-full"
+                style={{ imageRendering: 'pixelated', cursor: surgeryMode ? 'crosshair' : 'default' }}
+                onClick={handleCanvasClick}
+              />
+            </div>
+
+            {/* Surgery Toolbar */}
+            <div className="px-4 py-2 flex items-center gap-3 bg-muted/30 border-b border-border">
+              <div className="flex items-center gap-2">
+                <Scissors className={`w-4 h-4 ${surgeryMode ? 'text-red-400' : 'text-muted-foreground'}`} />
+                <label className="text-xs font-mono text-muted-foreground uppercase" htmlFor="surgery-toggle">Surgery Mode</label>
+                <Switch
+                  id="surgery-toggle"
+                  checked={surgeryMode}
+                  onCheckedChange={setSurgeryMode}
+                />
+              </div>
+              {deletedNotes.size > 0 && (
+                <>
+                  <Badge variant="secondary" className="font-mono text-xs">
+                    {deletedNotes.size} note{deletedNotes.size !== 1 ? 's' : ''} removed
+                  </Badge>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-xs h-7 px-2"
+                    onClick={() => setDeletedNotes(new Set())}
+                  >
+                    <Undo2 className="w-3 h-3 mr-1" /> Undo All
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="text-xs h-7 px-2"
+                    onClick={exportSimplified}
+                  >
+                    <Download className="w-3 h-3 mr-1" /> Export Simplified
+                  </Button>
+                </>
+              )}
             </div>
 
             {/* Transport */}

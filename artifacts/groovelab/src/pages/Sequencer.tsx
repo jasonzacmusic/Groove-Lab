@@ -1,11 +1,13 @@
 import React, { useRef, useCallback } from 'react';
 import { useSequencerStore } from '../store/sequencer';
 import { useAudioEngine } from '../context/AudioEngineContext';
+import { usePracticeTracker } from '@/hooks/use-practice-tracker';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { Play, Square, Settings2, Volume2 } from 'lucide-react';
+import { Play, Square, Settings2, Volume2, Download } from 'lucide-react';
+import { Midi } from '@tonejs/midi';
 
 // Instrument color map
 const INSTRUMENT_COLORS: Record<string, string> = {
@@ -256,14 +258,53 @@ export function PizzaSequencer({ size = 480 }: PizzaSequencerProps) {
 }
 
 export default function Sequencer() {
+  usePracticeTracker('sequencer');
   const store = useSequencerStore();
-  const { isInitialized, isPlaying, startEngine, togglePlayback, playPreview } = useAudioEngine();
+  const { isInitialized, isPlaying, midiConnected, startEngine, togglePlayback, playPreview } = useAudioEngine();
 
   const handleStart = async () => {
     if (!isInitialized) {
       await startEngine();
     }
     togglePlayback();
+  };
+
+  const exportMidi = () => {
+    const midi = new Midi();
+    const track = midi.addTrack();
+    track.channel = 9; // drum channel
+
+    const currentBpm = store.bpm;
+    const secondsPerBeat = 60 / currentBpm;
+
+    const INST_TO_MIDI: Record<string, number> = {
+      kick: 36, snare: 38, hihatClosed: 42, hihatOpen: 46, ride: 51,
+      crash: 49, tomHigh: 48, tomMid: 45, tomLow: 41, clap: 39, cowbell: 56,
+      crossStick: 37, clave: 75, shaker: 70,
+    };
+
+    let globalTime = 0;
+    for (let b = 0; b < store.beats.length; b++) {
+      const slices = store.beats[b];
+      const sliceDur = secondsPerBeat / slices.length;
+      for (let s = 0; s < slices.length; s++) {
+        const hit = slices[s];
+        if (hit.instrument) {
+          const note = INST_TO_MIDI[hit.instrument] || 36;
+          track.addNote({ midi: note, time: globalTime, duration: 0.1, velocity: 0.8 });
+        }
+        globalTime += sliceDur;
+      }
+    }
+
+    midi.header.setTempo(currentBpm);
+    const blob = new Blob([midi.toArray() as unknown as ArrayBuffer], { type: 'audio/midi' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `groovelab-pattern-${currentBpm}bpm.mid`;
+    a.click();
+    URL.revokeObjectURL(url);
   };
 
   const instruments = KIT_INSTRUMENTS[store.selectedKit];
@@ -409,6 +450,21 @@ export default function Sequencer() {
               </Select>
             ))}
           </div>
+        </div>
+
+        <div className="w-px h-10 bg-border" />
+
+        {/* Export MIDI & MIDI indicator */}
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="icon" onClick={exportMidi} title="Export MIDI">
+            <Download className="w-5 h-5" />
+          </Button>
+          {midiConnected && (
+            <div className="flex items-center gap-1.5" title="MIDI Controller Connected">
+              <span className="w-2.5 h-2.5 rounded-full bg-green-500 shadow-[0_0_6px_rgba(34,197,94,0.6)]" />
+              <span className="text-[10px] font-mono text-green-400 uppercase">MIDI</span>
+            </div>
+          )}
         </div>
       </div>
     </div>

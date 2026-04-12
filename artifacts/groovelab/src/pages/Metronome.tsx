@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import * as Tone from 'tone';
+import { usePracticeTracker } from '@/hooks/use-practice-tracker';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import {
@@ -64,7 +65,54 @@ function buildAccents(numerator: number): AccentLevel[] {
   return Array.from({ length: numerator }, (_, i) => (i === 0 ? 'f' : 'mf'));
 }
 
+// ---------- Pendulum Component ----------
+
+interface PendulumProps {
+  bpm: number;
+  isPlaying: boolean;
+}
+
+function PendulumVisual({ bpm, isPlaying }: PendulumProps) {
+  const [angle, setAngle] = useState(0);
+  const rafRef = useRef<number>(0);
+  const startTimeRef = useRef(0);
+
+  useEffect(() => {
+    if (!isPlaying) { setAngle(0); return; }
+    startTimeRef.current = performance.now();
+    const beatDuration = 60000 / bpm; // ms per beat
+
+    const animate = (now: number) => {
+      const elapsed = now - startTimeRef.current;
+      const phase = (elapsed % (beatDuration * 2)) / (beatDuration * 2);
+      const swing = Math.sin(phase * Math.PI * 2) * 30;
+      setAngle(swing);
+      rafRef.current = requestAnimationFrame(animate);
+    };
+    rafRef.current = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [isPlaying, bpm]);
+
+  return (
+    <svg width="120" height="200" viewBox="0 0 120 200" className="mx-auto">
+      <circle cx="60" cy="20" r="6" fill="hsl(38 76% 54%)" />
+      <line
+        x1="60" y1="20"
+        x2={60 + Math.sin(angle * Math.PI / 180) * 140}
+        y2={20 + Math.cos(angle * Math.PI / 180) * 140}
+        stroke="hsl(38 76% 54% / 0.6)" strokeWidth="2"
+      />
+      <circle
+        cx={60 + Math.sin(angle * Math.PI / 180) * 140}
+        cy={20 + Math.cos(angle * Math.PI / 180) * 140}
+        r="10" fill="hsl(38 76% 54%)"
+      />
+    </svg>
+  );
+}
+
 export default function Metronome() {
+  usePracticeTracker('metronome');
   // --- Core state ---
   const [bpm, setBpm] = useState(120);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -89,6 +137,9 @@ export default function Metronome() {
   // --- Practice timer ---
   const [practiceSeconds, setPracticeSeconds] = useState(0);
   const [targetMinutes, setTargetMinutes] = useState(5);
+
+  // --- Pendulum state ---
+  const [pendulumMode, setPendulumMode] = useState(false);
 
   // --- UI state ---
   const [advancedOpen, setAdvancedOpen] = useState(false);
@@ -574,6 +625,24 @@ export default function Metronome() {
               <Badge variant={trainerMutedRef.current ? 'destructive' : 'secondary'} className="font-mono text-xs">
                 {trainerMutedRef.current ? 'MUTED' : 'PLAYING'}
               </Badge>
+            </div>
+          )}
+          {/* Pendulum toggle */}
+          <div className="flex items-center justify-center gap-2 mt-4">
+            <label className="text-xs text-muted-foreground uppercase tracking-wide font-mono" htmlFor="pendulum-toggle">
+              Pendulum
+            </label>
+            <Switch
+              id="pendulum-toggle"
+              checked={pendulumMode}
+              onCheckedChange={setPendulumMode}
+            />
+          </div>
+
+          {/* Pendulum visual */}
+          {pendulumMode && (
+            <div className="mt-4">
+              <PendulumVisual bpm={bpm} isPlaying={isPlaying} />
             </div>
           )}
         </CardContent>
