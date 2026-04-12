@@ -20,6 +20,7 @@ import Metronome from "@/pages/Metronome";
 import CreatorProfile from "@/pages/CreatorProfile";
 import Auth from "@/pages/Auth";
 import Playlists from "@/pages/Playlists";
+import Creators from "@/pages/Creators";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -43,6 +44,7 @@ function Router() {
         <Route path="/live" component={Live} />
         <Route path="/metronome" component={Metronome} />
         <Route path="/auth" component={Auth} />
+        <Route path="/creators" component={Creators} />
         <Route path="/creators/:id" component={CreatorProfile} />
         <Route path="/playlists" component={Playlists} />
         <Route path="/practice" component={Practice} />
