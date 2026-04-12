@@ -347,6 +347,9 @@ export default function Explore() {
   const [selectedLoopTitle, setSelectedLoopTitle] = useState('');
   const [genreFilter, setGenreFilter] = useState<string | null>(null);
   const [favoritedIds, setFavoritedIds] = useState<Set<string>>(new Set());
+  const [selectedTimeSigId, setSelectedTimeSigId] = useState<number | null>(null);
+  const [selectedFeelId, setSelectedFeelId] = useState<number | null>(null);
+  const [selectedGenreId, setSelectedGenreId] = useState<number | null>(null);
 
   const { user } = useAuth();
   const { playLoop } = usePlayer();
@@ -412,6 +415,9 @@ export default function Explore() {
   const { data: loopsData, isLoading: isLoopsLoading } = useGetLoops({
     search: search || undefined,
     ...(bpmFilterActive ? { bpmMin: bpmRange[0], bpmMax: bpmRange[1] } : {}),
+    ...(selectedTimeSigId ? { timeSignatureId: selectedTimeSigId } : {}),
+    ...(selectedFeelId ? { feelId: selectedFeelId } : {}),
+    ...(selectedGenreId ? { genreId: selectedGenreId } : {}),
   });
   const { data: genreMap } = useGetGenreMap();
 
@@ -476,7 +482,9 @@ export default function Explore() {
                    Array.from({length: 4}).map((_, i) => <Skeleton key={i} className="h-8 w-16 rounded-full" />)
                 ) : (
                   taxonomy?.timeSignatures.map(ts => (
-                    <Badge key={ts.id} variant="outline" className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors font-mono">
+                    <Badge key={ts.id} variant="outline"
+                      className={`cursor-pointer transition-colors font-mono ${selectedTimeSigId === ts.id ? 'bg-primary text-primary-foreground' : 'hover:bg-primary/20'}`}
+                      onClick={() => setSelectedTimeSigId(selectedTimeSigId === ts.id ? null : ts.id)}>
                       {ts.displayName}
                     </Badge>
                   ))
@@ -490,7 +498,9 @@ export default function Explore() {
             <AccordionContent>
               <div className="flex flex-wrap gap-2 pt-2">
                 {taxonomy?.feels.map(feel => (
-                  <Badge key={feel.id} variant="outline" className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors">
+                  <Badge key={feel.id} variant="outline"
+                    className={`cursor-pointer transition-colors ${selectedFeelId === feel.id ? 'bg-primary text-primary-foreground' : 'hover:bg-primary/20'}`}
+                    onClick={() => setSelectedFeelId(selectedFeelId === feel.id ? null : feel.id)}>
                     {feel.name}
                   </Badge>
                 ))}
@@ -503,10 +513,12 @@ export default function Explore() {
             <AccordionContent>
               <div className="flex flex-col gap-2 pt-2">
                 {taxonomy?.genres.map(genre => (
-                  <label key={genre.id} className="flex items-center gap-2 text-sm cursor-pointer hover:text-primary transition-colors">
-                    <input type="checkbox" className="rounded border-border text-primary focus:ring-primary bg-background" />
+                  <button key={genre.id}
+                    className={`flex items-center gap-2 text-sm cursor-pointer transition-colors text-left px-2 py-1 rounded ${selectedGenreId === genre.id ? 'bg-primary/20 text-primary font-medium' : 'hover:text-primary'}`}
+                    onClick={() => setSelectedGenreId(selectedGenreId === genre.id ? null : genre.id)}>
+                    <span className={`w-2 h-2 rounded-full ${selectedGenreId === genre.id ? 'bg-primary' : 'bg-muted-foreground/30'}`} />
                     {genre.name}
-                  </label>
+                  </button>
                 ))}
               </div>
             </AccordionContent>
@@ -588,7 +600,7 @@ export default function Explore() {
                     <Music className="w-12 h-12 mb-4 opacity-50" />
                     <h3 className="text-xl font-serif mb-2">No loops found</h3>
                     <p className="text-sm">Try broadening your search or adjusting filters.</p>
-                    <Button variant="outline" className="mt-4" onClick={() => { setSearch(''); setBpmRange([40, 300]); setGenreFilter(null); }}>
+                    <Button variant="outline" className="mt-4" onClick={() => { setSearch(''); setBpmRange([40, 300]); setGenreFilter(null); setSelectedTimeSigId(null); setSelectedFeelId(null); setSelectedGenreId(null); }}>
                       Clear Filters
                     </Button>
                   </div>
