@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { cors } from "../../_lib/cors";
-import { db, liveSessions, eq } from "../../_lib/db";
+import { db, eq } from "../../_lib/db";
+import { liveSessions } from "../../../lib/db/src/schema/groovelab";
 
 function generateRoomCode(): string {
   const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";

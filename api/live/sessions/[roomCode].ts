@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { cors } from "../../_lib/cors";
-import { db, liveSessions, sessionParticipants, eq, sql } from "../../_lib/db";
+import { db, eq, sql } from "../../_lib/db";
+import { liveSessions, sessionParticipants } from "../../../lib/db/src/schema/groovelab";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (cors(req, res)) return;
