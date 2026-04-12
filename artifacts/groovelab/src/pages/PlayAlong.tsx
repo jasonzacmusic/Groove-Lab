@@ -1,75 +1,74 @@
 import React, { useState, useMemo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { GraduationCap, BookOpen, Music, ExternalLink } from 'lucide-react';
+import { GraduationCap, BookOpen, Music, ExternalLink, Play } from 'lucide-react';
 import {
-  EXAM_BOARDS, INSTRUMENTS, GRADES, PIANO_METHODS, STRING_METHODS,
-  generateSearchQueries, getMethodBooks,
+  EXAM_BOARDS, INSTRUMENTS, GRADES,
+  generateSearchQueries, getMethodBooks, PIANO_METHODS,
 } from '@/data/exam-videos';
+import videoDb from '@/data/exam-video-ids.json';
 
-function YouTubeSearchCard({ query, title }: { query: string; title: string }) {
+const VIDEO_DB = videoDb as Record<string, { id: string; title: string }[]>;
+
+function InlinePlayer({ videoId, title }: { videoId: string; title: string }) {
   return (
-    <div className="rounded-lg border border-border overflow-hidden">
-      <div className="aspect-video bg-muted">
+    <div className="rounded-lg overflow-hidden border border-border">
+      <div className="aspect-video">
         <iframe
-          src={`https://www.youtube-nocookie.com/embed?search_query=${encodeURIComponent(query)}`}
+          src={`https://www.youtube-nocookie.com/embed/${videoId}`}
           className="w-full h-full"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
           title={title}
         />
       </div>
-      <div className="px-3 py-1.5 flex items-center justify-between bg-card">
-        <p className="text-[10px] text-muted-foreground font-mono truncate mr-2">"{query}"</p>
-        <a
-          href={`https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex-shrink-0 flex items-center gap-1 text-[10px] text-red-500 hover:text-red-600 font-medium whitespace-nowrap"
-        >
-          <ExternalLink className="w-2.5 h-2.5" /> Open in YouTube
-        </a>
+      <div className="px-3 py-2 bg-card">
+        <p className="text-sm text-foreground truncate">{title}</p>
       </div>
     </div>
   );
 }
 
-function MethodBookSection({ methods, instrument }: { methods: typeof PIANO_METHODS; instrument: string }) {
-  const [expandedMethod, setExpandedMethod] = useState<string | null>(null);
+function YouTubeSearchLink({ query, title }: { query: string; title: string }) {
+  return (
+    <a href={`https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`}
+      target="_blank" rel="noopener noreferrer"
+      className="flex items-center gap-4 p-4 rounded-lg bg-card border border-border hover:border-primary/50 transition-colors group">
+      <div className="w-12 h-12 rounded-lg bg-red-600/15 border border-red-500/20 flex items-center justify-center flex-shrink-0 group-hover:bg-red-600/25 transition-colors">
+        <Play className="w-5 h-5 text-red-500" fill="currentColor" />
+      </div>
+      <div className="flex-1 min-w-0">
+        <p className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">{title}</p>
+        <p className="text-xs text-muted-foreground font-mono mt-0.5 truncate">Opens YouTube: "{query}"</p>
+      </div>
+      <ExternalLink className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+    </a>
+  );
+}
 
+function MethodBookSection({ methods, instrument }: { methods: typeof PIANO_METHODS; instrument: string }) {
+  const [expanded, setExpanded] = useState<string | null>(null);
   return (
     <div className="space-y-3">
       <h3 className="font-serif text-lg flex items-center gap-2">
-        <BookOpen className="w-4 h-4 text-primary" />
-        {instrument} Method Books & Studies
+        <BookOpen className="w-4 h-4 text-primary" /> {instrument} Method Books
       </h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        {methods.map((method) => (
-          <Card key={method.name} className="overflow-hidden">
+        {methods.map((m) => (
+          <Card key={m.name} className="overflow-hidden">
             <CardContent className="p-0">
-              <button
-                onClick={() => setExpandedMethod(expandedMethod === method.name ? null : method.name)}
-                className="w-full p-4 text-left hover:bg-muted/50 transition-colors"
-              >
-                <h4 className="font-medium text-sm">{method.name}</h4>
+              <button onClick={() => setExpanded(expanded === m.name ? null : m.name)}
+                className="w-full p-4 text-left hover:bg-muted/50 transition-colors">
+                <h4 className="font-medium text-sm">{m.name}</h4>
                 <div className="flex flex-wrap gap-1 mt-2">
-                  {method.levels.map((level) => (
-                    <Badge key={level} variant="outline" className="text-[10px]">{level}</Badge>
-                  ))}
+                  {m.levels.map((l) => <Badge key={l} variant="outline" className="text-[10px]">{l}</Badge>)}
                 </div>
               </button>
-              {expandedMethod === method.name && (
-                <div className="border-t border-border p-3 space-y-4">
-                  {method.levels.slice(0, 3).map((level) => {
-                    const query = `${method.searchPrefix} ${level} play along`;
-                    return (
-                      <div key={level} className="space-y-1">
-                        <p className="text-xs font-medium text-muted-foreground">{level}</p>
-                        <YouTubeSearchCard query={query} title={`${method.name} ${level}`} />
-                      </div>
-                    );
-                  })}
+              {expanded === m.name && (
+                <div className="border-t border-border p-3 space-y-3">
+                  {m.levels.slice(0, 3).map((level) => (
+                    <YouTubeSearchLink key={level} query={`${m.searchPrefix} ${level} play along`} title={`${m.name} — ${level}`} />
+                  ))}
                 </div>
               )}
             </CardContent>
@@ -84,178 +83,128 @@ export default function PlayAlong() {
   const [board, setBoard] = useState<string>('All');
   const [instrument, setInstrument] = useState<string>('All Instruments');
   const [grade, setGrade] = useState<string>('All Grades');
-
   const isFiltered = instrument !== 'All Instruments' || grade !== 'All Grades' || board !== 'All';
   const isMethodBooks = board === 'Methods';
-
   const availableGrades = useMemo(() => {
-    if (board === 'All' || board === 'Methods') return ['All Grades', 'Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5', 'Grade 6', 'Grade 7', 'Grade 8'];
+    if (board === 'All' || board === 'Methods') return ['All Grades','Grade 1','Grade 2','Grade 3','Grade 4','Grade 5','Grade 6','Grade 7','Grade 8'];
     return ['All Grades', ...(GRADES[board] || [])];
   }, [board]);
 
   const searchContent = useMemo(() => {
     if (isMethodBooks) return [];
-
-    if (!isFiltered) {
-      return [
-        { title: 'Piano — ABRSM Grade 3', queries: generateSearchQueries('ABRSM', 'Piano', 'Grade 3') },
-        { title: 'Guitar — Trinity Grade 3', queries: generateSearchQueries('Trinity', 'Guitar', 'Grade 3') },
-        { title: 'Drums — Rockschool Grade 2', queries: generateSearchQueries('Rockschool', 'Drums', 'Grade 2') },
-        { title: 'Violin — ABRSM Grade 5', queries: generateSearchQueries('ABRSM', 'Violin', 'Grade 5') },
-        { title: 'Flute — Trinity Grade 4', queries: generateSearchQueries('Trinity', 'Flute', 'Grade 4') },
-        { title: 'Trumpet — ABRSM Grade 4', queries: generateSearchQueries('ABRSM', 'Trumpet', 'Grade 4') },
-      ];
-    }
-
-    const boards = board === 'All' ? EXAM_BOARDS.filter(b => b.id !== 'Methods').map(b => b.id) : [board];
+    if (!isFiltered) return [
+      { title: 'ABRSM Grade 1 Piano', board: 'ABRSM', inst: 'Piano', grade: 'Grade 1' },
+      { title: 'Trinity Grade 3 Guitar', board: 'Trinity', inst: 'Guitar', grade: 'Grade 3' },
+      { title: 'Rockschool Grade 2 Drums', board: 'Rockschool', inst: 'Drums', grade: 'Grade 2' },
+      { title: 'ABRSM Grade 5 Violin', board: 'ABRSM', inst: 'Violin', grade: 'Grade 5' },
+      { title: 'Trinity Grade 4 Saxophone', board: 'Trinity', inst: 'Saxophone', grade: 'Grade 4' },
+      { title: 'RCM Level 3 Piano', board: 'RCM', inst: 'Piano', grade: 'Level 3' },
+    ];
+    const boards = board === 'All' ? ['ABRSM','Trinity','Rockschool'] : [board];
     const insts = instrument === 'All Instruments' ? ['Piano'] : [instrument];
-    const grades = grade === 'All Grades' ? (GRADES[board] || ['Grade 1', 'Grade 3', 'Grade 5']).slice(0, 3) : [grade];
-
-    const entries: { title: string; queries: string[] }[] = [];
-    for (const b of boards) {
-      for (const inst of insts) {
-        for (const g of grades) {
-          entries.push({
-            title: `${b} ${g} ${inst}`,
-            queries: generateSearchQueries(b, inst, g),
-          });
-          if (entries.length >= 8) break;
-        }
-        if (entries.length >= 8) break;
-      }
-      if (entries.length >= 8) break;
+    const grades = grade === 'All Grades' ? (GRADES[board]||['Grade 1','Grade 3','Grade 5']).slice(0,3) : [grade];
+    const entries: { title: string; board: string; inst: string; grade: string }[] = [];
+    for (const b of boards) for (const i of insts) for (const g of grades) {
+      entries.push({ title: `${b} ${g} ${i}`, board: b, inst: i, grade: g });
+      if (entries.length >= 8) return entries;
     }
     return entries;
   }, [board, instrument, grade, isFiltered, isMethodBooks]);
 
   const subtitle = isMethodBooks ? 'Traditional Method Books & Studies'
-    : [board !== 'All' ? board : null, instrument !== 'All Instruments' ? instrument : null, grade !== 'All Grades' ? grade : null]
-      .filter(Boolean).join(' · ') || 'Popular Play-Along Content';
-
-  const methodBooks = isMethodBooks ? getMethodBooks(instrument) : [];
+    : [board!=='All'?board:null, instrument!=='All Instruments'?instrument:null, grade!=='All Grades'?grade:null].filter(Boolean).join(' · ') || 'Popular Play-Along Content';
 
   return (
     <div className="flex flex-col md:flex-row h-[calc(100vh-144px)]">
-      {/* Sidebar */}
       <div className="w-full md:w-[280px] border-b md:border-b-0 md:border-r border-border overflow-y-auto flex-shrink-0">
         <div className="p-4">
-          <h2 className="font-serif text-2xl mb-4 flex items-center gap-2">
-            <GraduationCap className="w-5 h-5 text-primary" /> Play-Alongs
-          </h2>
-
+          <h2 className="font-serif text-2xl mb-4 flex items-center gap-2"><GraduationCap className="w-5 h-5 text-primary" /> Play-Alongs</h2>
           <div className="mb-4">
             <label className="text-xs uppercase font-bold text-muted-foreground tracking-wider mb-2 block">Exam Board / Method</label>
             <div className="flex flex-wrap gap-1.5">
-              {['All', ...EXAM_BOARDS.map(b => b.id)].map((b) => {
-                const boardInfo = EXAM_BOARDS.find(eb => eb.id === b);
-                return (
-                  <button key={b} onClick={() => { setBoard(b); setGrade('All Grades'); }}
-                    className={`px-2.5 py-1.5 rounded-md text-xs font-medium transition-colors ${board === b ? 'bg-primary text-primary-foreground' : 'bg-muted/50 text-muted-foreground hover:bg-muted'}`}
-                    title={boardInfo?.fullName || b}>
-                    {boardInfo?.name || b}
-                  </button>
-                );
-              })}
+              {['All',...EXAM_BOARDS.map(b=>b.id)].map((b)=>(
+                <button key={b} onClick={()=>{setBoard(b);setGrade('All Grades');}}
+                  className={`px-2.5 py-1.5 rounded-md text-xs font-medium transition-colors ${board===b?'bg-primary text-primary-foreground':'bg-muted/50 text-muted-foreground hover:bg-muted'}`}
+                  title={EXAM_BOARDS.find(eb=>eb.id===b)?.fullName||b}>
+                  {EXAM_BOARDS.find(eb=>eb.id===b)?.name||b}
+                </button>
+              ))}
             </div>
           </div>
-
-          {!isMethodBooks && (
+          {!isMethodBooks && (<>
             <div className="mb-4">
               <label className="text-xs uppercase font-bold text-muted-foreground tracking-wider mb-2 block">Instrument</label>
               <div className="flex flex-wrap gap-1.5">
-                {['All Instruments', ...INSTRUMENTS].map((i) => (
-                  <button key={i} onClick={() => setInstrument(i)}
-                    className={`px-2 py-1.5 rounded-md text-xs font-medium transition-colors ${instrument === i ? 'bg-primary text-primary-foreground' : 'bg-muted/50 text-muted-foreground hover:bg-muted'}`}>
-                    {i === 'All Instruments' ? 'All' : i}
+                {['All Instruments',...INSTRUMENTS].map((i)=>(
+                  <button key={i} onClick={()=>setInstrument(i)}
+                    className={`px-2 py-1.5 rounded-md text-xs font-medium transition-colors ${instrument===i?'bg-primary text-primary-foreground':'bg-muted/50 text-muted-foreground hover:bg-muted'}`}>
+                    {i==='All Instruments'?'All':i}
                   </button>
                 ))}
               </div>
             </div>
-          )}
-
+            <div className="mb-4">
+              <label className="text-xs uppercase font-bold text-muted-foreground tracking-wider mb-2 block">Grade / Level</label>
+              <div className="flex flex-wrap gap-1.5">
+                {availableGrades.map((g)=>(
+                  <button key={g} onClick={()=>setGrade(g)}
+                    className={`px-2 py-1.5 rounded-md text-xs font-medium transition-colors ${grade===g?'bg-primary text-primary-foreground':'bg-muted/50 text-muted-foreground hover:bg-muted'}`}>
+                    {g==='All Grades'?'All':g}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </>)}
           {isMethodBooks && (
             <div className="mb-4">
               <label className="text-xs uppercase font-bold text-muted-foreground tracking-wider mb-2 block">Instrument</label>
               <div className="flex flex-wrap gap-1.5">
-                {['Piano', 'Violin', 'Cello'].map((i) => (
-                  <button key={i} onClick={() => setInstrument(i)}
-                    className={`px-2.5 py-1.5 rounded-md text-xs font-medium transition-colors ${instrument === i ? 'bg-primary text-primary-foreground' : 'bg-muted/50 text-muted-foreground hover:bg-muted'}`}>
-                    {i}
-                  </button>
+                {['Piano','Violin','Cello'].map((i)=>(
+                  <button key={i} onClick={()=>setInstrument(i)}
+                    className={`px-2.5 py-1.5 rounded-md text-xs font-medium transition-colors ${instrument===i?'bg-primary text-primary-foreground':'bg-muted/50 text-muted-foreground hover:bg-muted'}`}>{i}</button>
                 ))}
               </div>
             </div>
           )}
-
-          {!isMethodBooks && (
-            <div className="mb-4">
-              <label className="text-xs uppercase font-bold text-muted-foreground tracking-wider mb-2 block">Grade / Level</label>
-              <div className="flex flex-wrap gap-1.5">
-                {availableGrades.map((g) => (
-                  <button key={g} onClick={() => setGrade(g)}
-                    className={`px-2 py-1.5 rounded-md text-xs font-medium transition-colors ${grade === g ? 'bg-primary text-primary-foreground' : 'bg-muted/50 text-muted-foreground hover:bg-muted'}`}>
-                    {g === 'All Grades' ? 'All' : g}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {isFiltered && (
-            <button
-              onClick={() => { setBoard('All'); setInstrument('All Instruments'); setGrade('All Grades'); }}
-              className="text-xs text-primary hover:underline mt-2"
-            >
-              Clear filters
-            </button>
-          )}
-
-          {board !== 'All' && (
+          {isFiltered && <button onClick={()=>{setBoard('All');setInstrument('All Instruments');setGrade('All Grades');}} className="text-xs text-primary hover:underline mt-2">Clear filters</button>}
+          {board!=='All'&&board!=='Methods'&&(
             <div className="mt-4 p-3 bg-muted/30 rounded-lg">
-              <p className="text-xs font-medium">{EXAM_BOARDS.find(b => b.id === board)?.fullName}</p>
-              <p className="text-[10px] text-muted-foreground mt-0.5">{EXAM_BOARDS.find(b => b.id === board)?.region}</p>
+              <p className="text-xs font-medium">{EXAM_BOARDS.find(b=>b.id===board)?.fullName}</p>
+              <p className="text-[10px] text-muted-foreground mt-0.5">{EXAM_BOARDS.find(b=>b.id===board)?.region}</p>
             </div>
           )}
+          <div className="mt-4 p-3 bg-primary/5 border border-primary/20 rounded-lg">
+            <p className="text-[11px] text-muted-foreground">
+              Cards with inline players show verified YouTube videos. Others open YouTube search in a new tab. Run the fetch script to add more inline videos.
+            </p>
+          </div>
         </div>
       </div>
 
-      {/* Main content */}
       <div className="flex-1 overflow-y-auto p-4 md:p-6">
-        <div className="mb-6">
-          <h3 className="font-serif text-xl">{subtitle}</h3>
-          <p className="text-xs text-muted-foreground mt-1">
-            {isMethodBooks
-              ? 'Browse traditional method books with YouTube play-along search links.'
-              : 'YouTube play-along content for exam preparation. Click any card to search YouTube.'}
-          </p>
-        </div>
-
-        {isMethodBooks && methodBooks.length > 0 && (
-          <MethodBookSection methods={methodBooks} instrument={instrument} />
-        )}
-
+        <div className="mb-6"><h3 className="font-serif text-xl">{subtitle}</h3></div>
+        {isMethodBooks && getMethodBooks(instrument).length > 0 && <MethodBookSection methods={getMethodBooks(instrument)} instrument={instrument} />}
         {!isMethodBooks && searchContent.length > 0 && (
           <div className="space-y-8">
-            {searchContent.map((entry, idx) => (
-              <div key={`${entry.title}-${idx}`} className="space-y-3">
-                <h4 className="font-medium text-base flex items-center gap-2">
-                  <Music className="w-4 h-4 text-primary" />
-                  {entry.title}
-                </h4>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  {entry.queries.slice(0, isFiltered ? 4 : 1).map((q, qi) => (
-                    <YouTubeSearchCard key={qi} query={q} title={`${entry.title} - ${qi + 1}`} />
-                  ))}
+            {searchContent.map((entry, idx) => {
+              const dbKey = `${entry.board}|${entry.inst}|${entry.grade}`;
+              const queries = generateSearchQueries(entry.board, entry.inst, entry.grade);
+              const known = VIDEO_DB[dbKey];
+              return (
+                <div key={idx} className="space-y-3">
+                  <h4 className="font-medium text-base flex items-center gap-2"><Music className="w-4 h-4 text-primary" />{entry.title}</h4>
+                  {known && known.length > 0 ? (
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                      {known.map((v) => <InlinePlayer key={v.id} videoId={v.id} title={v.title} />)}
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+                      {queries.slice(0,2).map((q,qi) => <YouTubeSearchLink key={qi} query={q} title={`${entry.title} Play Along`} />)}
+                    </div>
+                  )}
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {!isMethodBooks && searchContent.length === 0 && !isFiltered && (
-          <div className="text-center py-16 text-muted-foreground">
-            <GraduationCap className="w-12 h-12 mx-auto mb-4 opacity-30" />
-            <p>Select an exam board and instrument to find play-along content.</p>
+              );
+            })}
           </div>
         )}
       </div>
