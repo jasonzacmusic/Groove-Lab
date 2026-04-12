@@ -37,38 +37,35 @@ function transposeChordSymbol(symbol: string, semitones: number): string {
   return display + quality;
 }
 
-// Convert chord symbol to an array of MIDI note names for playback
+// Convert chord symbol to jazz voicing note names for playback
 function chordToNotes(symbol: string): string[] {
   const match = symbol.match(/^([A-G][#b]?)(.*)/);
-  if (!match) return ['C4'];
+  if (!match) return ['C4', 'E4', 'G4'];
   const [, root, quality] = match;
-  const r = rootToIndex(root);
-  const q = quality.toLowerCase().replace(/\s/g, '');
-  // intervals in semitones from root
-  let intervals = [0, 4, 7]; // major triad default
-  if (q.includes('m7b5') || q.includes('ø') || q.includes('half')) {
-    intervals = [0, 3, 6, 10];
-  } else if (q.includes('dim') || q.includes('°')) {
-    intervals = [0, 3, 6, q.includes('7') ? 9 : 6];
-  } else if (q.includes('aug') || q.includes('+')) {
-    intervals = [0, 4, 8];
-  } else if (q.includes('maj7') || q.includes('Δ')) {
-    intervals = [0, 4, 7, 11];
-  } else if (q.includes('m7') || q.includes('min7') || q.includes('-7')) {
-    intervals = [0, 3, 7, 10];
-  } else if (q.includes('7')) {
-    intervals = [0, 4, 7, 10]; // dominant 7
-  } else if (q.includes('m') || q.includes('min') || q.startsWith('-')) {
-    intervals = [0, 3, 7];
-  } else if (q.includes('sus4')) {
-    intervals = [0, 5, 7];
-  } else if (q.includes('sus2')) {
-    intervals = [0, 2, 7];
-  }
-  return intervals.map(i => {
-    const noteIdx = (r + i) % 12;
-    return CHROMATIC[noteIdx] + '4';
-  });
+
+  const FLAT_MAP: Record<string, string> = { Db: 'C#', Eb: 'D#', Gb: 'F#', Ab: 'G#', Bb: 'A#' };
+  const rootIdx = CHROMATIC.indexOf(FLAT_MAP[root] || root);
+  if (rootIdx < 0) return ['C4', 'E4', 'G4'];
+
+  const note = (semitones: number, octave: number) => {
+    const idx = (rootIdx + semitones) % 12;
+    return CHROMATIC[idx] + octave;
+  };
+
+  const q = quality.toLowerCase();
+  // Rootless voicings (3rd, 5th, 7th, 9th) — more jazzy
+  if (q.includes('maj7') || q === 'maj7' || q === 'Δ7') return [note(4, 3), note(7, 3), note(11, 3), note(2, 4)];
+  if (q.includes('m7b5') || q.includes('ø')) return [note(3, 3), note(6, 3), note(10, 3), note(2, 4)];
+  if (q.includes('dim7') || q.includes('°7')) return [note(3, 3), note(6, 3), note(9, 3)];
+  if (q.includes('m7') || q === 'min7' || q === '-7') return [note(3, 3), note(7, 3), note(10, 3), note(2, 4)];
+  if (q.includes('7') && !q.includes('maj')) return [note(4, 3), note(7, 3), note(10, 3), note(2, 4)];
+  if (q.includes('m') || q.includes('min') || q === '-') return [note(3, 3), note(7, 3), note(0, 4)];
+  if (q.includes('aug') || q === '+') return [note(4, 3), note(8, 3), note(0, 4)];
+  if (q.includes('sus4')) return [note(5, 3), note(7, 3), note(0, 4)];
+  if (q.includes('sus2')) return [note(2, 3), note(7, 3), note(0, 4)];
+  if (q.includes('6')) return [note(4, 3), note(7, 3), note(9, 3)];
+  // Default major
+  return [note(4, 3), note(7, 3), note(0, 4)];
 }
 
 export default function Chords() {
@@ -76,9 +73,11 @@ export default function Chords() {
   const [selectedKey, setSelectedKey] = useState('All');
   const [difficulty, setDifficulty] = useState('all');
   const [playingId, setPlayingId] = useState<string | null>(null);
+  const [playingChordIndex, setPlayingChordIndex] = useState<number>(-1);
   const [transpositions, setTranspositions] = useState<Record<string, number>>({});
   const synthRef = useRef<Tone.PolySynth | null>(null);
   const playTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const chordTimersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
 
   const difficultyFilter = difficulty === 'beginner' ? 3 : difficulty === 'intermediate' ? 6 : difficulty === 'advanced' ? 9 : undefined;
 
@@ -115,9 +114,12 @@ export default function Chords() {
       clearTimeout(playTimeoutRef.current);
       playTimeoutRef.current = null;
     }
+    chordTimersRef.current.forEach(t => clearTimeout(t));
+    chordTimersRef.current = [];
     Tone.getTransport().stop();
     Tone.getTransport().cancel();
     setPlayingId(null);
+    setPlayingChordIndex(-1);
   }, []);
 
   const playChord = async (id: string, chords: ChordEntry[]) => {
@@ -134,8 +136,8 @@ export default function Chords() {
     const transposed = getTransposedChords(id, chords);
 
     const synth = new Tone.PolySynth(Tone.Synth, {
-      oscillator: { type: 'triangle' },
-      envelope: { attack: 0.05, decay: 0.3, sustain: 0.4, release: 0.8 },
+      oscillator: { type: 'triangle' as const },
+      envelope: { attack: 0.02, decay: 0.3, sustain: 0.4, release: 0.8 },
       volume: -8,
     }).toDestination();
     synthRef.current = synth;
@@ -144,9 +146,15 @@ export default function Chords() {
     let timeOffset = 0;
     const beatDuration = 0.5; // seconds per beat
 
-    transposed.forEach((chord) => {
+    chordTimersRef.current = [];
+    transposed.forEach((chord, idx) => {
       const notes = chordToNotes(chord.chord);
       const duration = chord.beats * beatDuration;
+      // Schedule highlight update
+      const timer = setTimeout(() => {
+        setPlayingChordIndex(idx);
+      }, timeOffset * 1000);
+      chordTimersRef.current.push(timer);
       synth.triggerAttackRelease(notes, duration - 0.05, now + timeOffset);
       timeOffset += duration;
     });
@@ -155,6 +163,7 @@ export default function Chords() {
       synth.dispose();
       synthRef.current = null;
       setPlayingId(null);
+      setPlayingChordIndex(-1);
     }, timeOffset * 1000 + 200);
   };
 
@@ -253,18 +262,23 @@ export default function Chords() {
                   </div>
                 </div>
 
-                <div className="bg-muted rounded-xl p-4 flex flex-wrap gap-3 items-center border border-border/50 font-serif text-2xl text-foreground">
-                  {getTransposedChords(prog.id, prog.chords).map((c, i) => (
-                    <div key={i} className="flex items-center">
-                      <div className="bg-background px-4 py-2 rounded-lg border border-border shadow-sm text-center min-w-[60px]">
-                        {c.chord}
-                        <div className="text-[10px] font-mono text-muted-foreground mt-1 opacity-60 font-sans tracking-widest">
-                          {Array.from({length: c.beats}).map(() => '·').join(' ')}
+                <div className="bg-muted rounded-xl p-4 flex flex-wrap gap-3 items-center border border-border/50">
+                  {getTransposedChords(prog.id, prog.chords).map((c, i) => {
+                    const isCurrentlyPlaying = playingId === prog.id && playingChordIndex === i;
+                    return (
+                      <div key={i} className="flex items-center">
+                        <div
+                          className={`inline-flex items-center justify-center rounded-lg border px-3 py-2 font-mono text-base ${
+                            isCurrentlyPlaying ? 'bg-primary/20 border-primary text-primary' : 'bg-card border-border'
+                          }`}
+                          style={{ minWidth: `${c.beats * 40}px` }}
+                        >
+                          {c.chord}
                         </div>
+                        {i < prog.chords.length - 1 && <div className="w-4 h-px bg-border mx-1" />}
                       </div>
-                      {i < prog.chords.length - 1 && <div className="w-4 h-px bg-border mx-1" />}
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
 
                 <div className="mt-6 flex items-center justify-between border-t border-border pt-4">

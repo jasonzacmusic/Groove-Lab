@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import { Layout } from "@/components/Layout";
 import { AudioEngineProvider } from "@/context/AudioEngineContext";
+import { PlayerProvider } from "@/context/PlayerContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { ThemeProvider } from "next-themes";
 
@@ -21,6 +22,7 @@ import CreatorProfile from "@/pages/CreatorProfile";
 import Auth from "@/pages/Auth";
 import Playlists from "@/pages/Playlists";
 import Creators from "@/pages/Creators";
+import PlayAlong from "@/pages/PlayAlong";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -41,6 +43,7 @@ function Router() {
         <Route path="/midi" component={Midi} />
         <Route path="/chords" component={Chords} />
         <Route path="/standards" component={Standards} />
+        <Route path="/play-along" component={PlayAlong} />
         <Route path="/live" component={Live} />
         <Route path="/metronome" component={Metronome} />
         <Route path="/auth" component={Auth} />
@@ -60,11 +63,13 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <AuthProvider>
-            <AudioEngineProvider>
-              <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-                <Router />
-              </WouterRouter>
-            </AudioEngineProvider>
+            <PlayerProvider>
+              <AudioEngineProvider>
+                <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+                  <Router />
+                </WouterRouter>
+              </AudioEngineProvider>
+            </PlayerProvider>
           </AuthProvider>
           <Toaster />
         </TooltipProvider>

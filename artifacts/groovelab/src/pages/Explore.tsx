@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Play, Music, Map as MapIcon, List, Search, X, Heart } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { useAuth } from '@/context/AuthContext';
+import { usePlayer } from '@/context/PlayerContext';
 import { useToast } from '@/hooks/use-toast';
 
 /* ------------------------------------------------------------------ */
@@ -348,6 +349,7 @@ export default function Explore() {
   const [favoritedIds, setFavoritedIds] = useState<Set<string>>(new Set());
 
   const { user } = useAuth();
+  const { playLoop } = usePlayer();
   const { toast } = useToast();
 
   // Fetch user's favorites on mount
@@ -605,7 +607,8 @@ export default function Explore() {
                         ) : (
                           <Music className="w-12 h-12 text-muted-foreground group-hover:text-primary transition-colors" />
                         )}
-                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                          onClick={(e) => { e.stopPropagation(); playLoop(loop); }}>
                           <Play className="w-12 h-12 text-white drop-shadow-md" fill="currentColor" />
                         </div>
                         <button

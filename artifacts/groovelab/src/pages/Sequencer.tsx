@@ -322,7 +322,7 @@ export default function Sequencer() {
     <div className="flex flex-col h-[calc(100vh-144px)] max-w-7xl mx-auto w-full">
       {/* ---- Header ---- */}
       <div className="px-4 md:px-6 pt-4 md:pt-6 flex items-center justify-between">
-        <h2 className="font-serif text-2xl md:text-3xl">The Pizza Lab</h2>
+        <h2 className="font-serif text-2xl md:text-3xl">Rhythm Circles</h2>
         <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground">
           <span className="hidden md:inline opacity-60">
             Q/W/E/R/T = instruments | Space = play

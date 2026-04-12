@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link, useLocation } from 'wouter';
-import { Compass, Music, Cpu, Piano, BookOpen, Radio, Target, Search, Sun, Moon, Play, Pause, Disc3, Timer, LogOut, User, ListMusic } from 'lucide-react';
+import { Compass, Music, Cpu, Piano, BookOpen, Radio, Target, Search, Sun, Moon, Play, Pause, Disc3, Timer, LogOut, User, ListMusic, GraduationCap } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useAuth } from '@/context/AuthContext';
+import { usePlayer } from '@/context/PlayerContext';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -22,6 +23,7 @@ const NAV_ITEMS = [
   { path: '/midi', label: 'MIDI', icon: Cpu },
   { path: '/chords', label: 'Chords', icon: Piano },
   { path: '/standards', label: 'Standards', icon: BookOpen },
+  { path: '/play-along', label: 'Play-Along', icon: GraduationCap },
   { path: '/live', label: 'Live', icon: Radio },
   { path: '/playlists', label: 'Playlists', icon: ListMusic },
   { path: '/practice', label: 'Practice', icon: Target },
@@ -31,6 +33,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   const [location, navigate] = useLocation();
   const { theme, setTheme } = useTheme();
   const { user, logout, isLoading } = useAuth();
+  const { current: playerCurrent, isOpen: playerOpen, close: closePlayer } = usePlayer();
   
   return (
     <div className="flex h-[100dvh] w-full bg-background overflow-hidden flex-col md:flex-row">
@@ -131,22 +134,44 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
         </main>
 
         {/* Bottom Player Bar */}
-        <div className="absolute bottom-16 md:bottom-0 left-0 right-0 h-20 bg-card border-t border-border flex items-center px-4 z-20 shadow-lg">
-          <div className="flex items-center gap-4 flex-1">
-            <div className="w-12 h-12 bg-muted rounded flex items-center justify-center">
-              <Music className="w-6 h-6 text-muted-foreground" />
-            </div>
-            <div>
-              <p className="font-medium text-sm text-foreground">Select a loop to play</p>
-              <p className="text-xs text-muted-foreground">--</p>
+        {playerOpen && playerCurrent ? (
+          <div className="absolute bottom-16 md:bottom-0 left-0 right-0 bg-card border-t border-border z-20 shadow-lg">
+            {playerCurrent.youtubeVideoId && (
+              <div className="w-full aspect-video max-h-[300px]">
+                <iframe
+                  src={`https://www.youtube.com/embed/${playerCurrent.youtubeVideoId}?autoplay=1&rel=0`}
+                  className="w-full h-full"
+                  allow="autoplay; encrypted-media"
+                  allowFullScreen
+                  title={playerCurrent.title}
+                />
+              </div>
+            )}
+            <div className="h-14 flex items-center px-4 gap-4">
+              <div className="flex items-center gap-3 flex-1 min-w-0">
+                <div className="w-10 h-10 bg-primary/10 rounded flex items-center justify-center flex-shrink-0">
+                  <Music className="w-5 h-5 text-primary" />
+                </div>
+                <div className="min-w-0">
+                  <p className="font-medium text-sm truncate">{playerCurrent.title}</p>
+                  <p className="text-xs text-muted-foreground truncate">{playerCurrent.creator}{playerCurrent.bpm ? ` · ${playerCurrent.bpm} BPM` : ''}</p>
+                </div>
+              </div>
+              <Button variant="ghost" size="icon" onClick={closePlayer} className="flex-shrink-0">
+                <span className="text-lg">x</span>
+              </Button>
             </div>
           </div>
-          <div className="flex items-center gap-4">
-            <Button variant="outline" size="icon" className="rounded-full w-10 h-10 border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-              <Play className="w-5 h-5" />
-            </Button>
+        ) : (
+          <div className="absolute bottom-16 md:bottom-0 left-0 right-0 h-14 bg-card border-t border-border flex items-center px-4 z-20">
+            <div className="flex items-center gap-3 flex-1">
+              <div className="w-10 h-10 bg-muted rounded flex items-center justify-center">
+                <Music className="w-5 h-5 text-muted-foreground" />
+              </div>
+              <p className="text-sm text-muted-foreground">Select a loop to play</p>
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* Mobile Bottom Nav */}
