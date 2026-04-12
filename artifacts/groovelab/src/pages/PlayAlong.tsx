@@ -2,36 +2,31 @@ import React, { useState, useMemo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { GraduationCap, BookOpen, Music, ExternalLink } from 'lucide-react';
+import { GraduationCap, BookOpen, Music } from 'lucide-react';
 import {
   EXAM_BOARDS, INSTRUMENTS, GRADES, PIANO_METHODS, STRING_METHODS,
   generateSearchQueries, getMethodBooks,
 } from '@/data/exam-videos';
 
-function YouTubeEmbed({ query, title }: { query: string; title: string }) {
+function YouTubeSearchCard({ query, title }: { query: string; title: string }) {
   return (
-    <div className="rounded-lg border border-border overflow-hidden">
-      <div className="aspect-video bg-muted">
-        <iframe
-          src={`https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(query)}`}
-          className="w-full h-full"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          title={title}
-        />
+    <a
+      href={`https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex items-center gap-4 p-4 rounded-lg bg-card border border-border hover:border-primary/50 transition-colors group"
+    >
+      <div className="w-12 h-12 rounded-lg bg-red-600/15 border border-red-500/20 flex items-center justify-center flex-shrink-0 group-hover:bg-red-600/25 transition-colors">
+        <svg viewBox="0 0 24 24" className="w-6 h-6 text-red-500" fill="currentColor">
+          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+        </svg>
       </div>
-      <div className="px-3 py-1.5 flex items-center justify-between bg-card">
-        <p className="text-[10px] text-muted-foreground font-mono truncate mr-2">"{query}"</p>
-        <a
-          href={`https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex-shrink-0 flex items-center gap-1 text-[10px] text-red-500 hover:text-red-600 font-medium whitespace-nowrap"
-        >
-          <ExternalLink className="w-2.5 h-2.5" /> Open in YouTube
-        </a>
+      <div className="flex-1 min-w-0">
+        <p className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">{title}</p>
+        <p className="text-xs text-muted-foreground font-mono mt-0.5 truncate">Search: "{query}"</p>
       </div>
-    </div>
+      <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-muted-foreground flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+    </a>
   );
 }
 
@@ -66,7 +61,7 @@ function MethodBookSection({ methods, instrument }: { methods: typeof PIANO_METH
                     return (
                       <div key={level} className="space-y-1">
                         <p className="text-xs font-medium text-muted-foreground">{level}</p>
-                        <YouTubeEmbed query={query} title={`${method.name} ${level}`} />
+                        <YouTubeSearchCard query={query} title={`${method.name} ${level}`} />
                       </div>
                     );
                   })}
@@ -225,8 +220,8 @@ export default function PlayAlong() {
           <h3 className="font-serif text-xl">{subtitle}</h3>
           <p className="text-xs text-muted-foreground mt-1">
             {isMethodBooks
-              ? 'Browse traditional method books with embedded YouTube play-along content.'
-              : 'YouTube play-along videos for exam preparation. Videos play directly — use "Open in YouTube" for more results.'}
+              ? 'Browse traditional method books with YouTube play-along search links.'
+              : 'YouTube play-along content for exam preparation. Click any card to search YouTube.'}
           </p>
         </div>
 
@@ -244,7 +239,7 @@ export default function PlayAlong() {
                 </h4>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   {entry.queries.slice(0, 2).map((q, qi) => (
-                    <YouTubeEmbed key={qi} query={q} title={`${entry.title} - ${qi + 1}`} />
+                    <YouTubeSearchCard key={qi} query={q} title={`${entry.title} - ${qi + 1}`} />
                   ))}
                 </div>
               </div>
