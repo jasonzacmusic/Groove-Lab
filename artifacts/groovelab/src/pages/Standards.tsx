@@ -9,7 +9,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   BookOpen, Search, Play, Square, ChevronRight, ArrowUp, ArrowDown,
-  Music, Repeat, Minus, Plus,
+  Music, Repeat, Minus, Plus, ExternalLink,
 } from 'lucide-react';
 import * as Tone from 'tone';
 
@@ -703,73 +703,6 @@ export default function Standards() {
     stopPlayback();
   }, [selectedId, stopPlayback]);
 
-  // ── YouTube Backing Tracks ─────────────────────────────────────────────────────
-  const [backingTracks, setBackingTracks] = useState<Array<{
-    id: string;
-    title: string;
-    youtubeVideoId: string;
-    creatorName: string;
-    bpm: number | null;
-  }>>([]);
-  const [tracksLoading, setTracksLoading] = useState(false);
-
-  useEffect(() => {
-    if (!selectedStandard) {
-      setBackingTracks([]);
-      return;
-    }
-
-    let cancelled = false;
-    const fetchTracks = async () => {
-      setTracksLoading(true);
-      setBackingTracks([]);
-      const searchQuery = selectedStandard.name + ' backing track';
-      try {
-        const res = await fetch('/api/loops?search=' + encodeURIComponent(searchQuery) + '&limit=3');
-        if (res.ok) {
-          const data = await res.json();
-          const loops = (data.data || data || []);
-          const withVideo = loops.filter((l: any) => l.youtubeVideoId);
-          if (!cancelled && withVideo.length > 0) {
-            setBackingTracks(withVideo.slice(0, 3).map((l: any) => ({
-              id: l.id,
-              title: l.title,
-              youtubeVideoId: l.youtubeVideoId,
-              creatorName: l.creator?.channelName || 'Unknown',
-              bpm: l.bpm || null,
-            })));
-            setTracksLoading(false);
-            return;
-          }
-        }
-      } catch (e) {
-        // fall through
-      }
-      try {
-        const fallbackRes = await fetch('/api/loops?search=' + encodeURIComponent('jazz backing track') + '&limit=3');
-        if (fallbackRes.ok) {
-          const fallbackData = await fallbackRes.json();
-          const fallbackLoops = (fallbackData.data || fallbackData || []);
-          const fallbackWithVideo = fallbackLoops.filter((l: any) => l.youtubeVideoId);
-          if (!cancelled && fallbackWithVideo.length > 0) {
-            setBackingTracks(fallbackWithVideo.slice(0, 3).map((l: any) => ({
-              id: l.id,
-              title: l.title,
-              youtubeVideoId: l.youtubeVideoId,
-              creatorName: l.creator?.channelName || 'Unknown',
-              bpm: l.bpm || null,
-            })));
-          }
-        }
-      } catch (e) {
-        // no results
-      }
-      if (!cancelled) setTracksLoading(false);
-    };
-    fetchTracks();
-    return () => { cancelled = true; };
-  }, [selectedStandard?.id, selectedStandard?.name]);
-
   // ── Render ─────────────────────────────────────────────────────────────────────
   return (
     <div className="flex flex-col md:flex-row h-[calc(100vh-144px)]">
@@ -1175,32 +1108,40 @@ export default function Standards() {
                 <Play className="w-5 h-5 text-red-500" fill="currentColor" />
                 Backing Tracks
               </h3>
-              <p className="text-xs text-muted-foreground">
-                YouTube results for "{selectedStandard.name}" in {displayKey}
+              <p className="text-xs text-muted-foreground mb-3">
+                Find play-along backing tracks for "{selectedStandard.name}" in {displayKey} on YouTube.
               </p>
 
               {(() => {
                 const name = selectedStandard.name;
                 const key = displayKey;
                 const searches = [
-                  `${name} ${key} backing track`,
-                  `${name} jazz play along ${key}`,
-                  `${name} backing track jazz`,
+                  { label: `${name} in ${key} — backing track`, query: `${name} ${key} backing track jazz` },
+                  { label: `${name} — play along`, query: `${name} jazz play along ${key}` },
+                  { label: `${name} — full band backing`, query: `${name} jazz trio backing track` },
                 ];
                 return (
-                  <div className="grid grid-cols-1 gap-6">
-                    {searches.map((query, idx) => (
-                      <div key={idx} className="space-y-2">
-                        <iframe
-                          src={`https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(query)}`}
-                          className="w-full aspect-video rounded-lg border border-border"
-                          allow="autoplay; encrypted-media"
-                          allowFullScreen
-                          title={`${name} - ${query}`}
-                        />
-                        <p className="text-xs text-muted-foreground font-mono px-1">
-                          "{query}"
-                        </p>
+                  <div className="flex flex-col gap-3">
+                    {searches.map(({ label, query }, idx) => (
+                      <div key={idx} className="rounded-lg border border-border bg-muted/30 flex items-center gap-3 p-3">
+                        <div className="w-8 h-8 rounded-md bg-red-600/20 flex items-center justify-center flex-shrink-0">
+                          <svg viewBox="0 0 24 24" className="w-4 h-4 text-red-500" fill="currentColor">
+                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                          </svg>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs font-medium text-foreground truncate">{label}</p>
+                          <p className="text-[10px] text-muted-foreground font-mono truncate">"{query}"</p>
+                        </div>
+                        <a
+                          href={`https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-shrink-0 flex items-center gap-1.5 text-xs bg-red-600 hover:bg-red-700 text-white rounded-md px-2.5 py-1.5 font-medium transition-colors"
+                        >
+                          <ExternalLink className="w-3 h-3" />
+                          Search
+                        </a>
                       </div>
                     ))}
                   </div>

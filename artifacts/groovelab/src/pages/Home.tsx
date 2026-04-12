@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { usePlayer } from '@/context/PlayerContext';
 import {
   Compass, Play, Music, Timer, Cpu, Piano, BookOpen,
-  GraduationCap, Radio, Star,
+  GraduationCap, Radio, Star, ExternalLink,
 } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
@@ -23,13 +23,41 @@ const TOOLS = [
 ];
 
 const FEATURED_SEARCHES = [
-  { label: 'Jazz Drum Loops', query: 'jazz drum loop BPM' },
-  { label: 'Blues Backing Tracks', query: 'blues backing track 12 bar' },
-  { label: 'Funk Grooves', query: 'funk drum loop groove' },
-  { label: 'Bossa Nova', query: 'bossa nova backing track' },
-  { label: 'Rock Drum Loops', query: 'rock drum loop 120 BPM' },
-  { label: 'Neo Soul', query: 'neo soul drum loop' },
+  { label: 'Jazz Drum Loops', query: 'jazz drum loop backing track BPM', color: 'text-amber-400', bg: 'bg-amber-500/10' },
+  { label: 'Blues Backing Tracks', query: 'blues backing track 12 bar', color: 'text-indigo-400', bg: 'bg-indigo-500/10' },
+  { label: 'Funk Grooves', query: 'funk drum loop groove backing track', color: 'text-orange-400', bg: 'bg-orange-500/10' },
+  { label: 'Bossa Nova', query: 'bossa nova backing track jazz', color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
+  { label: 'Rock Drum Loops', query: 'rock drum loop 120 BPM', color: 'text-red-400', bg: 'bg-red-500/10' },
+  { label: 'Neo Soul', query: 'neo soul drum loop backing track', color: 'text-purple-400', bg: 'bg-purple-500/10' },
 ];
+
+function YouTubeSearchCard({ label, query, color, bg }: { label: string; query: string; color: string; bg: string }) {
+  return (
+    <Card className="overflow-hidden hover:border-primary/40 transition-colors group">
+      <div className={`aspect-video ${bg} flex flex-col items-center justify-center gap-3 relative`}>
+        <div className="w-14 h-14 rounded-full bg-red-600/20 border border-red-500/30 flex items-center justify-center group-hover:scale-110 transition-transform">
+          <svg viewBox="0 0 24 24" className="w-7 h-7 text-red-500" fill="currentColor">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+        </div>
+        <p className={`text-sm font-medium ${color}`}>{label}</p>
+      </div>
+      <CardContent className="p-3 flex items-center justify-between gap-2">
+        <p className="text-xs text-muted-foreground font-mono truncate">"{query}"</p>
+        <a
+          href={`https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex-shrink-0 flex items-center gap-1.5 text-xs bg-red-600 hover:bg-red-700 text-white rounded-md px-2.5 py-1.5 font-medium transition-colors"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <ExternalLink className="w-3 h-3" />
+          Search
+        </a>
+      </CardContent>
+    </Card>
+  );
+}
 
 export default function Home() {
   const { data: taxonomy } = useGetTaxonomy();
@@ -82,7 +110,7 @@ export default function Home() {
         {/* Genre pills */}
         <ScrollArea className="w-full whitespace-nowrap pb-3">
           <div className="flex w-max space-x-2">
-            {taxonomy?.genres.slice(0, 12).map((g) => (
+            {taxonomy?.genres?.slice(0, 12).map((g) => (
               <Link key={g.id} href={`/explore`}>
                 <Badge variant="outline" className="cursor-pointer hover:bg-primary/10 hover:border-primary/50">
                   {g.name}
@@ -105,7 +133,7 @@ export default function Home() {
               </Card>
             ))
           ) : (
-            loopsData?.loops.map((loop) => (
+            loopsData?.loops?.map((loop) => (
               <Card key={loop.id} className="overflow-hidden hover:border-primary/50 transition-colors cursor-pointer group"
                 onClick={() => playLoop(loop)}>
                 <div className="aspect-video relative bg-muted">
@@ -140,23 +168,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* YouTube Featured Searches - embedded directly */}
+      {/* Featured Practice Content — YouTube search links */}
       <section>
-        <h2 className="font-serif text-2xl mb-4 flex items-center gap-2">
+        <h2 className="font-serif text-2xl mb-2 flex items-center gap-2">
           <Star className="w-5 h-5 text-primary" /> Featured Practice Content
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <p className="text-sm text-muted-foreground mb-4">
+          Search YouTube directly for the best backing tracks in each genre.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {FEATURED_SEARCHES.map((fs) => (
-            <div key={fs.label} className="space-y-2">
-              <h3 className="font-medium text-sm">{fs.label}</h3>
-              <iframe
-                src={`https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(fs.query)}`}
-                className="w-full aspect-video rounded-lg border border-border"
-                allow="autoplay; encrypted-media"
-                allowFullScreen
-                title={fs.label}
-              />
-            </div>
+            <YouTubeSearchCard key={fs.label} label={fs.label} query={fs.query} color={fs.color} bg={fs.bg} />
           ))}
         </div>
       </section>

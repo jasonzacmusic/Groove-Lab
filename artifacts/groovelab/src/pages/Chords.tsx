@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { useGetChordProgressions } from '@workspace/api-client-react';
 import type { ChordEntry } from '@workspace/api-client-react';
 import { Card, CardContent } from '@/components/ui/card';
@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Piano, Play, Square, ArrowUp, ArrowDown, Star, ChevronUp, ExternalLink, Youtube } from 'lucide-react';
+import { Piano, Play, Square, ArrowUp, ArrowDown, Star, ExternalLink } from 'lucide-react';
 import * as Tone from 'tone';
 
 const CHORD_TABS = ['All', 'ii-V-I', 'I-vi-ii-V', 'Blues', 'Rhythm Changes', 'Modal'];
@@ -16,14 +16,12 @@ const CHROMATIC = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', '
 const FLAT_TO_SHARP: Record<string, string> = { 'Db': 'C#', 'Eb': 'D#', 'Gb': 'F#', 'Ab': 'G#', 'Bb': 'A#' };
 const SHARP_TO_FLAT: Record<string, string> = { 'C#': 'Db', 'D#': 'Eb', 'F#': 'Gb', 'G#': 'Ab', 'A#': 'Bb' };
 
-// Map chord symbol root to a chromatic index
 function rootToIndex(root: string): number {
   const normalized = FLAT_TO_SHARP[root] || root;
   const idx = CHROMATIC.indexOf(normalized);
   return idx >= 0 ? idx : 0;
 }
 
-// Transpose a chord symbol by semitones
 function transposeChordSymbol(symbol: string, semitones: number): string {
   const match = symbol.match(/^([A-G][#b]?)(.*)/);
   if (!match) return symbol;
@@ -31,13 +29,11 @@ function transposeChordSymbol(symbol: string, semitones: number): string {
   const idx = rootToIndex(root);
   const newIdx = ((idx + semitones) % 12 + 12) % 12;
   const newRoot = CHROMATIC[newIdx];
-  // Use flat spelling if original used flats
   const useFlat = root.includes('b') || ['Db', 'Eb', 'Gb', 'Ab', 'Bb'].includes(root);
   const display = useFlat && SHARP_TO_FLAT[newRoot] ? SHARP_TO_FLAT[newRoot] : newRoot;
   return display + quality;
 }
 
-// Convert chord symbol to jazz voicing note names for playback
 function chordToNotes(symbol: string): string[] {
   const match = symbol.match(/^([A-G][#b]?)(.*)/);
   if (!match) return ['C4', 'E4', 'G4'];
@@ -53,7 +49,6 @@ function chordToNotes(symbol: string): string[] {
   };
 
   const q = quality.toLowerCase();
-  // Rootless voicings (3rd, 5th, 7th, 9th) — more jazzy
   if (q.includes('maj7') || q === 'maj7' || q === 'Δ7') return [note(4, 3), note(7, 3), note(11, 3), note(2, 4)];
   if (q.includes('m7b5') || q.includes('ø')) return [note(3, 3), note(6, 3), note(10, 3), note(2, 4)];
   if (q.includes('dim7') || q.includes('°7')) return [note(3, 3), note(6, 3), note(9, 3)];
@@ -64,8 +59,33 @@ function chordToNotes(symbol: string): string[] {
   if (q.includes('sus4')) return [note(5, 3), note(7, 3), note(0, 4)];
   if (q.includes('sus2')) return [note(2, 3), note(7, 3), note(0, 4)];
   if (q.includes('6')) return [note(4, 3), note(7, 3), note(9, 3)];
-  // Default major
   return [note(4, 3), note(7, 3), note(0, 4)];
+}
+
+function YouTubeSearchCard({ label, query }: { label: string; query: string }) {
+  return (
+    <div className="rounded-lg border border-border bg-muted/30 flex items-center gap-3 p-2.5">
+      <div className="w-7 h-7 rounded-md bg-red-600/20 flex items-center justify-center flex-shrink-0">
+        <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 text-red-500" fill="currentColor">
+          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+        </svg>
+      </div>
+      <div className="flex-1 min-w-0">
+        <p className="text-xs font-medium text-foreground truncate">{label}</p>
+        <p className="text-[10px] text-muted-foreground font-mono truncate">"{query}"</p>
+      </div>
+      <a
+        href={`https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex-shrink-0 flex items-center gap-1 text-[11px] bg-red-600 hover:bg-red-700 text-white rounded px-2 py-1 font-medium transition-colors"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <ExternalLink className="w-2.5 h-2.5" />
+        Search
+      </a>
+    </div>
+  );
 }
 
 export default function Chords() {
@@ -75,9 +95,6 @@ export default function Chords() {
   const [playingId, setPlayingId] = useState<string | null>(null);
   const [playingChordIndex, setPlayingChordIndex] = useState<number>(-1);
   const [transpositions, setTranspositions] = useState<Record<string, number>>({});
-  const [expandedId, setExpandedId] = useState<string | null>(null);
-  const [backingTracks, setBackingTracks] = useState<any[]>([]);
-  const [backingTracksLoading, setBackingTracksLoading] = useState(false);
   const synthRef = useRef<Tone.PolySynth | null>(null);
   const playTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const chordTimersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
@@ -90,65 +107,6 @@ export default function Chords() {
     difficulty: difficultyFilter,
     isJazzStandard: false,
   });
-
-  // Fetch backing tracks when a progression card is expanded
-  useEffect(() => {
-    if (!expandedId || !progressions) return;
-    const prog = progressions.find(p => p.id === expandedId);
-    if (!prog) return;
-
-    let cancelled = false;
-    setBackingTracksLoading(true);
-    setBackingTracks([]);
-
-    const searchTerm = `${prog.name} ${prog.keySignature || ''}`.trim();
-    const genreTerm = prog.genre?.name || '';
-
-    // Try specific search first, then fallback to genre-based search
-    const doSearch = async () => {
-      try {
-        // First try: search by progression name
-        let res = await fetch(`/api/loops?search=${encodeURIComponent(searchTerm)}&limit=3`);
-        let data = await res.json();
-        let loops = (data.loops || []).filter((l: any) => l.youtubeVideoId);
-
-        // Second try: search by genre + "backing track"
-        if (loops.length === 0 && genreTerm) {
-          res = await fetch(`/api/loops?search=${encodeURIComponent(genreTerm + ' backing track')}&limit=3`);
-          data = await res.json();
-          loops = (data.loops || []).filter((l: any) => l.youtubeVideoId);
-        }
-
-        // Third try: search by genre + key
-        if (loops.length === 0 && genreTerm) {
-          const keyTerm = prog.keySignature || 'C';
-          res = await fetch(`/api/loops?search=${encodeURIComponent(genreTerm + ' ' + keyTerm)}&limit=3`);
-          data = await res.json();
-          loops = (data.loops || []).filter((l: any) => l.youtubeVideoId);
-        }
-
-        // Last resort: just get featured loops
-        if (loops.length === 0) {
-          res = await fetch(`/api/loops?featured=true&limit=3`);
-          data = await res.json();
-          loops = (data.loops || []).filter((l: any) => l.youtubeVideoId);
-        }
-
-        if (!cancelled) {
-          setBackingTracks(loops);
-          setBackingTracksLoading(false);
-        }
-      } catch {
-        if (!cancelled) {
-          setBackingTracks([]);
-          setBackingTracksLoading(false);
-        }
-      }
-    };
-
-    doSearch();
-    return () => { cancelled = true; };
-  }, [expandedId, progressions]);
 
   const transpose = useCallback((progId: string, direction: 1 | -1) => {
     setTranspositions(prev => ({
@@ -185,7 +143,6 @@ export default function Chords() {
   }, []);
 
   const playChord = async (id: string, chords: ChordEntry[]) => {
-    // If already playing this one, stop it
     if (playingId === id) {
       stopPlayback();
       return;
@@ -206,13 +163,12 @@ export default function Chords() {
 
     const now = Tone.now();
     let timeOffset = 0;
-    const beatDuration = 0.5; // seconds per beat
+    const beatDuration = 0.5;
 
     chordTimersRef.current = [];
     transposed.forEach((chord, idx) => {
       const notes = chordToNotes(chord.chord);
       const duration = chord.beats * beatDuration;
-      // Schedule highlight update
       const timer = setTimeout(() => {
         setPlayingChordIndex(idx);
       }, timeOffset * 1000);
@@ -292,23 +248,28 @@ export default function Chords() {
              </Card>
            ))
         ) : (
-          progressions?.map((prog) => (
-            <Card key={prog.id} className="overflow-hidden border-border bg-card hover:border-primary/30 transition-colors group">
-              <CardContent className="p-6">
-                <div className="flex justify-between items-start mb-6">
-                  <div>
-                    <h3 className="font-serif text-xl text-foreground mb-2">{prog.name}</h3>
-                    <div className="flex gap-2 items-center">
-                      <Badge variant="secondary" className="bg-muted text-muted-foreground font-mono text-xs">{prog.keySignature || 'C'}</Badge>
-                      {prog.genre && <Badge variant="outline" className="text-xs">{prog.genre.name}</Badge>}
-                      <div className="flex text-amber-500 ml-2">
-                        {Array.from({length: 3}).map((_, i) => (
-                          <Star key={i} className={`w-3 h-3 ${i < (prog.difficultyLevel || 1)/3 ? 'fill-current' : 'opacity-30'}`} />
-                        ))}
+          progressions?.map((prog) => {
+            const transAmt = transpositions[prog.id] || 0;
+            const origKey = prog.keySignature || 'C';
+            const displayKey = transAmt !== 0 ? transposeChordSymbol(origKey, transAmt) : origKey;
+            const genre = (prog as any).genre?.name || 'jazz';
+
+            return (
+              <Card key={prog.id} className="overflow-hidden border-border bg-card hover:border-primary/30 transition-colors group">
+                <CardContent className="p-6">
+                  <div className="flex justify-between items-start mb-6">
+                    <div>
+                      <h3 className="font-serif text-xl text-foreground mb-2">{prog.name}</h3>
+                      <div className="flex gap-2 items-center">
+                        <Badge variant="secondary" className="bg-muted text-muted-foreground font-mono text-xs">{displayKey}</Badge>
+                        {prog.genre && <Badge variant="outline" className="text-xs">{prog.genre.name}</Badge>}
+                        <div className="flex text-amber-500 ml-2">
+                          {Array.from({length: 3}).map((_, i) => (
+                            <Star key={i} className={`w-3 h-3 ${i < (prog.difficultyLevel || 1)/3 ? 'fill-current' : 'opacity-30'}`} />
+                          ))}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="flex flex-col gap-2">
                     <Button
                       variant="outline"
                       size="icon"
@@ -322,87 +283,57 @@ export default function Chords() {
                       )}
                     </Button>
                   </div>
-                </div>
 
-                <div className="bg-muted rounded-xl p-4 flex flex-wrap gap-3 items-center border border-border/50">
-                  {getTransposedChords(prog.id, prog.chords).map((c, i) => {
-                    const isCurrentlyPlaying = playingId === prog.id && playingChordIndex === i;
-                    return (
-                      <div key={i} className="flex items-center">
-                        <div
-                          className={`inline-flex items-center justify-center rounded-lg border px-3 py-2 font-mono text-base ${
-                            isCurrentlyPlaying ? 'bg-primary/20 border-primary text-primary' : 'bg-card border-border'
-                          }`}
-                          style={{ minWidth: `${c.beats * 40}px` }}
-                        >
-                          {c.chord}
+                  <div className="bg-muted rounded-xl p-4 flex flex-wrap gap-3 items-center border border-border/50">
+                    {getTransposedChords(prog.id, prog.chords).map((c, i) => {
+                      const isCurrentlyPlaying = playingId === prog.id && playingChordIndex === i;
+                      return (
+                        <div key={i} className="flex items-center">
+                          <div
+                            className={`inline-flex items-center justify-center rounded-lg border px-3 py-2 font-mono text-base ${
+                              isCurrentlyPlaying ? 'bg-primary/20 border-primary text-primary' : 'bg-card border-border'
+                            }`}
+                            style={{ minWidth: `${c.beats * 40}px` }}
+                          >
+                            {c.chord}
+                          </div>
+                          {i < prog.chords.length - 1 && <div className="w-4 h-px bg-border mx-1" />}
                         </div>
-                        {i < prog.chords.length - 1 && <div className="w-4 h-px bg-border mx-1" />}
-                      </div>
-                    );
-                  })}
-                </div>
+                      );
+                    })}
+                  </div>
 
-                <div className="mt-6 flex items-center justify-between border-t border-border pt-4">
-                  <div className="flex gap-2 items-center">
+                  {/* Transpose controls */}
+                  <div className="mt-4 flex items-center gap-2 border-t border-border pt-4">
                     <Button variant="ghost" size="sm" className="h-8 text-muted-foreground hover:text-foreground" onClick={() => transpose(prog.id, -1)}>
                       <ArrowDown className="w-4 h-4 mr-1" /> Transpose
                     </Button>
                     <Button variant="ghost" size="sm" className="h-8 text-muted-foreground hover:text-foreground" onClick={() => transpose(prog.id, 1)}>
                       <ArrowUp className="w-4 h-4 mr-1" />
                     </Button>
-                    {(transpositions[prog.id] || 0) !== 0 && (
-                      <Badge variant="secondary" className="font-mono text-xs">{transpositions[prog.id] > 0 ? '+' : ''}{transpositions[prog.id]}</Badge>
+                    {transAmt !== 0 && (
+                      <Badge variant="secondary" className="font-mono text-xs">{transAmt > 0 ? '+' : ''}{transAmt}</Badge>
                     )}
                   </div>
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    className="h-8 bg-primary/10 text-primary hover:bg-primary hover:text-white"
-                    onClick={() => setExpandedId(expandedId === prog.id ? null : prog.id)}
-                  >
-                    {expandedId === prog.id ? (
-                      <><ChevronUp className="w-4 h-4 mr-2" /> Hide Tracks</>
-                    ) : (
-                      <><Youtube className="w-4 h-4 mr-2" /> Backing Tracks</>
-                    )}
-                  </Button>
-                </div>
 
-                {/* Backing Tracks Section - YouTube Search Embeds */}
-                {expandedId === prog.id && (() => {
-                  // Build search query using the TRANSPOSED key
-                  const transAmt = transpositions[prog.id] || 0;
-                  const origKey = prog.keySignature || 'C';
-                  const displayKey = transAmt !== 0 ? transposeChordSymbol(origKey, transAmt) : origKey;
-                  const genre = (prog as any).genre?.name || 'jazz';
-                  const searches = [
-                    `${prog.name} ${displayKey} backing track`,
-                    `${displayKey} ${genre} backing track`,
-                  ];
-                  return (
-                    <div className="mt-4 pt-4 border-t border-border space-y-3">
-                      <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                        <Youtube className="w-4 h-4" /> Backing Tracks in {displayKey}
-                      </h4>
-                      {searches.map((query, idx) => (
-                        <div key={idx} className="space-y-1">
-                          <iframe
-                            src={`https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(query)}`}
-                            className="w-full aspect-video rounded-lg"
-                            allow="autoplay; encrypted-media"
-                            allowFullScreen
-                            title={query}
-                          />
-                          <p className="text-xs text-muted-foreground font-mono">"{query}"</p>
-                        </div>
-                      ))}
-                    </div>
-                  );
-                })()}
-              </CardContent>
-            </Card>
-          ))
+                  {/* Backing Tracks — always visible */}
+                  <div className="mt-4 pt-4 border-t border-border space-y-2">
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                      Backing Tracks in {displayKey}
+                    </h4>
+                    <YouTubeSearchCard
+                      label={`${prog.name} backing track in ${displayKey}`}
+                      query={`${prog.name} ${displayKey} backing track`}
+                    />
+                    <YouTubeSearchCard
+                      label={`${displayKey} ${genre} backing track`}
+                      query={`${displayKey} ${genre} backing track`}
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })
         )}
       </div>
     </div>
