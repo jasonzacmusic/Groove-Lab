@@ -1222,7 +1222,7 @@ export default function Standards() {
                       <div key={idx} className="rounded-lg border border-border overflow-hidden">
                         <div className="aspect-video bg-muted">
                           <iframe
-                            src={`https://www.youtube-nocookie.com/embed?search_query=${encodeURIComponent(query)}`}
+                            src={`https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(query)}`}
                             className="w-full h-full"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
