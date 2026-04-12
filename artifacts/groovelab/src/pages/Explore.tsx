@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useGetLoops, useGetTaxonomy, useGetGenreMap } from '@workspace/api-client-react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { useGetLoops, useGetTaxonomy, useGetGenreMap, useGetGrooveMatch } from '@workspace/api-client-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -8,15 +8,342 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Slider } from '@/components/ui/slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Play, Music, Map as MapIcon, List, Search } from 'lucide-react';
+import { Play, Music, Map as MapIcon, List, Search, X } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { ScatterChart, Scatter, XAxis, YAxis, Tooltip as RechartsTooltip, ResponsiveContainer, Cell } from 'recharts';
+
+/* ------------------------------------------------------------------ */
+/*  Genre Map Component (SVG-based 2D interactive map)                */
+/* ------------------------------------------------------------------ */
+
+interface GenreMapNode {
+  genreId: number;
+  genreName: string;
+  x: number;
+  y: number;
+  loopCount: number;
+  feelId?: number | null;
+  feelName?: string | null;
+}
+
+interface GenreMapViewProps {
+  data: GenreMapNode[];
+  onGenreClick: (genreId: number, genreName: string) => void;
+}
+
+function GenreMapView({ data, onGenreClick }: GenreMapViewProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [dimensions, setDimensions] = useState({ width: 800, height: 600 });
+  const [hoveredGenre, setHoveredGenre] = useState<number | null>(null);
+  const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new ResizeObserver((entries) => {
+      const { width, height } = entries[0].contentRect;
+      if (width > 0 && height > 0) setDimensions({ width, height });
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  const padding = { top: 50, right: 50, bottom: 50, left: 60 };
+  const plotW = dimensions.width - padding.left - padding.right;
+  const plotH = dimensions.height - padding.top - padding.bottom;
+
+  const maxLoops = Math.max(...data.map((d) => d.loopCount), 1);
+
+  const toSvgX = (v: number) => padding.left + v * plotW;
+  const toSvgY = (v: number) => padding.top + (1 - v) * plotH; // flip Y so 0=bottom
+
+  const radius = (loopCount: number) => {
+    const min = 15;
+    const max = 30;
+    return min + (loopCount / maxLoops) * (max - min);
+  };
+
+  const nodeColor = (x: number) => {
+    if (x > 0.55) return '#f59e0b'; // warm amber for swung
+    if (x < 0.45) return '#3b82f6'; // cool blue for straight
+    return '#8b5cf6'; // purple blend for middle
+  };
+
+  const gridLines = [0, 0.25, 0.5, 0.75, 1];
+
+  const hoveredNode = data.find((d) => d.genreId === hoveredGenre);
+
+  return (
+    <div ref={containerRef} className="w-full h-full relative" style={{ minHeight: 400 }}>
+      {/* CSS for pulse animation */}
+      <style>{`
+        @keyframes genre-pulse {
+          0%, 100% { opacity: 0.15; transform: scale(1); }
+          50% { opacity: 0.3; transform: scale(1.3); }
+        }
+        .genre-pulse-ring {
+          animation: genre-pulse 3s ease-in-out infinite;
+          transform-origin: center;
+          pointer-events: none;
+        }
+      `}</style>
+
+      <svg
+        width={dimensions.width}
+        height={dimensions.height}
+        className="block"
+        style={{ background: 'hsl(220 20% 8%)' }}
+      >
+        {/* Grid lines */}
+        {gridLines.map((v) => (
+          <React.Fragment key={`grid-${v}`}>
+            <line
+              x1={toSvgX(v)}
+              y1={padding.top}
+              x2={toSvgX(v)}
+              y2={padding.top + plotH}
+              stroke="hsl(220 10% 20%)"
+              strokeWidth={v === 0.5 ? 1 : 0.5}
+              strokeDasharray={v === 0.5 ? undefined : '4 4'}
+            />
+            <line
+              x1={padding.left}
+              y1={toSvgY(v)}
+              x2={padding.left + plotW}
+              y2={toSvgY(v)}
+              stroke="hsl(220 10% 20%)"
+              strokeWidth={v === 0.5 ? 1 : 0.5}
+              strokeDasharray={v === 0.5 ? undefined : '4 4'}
+            />
+          </React.Fragment>
+        ))}
+
+        {/* Axis labels */}
+        <text x={padding.left} y={padding.top + plotH + 40} fill="hsl(220 10% 50%)" fontSize={12} fontFamily="sans-serif">
+          Straight
+        </text>
+        <text x={padding.left + plotW} y={padding.top + plotH + 40} fill="hsl(220 10% 50%)" fontSize={12} fontFamily="sans-serif" textAnchor="end">
+          Swung
+        </text>
+        <text x={padding.left - 10} y={padding.top - 10} fill="hsl(220 10% 50%)" fontSize={12} fontFamily="sans-serif" textAnchor="start">
+          Complex
+        </text>
+        <text x={padding.left - 10} y={padding.top + plotH + 5} fill="hsl(220 10% 50%)" fontSize={12} fontFamily="sans-serif" textAnchor="start">
+          Simple
+        </text>
+
+        {/* Genre nodes */}
+        {data.map((entry) => {
+          const cx = toSvgX(entry.x);
+          const cy = toSvgY(entry.y);
+          const r = radius(entry.loopCount);
+          const color = nodeColor(entry.x);
+          const isHovered = hoveredGenre === entry.genreId;
+
+          return (
+            <g
+              key={entry.genreId}
+              style={{ cursor: 'pointer' }}
+              onClick={() => onGenreClick(entry.genreId, entry.genreName)}
+              onMouseEnter={(e) => {
+                setHoveredGenre(entry.genreId);
+                setTooltipPos({ x: e.clientX, y: e.clientY });
+              }}
+              onMouseMove={(e) => {
+                setTooltipPos({ x: e.clientX, y: e.clientY });
+              }}
+              onMouseLeave={() => setHoveredGenre(null)}
+            >
+              {/* Pulse ring for nodes with loops */}
+              {entry.loopCount > 0 && (
+                <circle
+                  cx={cx}
+                  cy={cy}
+                  r={r + 6}
+                  fill={color}
+                  className="genre-pulse-ring"
+                  style={{ animationDelay: `${(entry.genreId * 0.4) % 3}s` }}
+                />
+              )}
+
+              {/* Main circle */}
+              <circle
+                cx={cx}
+                cy={cy}
+                r={isHovered ? r + 4 : r}
+                fill={color}
+                fillOpacity={isHovered ? 0.9 : 0.6}
+                stroke={isHovered ? '#fff' : color}
+                strokeWidth={isHovered ? 2 : 1}
+                strokeOpacity={0.8}
+                style={{ transition: 'r 0.2s, fill-opacity 0.2s' }}
+              />
+
+              {/* Genre name */}
+              <text
+                x={cx}
+                y={cy + 1}
+                textAnchor="middle"
+                dominantBaseline="central"
+                fill="#fff"
+                fontSize={r > 20 ? 11 : 9}
+                fontWeight={600}
+                fontFamily="sans-serif"
+                pointerEvents="none"
+                style={{ textShadow: '0 1px 3px rgba(0,0,0,0.6)' }}
+              >
+                {entry.genreName.length > 10 ? entry.genreName.slice(0, 9) + '...' : entry.genreName}
+              </text>
+
+              {/* Loop count badge */}
+              <circle
+                cx={cx + r * 0.7}
+                cy={cy - r * 0.7}
+                r={9}
+                fill="hsl(220 20% 15%)"
+                stroke={color}
+                strokeWidth={1.5}
+              />
+              <text
+                x={cx + r * 0.7}
+                y={cy - r * 0.7 + 1}
+                textAnchor="middle"
+                dominantBaseline="central"
+                fill="#fff"
+                fontSize={8}
+                fontWeight={700}
+                fontFamily="monospace"
+                pointerEvents="none"
+              >
+                {entry.loopCount}
+              </text>
+            </g>
+          );
+        })}
+      </svg>
+
+      {/* Tooltip */}
+      {hoveredNode && (
+        <div
+          className="fixed z-50 pointer-events-none bg-popover border border-border rounded-lg shadow-xl px-4 py-3"
+          style={{
+            left: tooltipPos.x + 14,
+            top: tooltipPos.y - 10,
+          }}
+        >
+          <p className="font-medium text-foreground text-sm">{hoveredNode.genreName}</p>
+          <p className="text-xs text-muted-foreground">{hoveredNode.feelName || 'Mixed Feel'}</p>
+          <p className="text-xs font-mono mt-1 text-primary">{hoveredNode.loopCount} loops</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Groove Match Panel                                                */
+/* ------------------------------------------------------------------ */
+
+interface GrooveMatchPanelProps {
+  loopId: string;
+  loopTitle: string;
+  onClose: () => void;
+  onMatchClick: (loopId: string) => void;
+}
+
+function GrooveMatchPanel({ loopId, loopTitle, onClose, onMatchClick }: GrooveMatchPanelProps) {
+  const { data: matches, isLoading } = useGetGrooveMatch(loopId);
+
+  return (
+    <div
+      className="border-t border-border bg-card/80 backdrop-blur overflow-hidden"
+      style={{
+        animation: 'grooveMatchSlideIn 0.35s cubic-bezier(0.4,0,0.2,1) forwards',
+      }}
+    >
+      <style>{`
+        @keyframes grooveMatchSlideIn {
+          from { max-height: 0; opacity: 0; padding-top: 0; padding-bottom: 0; }
+          to   { max-height: 300px; opacity: 1; padding-top: 1.5rem; padding-bottom: 1.5rem; }
+        }
+      `}</style>
+
+      <div className="px-6">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h4 className="font-serif text-lg text-foreground">Loops that groove with this one</h4>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              Based on <span className="text-primary font-medium">{loopTitle}</span>
+            </p>
+          </div>
+          <Button variant="ghost" size="sm" onClick={onClose} className="h-8 w-8 p-0">
+            <X className="w-4 h-4" />
+          </Button>
+        </div>
+
+        {isLoading ? (
+          <div className="flex gap-4 overflow-x-auto pb-2">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <Skeleton key={i} className="h-24 w-56 flex-shrink-0 rounded-lg" />
+            ))}
+          </div>
+        ) : !matches || matches.length === 0 ? (
+          <p className="text-sm text-muted-foreground py-4">No groove matches found for this loop.</p>
+        ) : (
+          <div className="flex gap-4 overflow-x-auto pb-2">
+            {matches.slice(0, 6).map((match) => (
+              <Card
+                key={match.id}
+                className="flex-shrink-0 w-56 border-border bg-background hover:border-primary/50 transition-colors cursor-pointer group"
+                onClick={() => onMatchClick(match.id)}
+              >
+                <CardContent className="p-3">
+                  <h5 className="font-medium text-sm truncate mb-2 group-hover:text-primary transition-colors">
+                    {match.title}
+                  </h5>
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    {match.bpm && (
+                      <Badge variant="secondary" className="font-mono text-[10px] bg-primary/10 text-primary">
+                        {match.bpm} BPM
+                      </Badge>
+                    )}
+                    {match.timeSignatures?.[0] && (
+                      <Badge variant="outline" className="font-mono text-[10px]">
+                        {match.timeSignatures[0].displayName}
+                      </Badge>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-1.5 mt-2">
+                    <Avatar className="w-4 h-4">
+                      <AvatarFallback className="text-[7px]">
+                        {match.creator?.channelName?.substring(0, 2).toUpperCase() || 'GL'}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="text-[10px] text-muted-foreground truncate">
+                      {match.creator?.channelName || 'Unknown'}
+                    </span>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Main Explore Page                                                 */
+/* ------------------------------------------------------------------ */
 
 export default function Explore() {
   const [viewMode, setViewMode] = useState<'list' | 'map'>('list');
   const [search, setSearch] = useState('');
   const [bpmRange, setBpmRange] = useState([60, 200]);
-  
+  const [selectedLoopId, setSelectedLoopId] = useState<string | null>(null);
+  const [selectedLoopTitle, setSelectedLoopTitle] = useState('');
+  const [genreFilter, setGenreFilter] = useState<string | null>(null);
+
   const { data: taxonomy, isLoading: isTaxonomyLoading } = useGetTaxonomy();
   const { data: loopsData, isLoading: isLoopsLoading } = useGetLoops({
     search: search || undefined,
@@ -25,20 +352,48 @@ export default function Explore() {
   });
   const { data: genreMap } = useGetGenreMap();
 
+  const handleGenreMapClick = useCallback((genreId: number, genreName: string) => {
+    setGenreFilter(genreName);
+    setSearch(genreName);
+    setViewMode('list');
+  }, []);
+
+  const handleLoopCardClick = useCallback((loopId: string, loopTitle: string) => {
+    if (selectedLoopId === loopId) {
+      setSelectedLoopId(null);
+      setSelectedLoopTitle('');
+    } else {
+      setSelectedLoopId(loopId);
+      setSelectedLoopTitle(loopTitle);
+    }
+  }, [selectedLoopId]);
+
+  const handleMatchClick = useCallback((loopId: string) => {
+    // Find the match title from the loops data or just use the id
+    const matchLoop = loopsData?.loops.find((l) => l.id === loopId);
+    setSelectedLoopId(loopId);
+    setSelectedLoopTitle(matchLoop?.title || 'Selected Loop');
+  }, [loopsData]);
+
+  const clearGenreFilter = useCallback(() => {
+    setGenreFilter(null);
+    setSearch('');
+  }, []);
+
   return (
     <div className="flex flex-col md:flex-row h-[calc(100vh-144px)]">
       {/* Sidebar Filters */}
       <aside className="w-full md:w-80 border-r border-border bg-sidebar overflow-y-auto hidden md:block p-6">
         <h3 className="font-serif text-xl mb-6">Filters</h3>
-        
+
         <Accordion type="multiple" defaultValue={['bpm', 'time_sig', 'feel']} className="w-full">
           <AccordionItem value="bpm" className="border-border">
             <AccordionTrigger className="hover:no-underline font-medium text-sm text-foreground">BPM Range</AccordionTrigger>
             <AccordionContent className="pt-4 pb-6 px-1">
-              <Slider 
-                value={bpmRange} 
-                min={40} 
-                max={300} 
+              <Slider
+                value={bpmRange}
+                min={40}
+                max={300}
                 step={1}
                 onValueChange={setBpmRange}
                 className="mb-6"
@@ -101,15 +456,22 @@ export default function Explore() {
         <div className="p-6 border-b border-border bg-card/50 backdrop-blur flex items-center justify-between gap-4">
           <div className="relative flex-1 max-w-md hidden md:block">
              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-             <Input 
-               placeholder="Search loops..." 
+             <Input
+               placeholder="Search loops..."
                value={search}
-               onChange={(e) => setSearch(e.target.value)}
-               className="pl-9 bg-background border-border" 
+               onChange={(e) => { setSearch(e.target.value); setGenreFilter(null); }}
+               className="pl-9 bg-background border-border"
              />
           </div>
-          
+
           <div className="flex items-center gap-4 ml-auto">
+            {genreFilter && (
+              <Badge variant="secondary" className="gap-1 cursor-pointer" onClick={clearGenreFilter}>
+                Genre: {genreFilter}
+                <X className="w-3 h-3" />
+              </Badge>
+            )}
+
             <Select defaultValue="newest">
               <SelectTrigger className="w-[180px] bg-background border-border">
                 <SelectValue placeholder="Sort by" />
@@ -124,17 +486,17 @@ export default function Explore() {
             </Select>
 
             <div className="flex bg-muted rounded-md p-1">
-              <Button 
-                variant={viewMode === 'list' ? 'secondary' : 'ghost'} 
-                size="sm" 
+              <Button
+                variant={viewMode === 'list' ? 'secondary' : 'ghost'}
+                size="sm"
                 className="h-8 px-3"
                 onClick={() => setViewMode('list')}
               >
                 <List className="w-4 h-4 mr-2" /> List
               </Button>
-              <Button 
-                variant={viewMode === 'map' ? 'secondary' : 'ghost'} 
-                size="sm" 
+              <Button
+                variant={viewMode === 'map' ? 'secondary' : 'ghost'}
+                size="sm"
                 className="h-8 px-3"
                 onClick={() => setViewMode('map')}
               >
@@ -144,112 +506,100 @@ export default function Explore() {
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-6">
+        <div className="flex-1 overflow-y-auto">
           {viewMode === 'list' ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {isLoopsLoading ? (
-                 Array.from({ length: 8 }).map((_, i) => (
-                  <Card key={`loading-${i}`} className="overflow-hidden border-border bg-card">
-                    <Skeleton className="h-40 w-full" />
-                    <CardContent className="p-4 space-y-2">
-                      <Skeleton className="h-4 w-3/4" />
-                      <Skeleton className="h-4 w-1/2" />
-                    </CardContent>
-                  </Card>
-                ))
-              ) : loopsData?.loops.length === 0 ? (
-                <div className="col-span-full flex flex-col items-center justify-center py-20 text-muted-foreground">
-                  <Music className="w-12 h-12 mb-4 opacity-50" />
-                  <h3 className="text-xl font-serif mb-2">No loops found</h3>
-                  <p className="text-sm">Try broadening your search or adjusting filters.</p>
-                  <Button variant="outline" className="mt-4" onClick={() => { setSearch(''); setBpmRange([60, 200]); }}>
-                    Clear Filters
-                  </Button>
-                </div>
-              ) : (
-                loopsData?.loops.map((loop) => (
-                  <Card key={loop.id} className="overflow-hidden border-border bg-card hover:border-primary/50 transition-colors cursor-pointer group vinyl-hover">
-                    <div className="aspect-video relative bg-muted flex items-center justify-center group-hover:bg-primary/10 transition-colors">
-                      {loop.youtubeVideoId ? (
-                        <img src={`https://img.youtube.com/vi/${loop.youtubeVideoId}/mqdefault.jpg`} alt={loop.title} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
-                      ) : (
-                        <Music className="w-12 h-12 text-muted-foreground group-hover:text-primary transition-colors" />
-                      )}
-                      <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                        <Play className="w-12 h-12 text-white drop-shadow-md" fill="currentColor" />
-                      </div>
-                    </div>
-                    <CardContent className="p-4">
-                      <h4 className="font-medium text-lg truncate mb-2">{loop.title}</h4>
-                      <div className="flex flex-wrap items-center gap-2 mb-3">
-                        <Badge variant="secondary" className="font-mono text-xs bg-primary/10 text-primary">{loop.bpm} BPM</Badge>
-                        {loop.timeSignatures?.[0] && <Badge variant="outline" className="font-mono text-xs">{loop.timeSignatures[0].displayName}</Badge>}
-                        {loop.feels?.[0] && <Badge variant="outline" className="text-[10px]">{loop.feels[0].name}</Badge>}
-                      </div>
-                      <div className="flex items-center justify-between mt-4 pt-4 border-t border-border">
-                        <div className="flex items-center gap-2">
-                          <Avatar className="w-6 h-6">
-                            <AvatarFallback className="text-[10px]">{loop.creator?.channelName.substring(0, 2).toUpperCase() || 'GL'}</AvatarFallback>
-                          </Avatar>
-                          <span className="text-xs text-muted-foreground truncate max-w-[100px]">{loop.creator?.channelName || 'Unknown'}</span>
-                        </div>
-                        <div className="flex gap-1 items-center text-primary">
-                          {Array.from({ length: 5 }).map((_, i) => (
-                            <div key={i} className={`w-1.5 h-1.5 rounded-full ${i < loop.qualityScore ? 'bg-primary' : 'bg-muted'}`} />
-                          ))}
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6">
+                {isLoopsLoading ? (
+                   Array.from({ length: 8 }).map((_, i) => (
+                    <Card key={`loading-${i}`} className="overflow-hidden border-border bg-card">
+                      <Skeleton className="h-40 w-full" />
+                      <CardContent className="p-4 space-y-2">
+                        <Skeleton className="h-4 w-3/4" />
+                        <Skeleton className="h-4 w-1/2" />
+                      </CardContent>
+                    </Card>
+                  ))
+                ) : loopsData?.loops.length === 0 ? (
+                  <div className="col-span-full flex flex-col items-center justify-center py-20 text-muted-foreground">
+                    <Music className="w-12 h-12 mb-4 opacity-50" />
+                    <h3 className="text-xl font-serif mb-2">No loops found</h3>
+                    <p className="text-sm">Try broadening your search or adjusting filters.</p>
+                    <Button variant="outline" className="mt-4" onClick={() => { setSearch(''); setBpmRange([60, 200]); setGenreFilter(null); }}>
+                      Clear Filters
+                    </Button>
+                  </div>
+                ) : (
+                  loopsData?.loops.map((loop) => (
+                    <Card
+                      key={loop.id}
+                      className={`overflow-hidden border-border bg-card hover:border-primary/50 transition-colors cursor-pointer group vinyl-hover ${
+                        selectedLoopId === loop.id ? 'ring-2 ring-primary border-primary' : ''
+                      }`}
+                      onClick={() => handleLoopCardClick(loop.id, loop.title)}
+                    >
+                      <div className="aspect-video relative bg-muted flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+                        {loop.youtubeVideoId ? (
+                          <img src={`https://img.youtube.com/vi/${loop.youtubeVideoId}/mqdefault.jpg`} alt={loop.title} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
+                        ) : (
+                          <Music className="w-12 h-12 text-muted-foreground group-hover:text-primary transition-colors" />
+                        )}
+                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                          <Play className="w-12 h-12 text-white drop-shadow-md" fill="currentColor" />
                         </div>
                       </div>
-                    </CardContent>
-                  </Card>
-                ))
+                      <CardContent className="p-4">
+                        <h4 className="font-medium text-lg truncate mb-2">{loop.title}</h4>
+                        <div className="flex flex-wrap items-center gap-2 mb-3">
+                          <Badge variant="secondary" className="font-mono text-xs bg-primary/10 text-primary">{loop.bpm} BPM</Badge>
+                          {loop.timeSignatures?.[0] && <Badge variant="outline" className="font-mono text-xs">{loop.timeSignatures[0].displayName}</Badge>}
+                          {loop.feels?.[0] && <Badge variant="outline" className="text-[10px]">{loop.feels[0].name}</Badge>}
+                        </div>
+                        <div className="flex items-center justify-between mt-4 pt-4 border-t border-border">
+                          <div className="flex items-center gap-2">
+                            <Avatar className="w-6 h-6">
+                              <AvatarFallback className="text-[10px]">{loop.creator?.channelName.substring(0, 2).toUpperCase() || 'GL'}</AvatarFallback>
+                            </Avatar>
+                            <span className="text-xs text-muted-foreground truncate max-w-[100px]">{loop.creator?.channelName || 'Unknown'}</span>
+                          </div>
+                          <div className="flex gap-1 items-center text-primary">
+                            {Array.from({ length: 5 }).map((_, i) => (
+                              <div key={i} className={`w-1.5 h-1.5 rounded-full ${i < loop.qualityScore ? 'bg-primary' : 'bg-muted'}`} />
+                            ))}
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))
+                )}
+              </div>
+
+              {/* Groove Match Panel */}
+              {selectedLoopId && (
+                <GrooveMatchPanel
+                  key={selectedLoopId}
+                  loopId={selectedLoopId}
+                  loopTitle={selectedLoopTitle}
+                  onClose={() => { setSelectedLoopId(null); setSelectedLoopTitle(''); }}
+                  onMatchClick={handleMatchClick}
+                />
               )}
-            </div>
+            </>
           ) : (
-            <div className="h-full w-full bg-card border border-border rounded-xl p-4 flex flex-col relative overflow-hidden">
-               <h3 className="font-serif text-2xl mb-2 z-10">The Groove Map</h3>
-               <p className="text-sm text-muted-foreground mb-6 z-10">Discover loops by feel and complexity. Straight rhythms on the left, swung on the right.</p>
-               
+            <div className="h-full w-full flex flex-col relative overflow-hidden" style={{ background: 'hsl(220 20% 8%)' }}>
+               <div className="px-6 pt-6 pb-2 z-10">
+                 <h3 className="font-serif text-2xl text-white">The Groove Map</h3>
+                 <p className="text-sm text-gray-400 mt-1">Discover loops by feel and complexity. Click a genre to explore its loops.</p>
+               </div>
+
                <div className="flex-1 min-h-0 relative z-10">
                  {genreMap && genreMap.length > 0 ? (
-                   <ResponsiveContainer width="100%" height="100%">
-                     <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
-                       <XAxis type="number" dataKey="x" name="Feel" domain={[0, 1]} hide />
-                       <YAxis type="number" dataKey="y" name="Complexity" domain={[0, 1]} hide />
-                       <RechartsTooltip cursor={{strokeDasharray: '3 3'}} content={({ active, payload }) => {
-                         if (active && payload && payload.length) {
-                           const data = payload[0].payload;
-                           return (
-                             <div className="bg-popover border border-border p-3 rounded-lg shadow-lg">
-                               <p className="font-medium text-foreground">{data.genreName}</p>
-                               <p className="text-sm text-muted-foreground">{data.feelName || 'Mixed Feel'}</p>
-                               <p className="text-xs font-mono mt-2 text-primary">{data.loopCount} loops</p>
-                             </div>
-                           );
-                         }
-                         return null;
-                       }} />
-                       <Scatter name="Genres" data={genreMap}>
-                         {genreMap.map((entry, index) => {
-                           // Color based on x (feel) - straight is amber, swung is coral
-                           const color = entry.x > 0.6 ? 'hsl(var(--coral))' : entry.x < 0.4 ? 'hsl(var(--primary))' : 'hsl(var(--sage))';
-                           return <Cell key={`cell-${index}`} fill={color} />;
-                         })}
-                       </Scatter>
-                     </ScatterChart>
-                   </ResponsiveContainer>
+                   <GenreMapView data={genreMap} onGenreClick={handleGenreMapClick} />
                  ) : (
                     <div className="absolute inset-0 flex items-center justify-center">
                       <Skeleton className="w-full h-full rounded-xl opacity-20" />
                     </div>
                  )}
-               </div>
-               
-               {/* Decorative grid background */}
-               <div className="absolute inset-0 pointer-events-none opacity-5 flex flex-col justify-between p-12">
-                  {Array.from({length: 10}).map((_, i) => <div key={`h-${i}`} className="w-full h-px bg-foreground" />)}
-               </div>
-               <div className="absolute inset-0 pointer-events-none opacity-5 flex justify-between p-12">
-                  {Array.from({length: 10}).map((_, i) => <div key={`v-${i}`} className="h-full w-px bg-foreground" />)}
                </div>
             </div>
           )}
