@@ -1,8 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { cors } from "../_lib/cors";
-import { db } from "../_lib/db";
-import { genres, feels, loopGenres, loopFeels } from "../_lib/db";
-import { eq, sql } from "drizzle-orm";
+import { db, genres, feels, loopGenres, loopFeels, eq, sql } from "../_lib/db";
 
 const GENRE_MAP_POSITIONS: Record<string, { x: number; y: number }> = {
   Jazz: { x: 0.75, y: 0.8 },

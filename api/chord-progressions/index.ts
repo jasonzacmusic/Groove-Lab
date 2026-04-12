@@ -1,8 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { cors } from "../_lib/cors";
-import { db } from "../_lib/db";
-import { chordProgressions, timeSignatures, genres } from "../_lib/db";
-import { eq, and } from "drizzle-orm";
+import { db, chordProgressions, timeSignatures, genres, eq, and } from "../_lib/db";
 
 async function enrichChordProgression(cp: typeof chordProgressions.$inferSelect) {
   const [ts, genre] = await Promise.all([

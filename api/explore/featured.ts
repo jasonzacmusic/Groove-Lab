@@ -1,9 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { cors } from "../_lib/cors";
 import { enrichLoop } from "../_lib/enrich";
-import { db } from "../_lib/db";
-import { loops } from "../_lib/db";
-import { eq, and, desc } from "drizzle-orm";
+import { db, loops, eq, and, desc } from "../_lib/db";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (cors(req, res)) return;

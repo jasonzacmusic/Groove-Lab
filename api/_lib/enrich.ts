@@ -12,8 +12,8 @@ import {
   loopGenres,
   loopInstrumentTypes,
   loopContentTypes,
+  eq,
 } from "./db";
-import { eq } from "drizzle-orm";
 
 export async function enrichLoop(loop: typeof loops.$inferSelect) {
   const [ts, f, g, it, ct, creator] = await Promise.all([

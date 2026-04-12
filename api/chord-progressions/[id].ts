@@ -1,8 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { cors } from "../_lib/cors";
-import { db } from "../_lib/db";
-import { chordProgressions, timeSignatures, genres } from "../_lib/db";
-import { eq } from "drizzle-orm";
+import { db, chordProgressions, timeSignatures, genres, eq } from "../_lib/db";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (cors(req, res)) return;
