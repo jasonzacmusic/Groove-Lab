@@ -47,17 +47,17 @@ export const AudioEngineProvider: React.FC<{ children: React.ReactNode }> = ({ c
           envelope: { attack: 0.005, decay: 0.1, sustain: 0, release: 0.1 }
         }).toDestination(),
         hihatClosed: new Tone.MetalSynth({
-          frequency: 200, envelope: { attack: 0.001, decay: 0.1, release: 0.01 }, harmonicity: 5.1, modulationIndex: 32, resonance: 4000, octaves: 1.5
+          envelope: { attack: 0.001, decay: 0.1, release: 0.01 }, harmonicity: 5.1, modulationIndex: 32, resonance: 4000, octaves: 1.5
         }).toDestination(),
         hihatOpen: new Tone.MetalSynth({
-          frequency: 200, envelope: { attack: 0.001, decay: 0.5, release: 0.1 }, harmonicity: 5.1, modulationIndex: 32, resonance: 4000, octaves: 1.5
+          envelope: { attack: 0.001, decay: 0.5, release: 0.1 }, harmonicity: 5.1, modulationIndex: 32, resonance: 4000, octaves: 1.5
         }).toDestination(),
-        ride: new Tone.MetalSynth({ frequency: 300, envelope: { decay: 1.5 } }).toDestination(),
-        crash: new Tone.MetalSynth({ frequency: 200, envelope: { decay: 2 } }).toDestination(),
+        ride: new Tone.MetalSynth({ envelope: { decay: 1.5 } }).toDestination(),
+        crash: new Tone.MetalSynth({ envelope: { decay: 2 } }).toDestination(),
         tomHigh: new Tone.MembraneSynth({ pitchDecay: 0.05, octaves: 4 }).toDestination(),
         tomMid: new Tone.MembraneSynth({ pitchDecay: 0.05, octaves: 3 }).toDestination(),
         tomLow: new Tone.MembraneSynth({ pitchDecay: 0.05, octaves: 2 }).toDestination(),
-        cowbell: new Tone.MetalSynth({ frequency: 800, envelope: { decay: 0.2 } }).toDestination(),
+        cowbell: new Tone.MetalSynth({ envelope: { decay: 0.2 } }).toDestination(),
         clap: new Tone.NoiseSynth({ envelope: { attack: 0.001, decay: 0.2 } }).toDestination()
       };
       setIsInitialized(true);
@@ -108,8 +108,10 @@ export const AudioEngineProvider: React.FC<{ children: React.ReactNode }> = ({ c
             
             if (synth instanceof Tone.MembraneSynth) {
               synth.triggerAttackRelease(event.data.instrument === 'kick' ? 'C2' : 'C3', '8n', time + swingOffset);
-            } else if (synth instanceof Tone.NoiseSynth || synth instanceof Tone.MetalSynth) {
+            } else if (synth instanceof Tone.NoiseSynth) {
               synth.triggerAttackRelease('16n', time + swingOffset);
+            } else if (synth instanceof Tone.MetalSynth) {
+              synth.triggerAttackRelease('C4', '16n', time + swingOffset);
             }
          }
        }
@@ -132,7 +134,7 @@ export const AudioEngineProvider: React.FC<{ children: React.ReactNode }> = ({ c
     } else if (synth instanceof Tone.NoiseSynth) {
       synth.triggerAttackRelease('16n');
     } else if (synth instanceof Tone.MetalSynth) {
-      synth.triggerAttackRelease('16n');
+      synth.triggerAttackRelease('C4', '16n');
     }
   };
 

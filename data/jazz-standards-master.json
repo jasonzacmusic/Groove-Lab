@@ -1,0 +1,1694 @@
+{
+  "metadata": {
+    "title": "100 Most Commonly Played Jazz Standards for Music Education",
+    "description": "Comprehensive jazz standards reference organized by difficulty level, including Real Book favorites and syllabi standards",
+    "generatedDate": "2026-04-12",
+    "totalCount": 100,
+    "organizationMethod": "difficulty_ascending"
+  },
+  "standards": [
+    {
+      "title": "All Of Me",
+      "composer": "Gerald Marks / Seymour Simons",
+      "yearComposed": 1931,
+      "commonKeys": ["C", "F", "Bb"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 1,
+      "genreTags": ["swing", "standards", "ballad"],
+      "youtubeSearchQueries": [
+        "All Of Me jazz backing track",
+        "All Of Me jazz play along",
+        "All Of Me standard jazz",
+        "All Of Me beginner jazz"
+      ]
+    },
+    {
+      "title": "C Jam Blues",
+      "composer": "Duke Ellington",
+      "yearComposed": 1942,
+      "commonKeys": ["C", "F", "Bb"],
+      "timeSignature": "4/4",
+      "form": "12-bar blues",
+      "bars": 12,
+      "difficulty": 1,
+      "genreTags": ["blues", "swing", "standards"],
+      "youtubeSearchQueries": [
+        "C Jam Blues jazz backing track",
+        "C Jam Blues play along",
+        "Duke Ellington C Jam Blues",
+        "C Jam Blues 12 bar blues"
+      ]
+    },
+    {
+      "title": "So What",
+      "composer": "Miles Davis",
+      "yearComposed": 1959,
+      "commonKeys": ["Dm", "Em"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 2,
+      "genreTags": ["modal", "cool", "standards"],
+      "youtubeSearchQueries": [
+        "So What Miles Davis backing track",
+        "So What jazz play along",
+        "So What modal jazz",
+        "So What Kind of Blue"
+      ]
+    },
+    {
+      "title": "Take Five",
+      "composer": "Paul Desmond",
+      "yearComposed": 1959,
+      "commonKeys": ["Em"],
+      "timeSignature": "5/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 2,
+      "genreTags": ["cool", "modal", "standards", "waltz"],
+      "youtubeSearchQueries": [
+        "Take Five jazz backing track",
+        "Take Five play along",
+        "Take Five Paul Desmond",
+        "Take Five 5/4 time"
+      ]
+    },
+    {
+      "title": "Now's The Time",
+      "composer": "Charlie Parker",
+      "yearComposed": 1945,
+      "commonKeys": ["F", "Bb"],
+      "timeSignature": "4/4",
+      "form": "12-bar blues",
+      "bars": 12,
+      "difficulty": 2,
+      "genreTags": ["bebop", "blues", "standards"],
+      "youtubeSearchQueries": [
+        "Now's The Time Charlie Parker",
+        "Now's The Time backing track",
+        "Now's The Time bebop blues",
+        "Now's The Time play along"
+      ]
+    },
+    {
+      "title": "Freddie Freeloader",
+      "composer": "Miles Davis",
+      "yearComposed": 1959,
+      "commonKeys": ["Bb", "Eb"],
+      "timeSignature": "4/4",
+      "form": "12-bar blues",
+      "bars": 12,
+      "difficulty": 2,
+      "genreTags": ["hard bop", "blues", "standards"],
+      "youtubeSearchQueries": [
+        "Freddie Freeloader backing track",
+        "Freddie Freeloader play along",
+        "Freddie Freeloader Miles Davis",
+        "Freddie Freeloader blues"
+      ]
+    },
+    {
+      "title": "Billie's Bounce",
+      "composer": "Charlie Parker",
+      "yearComposed": 1945,
+      "commonKeys": ["F", "Bb"],
+      "timeSignature": "4/4",
+      "form": "12-bar blues",
+      "bars": 12,
+      "difficulty": 2,
+      "genreTags": ["bebop", "blues", "standards"],
+      "youtubeSearchQueries": [
+        "Billie's Bounce Charlie Parker",
+        "Billie's Bounce backing track",
+        "Billie's Bounce play along",
+        "Billie's Bounce bebop"
+      ]
+    },
+    {
+      "title": "Misty",
+      "composer": "Erroll Garner",
+      "yearComposed": 1954,
+      "commonKeys": ["Eb", "F", "C"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 2,
+      "genreTags": ["ballad", "standards", "cool"],
+      "youtubeSearchQueries": [
+        "Misty jazz backing track",
+        "Misty Erroll Garner play along",
+        "Misty jazz standard",
+        "Misty ballad"
+      ]
+    },
+    {
+      "title": "It Don't Mean A Thing",
+      "composer": "Duke Ellington / Irving Mills",
+      "yearComposed": 1930,
+      "commonKeys": ["G", "D"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 2,
+      "genreTags": ["swing", "standards"],
+      "youtubeSearchQueries": [
+        "It Don't Mean A Thing backing track",
+        "It Don't Mean A Thing play along",
+        "Duke Ellington It Don't Mean A Thing",
+        "It Don't Mean A Thing swing"
+      ]
+    },
+    {
+      "title": "Bags' Groove",
+      "composer": "Milt Jackson",
+      "yearComposed": 1954,
+      "commonKeys": ["F", "Bb"],
+      "timeSignature": "4/4",
+      "form": "12-bar blues",
+      "bars": 12,
+      "difficulty": 2,
+      "genreTags": ["hard bop", "blues", "standards"],
+      "youtubeSearchQueries": [
+        "Bags' Groove backing track",
+        "Bags' Groove play along",
+        "Bags' Groove Miles Davis",
+        "Bags' Groove vibes"
+      ]
+    },
+    {
+      "title": "Blue Bossa",
+      "composer": "Ken Dorham",
+      "yearComposed": 1962,
+      "commonKeys": ["Cm", "F"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 3,
+      "genreTags": ["bossa", "latin", "standards"],
+      "youtubeSearchQueries": [
+        "Blue Bossa backing track",
+        "Blue Bossa play along",
+        "Blue Bossa jazz standard",
+        "Blue Bossa bossa nova"
+      ]
+    },
+    {
+      "title": "Satin Doll",
+      "composer": "Duke Ellington / Billy Strayhorn / Johnny Mercer",
+      "yearComposed": 1953,
+      "commonKeys": ["Cm", "Dm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 3,
+      "genreTags": ["swing", "standards"],
+      "youtubeSearchQueries": [
+        "Satin Doll backing track",
+        "Satin Doll play along",
+        "Satin Doll Duke Ellington",
+        "Satin Doll jazz standard"
+      ]
+    },
+    {
+      "title": "Bye Bye Blackbird",
+      "composer": "David Henderson / Mort Dixon",
+      "yearComposed": 1926,
+      "commonKeys": ["Gm", "Dm", "F"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 3,
+      "genreTags": ["swing", "standards", "bebop"],
+      "youtubeSearchQueries": [
+        "Bye Bye Blackbird backing track",
+        "Bye Bye Blackbird play along",
+        "Bye Bye Blackbird jazz standard",
+        "Bye Bye Blackbird Miles Davis"
+      ]
+    },
+    {
+      "title": "Perdido",
+      "composer": "Juan Pérez Trevira / Erwin Drake / Jack Kane",
+      "yearComposed": 1941,
+      "commonKeys": ["Bb", "Eb"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 3,
+      "genreTags": ["swing", "standards", "latin"],
+      "youtubeSearchQueries": [
+        "Perdido backing track",
+        "Perdido play along",
+        "Perdido Duke Ellington",
+        "Perdido jazz standard"
+      ]
+    },
+    {
+      "title": "Take The A Train",
+      "composer": "Billy Strayhorn",
+      "yearComposed": 1939,
+      "commonKeys": ["C"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 3,
+      "genreTags": ["swing", "standards"],
+      "youtubeSearchQueries": [
+        "Take The A Train backing track",
+        "Take The A Train play along",
+        "Take The A Train Duke Ellington",
+        "Take The A Train Billy Strayhorn"
+      ]
+    },
+    {
+      "title": "I Got Rhythm",
+      "composer": "George Gershwin / Ira Gershwin",
+      "yearComposed": 1930,
+      "commonKeys": ["Bb", "G", "C"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 3,
+      "genreTags": ["swing", "standards", "bebop"],
+      "youtubeSearchQueries": [
+        "I Got Rhythm backing track",
+        "I Got Rhythm play along",
+        "I Got Rhythm Gershwin",
+        "I Got Rhythm jazz standard"
+      ]
+    },
+    {
+      "title": "In A Sentimental Mood",
+      "composer": "Duke Ellington / Irving Mills / Manny Kurtz",
+      "yearComposed": 1935,
+      "commonKeys": ["Cm", "G", "Gm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 3,
+      "genreTags": ["swing", "standards", "ballad"],
+      "youtubeSearchQueries": [
+        "In A Sentimental Mood backing track",
+        "In A Sentimental Mood play along",
+        "In A Sentimental Mood Duke Ellington",
+        "In A Sentimental Mood ballad"
+      ]
+    },
+    {
+      "title": "Mood Indigo",
+      "composer": "Duke Ellington / Barney Bigard / Irving Mills",
+      "yearComposed": 1930,
+      "commonKeys": ["Dm", "Gm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 3,
+      "genreTags": ["swing", "standards", "ballad"],
+      "youtubeSearchQueries": [
+        "Mood Indigo backing track",
+        "Mood Indigo play along",
+        "Mood Indigo Duke Ellington",
+        "Mood Indigo jazz standard"
+      ]
+    },
+    {
+      "title": "Autumn Leaves",
+      "composer": "Joseph Kosma / Jacques Prévert / Johnny Mercer",
+      "yearComposed": 1945,
+      "commonKeys": ["Gm", "Cm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 3,
+      "genreTags": ["standards", "swing", "ballad"],
+      "youtubeSearchQueries": [
+        "Autumn Leaves backing track",
+        "Autumn Leaves play along",
+        "Autumn Leaves jazz standard",
+        "Autumn Leaves Bill Evans"
+      ]
+    },
+    {
+      "title": "My Funny Valentine",
+      "composer": "Richard Rodgers / Lorenz Hart",
+      "yearComposed": 1937,
+      "commonKeys": ["Cm", "Gm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 3,
+      "genreTags": ["ballad", "standards", "swing"],
+      "youtubeSearchQueries": [
+        "My Funny Valentine backing track",
+        "My Funny Valentine play along",
+        "My Funny Valentine Miles Davis",
+        "My Funny Valentine ballad"
+      ]
+    },
+    {
+      "title": "Summertime",
+      "composer": "George Gershwin / Dubose Heyward",
+      "yearComposed": 1934,
+      "commonKeys": ["Am", "Em"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 3,
+      "genreTags": ["ballad", "standards", "swing"],
+      "youtubeSearchQueries": [
+        "Summertime backing track",
+        "Summertime play along",
+        "Summertime Gershwin jazz",
+        "Summertime ballad"
+      ]
+    },
+    {
+      "title": "All The Things You Are",
+      "composer": "Jerome Kern / Oscar Hammerstein II",
+      "yearComposed": 1939,
+      "commonKeys": ["F", "Cm"],
+      "timeSignature": "4/4",
+      "form": "ABAC",
+      "bars": 36,
+      "difficulty": 4,
+      "genreTags": ["standards", "swing", "bebop"],
+      "youtubeSearchQueries": [
+        "All The Things You Are backing track",
+        "All The Things You Are play along",
+        "All The Things You Are jazz standard",
+        "All The Things You Are Kern"
+      ]
+    },
+    {
+      "title": "Stella By Starlight",
+      "composer": "Victor Young / Ned Washington",
+      "yearComposed": 1946,
+      "commonKeys": ["Cm", "Gm", "Dm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 4,
+      "genreTags": ["ballad", "standards", "bebop"],
+      "youtubeSearchQueries": [
+        "Stella By Starlight backing track",
+        "Stella By Starlight play along",
+        "Stella By Starlight jazz standard",
+        "Stella By Starlight ballad"
+      ]
+    },
+    {
+      "title": "Fly Me To The Moon",
+      "composer": "Bart Howard",
+      "yearComposed": 1954,
+      "commonKeys": ["Fm", "Cm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 4,
+      "genreTags": ["standards", "swing", "ballad"],
+      "youtubeSearchQueries": [
+        "Fly Me To The Moon backing track",
+        "Fly Me To The Moon play along",
+        "Fly Me To The Moon jazz standard",
+        "Fly Me To The Moon Frank Sinatra"
+      ]
+    },
+    {
+      "title": "Body And Soul",
+      "composer": "Johnny Green / Edward Heyman / Robert Sour / Frank Eyton",
+      "yearComposed": 1930,
+      "commonKeys": ["Cm", "Gm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 4,
+      "genreTags": ["ballad", "standards", "swing"],
+      "youtubeSearchQueries": [
+        "Body And Soul backing track",
+        "Body And Soul play along",
+        "Body And Soul jazz standard",
+        "Body And Soul Coleman Hawkins"
+      ]
+    },
+    {
+      "title": "Night And Day",
+      "composer": "Cole Porter",
+      "yearComposed": 1932,
+      "commonKeys": ["Dm", "Gm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 4,
+      "genreTags": ["standards", "swing", "ballad"],
+      "youtubeSearchQueries": [
+        "Night And Day backing track",
+        "Night And Day play along",
+        "Night And Day Cole Porter",
+        "Night And Day jazz standard"
+      ]
+    },
+    {
+      "title": "There Will Never Be Another You",
+      "composer": "Harry Warren / Mack Gordon",
+      "yearComposed": 1942,
+      "commonKeys": ["F", "C"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 4,
+      "genreTags": ["standards", "swing", "ballad"],
+      "youtubeSearchQueries": [
+        "There Will Never Be Another You backing track",
+        "There Will Never Be Another You play along",
+        "There Will Never Be Another You jazz",
+        "There Will Never Be Another You standard"
+      ]
+    },
+    {
+      "title": "How High The Moon",
+      "composer": "Morgan Lewis / Nancy Hamilton",
+      "yearComposed": 1940,
+      "commonKeys": ["G", "D"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 4,
+      "genreTags": ["bebop", "standards", "swing"],
+      "youtubeSearchQueries": [
+        "How High The Moon backing track",
+        "How High The Moon play along",
+        "How High The Moon jazz standard",
+        "How High The Moon bebop"
+      ]
+    },
+    {
+      "title": "Someday My Prince Will Come",
+      "composer": "Frank Churchill / Larry Morey",
+      "yearComposed": 1937,
+      "commonKeys": ["Fm", "Cm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 4,
+      "genreTags": ["ballad", "standards", "swing"],
+      "youtubeSearchQueries": [
+        "Someday My Prince Will Come backing track",
+        "Someday My Prince Will Come play along",
+        "Someday My Prince Will Come Miles Davis",
+        "Someday My Prince Will Come jazz"
+      ]
+    },
+    {
+      "title": "Impressions",
+      "composer": "John Coltrane",
+      "yearComposed": 1961,
+      "commonKeys": ["Dm", "Em"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 4,
+      "genreTags": ["modal", "standards", "hard bop"],
+      "youtubeSearchQueries": [
+        "Impressions backing track",
+        "Impressions play along",
+        "Impressions John Coltrane",
+        "Impressions modal jazz"
+      ]
+    },
+    {
+      "title": "Footprints",
+      "composer": "Wayne Shorter",
+      "yearComposed": 1966,
+      "commonKeys": ["Dm", "Em"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 4,
+      "genreTags": ["modal", "standards", "hard bop"],
+      "youtubeSearchQueries": [
+        "Footprints backing track",
+        "Footprints play along",
+        "Footprints Wayne Shorter",
+        "Footprints modal jazz"
+      ]
+    },
+    {
+      "title": "Watermelon Man",
+      "composer": "Herbie Hancock",
+      "yearComposed": 1963,
+      "commonKeys": ["F", "Bb"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 4,
+      "genreTags": ["funk", "hard bop", "standards"],
+      "youtubeSearchQueries": [
+        "Watermelon Man backing track",
+        "Watermelon Man play along",
+        "Watermelon Man Herbie Hancock",
+        "Watermelon Man funk jazz"
+      ]
+    },
+    {
+      "title": "Song For My Father",
+      "composer": "Horace Silver",
+      "yearComposed": 1964,
+      "commonKeys": ["Fm", "Cm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 4,
+      "genreTags": ["hard bop", "funk", "standards"],
+      "youtubeSearchQueries": [
+        "Song For My Father backing track",
+        "Song For My Father play along",
+        "Song For My Father Horace Silver",
+        "Song For My Father hard bop"
+      ]
+    },
+    {
+      "title": "Spain",
+      "composer": "Chick Corea",
+      "yearComposed": 1973,
+      "commonKeys": ["D", "A"],
+      "timeSignature": "4/4",
+      "form": "Through-composed",
+      "bars": 48,
+      "difficulty": 5,
+      "genreTags": ["modal", "latin", "standards"],
+      "youtubeSearchQueries": [
+        "Spain backing track",
+        "Spain play along",
+        "Spain Chick Corea",
+        "Spain latin jazz"
+      ]
+    },
+    {
+      "title": "Cantaloupe Island",
+      "composer": "Herbie Hancock",
+      "yearComposed": 1964,
+      "commonKeys": ["Fm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 5,
+      "genreTags": ["funk", "modal", "standards"],
+      "youtubeSearchQueries": [
+        "Cantaloupe Island backing track",
+        "Cantaloupe Island play along",
+        "Cantaloupe Island Herbie Hancock",
+        "Cantaloupe Island funk"
+      ]
+    },
+    {
+      "title": "Giant Steps",
+      "composer": "John Coltrane",
+      "yearComposed": 1960,
+      "commonKeys": ["B", "G", "Eb"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 5,
+      "genreTags": ["bebop", "standards", "hard bop"],
+      "youtubeSearchQueries": [
+        "Giant Steps backing track",
+        "Giant Steps play along",
+        "Giant Steps John Coltrane",
+        "Giant Steps fast changes"
+      ]
+    },
+    {
+      "title": "Confirmation",
+      "composer": "Charlie Parker",
+      "yearComposed": 1946,
+      "commonKeys": ["F", "Bb"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 5,
+      "genreTags": ["bebop", "standards"],
+      "youtubeSearchQueries": [
+        "Confirmation backing track",
+        "Confirmation play along",
+        "Confirmation Charlie Parker",
+        "Confirmation bebop"
+      ]
+    },
+    {
+      "title": "Donna Lee",
+      "composer": "Charlie Parker",
+      "yearComposed": 1947,
+      "commonKeys": ["F", "C"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 5,
+      "genreTags": ["bebop", "standards"],
+      "youtubeSearchQueries": [
+        "Donna Lee backing track",
+        "Donna Lee play along",
+        "Donna Lee Charlie Parker",
+        "Donna Lee bebop"
+      ]
+    },
+    {
+      "title": "A Night In Tunisia",
+      "composer": "Dizzy Gillespie / Frank Paparelli",
+      "yearComposed": 1942,
+      "commonKeys": ["Gm", "Dm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 48,
+      "difficulty": 5,
+      "genreTags": ["bebop", "latin", "standards"],
+      "youtubeSearchQueries": [
+        "A Night In Tunisia backing track",
+        "A Night In Tunisia play along",
+        "A Night In Tunisia Gillespie",
+        "A Night In Tunisia bebop"
+      ]
+    },
+    {
+      "title": "Round Midnight",
+      "composer": "Thelonious Monk",
+      "yearComposed": 1944,
+      "commonKeys": ["Bm", "F#m"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 5,
+      "genreTags": ["bebop", "standards", "ballad"],
+      "youtubeSearchQueries": [
+        "Round Midnight backing track",
+        "Round Midnight play along",
+        "Round Midnight Thelonious Monk",
+        "Round Midnight ballad"
+      ]
+    },
+    {
+      "title": "Cherokee",
+      "composer": "Ray Noble",
+      "yearComposed": 1938,
+      "commonKeys": ["Bb", "F"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 5,
+      "genreTags": ["bebop", "standards", "swing"],
+      "youtubeSearchQueries": [
+        "Cherokee backing track",
+        "Cherokee play along",
+        "Cherokee jazz standard",
+        "Cherokee bebop"
+      ]
+    },
+    {
+      "title": "Bye Bye Blackbird (Uptempo)",
+      "composer": "David Henderson / Mort Dixon",
+      "yearComposed": 1926,
+      "commonKeys": ["Gm", "Dm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 5,
+      "genreTags": ["bebop", "standards", "swing"],
+      "youtubeSearchQueries": [
+        "Bye Bye Blackbird fast backing track",
+        "Bye Bye Blackbird uptempo play along",
+        "Bye Bye Blackbird fast jazz",
+        "Bye Bye Blackbird bebop"
+      ]
+    },
+    {
+      "title": "Beautiful Love",
+      "composer": "Victor Young / Egbert Van Alstyne / Wayne King / Harry Barris",
+      "yearComposed": 1931,
+      "commonKeys": ["Em", "Am"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 5,
+      "genreTags": ["standards", "swing", "ballad"],
+      "youtubeSearchQueries": [
+        "Beautiful Love backing track",
+        "Beautiful Love play along",
+        "Beautiful Love jazz standard",
+        "Beautiful Love ballad"
+      ]
+    },
+    {
+      "title": "You Don't Know What Love Is",
+      "composer": "Don Raye / Gene De Paul",
+      "yearComposed": 1941,
+      "commonKeys": ["Dm", "Gm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 5,
+      "genreTags": ["ballad", "standards", "bebop"],
+      "youtubeSearchQueries": [
+        "You Don't Know What Love Is backing track",
+        "You Don't Know What Love Is play along",
+        "You Don't Know What Love Is ballad",
+        "You Don't Know What Love Is jazz"
+      ]
+    },
+    {
+      "title": "Tenor Madness",
+      "composer": "Sonny Rollins",
+      "yearComposed": 1956,
+      "commonKeys": ["F", "Bb"],
+      "timeSignature": "4/4",
+      "form": "12-bar blues",
+      "bars": 12,
+      "difficulty": 5,
+      "genreTags": ["hard bop", "blues", "standards"],
+      "youtubeSearchQueries": [
+        "Tenor Madness backing track",
+        "Tenor Madness play along",
+        "Tenor Madness Sonny Rollins",
+        "Tenor Madness blues"
+      ]
+    },
+    {
+      "title": "Doxy",
+      "composer": "Sonny Rollins",
+      "yearComposed": 1959,
+      "commonKeys": ["Dm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 5,
+      "genreTags": ["hard bop", "standards"],
+      "youtubeSearchQueries": [
+        "Doxy backing track",
+        "Doxy play along",
+        "Doxy Sonny Rollins",
+        "Doxy hard bop"
+      ]
+    },
+    {
+      "title": "Calypso",
+      "composer": "John Coltrane",
+      "yearComposed": 1961,
+      "commonKeys": ["Fm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 5,
+      "genreTags": ["modal", "standards", "latin"],
+      "youtubeSearchQueries": [
+        "Calypso backing track",
+        "Calypso play along",
+        "Calypso John Coltrane",
+        "Calypso modal jazz"
+      ]
+    },
+    {
+      "title": "Moment's Notice",
+      "composer": "John Coltrane",
+      "yearComposed": 1957,
+      "commonKeys": ["Dm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 5,
+      "genreTags": ["hard bop", "standards"],
+      "youtubeSearchQueries": [
+        "Moment's Notice backing track",
+        "Moment's Notice play along",
+        "Moment's Notice John Coltrane",
+        "Moment's Notice hard bop"
+      ]
+    },
+    {
+      "title": "Maiden Voyage",
+      "composer": "Herbie Hancock",
+      "yearComposed": 1965,
+      "commonKeys": ["Cm", "Bbm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 5,
+      "genreTags": ["modal", "standards", "cool"],
+      "youtubeSearchQueries": [
+        "Maiden Voyage backing track",
+        "Maiden Voyage play along",
+        "Maiden Voyage Herbie Hancock",
+        "Maiden Voyage modal"
+      ]
+    },
+    {
+      "title": "Well You Needn't",
+      "composer": "Thelonious Monk",
+      "yearComposed": 1947,
+      "commonKeys": ["Bb"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 5,
+      "genreTags": ["bebop", "standards"],
+      "youtubeSearchQueries": [
+        "Well You Needn't backing track",
+        "Well You Needn't play along",
+        "Well You Needn't Thelonious Monk",
+        "Well You Needn't bebop"
+      ]
+    },
+    {
+      "title": "Blue Monk",
+      "composer": "Thelonious Monk",
+      "yearComposed": 1954,
+      "commonKeys": ["Bb", "F"],
+      "timeSignature": "4/4",
+      "form": "12-bar blues",
+      "bars": 12,
+      "difficulty": 5,
+      "genreTags": ["bebop", "blues", "standards"],
+      "youtubeSearchQueries": [
+        "Blue Monk backing track",
+        "Blue Monk play along",
+        "Blue Monk Thelonious Monk",
+        "Blue Monk blues"
+      ]
+    },
+    {
+      "title": "Ask Me Now",
+      "composer": "Thelonious Monk",
+      "yearComposed": 1943,
+      "commonKeys": ["Cm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 6,
+      "genreTags": ["bebop", "standards", "ballad"],
+      "youtubeSearchQueries": [
+        "Ask Me Now backing track",
+        "Ask Me Now play along",
+        "Ask Me Now Thelonious Monk",
+        "Ask Me Now ballad"
+      ]
+    },
+    {
+      "title": "Rhythm-a-ning",
+      "composer": "Thelonious Monk",
+      "yearComposed": 1957,
+      "commonKeys": ["Bb"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 6,
+      "genreTags": ["bebop", "standards"],
+      "youtubeSearchQueries": [
+        "Rhythm-a-ning backing track",
+        "Rhythm-a-ning play along",
+        "Rhythm-a-ning Thelonious Monk",
+        "Rhythm-a-ning bebop"
+      ]
+    },
+    {
+      "title": "Trinkle Tinkle",
+      "composer": "Thelonious Monk",
+      "yearComposed": 1952,
+      "commonKeys": ["Bb"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 6,
+      "genreTags": ["bebop", "standards"],
+      "youtubeSearchQueries": [
+        "Trinkle Tinkle backing track",
+        "Trinkle Tinkle play along",
+        "Trinkle Tinkle Thelonious Monk",
+        "Trinkle Tinkle bebop"
+      ]
+    },
+    {
+      "title": "Epistrophy",
+      "composer": "Thelonious Monk / Kenny Clarke",
+      "yearComposed": 1942,
+      "commonKeys": ["Dm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 6,
+      "genreTags": ["bebop", "standards"],
+      "youtubeSearchQueries": [
+        "Epistrophy backing track",
+        "Epistrophy play along",
+        "Epistrophy Thelonious Monk",
+        "Epistrophy bebop"
+      ]
+    },
+    {
+      "title": "Criss Cross",
+      "composer": "Thelonious Monk",
+      "yearComposed": 1951,
+      "commonKeys": ["Gm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 6,
+      "genreTags": ["bebop", "standards"],
+      "youtubeSearchQueries": [
+        "Criss Cross backing track",
+        "Criss Cross play along",
+        "Criss Cross Thelonious Monk",
+        "Criss Cross bebop"
+      ]
+    },
+    {
+      "title": "Straight No Chaser",
+      "composer": "Thelonious Monk",
+      "yearComposed": 1951,
+      "commonKeys": ["Bb", "F"],
+      "timeSignature": "4/4",
+      "form": "12-bar blues",
+      "bars": 12,
+      "difficulty": 6,
+      "genreTags": ["bebop", "blues", "standards"],
+      "youtubeSearchQueries": [
+        "Straight No Chaser backing track",
+        "Straight No Chaser play along",
+        "Straight No Chaser Thelonious Monk",
+        "Straight No Chaser blues"
+      ]
+    },
+    {
+      "title": "Jackie-ing",
+      "composer": "Jackie McLean",
+      "yearComposed": 1956,
+      "commonKeys": ["F", "Bb"],
+      "timeSignature": "4/4",
+      "form": "12-bar blues",
+      "bars": 12,
+      "difficulty": 6,
+      "genreTags": ["hard bop", "blues", "standards"],
+      "youtubeSearchQueries": [
+        "Jackie-ing backing track",
+        "Jackie-ing play along",
+        "Jackie-ing Jackie McLean",
+        "Jackie-ing hard bop"
+      ]
+    },
+    {
+      "title": "Tune Up",
+      "composer": "Miles Davis",
+      "yearComposed": 1957,
+      "commonKeys": ["Cm"],
+      "timeSignature": "4/4",
+      "form": "ABAB",
+      "bars": 32,
+      "difficulty": 6,
+      "genreTags": ["hard bop", "standards"],
+      "youtubeSearchQueries": [
+        "Tune Up backing track",
+        "Tune Up play along",
+        "Tune Up Miles Davis",
+        "Tune Up hard bop"
+      ]
+    },
+    {
+      "title": "Dig",
+      "composer": "Miles Davis",
+      "yearComposed": 1951,
+      "commonKeys": ["Dm"],
+      "timeSignature": "4/4",
+      "form": "12-bar blues",
+      "bars": 12,
+      "difficulty": 6,
+      "genreTags": ["cool", "blues", "standards"],
+      "youtubeSearchQueries": [
+        "Dig backing track",
+        "Dig play along",
+        "Dig Miles Davis",
+        "Dig cool jazz"
+      ]
+    },
+    {
+      "title": "Oleo",
+      "composer": "Sonny Rollins",
+      "yearComposed": 1954,
+      "commonKeys": ["F", "Bb"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 6,
+      "genreTags": ["hard bop", "standards"],
+      "youtubeSearchQueries": [
+        "Oleo backing track",
+        "Oleo play along",
+        "Oleo Sonny Rollins",
+        "Oleo hard bop"
+      ]
+    },
+    {
+      "title": "St. Thomas",
+      "composer": "Sonny Rollins",
+      "yearComposed": 1956,
+      "commonKeys": ["Dm", "Am"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 6,
+      "genreTags": ["hard bop", "standards", "latin"],
+      "youtubeSearchQueries": [
+        "St. Thomas backing track",
+        "St. Thomas play along",
+        "St. Thomas Sonny Rollins",
+        "St. Thomas hard bop"
+      ]
+    },
+    {
+      "title": "Dearly Beloved",
+      "composer": "Jerome Kern / Otto Harbach",
+      "yearComposed": 1933,
+      "commonKeys": ["C", "F"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 6,
+      "genreTags": ["ballad", "standards", "swing"],
+      "youtubeSearchQueries": [
+        "Dearly Beloved backing track",
+        "Dearly Beloved play along",
+        "Dearly Beloved jazz standard",
+        "Dearly Beloved ballad"
+      ]
+    },
+    {
+      "title": "Embraceable You",
+      "composer": "George Gershwin / Ira Gershwin",
+      "yearComposed": 1928,
+      "commonKeys": ["Gm", "Cm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 6,
+      "genreTags": ["ballad", "standards", "swing"],
+      "youtubeSearchQueries": [
+        "Embraceable You backing track",
+        "Embraceable You play along",
+        "Embraceable You jazz standard",
+        "Embraceable You Gershwin"
+      ]
+    },
+    {
+      "title": "Lush Life",
+      "composer": "Billy Strayhorn",
+      "yearComposed": 1946,
+      "commonKeys": ["Cm", "Gm"],
+      "timeSignature": "4/4",
+      "form": "Through-composed",
+      "bars": 32,
+      "difficulty": 7,
+      "genreTags": ["ballad", "standards", "swing"],
+      "youtubeSearchQueries": [
+        "Lush Life backing track",
+        "Lush Life play along",
+        "Lush Life Billy Strayhorn",
+        "Lush Life ballad"
+      ]
+    },
+    {
+      "title": "All Or Nothing At All",
+      "composer": "Arthur Altman / Jack Lawrence",
+      "yearComposed": 1940,
+      "commonKeys": ["Fm", "Cm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 7,
+      "genreTags": ["ballad", "standards", "swing"],
+      "youtubeSearchQueries": [
+        "All Or Nothing At All backing track",
+        "All Or Nothing At All play along",
+        "All Or Nothing At All jazz standard",
+        "All Or Nothing At All ballad"
+      ]
+    },
+    {
+      "title": "I'll Remember April",
+      "composer": "Don Raye / Gene De Paul / Al Rinker",
+      "yearComposed": 1941,
+      "commonKeys": ["G", "D"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 7,
+      "genreTags": ["standards", "swing", "bebop"],
+      "youtubeSearchQueries": [
+        "I'll Remember April backing track",
+        "I'll Remember April play along",
+        "I'll Remember April jazz standard",
+        "I'll Remember April bebop"
+      ]
+    },
+    {
+      "title": "Round Midnight (Uptempo)",
+      "composer": "Thelonious Monk",
+      "yearComposed": 1944,
+      "commonKeys": ["Bm", "F#m"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 7,
+      "genreTags": ["bebop", "standards"],
+      "youtubeSearchQueries": [
+        "Round Midnight fast backing track",
+        "Round Midnight uptempo play along",
+        "Round Midnight uptempo jazz",
+        "Round Midnight bebop"
+      ]
+    },
+    {
+      "title": "Honeysuckle Rose",
+      "composer": "Thomas Waller / Andy Razaf",
+      "yearComposed": 1928,
+      "commonKeys": ["F", "C"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 7,
+      "genreTags": ["swing", "standards", "bebop"],
+      "youtubeSearchQueries": [
+        "Honeysuckle Rose backing track",
+        "Honeysuckle Rose play along",
+        "Honeysuckle Rose jazz standard",
+        "Honeysuckle Rose Fats Waller"
+      ]
+    },
+    {
+      "title": "Fascination",
+      "composer": "Freddy Bisson / Dick Manning / Dyane Leigh",
+      "yearComposed": 1957,
+      "commonKeys": ["Fm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 7,
+      "genreTags": ["ballad", "standards", "swing"],
+      "youtubeSearchQueries": [
+        "Fascination backing track",
+        "Fascination play along",
+        "Fascination jazz standard",
+        "Fascination ballad"
+      ]
+    },
+    {
+      "title": "Oscar Peterson Blues",
+      "composer": "Oscar Peterson",
+      "yearComposed": 1950,
+      "commonKeys": ["F", "Bb"],
+      "timeSignature": "4/4",
+      "form": "12-bar blues",
+      "bars": 12,
+      "difficulty": 7,
+      "genreTags": ["hard bop", "blues", "standards"],
+      "youtubeSearchQueries": [
+        "Oscar Peterson Blues backing track",
+        "Oscar Peterson Blues play along",
+        "Oscar Peterson Blues Oscar Peterson",
+        "Oscar Peterson Blues hard bop"
+      ]
+    },
+    {
+      "title": "Stompin At The Savoy",
+      "composer": "Benny Goodman / Chick Webb / Edgar Sampson",
+      "yearComposed": 1934,
+      "commonKeys": ["Eb", "Bb"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 7,
+      "genreTags": ["swing", "standards"],
+      "youtubeSearchQueries": [
+        "Stompin At The Savoy backing track",
+        "Stompin At The Savoy play along",
+        "Stompin At The Savoy jazz standard",
+        "Stompin At The Savoy swing"
+      ]
+    },
+    {
+      "title": "Caravan",
+      "composer": "Juan Pérez Trevira / Erwin Drake / Jack Kane",
+      "yearComposed": 1937,
+      "commonKeys": ["Em", "Am"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 7,
+      "genreTags": ["standards", "latin", "swing"],
+      "youtubeSearchQueries": [
+        "Caravan backing track",
+        "Caravan play along",
+        "Caravan jazz standard",
+        "Caravan latin jazz"
+      ]
+    },
+    {
+      "title": "Pennies From Heaven",
+      "composer": "Arthur Johnston / Johnny Burke",
+      "yearComposed": 1936,
+      "commonKeys": ["F", "C"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 7,
+      "genreTags": ["standards", "swing", "ballad"],
+      "youtubeSearchQueries": [
+        "Pennies From Heaven backing track",
+        "Pennies From Heaven play along",
+        "Pennies From Heaven jazz standard",
+        "Pennies From Heaven swing"
+      ]
+    },
+    {
+      "title": "Love Is Here And Now You're Gone",
+      "composer": "Eddie Holland / Lamont Dozier / Brian Holland",
+      "yearComposed": 1967,
+      "commonKeys": ["Cm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 7,
+      "genreTags": ["funk", "standards"],
+      "youtubeSearchQueries": [
+        "Love Is Here And Now You're Gone backing track",
+        "Love Is Here And Now You're Gone play along",
+        "Love Is Here And Now You're Gone Motown",
+        "Love Is Here And Now You're Gone funk"
+      ]
+    },
+    {
+      "title": "Chelsea Bridge",
+      "composer": "Billy Strayhorn",
+      "yearComposed": 1941,
+      "commonKeys": ["Cm", "Gm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 8,
+      "genreTags": ["ballad", "standards", "swing"],
+      "youtubeSearchQueries": [
+        "Chelsea Bridge backing track",
+        "Chelsea Bridge play along",
+        "Chelsea Bridge Billy Strayhorn",
+        "Chelsea Bridge ballad"
+      ]
+    },
+    {
+      "title": "Naima",
+      "composer": "John Coltrane",
+      "yearComposed": 1959,
+      "commonKeys": ["B"],
+      "timeSignature": "4/4",
+      "form": "Through-composed",
+      "bars": 32,
+      "difficulty": 8,
+      "genreTags": ["modal", "standards", "ballad"],
+      "youtubeSearchQueries": [
+        "Naima backing track",
+        "Naima play along",
+        "Naima John Coltrane",
+        "Naima modal jazz"
+      ]
+    },
+    {
+      "title": "Syeeda's Song Flute",
+      "composer": "John Coltrane",
+      "yearComposed": 1959,
+      "commonKeys": ["Cm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 8,
+      "genreTags": ["modal", "standards"],
+      "youtubeSearchQueries": [
+        "Syeeda's Song Flute backing track",
+        "Syeeda's Song Flute play along",
+        "Syeeda's Song Flute John Coltrane",
+        "Syeeda's Song Flute modal"
+      ]
+    },
+    {
+      "title": "Lazy Bird",
+      "composer": "John Coltrane",
+      "yearComposed": 1957,
+      "commonKeys": ["Cm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 8,
+      "genreTags": ["hard bop", "standards"],
+      "youtubeSearchQueries": [
+        "Lazy Bird backing track",
+        "Lazy Bird play along",
+        "Lazy Bird John Coltrane",
+        "Lazy Bird hard bop"
+      ]
+    },
+    {
+      "title": "Count Your Blessings",
+      "composer": "Irving Berlin",
+      "yearComposed": 1954,
+      "commonKeys": ["Gm", "Cm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 8,
+      "genreTags": ["ballad", "standards", "swing"],
+      "youtubeSearchQueries": [
+        "Count Your Blessings backing track",
+        "Count Your Blessings play along",
+        "Count Your Blessings jazz standard",
+        "Count Your Blessings ballad"
+      ]
+    },
+    {
+      "title": "Cry Me A River",
+      "composer": "Arthur Hamilton",
+      "yearComposed": 1953,
+      "commonKeys": ["Cm", "Gm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 8,
+      "genreTags": ["ballad", "standards", "swing"],
+      "youtubeSearchQueries": [
+        "Cry Me A River backing track",
+        "Cry Me A River play along",
+        "Cry Me A River jazz standard",
+        "Cry Me A River ballad"
+      ]
+    },
+    {
+      "title": "Witchcraft",
+      "composer": "Cy Coleman / Carolyn Leigh",
+      "yearComposed": 1957,
+      "commonKeys": ["Gm", "Dm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 8,
+      "genreTags": ["standards", "swing", "cool"],
+      "youtubeSearchQueries": [
+        "Witchcraft backing track",
+        "Witchcraft play along",
+        "Witchcraft jazz standard",
+        "Witchcraft Frank Sinatra"
+      ]
+    },
+    {
+      "title": "The Girl From Ipanema",
+      "composer": "Tom Jobim / Vinicius de Moraes / Norman Gimbel",
+      "yearComposed": 1962,
+      "commonKeys": ["F#m", "Cm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 8,
+      "genreTags": ["bossa", "standards"],
+      "youtubeSearchQueries": [
+        "The Girl From Ipanema backing track",
+        "The Girl From Ipanema play along",
+        "The Girl From Ipanema bossa nova",
+        "The Girl From Ipanema Stan Getz"
+      ]
+    },
+    {
+      "title": "Desafinado",
+      "composer": "Tom Jobim / Newton Mendonça / Jon Hendricks",
+      "yearComposed": 1959,
+      "commonKeys": ["Gm", "Dm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 8,
+      "genreTags": ["bossa", "standards"],
+      "youtubeSearchQueries": [
+        "Desafinado backing track",
+        "Desafinado play along",
+        "Desafinado bossa nova",
+        "Desafinado Tom Jobim"
+      ]
+    },
+    {
+      "title": "The Nearness Of You",
+      "composer": "Hoagy Carmichael / Ned Washington",
+      "yearComposed": 1937,
+      "commonKeys": ["Cm", "Gm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 8,
+      "genreTags": ["ballad", "standards", "swing"],
+      "youtubeSearchQueries": [
+        "The Nearness Of You backing track",
+        "The Nearness Of You play along",
+        "The Nearness Of You jazz standard",
+        "The Nearness Of You ballad"
+      ]
+    },
+    {
+      "title": "Invitation",
+      "composer": "Bronislaw Kaper / Paul Francis Webster",
+      "yearComposed": 1952,
+      "commonKeys": ["Cm", "Gm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 8,
+      "genreTags": ["ballad", "standards", "swing"],
+      "youtubeSearchQueries": [
+        "Invitation backing track",
+        "Invitation play along",
+        "Invitation jazz standard",
+        "Invitation ballad"
+      ]
+    },
+    {
+      "title": "Quiet Nights",
+      "composer": "Tom Jobim / Anthony Newley",
+      "yearComposed": 1962,
+      "commonKeys": ["Cm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 8,
+      "genreTags": ["bossa", "ballad", "standards"],
+      "youtubeSearchQueries": [
+        "Quiet Nights backing track",
+        "Quiet Nights play along",
+        "Quiet Nights bossa nova",
+        "Quiet Nights Tom Jobim"
+      ]
+    },
+    {
+      "title": "Wave",
+      "composer": "Tom Jobim",
+      "yearComposed": 1967,
+      "commonKeys": ["F#m"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 8,
+      "genreTags": ["bossa", "standards"],
+      "youtubeSearchQueries": [
+        "Wave backing track",
+        "Wave play along",
+        "Wave Tom Jobim",
+        "Wave bossa nova"
+      ]
+    },
+    {
+      "title": "Brazil",
+      "composer": "Ary Barroso / S.K. Russell",
+      "yearComposed": 1939,
+      "commonKeys": ["F", "C"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 9,
+      "genreTags": ["latin", "standards", "swing"],
+      "youtubeSearchQueries": [
+        "Brazil backing track",
+        "Brazil play along",
+        "Brazil jazz standard",
+        "Brazil latin jazz"
+      ]
+    },
+    {
+      "title": "Girl Talk",
+      "composer": "Neal Hefti / Fred Philips",
+      "yearComposed": 1954,
+      "commonKeys": ["F", "C"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 9,
+      "genreTags": ["standards", "swing"],
+      "youtubeSearchQueries": [
+        "Girl Talk backing track",
+        "Girl Talk play along",
+        "Girl Talk jazz standard",
+        "Girl Talk Billie Holiday"
+      ]
+    },
+    {
+      "title": "Polka Dots And Moonbeams",
+      "composer": "Frank Loesser / Jimmy Van Heusen",
+      "yearComposed": 1940,
+      "commonKeys": ["F", "C"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 9,
+      "genreTags": ["standards", "swing", "ballad"],
+      "youtubeSearchQueries": [
+        "Polka Dots And Moonbeams backing track",
+        "Polka Dots And Moonbeams play along",
+        "Polka Dots And Moonbeams jazz standard",
+        "Polka Dots And Moonbeams ballad"
+      ]
+    },
+    {
+      "title": "Scrapple From The Apple",
+      "composer": "Charlie Parker",
+      "yearComposed": 1947,
+      "commonKeys": ["F", "Bb"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 9,
+      "genreTags": ["bebop", "standards"],
+      "youtubeSearchQueries": [
+        "Scrapple From The Apple backing track",
+        "Scrapple From The Apple play along",
+        "Scrapple From The Apple Charlie Parker",
+        "Scrapple From The Apple bebop"
+      ]
+    },
+    {
+      "title": "Ornithology",
+      "composer": "Charlie Parker",
+      "yearComposed": 1946,
+      "commonKeys": ["Gm", "Dm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 9,
+      "genreTags": ["bebop", "standards"],
+      "youtubeSearchQueries": [
+        "Ornithology backing track",
+        "Ornithology play along",
+        "Ornithology Charlie Parker",
+        "Ornithology bebop"
+      ]
+    },
+    {
+      "title": "Anthropology",
+      "composer": "Charlie Parker / Dizzy Gillespie",
+      "yearComposed": 1946,
+      "commonKeys": ["F", "Bb"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 9,
+      "genreTags": ["bebop", "standards"],
+      "youtubeSearchQueries": [
+        "Anthropology backing track",
+        "Anthropology play along",
+        "Anthropology bebop",
+        "Anthropology fast changes"
+      ]
+    },
+    {
+      "title": "Yardbird Suite",
+      "composer": "Charlie Parker",
+      "yearComposed": 1946,
+      "commonKeys": ["F", "Bb"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 9,
+      "genreTags": ["bebop", "standards"],
+      "youtubeSearchQueries": [
+        "Yardbird Suite backing track",
+        "Yardbird Suite play along",
+        "Yardbird Suite Charlie Parker",
+        "Yardbird Suite bebop"
+      ]
+    },
+    {
+      "title": "Koko",
+      "composer": "Charlie Parker",
+      "yearComposed": 1945,
+      "commonKeys": ["F", "Bb"],
+      "timeSignature": "4/4",
+      "form": "Through-composed",
+      "bars": 32,
+      "difficulty": 10,
+      "genreTags": ["bebop", "standards"],
+      "youtubeSearchQueries": [
+        "Koko backing track",
+        "Koko play along",
+        "Koko Charlie Parker",
+        "Koko bebop fast"
+      ]
+    },
+    {
+      "title": "Dizzy Atmosphere",
+      "composer": "Dizzy Gillespie",
+      "yearComposed": 1945,
+      "commonKeys": ["F", "Bb"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 10,
+      "genreTags": ["bebop", "standards"],
+      "youtubeSearchQueries": [
+        "Dizzy Atmosphere backing track",
+        "Dizzy Atmosphere play along",
+        "Dizzy Atmosphere Dizzy Gillespie",
+        "Dizzy Atmosphere bebop"
+      ]
+    },
+    {
+      "title": "Manteca",
+      "composer": "Dizzy Gillespie / Chano Pozo",
+      "yearComposed": 1947,
+      "commonKeys": ["Cm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 10,
+      "genreTags": ["bebop", "latin", "standards"],
+      "youtubeSearchQueries": [
+        "Manteca backing track",
+        "Manteca play along",
+        "Manteca Dizzy Gillespie",
+        "Manteca bebop latin"
+      ]
+    },
+    {
+      "title": "Woody'n You",
+      "composer": "Dizzy Gillespie",
+      "yearComposed": 1944,
+      "commonKeys": ["Dm", "Gm"],
+      "timeSignature": "4/4",
+      "form": "AABA",
+      "bars": 32,
+      "difficulty": 10,
+      "genreTags": ["bebop", "standards"],
+      "youtubeSearchQueries": [
+        "Woody'n You backing track",
+        "Woody'n You play along",
+        "Woody'n You Dizzy Gillespie",
+        "Woody'n You bebop"
+      ]
+    }
+  ]
+}
