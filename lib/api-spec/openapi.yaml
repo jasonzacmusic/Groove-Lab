@@ -3,20 +3,37 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: GrooveLab API specification
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: loops
+    description: Loop catalog operations
+  - name: taxonomy
+    description: Taxonomy (time signatures, feels, genres, instruments, content types)
+  - name: creators
+    description: YouTube creator operations
+  - name: chord-progressions
+    description: Chord progression operations
+  - name: favorites
+    description: User favorites
+  - name: playlists
+    description: User playlists
+  - name: practice
+    description: Practice tracking
+  - name: live
+    description: Live session operations
+  - name: explore
+    description: Explore/discovery aggregates
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,6 +41,449 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /taxonomy:
+    get:
+      operationId: getTaxonomy
+      tags: [taxonomy]
+      summary: Get all taxonomy data in one call
+      responses:
+        "200":
+          description: All taxonomy data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaxonomyData"
+
+  /loops:
+    get:
+      operationId: getLoops
+      tags: [loops]
+      summary: List loops with optional filters
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+        - name: timeSignatureId
+          in: query
+          schema:
+            type: integer
+        - name: feelId
+          in: query
+          schema:
+            type: integer
+        - name: genreId
+          in: query
+          schema:
+            type: integer
+        - name: instrumentTypeId
+          in: query
+          schema:
+            type: integer
+        - name: contentTypeId
+          in: query
+          schema:
+            type: integer
+        - name: bpmMin
+          in: query
+          schema:
+            type: integer
+        - name: bpmMax
+          in: query
+          schema:
+            type: integer
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+            enum: [quality_score, newest, most_views, bpm_asc, bpm_desc]
+            default: quality_score
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: featured
+          in: query
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: Paginated list of loops
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoopListResponse"
+    post:
+      operationId: createLoop
+      tags: [loops]
+      summary: Create a new loop
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateLoopBody"
+      responses:
+        "201":
+          description: Created loop
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Loop"
+
+  /loops/{id}:
+    get:
+      operationId: getLoop
+      tags: [loops]
+      summary: Get a single loop by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Loop detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Loop"
+        "404":
+          description: Not found
+
+  /loops/{id}/groove-match:
+    get:
+      operationId: getGrooveMatch
+      tags: [loops]
+      summary: Get compatible loops (groove match) for a given loop
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Compatible loops
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Loop"
+
+  /explore/featured:
+    get:
+      operationId: getFeaturedLoops
+      tags: [explore]
+      summary: Get featured/hand-picked loops for homepage
+      responses:
+        "200":
+          description: Featured loops
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Loop"
+
+  /explore/by-category:
+    get:
+      operationId: getLoopsByCategory
+      tags: [explore]
+      summary: Get loops grouped by content type category
+      responses:
+        "200":
+          description: Loops grouped by category
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LoopCategory"
+
+  /explore/genre-map:
+    get:
+      operationId: getGenreMap
+      tags: [explore]
+      summary: Get genre/feel positioning data for the 2D map
+      responses:
+        "200":
+          description: Genre map data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GenreMapEntry"
+
+  /creators:
+    get:
+      operationId: getCreators
+      tags: [creators]
+      summary: List creators
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+      responses:
+        "200":
+          description: List of creators
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Creator"
+
+  /creators/{id}:
+    get:
+      operationId: getCreator
+      tags: [creators]
+      summary: Get creator profile
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Creator profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Creator"
+
+  /chord-progressions:
+    get:
+      operationId: getChordProgressions
+      tags: [chord-progressions]
+      summary: List chord progressions
+      parameters:
+        - name: type
+          in: query
+          schema:
+            type: string
+        - name: key
+          in: query
+          schema:
+            type: string
+        - name: genreId
+          in: query
+          schema:
+            type: integer
+        - name: difficulty
+          in: query
+          schema:
+            type: integer
+        - name: isJazzStandard
+          in: query
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: Chord progressions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ChordProgression"
+
+  /chord-progressions/{id}:
+    get:
+      operationId: getChordProgression
+      tags: [chord-progressions]
+      summary: Get single chord progression
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Chord progression
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChordProgression"
+
+  /favorites:
+    get:
+      operationId: getFavorites
+      tags: [favorites]
+      summary: Get user's favorite loops
+      parameters:
+        - name: userId
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Favorite loops
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Loop"
+    post:
+      operationId: addFavorite
+      tags: [favorites]
+      summary: Add a loop to favorites
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FavoriteBody"
+      responses:
+        "201":
+          description: Added
+    delete:
+      operationId: removeFavorite
+      tags: [favorites]
+      summary: Remove a loop from favorites
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FavoriteBody"
+      responses:
+        "200":
+          description: Removed
+
+  /playlists:
+    get:
+      operationId: getPlaylists
+      tags: [playlists]
+      summary: Get user's playlists
+      parameters:
+        - name: userId
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: User playlists
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Playlist"
+    post:
+      operationId: createPlaylist
+      tags: [playlists]
+      summary: Create a playlist
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePlaylistBody"
+      responses:
+        "201":
+          description: Created playlist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Playlist"
+
+  /practice/log:
+    post:
+      operationId: logPractice
+      tags: [practice]
+      summary: Log a practice session
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PracticeLogBody"
+      responses:
+        "201":
+          description: Logged
+
+  /practice/stats:
+    get:
+      operationId: getPracticeStats
+      tags: [practice]
+      summary: Get practice stats for a user
+      parameters:
+        - name: userId
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Practice stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PracticeStats"
+
+  /live/sessions:
+    post:
+      operationId: createLiveSession
+      tags: [live]
+      summary: Create a live session
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateLiveSessionBody"
+      responses:
+        "201":
+          description: Created session
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LiveSession"
+
+  /live/sessions/{roomCode}:
+    get:
+      operationId: getLiveSession
+      tags: [live]
+      summary: Get live session by room code
+      parameters:
+        - name: roomCode
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Live session
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LiveSession"
+        "404":
+          description: Not found
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +494,587 @@ components:
       required:
         - status
 
+    TaxonomyData:
+      type: object
+      properties:
+        timeSignatures:
+          type: array
+          items:
+            $ref: "#/components/schemas/TimeSignature"
+        feels:
+          type: array
+          items:
+            $ref: "#/components/schemas/Feel"
+        genres:
+          type: array
+          items:
+            $ref: "#/components/schemas/Genre"
+        instrumentTypes:
+          type: array
+          items:
+            $ref: "#/components/schemas/InstrumentType"
+        contentTypes:
+          type: array
+          items:
+            $ref: "#/components/schemas/ContentType"
+      required:
+        - timeSignatures
+        - feels
+        - genres
+        - instrumentTypes
+        - contentTypes
+
+    TimeSignature:
+      type: object
+      properties:
+        id:
+          type: integer
+        numerator:
+          type: integer
+        denominator:
+          type: integer
+        displayName:
+          type: string
+        category:
+          type: string
+        sortOrder:
+          type: integer
+      required:
+        - id
+        - numerator
+        - denominator
+        - displayName
+        - category
+        - sortOrder
+
+    Feel:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+        sortOrder:
+          type: integer
+      required:
+        - id
+        - name
+        - sortOrder
+
+    Genre:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        parentGenreId:
+          type: integer
+          nullable: true
+        sortOrder:
+          type: integer
+      required:
+        - id
+        - name
+        - sortOrder
+
+    InstrumentType:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        category:
+          type: string
+        sortOrder:
+          type: integer
+      required:
+        - id
+        - name
+        - category
+        - sortOrder
+
+    ContentType:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        icon:
+          type: string
+          nullable: true
+        sortOrder:
+          type: integer
+      required:
+        - id
+        - name
+        - sortOrder
+
+    Creator:
+      type: object
+      properties:
+        id:
+          type: string
+        youtubeChannelId:
+          type: string
+          nullable: true
+        channelName:
+          type: string
+        channelUrl:
+          type: string
+          nullable: true
+        subscriberCount:
+          type: integer
+        totalViews:
+          type: integer
+        videoCount:
+          type: integer
+        description:
+          type: string
+          nullable: true
+        avatarUrl:
+          type: string
+          nullable: true
+        qualityScore:
+          type: number
+        isVerified:
+          type: boolean
+        isClaimed:
+          type: boolean
+      required:
+        - id
+        - channelName
+        - subscriberCount
+        - qualityScore
+        - isVerified
+        - isClaimed
+
+    Loop:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        sourceType:
+          type: string
+        youtubeVideoId:
+          type: string
+          nullable: true
+        youtubeEmbedUrl:
+          type: string
+          nullable: true
+        midiFileUrl:
+          type: string
+          nullable: true
+        externalUrl:
+          type: string
+          nullable: true
+        creatorId:
+          type: string
+          nullable: true
+        creator:
+          $ref: "#/components/schemas/Creator"
+          nullable: true
+        bpm:
+          type: integer
+          nullable: true
+        bpmRangeLow:
+          type: integer
+          nullable: true
+        bpmRangeHigh:
+          type: integer
+          nullable: true
+        keySignature:
+          type: string
+          nullable: true
+        durationSeconds:
+          type: integer
+          nullable: true
+        viewCount:
+          type: integer
+        likeCount:
+          type: integer
+        qualityScore:
+          type: number
+        isEmbeddable:
+          type: boolean
+        description:
+          type: string
+          nullable: true
+        tags:
+          type: array
+          items:
+            type: string
+        isFeatured:
+          type: boolean
+        timeSignatures:
+          type: array
+          items:
+            $ref: "#/components/schemas/TimeSignature"
+        feels:
+          type: array
+          items:
+            $ref: "#/components/schemas/Feel"
+        genres:
+          type: array
+          items:
+            $ref: "#/components/schemas/Genre"
+        instrumentTypes:
+          type: array
+          items:
+            $ref: "#/components/schemas/InstrumentType"
+        contentTypes:
+          type: array
+          items:
+            $ref: "#/components/schemas/ContentType"
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - title
+        - sourceType
+        - viewCount
+        - likeCount
+        - qualityScore
+        - isEmbeddable
+        - tags
+        - isFeatured
+        - timeSignatures
+        - feels
+        - genres
+        - instrumentTypes
+        - contentTypes
+        - createdAt
+        - updatedAt
+
+    LoopListResponse:
+      type: object
+      properties:
+        loops:
+          type: array
+          items:
+            $ref: "#/components/schemas/Loop"
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+        totalPages:
+          type: integer
+      required:
+        - loops
+        - total
+        - page
+        - limit
+        - totalPages
+
+    LoopCategory:
+      type: object
+      properties:
+        contentType:
+          $ref: "#/components/schemas/ContentType"
+        loops:
+          type: array
+          items:
+            $ref: "#/components/schemas/Loop"
+      required:
+        - contentType
+        - loops
+
+    GenreMapEntry:
+      type: object
+      properties:
+        genreId:
+          type: integer
+        genreName:
+          type: string
+        feelId:
+          type: integer
+          nullable: true
+        feelName:
+          type: string
+          nullable: true
+        x:
+          type: number
+          description: X position 0-1 (straight to swung)
+        y:
+          type: number
+          description: Y position 0-1 (simple to complex)
+        loopCount:
+          type: integer
+      required:
+        - genreId
+        - genreName
+        - x
+        - y
+        - loopCount
+
+    ChordProgression:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        progressionType:
+          type: string
+          nullable: true
+        chords:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChordEntry"
+        keySignature:
+          type: string
+          nullable: true
+        timeSignatureId:
+          type: integer
+          nullable: true
+        timeSignature:
+          $ref: "#/components/schemas/TimeSignature"
+          nullable: true
+        genreId:
+          type: integer
+          nullable: true
+        genre:
+          $ref: "#/components/schemas/Genre"
+          nullable: true
+        difficultyLevel:
+          type: integer
+          nullable: true
+        isJazzStandard:
+          type: boolean
+        composer:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - name
+        - chords
+        - isJazzStandard
+        - createdAt
+
+    ChordEntry:
+      type: object
+      properties:
+        chord:
+          type: string
+        beats:
+          type: number
+        measure:
+          type: integer
+          nullable: true
+      required:
+        - chord
+        - beats
+
+    CreateLoopBody:
+      type: object
+      properties:
+        title:
+          type: string
+        sourceType:
+          type: string
+        youtubeVideoId:
+          type: string
+        bpm:
+          type: integer
+        keySignature:
+          type: string
+        description:
+          type: string
+        timeSignatureIds:
+          type: array
+          items:
+            type: integer
+        feelIds:
+          type: array
+          items:
+            type: integer
+        genreIds:
+          type: array
+          items:
+            type: integer
+        instrumentTypeIds:
+          type: array
+          items:
+            type: integer
+        contentTypeIds:
+          type: array
+          items:
+            type: integer
+      required:
+        - title
+        - sourceType
+
+    FavoriteBody:
+      type: object
+      properties:
+        userId:
+          type: string
+        loopId:
+          type: string
+      required:
+        - userId
+        - loopId
+
+    Playlist:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+          nullable: true
+        isPublic:
+          type: boolean
+        loops:
+          type: array
+          items:
+            $ref: "#/components/schemas/Loop"
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - userId
+        - title
+        - isPublic
+        - loops
+        - createdAt
+
+    CreatePlaylistBody:
+      type: object
+      properties:
+        userId:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        isPublic:
+          type: boolean
+      required:
+        - userId
+        - title
+
+    PracticeLogBody:
+      type: object
+      properties:
+        userId:
+          type: string
+        loopId:
+          type: string
+        durationSeconds:
+          type: integer
+        bpmPracticed:
+          type: integer
+      required:
+        - userId
+        - durationSeconds
+
+    PracticeStats:
+      type: object
+      properties:
+        totalSessions:
+          type: integer
+        totalMinutes:
+          type: integer
+        currentStreak:
+          type: integer
+        longestStreak:
+          type: integer
+        recentLogs:
+          type: array
+          items:
+            $ref: "#/components/schemas/PracticeLog"
+      required:
+        - totalSessions
+        - totalMinutes
+        - currentStreak
+        - longestStreak
+        - recentLogs
+
+    PracticeLog:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        loopId:
+          type: string
+          nullable: true
+        durationSeconds:
+          type: integer
+        bpmPracticed:
+          type: integer
+          nullable: true
+        practicedAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - userId
+        - durationSeconds
+        - practicedAt
+
+    LiveSession:
+      type: object
+      properties:
+        id:
+          type: string
+        roomCode:
+          type: string
+        teacherId:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        isActive:
+          type: boolean
+        currentLoopId:
+          type: string
+          nullable: true
+        currentTempo:
+          type: integer
+          nullable: true
+        participantCount:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - roomCode
+        - isActive
+        - participantCount
+        - createdAt
+
+    CreateLiveSessionBody:
+      type: object
+      properties:
+        teacherId:
+          type: string
+        title:
+          type: string
+      required:
+        - teacherId

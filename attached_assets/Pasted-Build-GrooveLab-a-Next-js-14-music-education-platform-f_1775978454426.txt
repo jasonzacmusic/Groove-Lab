@@ -1,0 +1,77 @@
+Build GrooveLab — a Next.js 14 music education platform for groovelab.nathanielschool.com. Read the full specification in the attached file carefully before starting. Here is the priority execution order:
+STEP 1: Project Setup (do this first, completely)
+
+Initialize Next.js 14 with App Router, TypeScript, Tailwind CSS
+Install ALL dependencies: tone, @tonejs/midi, next-auth, @neondatabase/serverless, drizzle-orm, zustand, lucide-react
+Set up Google Fonts: DM Serif Display, IBM Plex Sans, IBM Plex Mono
+Create the complete CSS variables system from the spec (the "Vinyl Warmth meets Digital Precision" palette)
+Set up the Neon database connection and run ALL the SQL schema from the spec
+Seed the taxonomy tables (time signatures, feels, genres, instrument types, content types) with ALL the data in the spec
+
+STEP 2: Layout & Navigation
+
+Build the root layout with: top Navbar (logo, global search, theme toggle), desktop Sidebar, mobile BottomNav
+Dark mode by default with warm paper-tone light mode
+Use the exact fonts and colors from the spec — NO Inter, Roboto, or Arial anywhere
+The loading animation should be a stylized turntable/vinyl needle, NOT a spinner
+Navigation items: Explore, Sequencer, MIDI, Chords, Standards, Live, Practice
+
+STEP 3: Explore Page (the core experience)
+
+Multi-dimensional taxonomy filter panel (time signature, feel, genre, instrument type, content type, BPM range)
+Loop result cards showing: thumbnail (or MIDI preview), title, creator name, BPM badge, time sig badge, quality score
+Persistent bottom player bar (like Spotify) for YouTube embeds using lite-youtube-embed
+The Genre/Feel Map: a 2D interactive visualization where X = straight↔swung, Y = simple↔complex, genres appear as labeled clusters you can click to filter
+Groove Match panel: when viewing a loop, suggest compatible loops by matching time sig + BPM range + feel
+Use mock/seed data to populate initially — the YouTube API integration comes later
+
+STEP 4: Beat Sequencer ("The Pizza Lab")
+
+SVG-based pizza/circle beat sequencer inspired by BeatScholar by Modalics
+Each beat = one circle that can be subdivided into 2-16 slices
+Click slices to place drum hits (colored by instrument)
+4 drum kits using Tone.js synthesized drums (MembraneSynth for kicks, NoiseSynth for snares, MetalSynth for hihats)
+Transport controls: Play/Stop, BPM (IBM Plex Mono, large display), time sig selector, swing slider
+The playing beat should glow with warm amber animation
+Support Web MIDI API input for connected controllers
+
+STEP 5: Metronome (built into Sequencer page as expandable panel)
+
+Full Pro Metronome clone: any time sig, any BPM (20-300)
+Accent patterns per beat: f, mf, p, mute with visual indicators
+Subdivisions: 8ths, 16ths, triplets, dotted, quintuplets, septuplets
+Polyrhythm mode: two independent rhythm layers
+Tempo ramp: start BPM → end BPM over configurable duration
+Rhythm trainer: play N bars → mute N bars → repeat
+Tap tempo button
+Practice timer
+Beat sounds: at least 4 timbres (click, woodblock, rim, cowbell)
+
+STEP 6: MIDI Library
+
+Browse page for MIDI files with same taxonomy filters
+Drag-and-drop upload zone for .mid files
+Parse uploaded MIDI with @tonejs/midi, show detected BPM/time sig/tracks
+Playback via Tone.js with piano roll visualization (scrolling colored blocks)
+Track mute/solo toggles
+Tempo slider independent of original BPM
+
+STEP 7: Auth & API Routes
+
+NextAuth.js with Google OAuth + email/password
+API routes for: loops CRUD, favorites, playlists, practice logging
+YouTube search API route (server-side, protects API key)
+
+DESIGN REQUIREMENTS — CRITICAL
+
+This must NOT look like a generic AI-generated website
+NO purple gradients, NO card-heavy layouts, NO Inter/Roboto fonts
+Aesthetic: "Vinyl Warmth meets Digital Precision" — warm ambers and golds, dark backgrounds, serif display font, generous spacing
+Age-appropriate for 6 to 60+: large touch targets, clear labels, expandable complexity
+Horizontal scroll carousels for categories (like Spotify)
+Skeleton loaders styled as vinyl groove lines
+All circular/pizza elements should have subtle vinyl texture
+Error states should be musical and friendly
+Mobile-first responsive design with bottom navigation
+
+Build as much as you can in one pass. Focus on getting Steps 1-5 fully working with real audio (Tone.js), the taxonomy system populated, and the design looking production-grade. Steps 6-7 can have placeholder UI if needed but the structure should be there.
