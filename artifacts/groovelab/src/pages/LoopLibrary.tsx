@@ -11,12 +11,10 @@ import { Search, Play, Pause, Headphones, SlidersHorizontal, X, ChevronLeft, Che
 import { LoopPlayer, type AudioLoopData } from '@/components/LoopPlayer';
 import { SongBuilder, type SongSection } from '@/components/SongBuilder';
 
-// These match the ACTUAL values in the database
+// These match the ACTUAL values in the Neon database (verified 2026-04-13)
 const GENRES = ['All', 'Rock', 'Pop', 'Funk', 'Blues', 'Jazz', 'R&B', 'Soul', 'Indie Rock', 'Hip Hop', 'Folk', 'World', 'Latin', 'Cinematic', 'Electronic', 'Reggae'];
-const FEELS = ['All', 'straight', 'shuffle', 'swing', 'laid_back'];
-const INSTRUMENTS = ['All', 'drums', 'percussion', 'bass', 'guitar', 'electronic'];
-const TIME_SIGNATURES = ['All', '4/4', '3/4', '6/8', '5/4', '7/8', '12/8'];
-const KEYS = ['All', 'Ab', 'B', 'C', 'C#', 'D', 'E', 'Eb'];
+const INSTRUMENTS = ['All', 'drums', 'percussion', 'bass', 'guitar'];
+const KEYS = ['All', 'A', 'B', 'C', 'C#', 'D', 'Db', 'E', 'Eb', 'F#', 'G', 'G#'];
 const SORT_OPTIONS = [
   { value: 'collection', label: 'By Song / Collection' },
   { value: 'artist', label: 'Artist A-Z' },
@@ -38,9 +36,7 @@ function displayLabel(val: string): string {
 interface LoopFilters {
   search: string;
   genre: string;
-  feel: string;
   instrument: string;
-  timeSignature: string;
   key: string;
   bpmRange: [number, number];
   sort: string;
@@ -51,9 +47,7 @@ async function fetchLoops(filters: LoopFilters): Promise<{ loops: AudioLoopData[
   const params = new URLSearchParams();
   if (filters.search) params.set('search', filters.search);
   if (filters.genre !== 'All') params.set('genre', filters.genre);
-  if (filters.feel !== 'All') params.set('feel', filters.feel);
   if (filters.instrument !== 'All') params.set('instrument_category', filters.instrument);
-  if (filters.timeSignature !== 'All') params.set('time_signature', filters.timeSignature);
   if (filters.key !== 'All') params.set('key', filters.key);
   // Only send BPM range if user has narrowed it from defaults (so NULL-bpm loops show when unfiltered)
   if (filters.bpmRange[0] > 40) params.set('bpm_min', String(filters.bpmRange[0]));
@@ -100,9 +94,7 @@ export default function LoopLibrary() {
   const [filters, setFilters] = useState<LoopFilters>({
     search: '',
     genre: 'All',
-    feel: 'All',
     instrument: 'All',
-    timeSignature: 'All',
     key: 'All',
     bpmRange: [40, 240],
     sort: 'collection',
@@ -176,9 +168,7 @@ export default function LoopLibrary() {
     setFilters({
       search: '',
       genre: 'All',
-      feel: 'All',
       instrument: 'All',
-      timeSignature: 'All',
       key: 'All',
       bpmRange: [40, 240],
       sort: 'collection',
@@ -187,8 +177,8 @@ export default function LoopLibrary() {
     setSearchInput('');
   }, []);
 
-  const hasActiveFilters = filters.genre !== 'All' || filters.feel !== 'All' || filters.instrument !== 'All' ||
-    filters.timeSignature !== 'All' || filters.key !== 'All' || filters.bpmRange[0] !== 40 || filters.bpmRange[1] !== 240 || filters.search !== '';
+  const hasActiveFilters = filters.genre !== 'All' || filters.instrument !== 'All' ||
+    filters.key !== 'All' || filters.bpmRange[0] !== 40 || filters.bpmRange[1] !== 240 || filters.search !== '';
 
   // Group loops by collection when sorted by collection
   const groupedLoops = React.useMemo(() => {
@@ -372,28 +362,6 @@ export default function LoopLibrary() {
               </Select>
             </div>
 
-            {/* Feel */}
-            <div>
-              <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Feel</label>
-              <Select value={filters.feel} onValueChange={(v) => updateFilter('feel', v)}>
-                <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
-                <SelectContent>
-                  {FEELS.map(f => <SelectItem key={f} value={f}>{displayLabel(f)}</SelectItem>)}
-                </SelectContent>
-              </Select>
-            </div>
-
-            {/* Time Signature */}
-            <div>
-              <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Time Signature</label>
-              <Select value={filters.timeSignature} onValueChange={(v) => updateFilter('timeSignature', v)}>
-                <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
-                <SelectContent>
-                  {TIME_SIGNATURES.map(t => <SelectItem key={t} value={t}>{t}</SelectItem>)}
-                </SelectContent>
-              </Select>
-            </div>
-
             {/* Key */}
             <div>
               <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Key</label>
@@ -431,11 +399,6 @@ export default function LoopLibrary() {
                 {filters.genre !== 'All' && (
                   <Badge variant="secondary" className="text-[10px] cursor-pointer" onClick={() => updateFilter('genre', 'All')}>
                     {displayLabel(filters.genre)} <X className="w-2.5 h-2.5 ml-1" />
-                  </Badge>
-                )}
-                {filters.feel !== 'All' && (
-                  <Badge variant="secondary" className="text-[10px] cursor-pointer" onClick={() => updateFilter('feel', 'All')}>
-                    {displayLabel(filters.feel)} <X className="w-2.5 h-2.5 ml-1" />
                   </Badge>
                 )}
                 {filters.instrument !== 'All' && (
