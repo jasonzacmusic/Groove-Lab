@@ -123,6 +123,18 @@ const ARTIST_MAP: Record<string, string> = {
   "ToddSuchermanV2_WAV": "Todd Sucherman",
 };
 
+// ── Clean product folder name into a readable artist/product name ────────
+function cleanProductName(folderName: string): string {
+  return folderName
+    .replace(/_WAV_MIDI$/i, "")
+    .replace(/_MIDI_WAV$/i, "")
+    .replace(/_WAV_ALP$/i, "")
+    .replace(/_WAV$/i, "")
+    .replace(/_MIDI$/i, "")
+    .replace(/_/g, " ")
+    .trim();
+}
+
 // ── Instrument detection from product name and file content ─────────────
 function detectInstrument(productName: string, fileName: string): string {
   const pn = productName.toLowerCase();
