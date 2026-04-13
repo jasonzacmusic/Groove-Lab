@@ -634,30 +634,45 @@ export default function Explore() {
                       }`}
                       onClick={() => handleLoopCardClick(loop.id, loop.title)}
                     >
-                      <div className="aspect-video relative bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
-                        <Music className="w-10 h-10 text-primary/40 group-hover:text-primary/60 transition-colors" />
-                        <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                          <Play className="w-10 h-10 text-white drop-shadow-md" fill="currentColor" />
-                        </div>
-                        {loop.genre && <Badge className="absolute top-2 left-2 text-[9px] bg-primary/80">{loop.genre}</Badge>}
-                        {loop.instrumentCategory && <Badge variant="outline" className="absolute top-2 right-2 text-[9px] bg-background/80">{loop.instrumentCategory}</Badge>}
+                      {/* Artist header bar */}
+                      <div className="px-3 py-2 bg-muted/50 border-b border-border flex items-center justify-between">
+                        <button
+                          className="flex items-center gap-2 hover:text-primary transition-colors text-left"
+                          onClick={(e) => { e.stopPropagation(); setSearch(loop.artist || ''); }}
+                          title={`Show all loops by ${loop.artist}`}
+                        >
+                          <Avatar className="w-6 h-6 flex-shrink-0">
+                            <AvatarFallback className="text-[9px] bg-primary/20 text-primary font-bold">
+                              {loop.artist?.substring(0, 2).toUpperCase() || 'GK'}
+                            </AvatarFallback>
+                          </Avatar>
+                          <span className="text-xs font-medium truncate">{loop.artist || 'Unknown Artist'}</span>
+                        </button>
+                        {loop.isMultitrack && <Badge variant="secondary" className="text-[8px] flex-shrink-0">Multi</Badge>}
                       </div>
-                      <CardContent className="p-4">
-                        <h4 className="font-medium text-lg truncate mb-2">{loop.grooveName || loop.title}</h4>
-                        <div className="flex flex-wrap items-center gap-2 mb-3">
-                          {loop.bpm && <Badge variant="secondary" className="font-mono text-xs bg-primary/10 text-primary">{loop.bpm} BPM</Badge>}
-                          {loop.timeSignature && <Badge variant="outline" className="font-mono text-xs">{loop.timeSignature}</Badge>}
-                          {loop.feel && <Badge variant="outline" className="text-[10px]">{loop.feel}</Badge>}
-                          {loop.sectionType && <Badge variant="outline" className="text-[10px]">{loop.sectionType}</Badge>}
-                        </div>
-                        <div className="flex items-center justify-between mt-4 pt-4 border-t border-border">
-                          <div className="flex items-center gap-2">
-                            <Avatar className="w-6 h-6">
-                              <AvatarFallback className="text-[10px]">{loop.artist?.substring(0, 2).toUpperCase() || 'GK'}</AvatarFallback>
-                            </Avatar>
-                            <span className="text-xs text-muted-foreground truncate max-w-[100px]">{loop.artist || 'Unknown'}</span>
-                          </div>
-                          {loop.isMultitrack && <Badge variant="secondary" className="text-[9px]">Multitrack</Badge>}
+                      {/* Main content */}
+                      <CardContent className="p-3">
+                        <h4 className="font-medium text-sm truncate">{loop.grooveName || loop.title}</h4>
+                        {loop.collection && (
+                          <button
+                            className="text-[10px] text-muted-foreground hover:text-primary transition-colors truncate block mt-0.5"
+                            onClick={(e) => { e.stopPropagation(); setSearch(loop.collection || ''); }}
+                            title={`Show all loops from ${loop.collection}`}
+                          >
+                            📁 {loop.collection.replace(/_/g, ' ')}
+                          </button>
+                        )}
+                        <div className="flex flex-wrap items-center gap-1.5 mt-2">
+                          {loop.genre && <Badge className="text-[9px] bg-primary/15 text-primary border-0">{loop.genre}</Badge>}
+                          {loop.bpm && <Badge variant="secondary" className="font-mono text-[9px]">{loop.bpm} BPM</Badge>}
+                          {loop.timeSignature && <Badge variant="outline" className="font-mono text-[9px]">{loop.timeSignature}</Badge>}
+                          {loop.feel && <Badge variant="outline" className="text-[9px]">{loop.feel}</Badge>}
+                          {loop.sectionType && loop.sectionType !== 'full_loop' && (
+                            <Badge variant="outline" className="text-[9px] border-primary/30 text-primary">{loop.sectionType}</Badge>
+                          )}
+                          {loop.instrumentCategory && loop.instrumentCategory !== 'drums' && (
+                            <Badge variant="outline" className="text-[9px]">{loop.instrumentCategory}</Badge>
+                          )}
                         </div>
                       </CardContent>
                     </Card>

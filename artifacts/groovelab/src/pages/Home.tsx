@@ -130,16 +130,22 @@ export default function Home() {
                   )}
                 </div>
                 <CardContent className="p-3">
-                  <h4 className="font-medium text-sm truncate">{loop.grooveName || loop.title}</h4>
-                  <div className="flex items-center gap-2 mt-1">
-                    {loop.bpm && <Badge variant="secondary" className="font-mono text-[10px]">{loop.bpm} BPM</Badge>}
-                    {loop.timeSignature && <Badge variant="outline" className="font-mono text-[10px]">{loop.timeSignature}</Badge>}
-                  </div>
-                  <div className="flex items-center gap-1.5 mt-2 text-xs text-muted-foreground">
-                    <Avatar className="w-4 h-4">
-                      <AvatarFallback className="text-[8px]">{loop.artist?.substring(0, 2).toUpperCase() || 'GK'}</AvatarFallback>
+                  <div className="flex items-center gap-1.5 mb-1.5">
+                    <Avatar className="w-5 h-5 flex-shrink-0">
+                      <AvatarFallback className="text-[8px] bg-primary/20 text-primary font-bold">{loop.artist?.substring(0, 2).toUpperCase() || 'GK'}</AvatarFallback>
                     </Avatar>
-                    <span className="truncate">{loop.artist || 'Unknown'}</span>
+                    <span className="text-xs font-medium truncate">{loop.artist || 'Unknown Artist'}</span>
+                  </div>
+                  <h4 className="font-medium text-sm truncate">{loop.grooveName || loop.title}</h4>
+                  {loop.collection && (
+                    <p className="text-[10px] text-muted-foreground truncate mt-0.5">
+                      📁 {loop.collection.replace(/_/g, ' ')}
+                    </p>
+                  )}
+                  <div className="flex items-center gap-1.5 mt-2">
+                    {loop.bpm && <Badge variant="secondary" className="font-mono text-[9px]">{loop.bpm} BPM</Badge>}
+                    {loop.timeSignature && <Badge variant="outline" className="font-mono text-[9px]">{loop.timeSignature}</Badge>}
+                    {loop.sectionType && loop.sectionType !== 'full_loop' && <Badge variant="outline" className="text-[9px] text-primary border-primary/30">{loop.sectionType}</Badge>}
                   </div>
                 </CardContent>
               </Card>
