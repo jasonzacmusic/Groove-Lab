@@ -10,7 +10,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
           time_signature, section_type, collection, search, sort, page: pageStr, limit: limitStr } = req.query;
 
   const page = Number(pageStr) || 1;
-  const limit = Math.min(Number(limitStr) || 20, 100);
+  const limit = Math.min(Number(limitStr) || 20, 200);
   const offset = (page - 1) * limit;
 
   const conditions = [];
@@ -24,14 +24,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
   if (collection) conditions.push(sql`${audioLoops.collection} ILIKE ${collection as string}`);
   if (bpm_min) conditions.push(gte(audioLoops.bpm, Number(bpm_min)));
   if (bpm_max) conditions.push(lte(audioLoops.bpm, Number(bpm_max)));
-  if (search) conditions.push(sql`(${audioLoops.title} ILIKE ${'%' + search + '%'} OR ${audioLoops.grooveName} ILIKE ${'%' + search + '%'} OR ${audioLoops.artist} ILIKE ${'%' + search + '%'})`);
+  if (search) conditions.push(sql`(${audioLoops.title} ILIKE ${'%' + search + '%'} OR ${audioLoops.grooveName} ILIKE ${'%' + search + '%'} OR ${audioLoops.artist} ILIKE ${'%' + search + '%'} OR ${audioLoops.collection} ILIKE ${'%' + search + '%'})`);
 
   const where = conditions.length > 0 ? and(...conditions) : undefined;
+
+  // Section-type ordering for collection grouping: intro → verse → chorus → fill → break → build → outro → full_loop
+  const sectionOrder = sql`CASE LOWER(${audioLoops.sectionType})
+    WHEN 'intro' THEN 1 WHEN 'verse' THEN 2 WHEN 'chorus' THEN 3
+    WHEN 'fill' THEN 4 WHEN 'break' THEN 5 WHEN 'build' THEN 6
+    WHEN 'outro' THEN 7 WHEN 'full_loop' THEN 8 ELSE 9 END`;
 
   const orderBy = sort === 'bpm_asc' ? [asc(audioLoops.bpm)]
     : sort === 'bpm_desc' ? [desc(audioLoops.bpm)]
     : sort === 'artist' ? [asc(audioLoops.artist)]
     : sort === 'most_played' ? [desc(audioLoops.playCount)]
+    : sort === 'collection' ? [asc(audioLoops.artist), asc(audioLoops.collection), sectionOrder, asc(audioLoops.sectionNumber)]
+    : sort === 'genre' ? [asc(audioLoops.genre), asc(audioLoops.artist)]
     : [desc(audioLoops.createdAt)];
 
   const [rows, countRow] = await Promise.all([

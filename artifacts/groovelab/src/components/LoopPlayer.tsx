@@ -61,6 +61,7 @@ export interface AudioLoopData {
 
 interface LoopPlayerProps {
   loop: AudioLoopData;
+  autoPlay?: boolean;
   onClose?: () => void;
 }
 
@@ -223,7 +224,7 @@ function StemRow({ stem, isMuted, isSoloed, volume, onToggleMute, onToggleSolo, 
 /*  Main Component                                                     */
 /* ------------------------------------------------------------------ */
 
-export function LoopPlayer({ loop, onClose }: LoopPlayerProps) {
+export function LoopPlayer({ loop, autoPlay = false, onClose }: LoopPlayerProps) {
   /* -- Audio engine refs (not state, for performance) --------------- */
   const audioCtxRef = useRef<AudioContext | null>(null);
   const bufferRef = useRef<AudioBuffer | null>(null);
@@ -481,6 +482,15 @@ export function LoopPlayer({ loop, onClose }: LoopPlayerProps) {
       play();
     }
   }, [isPlaying, loadingState, play, pause]);
+
+  /* -- Auto-play when buffer is ready and autoPlay prop is set ------- */
+  const autoPlayedRef = useRef(false);
+  useEffect(() => {
+    if (!autoPlay || loadingState !== 'ready' || autoPlayedRef.current) return;
+    autoPlayedRef.current = true;
+    const timer = setTimeout(() => play(), 50);
+    return () => clearTimeout(timer);
+  }, [autoPlay, loadingState, play]);
 
   const toggleLoop = useCallback(() => {
     setIsLooping((prev) => {

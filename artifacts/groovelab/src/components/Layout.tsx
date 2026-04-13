@@ -20,6 +20,7 @@ import {
 const NAV_ITEMS = [
   { path: '/', label: 'Explore', icon: Compass },
   { path: '/loop-library', label: 'Loop Library', icon: Headphones },
+  { path: '/song-builder', label: 'Song Builder', icon: ListMusic },
   { path: '/sequencer', label: 'Sequencer', icon: Music },
   { path: '/metronome', label: 'Metronome', icon: Timer },
   { path: '/midi', label: 'MIDI', icon: Cpu },

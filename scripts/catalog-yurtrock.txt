@@ -1,0 +1,986 @@
+FOLDER: 90sHipHop_EMajor_91bpm  [14 loops]
+  8Bar 90s HipHop 91bpm 1
+  Chorus 90s HipHop 91bpm 1
+  Chorus 90s HipHop 91bpm 2
+  Chorus 90s HipHop 91bpm 3
+  Chorus 90s HipHop 91bpm 4
+  Chorus 90s HipHop 91bpm 5
+  Chorus 90s HipHop 91bpm 6
+  Multitrack_Loops
+  Verse 90s HipHop 91bpm 1
+  Verse 90s HipHop 91bpm 2
+  Verse 90s HipHop 91bpm 3
+  VerseStop 90s HipHop 91bpm 1
+  VerseStop 90s HipHop 91bpm 2
+  VerseStop 90s HipHop 91bpm 3
+FOLDER: AdamLevyV1_BaritoneGuitar_WAV  [14 loops]
+  A_105bpm
+  Bb_83bpm
+  C_175bpm
+  D_92bpm
+  E_76bpm
+  G_112bpm
+  InThreeC_160bpm
+  Key Of A
+  Key Of C
+  Key Of G
+  Key of D
+  Key of E
+  Long
+  Palm Mute
+FOLDER: AntonioSanchezV1_WAV  [11 loops]
+  Afrocuban 2:3 Rumba Clave 120bpm.wav
+  Afrocuban 2:3 clave 5:4 125bpm.wav
+  Afrocuban 3:2 Rumba Clave 120bpm
+  Afrocuban 6:8 140bpm
+  Deep Snare
+  Double Time Hats
+  Dry Ride
+  Funk HipHop 160bpm
+  Fusion Grooves 160bpm
+  Jazz Waltz 200bpm
+  Laidback HipHop Funk 180bpm
+FOLDER: AntonioSanchezV2_WAV  [6 loops]
+  Swing 12 Bar Blues 200bpm
+  Swing AABA Changes 240bpm
+  The Way Up Groove 160bpm (Pat Metheny Group)
+  Varied Afrocuban 2-3 Clave Feels 120bpm
+  Varied Double Time Feel Straight 8ths 165bpm
+  Varied Grooves in 7:4 260bpm
+FOLDER: BeatsByDaruJones_MIDI_WAV  [12 loops]
+  Clean Loops
+  Clean Loops
+  Clean Loops
+  Clean Loops
+  Clean Loops
+  Clean Loops
+  Vibe Loops
+  Vibe Loops
+  Vibe Loops
+  Vibe Loops
+  Vibe Loops
+  Vibe Loops
+FOLDER: BenSatterleeVol1_Drums_WAV  [6 loops]
+  CajonKit_78bpm
+  GoGoKit_92bpm
+  NeoSoulKit_84bpm
+  PopKit_92bpm
+  RetroKit_100bpm
+  SixEightKit_64bpm
+FOLDER: BlairSintaV1_Drums_WAV  [84 loops]
+  112bpm
+  16ths
+  16ths
+  2Bar
+  8ths
+  8ths
+  8ths
+  96bpm
+  Bass Break
+  Bass Break
+  Bell
+  Bell
+  Bell
+  Break
+  Choke Hat
+  Choke Hat
+  Crash
+  Crash
+  Crash Groove
+  Crash Groove
+  Driving
+  Dry
+  Dry
+  Dry
+  Effected
+  Effected
+  Effected
+  Empty1
+  Fill
+  Fill
+  Fill
+  Fill
+  Fill
+  Fills Dry
+  Fills Dry
+  Fills Dry
+  Fills Effected
+  Fills Effected
+  Fills Effected
+  Floor 8ths
+  Floor 8ths
+  Grit
+  Groove
+  Halftime
+  Halftime
+  Hat Groove
+  Hat Groove
+  Hat Groove
+  Hat Groove
+  Hat Groove
+  Intro
+  Intro
+  Loops
+  Loose 16ths
+  Loose 16ths
+  Loose Hat
+  Loose Hat
+  Loose Hat
+  Loose Hat
+  Marchy
+  Marchy
+  Open Hat
+  Open Hat
+  Open Hat
+  Open Hat
+  QuarterHat
+  Ride
+  Ride
+  Ride
+  Ride
+  Samples Dry
+  Samples Dry
+  Samples Dry
+  Samples Effected
+  Samples Effected
+  Samples Effected
+  Snare
+  Snares Off
+  Snares Off
+  Space
+  Tom Groove
+  Tom Groove
+  Tom Groove
+  Tom Groove
+FOLDER: BlairSintaV2_Drums_WAV  [29 loops]
+  1 Bar Grooves
+  16s Grooves
+  16s Grooves
+  2 Bar Grooves
+  2 Bar Grooves
+  2 Bar Grooves
+  4 Bar Grooves
+  4 Bar Grooves
+  4 Bar Grooves
+  Bell Grooves
+  Bell Grooves
+  Blown Out 104 bpm
+  Break
+  Dropouts
+  Dry
+  Dry
+  Dry
+  EFX
+  EFX
+  EFX
+  Halftime
+  Industrial
+  One Shots
+  Tom Grooves
+  Tom Grooves
+  With Percussion
+  With Percussion
+  XStick
+  with perc
+FOLDER: BluesDrumsVol1_MIDI_WAV  [6 loops]
+  AntiGravity 125bpm
+  Boogaloo 128bpm
+  Driving Eighths 110bpm
+  Slow Pocket 156bpm
+  Sweet Chicago 115bpm
+  Uptempo Bounce 210bpm
+FOLDER: BluesGroove_BMajor_177bpm  [6 loops]
+  Chorus BluesGroove 177bpm 1
+  Chorus BluesGroove 177bpm 2
+  IntroChorus BluesGroove 177bpm 1
+  IntroStopTime BluesGroove 177bpm 1
+  IntroStopTime BluesGroove 177bpm 2
+  OutroChorus BluesGroove 177bpm
+FOLDER: BobReynoldsV1_Saxophone_WAV  [7 loops]
+  FunkLarry_F_107
+  HipHop_D_90
+  Hurley Pop 118 Cm
+  InRainbows-ish G 140bpm
+  InThree Db 188
+  Slow And Low Am 64bpm
+  WurliGroove BbEb 83bpm
+FOLDER: BonhamologyVol1_MultitrackEdition_WAV  [364 loops]
+  Bell Crash LightOnLove 1
+  Bell Crash LightOnLove 2
+  Bell Crash LightOnLove 3
+  Bell Crash LightOnLove 4
+  Bell Crash LightOnLove 5
+  Bell Crash LightOnLove 6
+  Bell Crash LightOnLove 7
+  Bell Crash LightOnLove 8
+  Bell Crash MountainMist 1
+  Bell Crash MountainMist 2
+  Bell Crash MountainMist 3
+  Bell Crash MountainMist 4
+  Bell Fill LightOnLove 1
+  Bell Fill LightOnLove 2
+  Bell Fill LightOnLove 3
+  Bell Fill LightOnLove 4
+  Bell Fill LightOnLove 5
+  Bell Fill LightOnLove 6
+  Bell Fill LightOnLove 7
+  Bell Fill MountainMist 1
+  Bell Fill MountainMist 2
+  Bell Fill MountainMist 3
+  Bell LightOnLove 1
+  Bell LightOnLove 2
+  Bell LightOnLove 3
+  Bell LightOnLove 4
+  Bell MountainMist 1
+  Bell MountainMist 2
+  Bell MountainMist 3
+  Bell MountainMist 4
+  Bell MountainMist 5
+  Bell MountainMist 6
+  Bell MountainMist 7
+  Bell Quarter LightOnLove 1
+  BellToHat MountainMist 1
+  BigToms RumbleThunder 1
+  BigToms RumbleThunder 1
+  BigToms RumbleThunder 2
+  BigToms RumbleThunder 2
+  BigToms RumbleThunder 3
+  BigToms RumbleThunder 3
+  Chorus 8Bar NoWrong 1
+  Chorus A Crash Dropkick 1
+  Chorus A Crash NoWrong 1
+  Chorus A Crash NoWrong 2
+  Chorus A Crash NoWrong 3
+  Chorus A Crash NoWrong 4
+  Chorus A Crash Swunky 1
+  Chorus A Crash Swunky 2
+  Chorus A Crash Swunky 3
+  Chorus A Crash Swunky 4
+  Chorus A Crash Swunky 5
+  Chorus A Dropkick 1
+  Chorus A Dropkick 2
+  Chorus A Dropkick 3
+  Chorus A Dropkick 4
+  Chorus A Fill Dropkick 1
+  Chorus B Crash Dropkick 1
+  Chorus B Crash Dropkick 2
+  Chorus B Crash NoWrong 1
+  Chorus B Crash NoWrong 2
+  Chorus B Crash NoWrong 3
+  Chorus B Crash Swunky 1
+  Chorus B CrashHit Dropkick 1
+  Chorus B Dropkick 1
+  Chorus B Dropkick 2
+  Chorus B Dropkick 3
+  Chorus B Dropkick 4
+  Chorus B Dropkick Fill 1
+  Chorus B Fill NoWrong 1
+  Chorus B Fill NoWrong 2
+  Chorus B Fill NoWrong 3
+  Chorus B Fill Swunky 1
+  Chorus B Fill Swunky 2
+  Chorus B Fill Swunky 3
+  Chorus B Swunky 1
+  Chorus B Swunky 2
+  Chorus B Swunky 3
+  Chorus C Crash Dropkick 1
+  Chorus C Dropkick 1
+  Chorus C Dropkick 2
+  Chorus C Fill Dropkick 1
+  Chorus C Fill Dropkick 2
+  Chorus C Fill Dropkick 3
+  Chorus C Fill Dropkick 4
+  Chorus Crash LightAndShade 1
+  Chorus Crash LightAndShade 2
+  Chorus Crash LightAndShade 3
+  Chorus Crash LightAndShade 4
+  Chorus Crash MountainMist 1
+  Chorus Crash SwissMix 1
+  Chorus Crash SwissMix 2
+  Chorus Crash SwissMix 3
+  Chorus Crash SwissMix 4
+  Chorus CrashHits NoWrong 1
+  Chorus Fill LightAndShade 1
+  Chorus Fill LightAndShade 2
+  Chorus Fill LightAndShade 3
+  Chorus Fill LightAndShade 4
+  Chorus Fill NoWrong 1
+  Chorus Fill NoWrong 2
+  Chorus Fill NoWrong 3
+  Chorus Fill SwissMix 1
+  Chorus Fill SwissMix 2
+  Chorus Fill SwissMix 3
+  Chorus Fill SwissMix 4
+  Chorus Fill SwissMix 5
+  Chorus Fill Swunky 1
+  Chorus Fill Swunky 2
+  Chorus LightAndShade 1
+  Chorus LightAndShade 2
+  Chorus NoWrong 1
+  Chorus NoWrong 2
+  Chorus SwissMix 1
+  Chorus Swunky 1
+  Chorus Swunky 2
+  ChorusToVerse Swunky 1
+  Countoff Dropkick 1
+  Countoff SwissMix
+  Crash LightAndShade
+  Drop Kick  72bpm
+  End Swunky
+  Ending LightOnLove
+  Fill LightOnLove 1
+  Fill LightOnLove 2
+  Fill LightOnLove 3
+  Fill MountainMist 1
+  Fill MountainMist 2
+  Fill NoWrong 1
+  Fill Swunky 1
+  FillToGroove MountainMist 1
+  Groove Crash RumbleThunder 1
+  Groove Crash RumbleThunder 1
+  Groove Crash RumbleThunder 2
+  Groove RumbleThunder 1
+  Groove RumbleThunder 1
+  Groove RumbleThunder 2
+  Groove RumbleThunder 2
+  Groove RumbleThunder 3
+  Groove RumbleThunder 3
+  Groove RumbleThunder 4
+  Groove RumbleThunder 4
+  Groove RumbleThunder 5
+  Groove RumbleThunder 5
+  Groove RumbleThunder 6
+  Groove RumbleThunder 6
+  Groove RumbleThunder 7
+  Groove RumbleThunder 7
+  Groove RumbleThunder 8
+  Intro Crash Dropkick 1
+  Intro RumbleThunder 1
+  Intro RumbleThunder 1
+  Light And Shade 60bpm
+  Light On The Love 130bpm
+  LooseHat CrashHits MountainMist 1
+  LooseHat Fill MountainMist 1
+  LooseHat Fill MountainMist 2
+  LooseHat MountainMist 1
+  LooseHat MountainMist 2
+  LooseHat MountainMist 3
+  LooseHatToBell MountainMist 1
+  Mountain Mist 130bpm
+  Never Did No Wrong 95bpm
+  Outro Dropkick 1
+  Outro Dropkick 2
+  Outro Fill SwissMix 1
+  Outro LightAndShade 1
+  Outro LightAndShade 2
+  Outro MountainMist 1
+  Outro NoWrong 1
+  Outro RumbleThunder 1
+  Outro RumbleThunder 1
+  Outro RumbleThunder 2
+  Outro RumbleThunder 2
+  Outro RumbleThunder 3
+  Outro SwissMix 1
+  Outro SwissMix 2
+  Outro SwissMix 3
+  Swiss Mix 88bpm
+  Swunky 87bpm
+  Take 1
+  Take 2
+  Verse A BuildingFill Dropkick 1
+  Verse A Crash Dropkick 1
+  Verse A Crash Dropkick 2
+  Verse A Crash Dropkick 3
+  Verse A Crash Dropkick 4
+  Verse A Crash LightAndShade 1
+  Verse A Crash LightAndShade 2
+  Verse A Crash LightAndShade 3
+  Verse A Crash LightOnLove 1
+  Verse A Crash LightOnLove 2
+  Verse A Crash LightOnLove 3
+  Verse A Crash MountainMist 2
+  Verse A Crash Moutain Mist 1
+  Verse A Crash NoWrong 1
+  Verse A Crash NoWrong 2
+  Verse A Crash NoWrong 3
+  Verse A Crash NoWrong 4
+  Verse A Crash SwissMix 1
+  Verse A Crash SwissMix 2
+  Verse A Crash SwissMix 3
+  Verse A Crash SwissMix 4
+  Verse A Crash Swunky 1
+  Verse A Crash Swunky 2
+  Verse A Crash Swunky 3
+  Verse A Crash Swunky 4
+  Verse A CrashHits LightAndShade 1
+  Verse A Dropkick 1
+  Verse A Dropkick 2
+  Verse A Dropkick 3
+  Verse A Fill Dropkick 1
+  Verse A Fill LightAndShade 1
+  Verse A Fill LightAndShade 2
+  Verse A Fill LightAndShade 3
+  Verse A Fill LightOnLove 1
+  Verse A Fill LightOnLove 2
+  Verse A Fill MountainMist 1
+  Verse A Fill NoWrong 1
+  Verse A Fill SwissMix 1
+  Verse A Fill SwissMix 2
+  Verse A LightAndShade 1
+  Verse A LightAndShade 2
+  Verse A LightAndShade 3
+  Verse A LightAndShade 4
+  Verse A LightOnLove 1
+  Verse A LightOnLove 2
+  Verse A LightOnLove 3
+  Verse A LightOnLove 4
+  Verse A MountainMist 1
+  Verse A MountainMist 2
+  Verse A MountainMist 3
+  Verse A MountainMist 4
+  Verse A NoWrong 1
+  Verse A NoWrong 2
+  Verse A NoWrong 3
+  Verse A NoWrong 4
+  Verse A SwissMix 1
+  Verse A SwissMix 2
+  Verse A Swunky 1
+  Verse A Swunky 2
+  Verse B BuildingFill Dropkick 1
+  Verse B Crash Dropkick 1
+  Verse B Crash Dropkick 2
+  Verse B Crash Dropkick 3
+  Verse B Crash Dropkick 4
+  Verse B Crash Dropkick 5
+  Verse B Crash Dropkick 6
+  Verse B Crash LightAndShade 1
+  Verse B Crash LightOnLove 1
+  Verse B Crash MountainMist 1
+  Verse B Crash MountainMist 2
+  Verse B Crash NoWrong 1
+  Verse B Crash NoWrong 2
+  Verse B Crash NoWrong 3
+  Verse B Crash SwissMix 1
+  Verse B Crash SwissMix 2
+  Verse B Crash SwissMix 3
+  Verse B Crash SwissMix 4
+  Verse B Crash Swunky 1
+  Verse B Crash Swunky 2
+  Verse B Crash Swunky 3
+  Verse B CrashHits LightAndShade 1
+  Verse B Dropkick 1
+  Verse B Dropkick 2
+  Verse B Dropkick 3
+  Verse B Fill Dropkick 1
+  Verse B Fill Dropkick 2
+  Verse B Fill Dropkick 3
+  Verse B Fill LightOnLove 1
+  Verse B Fill NoWrong 1
+  Verse B Fill NoWrong 2
+  Verse B Fill NoWrong 3
+  Verse B Fill SwissMix 1
+  Verse B Fill SwissMix 2
+  Verse B Fill SwissMix 3
+  Verse B LightAndShade 1
+  Verse B LightOnLove 1
+  Verse B LightOnLove 2
+  Verse B LightOnLove 3
+  Verse B MountainMist 1
+  Verse B NoWrong 1
+  Verse B NoWrong 2
+  Verse B SwissMix 1
+  Verse B Swunky 1
+  Verse B Swunky 2
+  Verse B Swunky 3
+  Verse C Crash Dropkick 1
+  Verse C Crash Dropkick 2
+  Verse C Crash FoolinTheRain 2
+  Verse C Crash FoolinTheRain 4
+  Verse C Crash LightOnLove 1
+  Verse C Crash LightOnLove 3
+  Verse C Crash NoWrong 1
+  Verse C Crash NoWrong 2
+  Verse C Crash NoWrong 3
+  Verse C Crash NoWrong 4
+  Verse C Crash SwissMix 1
+  Verse C Crash SwissMix 2
+  Verse C Crash SwissMix 3
+  Verse C Crash SwissMix 4
+  Verse C Crash Swunky 1
+  Verse C Crash Swunky 2
+  Verse C Crash Swunky 3
+  Verse C Crash Swunky 4
+  Verse C CrashHits Dropkick 1
+  Verse C Dropkick 1
+  Verse C Dropkick 2
+  Verse C Dropkick 3
+  Verse C Dropkick 4
+  Verse C Dropkick 5
+  Verse C Dropkick 6
+  Verse C Dropkick 7
+  Verse C Dropkick 8
+  Verse C Fill Dropkick 1
+  Verse C Fill Dropkick 2
+  Verse C Fill LightOnLove 1
+  Verse C Fill LightOnLove 2
+  Verse C Fill LightOnLove 3
+  Verse C Fill NoWrong 1
+  Verse C Fill NoWrong 2
+  Verse C Fill SwissMix 1
+  Verse C Fill SwissMix 2
+  Verse C LightOnLove 1
+  Verse C LightOnLove 2
+  Verse C LightOnLove 3
+  Verse C LightOnLove 4
+  Verse C SwissMix 1
+  Verse C Swunky 1
+  Verse C Swunky 2
+  Verse C Swunky 3
+  Verse CrashHit MountainMist 1
+  Verse CrashHit MountainMist 2
+  Verse CrashHit MountainMist 3
+  Verse CrashHit MountainMist 4
+  Verse CrashHit MountainMist 5
+  Verse D Crash Dropkick 1
+  Verse D Crash Dropkick 2
+  Verse D Crash Dropkick 3
+  Verse D Crash Swunky 1
+  Verse D CrashHits Dropkick 1
+  Verse D CrashHits Dropkick 2
+  Verse D CrashlHits Dropkick 3
+  Verse D Dropkick 1
+  Verse D Dropkick 2
+  Verse D Dropkick 3
+  Verse D Dropkick 4
+  Verse D Fill Bigbeat 4
+  Verse D Fill Dropkick 1
+  Verse D Fill Dropkick 2
+  Verse D Fill Dropkick 3
+  Verse D Fill Dropkick 5
+  Verse D Fill Swunky 1
+  Verse D Swunky 1
+  Verse D Swunky 2
+  Verse D Swunky 3
+  VerseToChorus Swunky 1
+  VerseToLooseHat MountainMist 1
+  XStick Crash LightAndShade 1
+  XStick Crash LightAndShade 2
+  XStick Fill LightAndShade 1
+  XStick LightAndShade 1
+  XStick LightAndShade 2
+  XStick LightAndShade 3
+FOLDER: BonhamologyVol1_StereoEdition_WAV  [9 loops]
+  Drop Kick  72bpm
+  Light And Shade 60bpm
+  Light On The Love 130bpm
+  Mountain Mist 130bpm
+  Never Did No Wrong 95bpm
+  Swiss Mix 88bpm
+  Swunky 87bpm
+  Take 1
+  Take 2
+FOLDER: BonhamologyVol2_MultitrackEditionPart1_WAV  [134 loops]
+  7 to 11 120bpm
+  Boogie Mama 138bpm
+  California Sunshine 140bpm
+  Count Off
+  Crashes And Fill
+  Ending
+  Ending
+  Ending
+  HardToQuit_70bpm
+  Hat 1
+  Hat 1
+  Hat 2
+  Hat 2
+  Hat 3
+  Hat 4
+  Hat 5
+  Hat 6
+  Hat 7
+  Hat 8
+  Hat 8Bar 1
+  Hat BuildingFill 1
+  Hat BuildingFill 2
+  Hat BuildingFill 3
+  Hat Crash 1
+  Hat Crash 1
+  Hat Crash 10
+  Hat Crash 11
+  Hat Crash 12
+  Hat Crash 13
+  Hat Crash 2
+  Hat Crash 2
+  Hat Crash 3
+  Hat Crash 3
+  Hat Crash 4
+  Hat Crash 4
+  Hat Crash 5
+  Hat Crash 5
+  Hat Crash 6
+  Hat Crash 6
+  Hat Crash 7
+  Hat Crash 7
+  Hat Crash 8
+  Hat Crash 9
+  Hat Crash Fill 1
+  Hat Crash Fill 1
+  Hat Crash Fill 2
+  Hat Crash Fill 3
+  Hat Crash Fill 4
+  Hat Crash Fill 5
+  Hat CrashHits 1
+  Hat CrashHits 2
+  Hat CrashHits 3
+  Hat Fill 1
+  Hat Fill 2
+  Hat Fill 3
+  Hat Fill 4
+  Hat Fill 5
+  Hat Fill 6
+  Hat Fill 7
+  Hat Roll 1
+  Hat Roll 2
+  HatOpen Crash 1
+  HatOpen Crash Fill 1
+  Intro
+  Intro Fill 1
+  Just Join Hands 110bpm
+  Keep a Coolin 92bpm
+  LooseHat 1
+  LooseHat 2
+  LooseHat 3
+  LooseHat 4
+  LooseHat 5
+  LooseHat Crash 1
+  LooseHat Crash 2
+  LooseHat Crash 3
+  LooseHat Crash 4
+  LooseHat Crash 5
+  LooseHat Crash 6
+  LooseHat Crash 7
+  LooseHat Crash 8
+  LooseHat Fill 1
+  LooseHat Fill 2
+  LooseHat Fill 3
+  LooseHat Fill 4
+  LooseHat Fill 5
+  LooseHat Fill 6
+  Quick Step 210bpm
+  RIde Crash 1
+  Ride 1
+  Ride 1
+  Ride 2
+  Ride 3
+  Ride 8Bar 1
+  Ride 8Bar 2
+  Ride Crash 1
+  Ride Crash 1
+  Ride Crash 2
+  Ride Crash 2
+  Ride Crash 2
+  Ride Crash 3
+  Ride Crash 3
+  Ride Crash 3
+  Ride Crash 4
+  Ride Crash 4
+  Ride Crash 5
+  Ride Crash 5
+  Ride Crash 6
+  Ride Crash 7
+  Ride Crash 8
+  Ride Crash FIll 1
+  Ride Crash Fill 2
+  Ride Crash Fill 3
+  Ride Crash Fill 4
+  Ride Crash Fill 5
+  Ride Crash Fill 6
+  Ride Crash Fill 7
+  Ride CrashHits 1
+  Ride Fill 1
+  Ride Fill 1
+  Ride Fill 2
+  Ride Fill 2
+  Ride Fill 3
+  Ride Fill 3
+  Ride Fill 4
+  Ride Fill 4
+  Ride Fill 5
+  Ride Fill 6
+  Squeeze It 83bpm
+  The Winds of Thor 66bpm
+  TightHat 1
+  TightHat Building
+  TightHat Crash 1
+  TightHat Crash 2
+  TightHat Crash 3
+FOLDER: BonhamologyVol2_MultitrackEditionPart2_WAV  [259 loops]
+  Bell 1
+  Bell 2
+  Bell Crash 1
+  Bell Crash 1
+  Bell Crash 2
+  Bell Crash 3
+  Bell Crash 4
+  Bell Crash 5
+  Bell Crash 6
+  Bell Crash 7
+  Bell Crash 8
+  Bell Crash 9
+  Bell Crash Fill 1
+  Bell Crash Fill 2
+  Bell Crash Fill 3
+  Bell Crash Fill 4
+  Bell Fill 1
+  Bell Fill 1
+  Bell Fill 2
+  Click Intro
+  Click Intro 2
+  Crash Fill
+  Ending
+  Ending
+  Ending
+  Ending
+  Hat 1
+  Hat 1
+  Hat 1
+  Hat 1
+  Hat 1
+  Hat 10
+  Hat 2
+  Hat 2
+  Hat 2
+  Hat 2
+  Hat 2
+  Hat 3
+  Hat 3
+  Hat 3
+  Hat 3
+  Hat 3
+  Hat 4
+  Hat 4
+  Hat 4
+  Hat 4
+  Hat 4
+  Hat 5
+  Hat 5
+  Hat 5
+  Hat 5
+  Hat 5
+  Hat 6
+  Hat 6
+  Hat 6
+  Hat 6
+  Hat 7
+  Hat 7
+  Hat 7
+  Hat 7
+  Hat 8
+  Hat 8
+  Hat 9
+  Hat BuildingFill 1
+  Hat BuildingFill 1
+  Hat BuildingFill 2
+  Hat BuildingFill 3
+  Hat BuildingFill 4
+  Hat Crash 1
+  Hat Crash 1
+  Hat Crash 1
+  Hat Crash 1
+  Hat Crash 1
+  Hat Crash 10
+  Hat Crash 10
+  Hat Crash 2
+  Hat Crash 2
+  Hat Crash 2
+  Hat Crash 2
+  Hat Crash 2
+  Hat Crash 3
+  Hat Crash 3
+  Hat Crash 3
+  Hat Crash 3
+  Hat Crash 3
+  Hat Crash 4
+  Hat Crash 4
+  Hat Crash 4
+  Hat Crash 4
+  Hat Crash 4
+  Hat Crash 5
+  Hat Crash 5
+  Hat Crash 5
+  Hat Crash 5
+  Hat Crash 5
+  Hat Crash 6
+  Hat Crash 6
+  Hat Crash 6
+  Hat Crash 6
+  Hat Crash 6
+  Hat Crash 7
+  Hat Crash 7
+  Hat Crash 7
+  Hat Crash 7
+  Hat Crash 8
+  Hat Crash 8
+  Hat Crash 8
+  Hat Crash 9
+  Hat Crash 9
+  Hat Crash Fill 1
+  Hat Crash Fill 1
+  Hat Crash Fill 1
+  Hat Crash Fill 10
+  Hat Crash Fill 2
+  Hat Crash Fill 3
+  Hat Crash Fill 4
+  Hat Crash Fill 5
+  Hat Crash Fill 6
+  Hat Crash Fill 7
+  Hat Crash Fill 8
+  Hat Crash Fill 9
+  Hat CrashHit 1
+  Hat CrashHit 2
+  Hat CrashHit 3
+  Hat CrashHit Fill 1
+  Hat CrashHit Fill 2
+  Hat CrashHit Fill 3
+  Hat CrashHit Fill 4
+  Hat CrashHit Fill 5
+  Hat CrashHits 1
+  Hat CrashHits 2
+  Hat Fill 1
+  Hat Fill 1
+  Hat Fill 1
+  Hat Fill 1
+  Hat Fill 2
+  Hat Fill 2
+  Hat Fill 2
+  Hat Fill 3
+  Hat Fill 3
+  Hat Fill 4
+  Hat w Cymbal Hits 1
+  Hat w Cymbal Hits 2
+  HatB 1
+  HatB 2
+  HatB CrashHits 1
+  HatB Fill 1
+  HatChunky Crash 1
+  HatChunky Fill 1
+  HatLoose 1
+  HatLoose Crash 1
+  HatLoose Crash 2
+  HatLoose Crash 3
+  HatLoose Crash 4
+  HatLoose Crash 5
+  HatLoose CrashHits 1
+  HatLoose Fill 1
+  HatLoose Fill 2
+  HatLoose Fill 3
+  HatOpen 1
+  HatOpen 1
+  HatOpen 2
+  HatOpen Crash 1
+  HatOpen Crash 1
+  HatOpen Crash 2
+  HatOpen Crash 3
+  HatOpen Crash Fill 1
+  HatOpen CrashHits 1
+  HatOpen Fill 1
+  HatTight 1
+  HatTight 2
+  HatTight 3
+  HatTight 4
+  HatTight Crash 1
+  HatTight Crash 2
+  HatTight Crash 3
+  HatTight Crash 4
+  HatTight Crash 5
+  HatTight Crash 6
+  HatTight Fill 1
+  HatTight Fill 2
+  Intro
+  Intro
+  Intro Fill 1
+  Intro Fill 1
+  Intro Fill 2
+  Kick Crash
+  Outro 1
+  Outro 1
+  Outro 1
+  Outro 2
+  Outro 2
+  Outro 3
+  Outro Crash 1
+  Outro Crash 1
+  Outro Crash 2
+  Outro Crash 2
+  Outro Crash 3
+  Outro Fill 1
+  Outro Ride 1
+  Outro Ride 2
+  Outro With Ending
+  Ride 1
+  Ride 1
+  Ride 1
+  Ride 1
+  Ride 2
+  Ride BuildingFill 1
+  Ride Crash 1
+  Ride Crash 1
+  Ride Crash 1
+  Ride Crash 1
+  Ride Crash 1
+  Ride Crash 2
+  Ride Crash 2
+  Ride Crash 2
+  Ride Crash 2
+  Ride Crash 2
+  Ride Crash 3
+  Ride Crash 3
+  Ride Crash 3
+  Ride Crash 3
+  Ride Crash 4
+  Ride Crash 4
+  Ride Crash 4
+  Ride Crash 5
+  Ride Crash 5
+  Ride Crash 6
+  Ride Crash 6
+  Ride Crash Fill 1
+  Ride Crash Fill 1
+  Ride Crash Fill 1
+  Ride Crash Fill 1
+  Ride Crash Fill 2
+  Ride Crash Fill 2
+  Ride Crash Fill 2
+  Ride Crash Fill 3
+  Ride Crash Hits 1
+  Ride CrashHits 1
+  Ride CrashHits 1
+  Ride CrashHits 1
+  Ride CrashHits 2
+  Ride CrashHits 2
+  Ride CrashHits 3
+  Ride CrashHits 4
+  Ride CrashHits Fill 1
+  Ride CrashHits Fill 1
+  Ride CrashHits Fill 2
+  Ride CrashHits Fill 2
+  Ride CrashHits Fill 3
+  Ride Fill 1
+  Ride Fill 1
+  Ride Fill 2
+  Ride Fill 2
+  Ride LongFill 1
+  Ride w Crash Hits 1
+  Ride w Crash Hits 2
+  Ride w CrashHits 1
+  Ride w CrashHits 2
+FOLDER: BonhamologyVol2_StereoEdition_WAV  [9 loops]
+  7 to 11 120bpm
+  Boogie Mama 138bpm
+  California Sunshine 140bpm
+  HardToQuit_70bpm
+  Just Join Hands 110bpm
+  Keep a Coolin 92bpm
+  Quick Step 210bpm
+  Squeeze It 83bpm
+  The Winds of Thor 66bpm

@@ -147,6 +147,7 @@ export function SongBuilder({ sections, artist, collection, bpm, onClose }: Song
   const [arrangement, setArrangement] = useState<ArrangementEntry[]>([]);
   const [loadingProgress, setLoadingProgress] = useState({ loaded: 0, total: 0 });
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isLooping, setIsLooping] = useState(true);
   const [currentPlayingIndex, setCurrentPlayingIndex] = useState<number>(-1);
   const [previewingId, setPreviewingId] = useState<string | null>(null);
 
@@ -157,6 +158,8 @@ export function SongBuilder({ sections, artist, collection, bpm, onClose }: Song
   const playStartTimeRef = useRef<number>(0);
   const animFrameRef = useRef<number>(0);
   const previewSourceRef = useRef<AudioBufferSourceNode | null>(null);
+  const isLoopingRef = useRef(true);
+  const playArrangementRef = useRef<(() => void) | null>(null);
 
   // Group sections by type for the available panel
   const groupedSections = useMemo(() => {
@@ -323,12 +326,17 @@ export function SongBuilder({ sections, artist, collection, bpm, onClose }: Song
 
     sourcesRef.current = newSources;
 
-    // Last source ends playback
+    // Last source: loop or stop
     if (newSources.length > 0) {
       newSources[newSources.length - 1].onended = () => {
-        setIsPlaying(false);
-        setCurrentPlayingIndex(-1);
-        cancelAnimationFrame(animFrameRef.current);
+        if (isLoopingRef.current && playArrangementRef.current) {
+          // Restart the arrangement for seamless looping
+          playArrangementRef.current();
+        } else {
+          setIsPlaying(false);
+          setCurrentPlayingIndex(-1);
+          cancelAnimationFrame(animFrameRef.current);
+        }
       };
     }
 
@@ -348,6 +356,10 @@ export function SongBuilder({ sections, artist, collection, bpm, onClose }: Song
     };
     animFrameRef.current = requestAnimationFrame(trackSection);
   }, [arrangement, stopPlayback]);
+
+  // Keep refs in sync
+  playArrangementRef.current = playArrangement;
+  isLoopingRef.current = isLooping;
 
   // Preview a single section
   const previewSection = useCallback((sectionId: string) => {
@@ -372,6 +384,7 @@ export function SongBuilder({ sections, artist, collection, bpm, onClose }: Song
 
     const source = ctx.createBufferSource();
     source.buffer = buffer;
+    source.loop = true;
     source.connect(gainRef.current!);
     source.start();
     previewSourceRef.current = source;
@@ -614,6 +627,17 @@ export function SongBuilder({ sections, artist, collection, bpm, onClose }: Song
                     Play All
                   </Button>
                 )}
+
+                <Button
+                  variant={isLooping ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setIsLooping(!isLooping)}
+                  className={`gap-1.5 text-xs ${isLooping ? 'bg-primary/20 text-primary border-primary/40' : ''}`}
+                  title="Loop arrangement"
+                >
+                  <Repeat className="w-3.5 h-3.5" />
+                  Loop
+                </Button>
 
                 <Button
                   variant="outline"

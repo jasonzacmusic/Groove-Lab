@@ -36,7 +36,18 @@
       "Bash(echo \"EXIT: $?\")",
       "Bash(npx vite:*)",
       "Bash(ls /home/runner/workspace/scripts/src/seed-full*)",
-      "Bash(awk '{print $5, \"bytes\"}')"
+      "Bash(awk '{print $5, \"bytes\"}')",
+      "Bash(vercel domains:*)",
+      "Bash(./node_modules/.bin/tsc --noEmit)",
+      "Bash(/home/runner/workspace/node_modules/.bin/tsc --noEmit --pretty false)",
+      "Bash(timeout 60 /home/runner/workspace/node_modules/.bin/tsc:*)",
+      "Bash(timeout 60 tsc --noEmit --pretty false --project /home/runner/workspace/artifacts/groovelab/tsconfig.json)",
+      "Bash(xargs ls:*)",
+      "Bash(npx tsx:*)",
+      "Bash(pnpm --filter @workspace/scripts exec tsx scripts/src/parse-catalog.ts scripts/catalog-yurtrock.txt)",
+      "Bash(env)",
+      "Bash(export BUNNY_STORAGE_PASSWORD=\"25e208b1-2c67-4f2b-ab197790a4b5-27aa-4fa9\")",
+      "Bash(python3 -c ':*)"
     ]
   }
 }

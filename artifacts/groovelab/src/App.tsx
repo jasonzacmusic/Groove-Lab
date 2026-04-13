@@ -24,6 +24,7 @@ import Playlists from "@/pages/Playlists";
 import Creators from "@/pages/Creators";
 import PlayAlong from "@/pages/PlayAlong";
 import LoopLibrary from "@/pages/LoopLibrary";
+import SongBuilderPage from "@/pages/SongBuilderPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -41,6 +42,7 @@ function Router() {
         <Route path="/" component={Home} />
         <Route path="/explore" component={Explore} />
         <Route path="/loop-library" component={LoopLibrary} />
+        <Route path="/song-builder" component={SongBuilderPage} />
         <Route path="/sequencer" component={Sequencer} />
         <Route path="/midi" component={Midi} />
         <Route path="/chords" component={Chords} />
