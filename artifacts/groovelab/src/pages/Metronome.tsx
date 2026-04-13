@@ -357,6 +357,27 @@ export default function Metronome() {
     }, 200);
   }, []);
 
+  // Pre-initialize Tone.js on first click anywhere on the page
+  useEffect(() => {
+    const initTone = () => {
+      if (!toneStarted) {
+        Tone.start().then(() => {
+          setToneStarted(true);
+          ensureSynth();
+          Tone.getContext().lookAhead = 0.01; // minimal latency
+        });
+      }
+      document.removeEventListener('click', initTone);
+      document.removeEventListener('keydown', initTone);
+    };
+    document.addEventListener('click', initTone);
+    document.addEventListener('keydown', initTone);
+    return () => {
+      document.removeEventListener('click', initTone);
+      document.removeEventListener('keydown', initTone);
+    };
+  }, [toneStarted, ensureSynth]);
+
   // --- Start / Stop ---
   const startMetronome = useCallback(async () => {
     if (!toneStarted) {
@@ -467,56 +488,66 @@ export default function Metronome() {
   const [tapInfo, setTapInfo] = useState<{ count: number; avgBpm: number | null }>({ count: 0, avgBpm: null });
   const tapResetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const handleTapTempo = useCallback(async () => {
+  // ZERO LATENCY tap tempo — fully synchronous, no await
+  const handleTapTempo = useCallback(() => {
+    // Init Tone in background (don't block the tap)
     if (!toneStarted) {
-      await Tone.start();
-      setToneStarted(true);
+      Tone.start().then(() => {
+        setToneStarted(true);
+        ensureSynth();
+      });
     }
-    // Play a click on each tap for feedback
+
+    // Click feedback (non-blocking)
     if (synthRef.current) {
       try {
-        const freqs = SOUND_FREQS[beatSoundRef.current];
-        synthRef.current.triggerAttackRelease(freqs.accent, '32n', Tone.now(), 0.5);
+        synthRef.current.triggerAttackRelease(
+          SOUND_FREQS[beatSoundRef.current].accent, '32n', Tone.now(), 0.5
+        );
       } catch {}
     }
 
     const now = performance.now();
     const taps = tapTimesRef.current;
-    // Reset if more than 2.5 seconds since last tap
+
+    // Reset after 2.5s gap
     if (taps.length > 0 && now - taps[taps.length - 1] > 2500) {
       tapTimesRef.current = [now];
       setTapInfo({ count: 1, avgBpm: null });
       return;
     }
-    taps.push(now);
-    if (taps.length > 12) taps.shift(); // keep last 12 taps for better averaging
 
-    // Auto-clear tap display after 3 seconds of no taps
+    taps.push(now);
+    if (taps.length > 12) taps.shift();
+
+    // Auto-clear after 3s
     if (tapResetTimerRef.current) clearTimeout(tapResetTimerRef.current);
-    tapResetTimerRef.current = setTimeout(() => {
-      setTapInfo({ count: 0, avgBpm: null });
-    }, 3000);
+    tapResetTimerRef.current = setTimeout(() => setTapInfo({ count: 0, avgBpm: null }), 3000);
 
     if (taps.length >= 2) {
       const intervals: number[] = [];
-      for (let i = 1; i < taps.length; i++) {
-        intervals.push(taps[i] - taps[i - 1]);
-      }
+      for (let i = 1; i < taps.length; i++) intervals.push(taps[i] - taps[i - 1]);
       const avg = intervals.reduce((a, b) => a + b, 0) / intervals.length;
       const tapBpm = Math.round(60000 / avg);
       if (tapBpm >= 20 && tapBpm <= 300) {
+        // IMMEDIATELY set the BPM — the average IS the decision
         setBpm(tapBpm);
         setTapInfo({ count: taps.length, avgBpm: tapBpm });
+        // If playing, update transport BPM in real-time
+        if (isPlaying && !isRamping) {
+          Tone.getTransport().bpm.value = tapBpm;
+        }
       }
     } else {
       setTapInfo({ count: 1, avgBpm: null });
     }
-  }, [toneStarted]);
+  }, [toneStarted, ensureSynth, isPlaying, isRamping]);
 
   // --- Keyboard shortcuts ---
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLSelectElement) return;
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLSelectElement || e.target instanceof HTMLTextAreaElement) return;
+      if (document.activeElement?.tagName === 'IFRAME') return;
       if (e.code === 'Space') {
         e.preventDefault();
         togglePlay();

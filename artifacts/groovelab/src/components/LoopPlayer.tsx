@@ -356,7 +356,8 @@ export function LoopPlayer({ loop, onClose }: LoopPlayerProps) {
     const onKeyDown = (e: KeyboardEvent) => {
       // Don't capture if user is typing in an input
       const target = e.target as HTMLElement;
-      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) return;
+      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT' || target.tagName === 'IFRAME' || target.isContentEditable) return;
+      if (document.activeElement?.tagName === 'IFRAME') return;
 
       switch (e.code) {
         case 'Space':

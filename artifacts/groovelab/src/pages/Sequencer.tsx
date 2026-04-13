@@ -687,12 +687,15 @@ export default function Sequencer() {
   }, [store]);
 
   // Keyboard shortcuts
+  // Keyboard shortcuts — only active on sequencer page, not when
+  // focus is in inputs or when other audio players are active
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       const tag = (e.target as HTMLElement)?.tagName;
       if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+      // Don't capture if an iframe (YouTube) or audio player has focus
+      if (document.activeElement?.tagName === 'IFRAME') return;
 
-      // Space = play/stop
       if (e.code === 'Space') {
         e.preventDefault();
         handleStart();

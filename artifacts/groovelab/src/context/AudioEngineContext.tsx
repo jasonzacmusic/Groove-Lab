@@ -402,23 +402,9 @@ export const AudioEngineProvider: React.FC<{ children: React.ReactNode }> = ({ c
     }
   };
 
-  // ---------- Keyboard input ----------
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      // Ignore if focus is in an input / textarea
-      const tag = (e.target as HTMLElement)?.tagName;
-      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
-
-      const instrument = KEY_MAP[e.key.toLowerCase()];
-      if (instrument) {
-        playPreview(instrument);
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isInitialized]);
+  // Keyboard shortcuts removed from global context — they are now
+  // scoped to individual pages (Sequencer, Metronome, LoopPlayer)
+  // to prevent clashing when on other pages.
 
   return (
     <AudioEngineContext.Provider value={{ isInitialized, isPlaying, midiConnected, startEngine, togglePlayback, playPreview }}>
