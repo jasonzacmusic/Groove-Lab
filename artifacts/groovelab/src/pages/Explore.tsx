@@ -366,19 +366,19 @@ export default function Explore() {
   const { toast } = useToast();
 
   const openSongBuilder = useCallback(async (loop: any) => {
-    if (!loop.collection && !loop.artist) return;
+    if (!loop.artist) return;
     setSongBuilderLoading(loop.id);
     try {
+      const bpm = loop.bpm || 100;
       const params = new URLSearchParams();
-      if (loop.collection) params.set('collection', loop.collection);
-      if (loop.bpm) {
-        params.set('bpm_min', String(loop.bpm));
-        params.set('bpm_max', String(loop.bpm));
-      }
-      params.set('limit', '50');
+      params.set('artist', loop.artist);
+      params.set('bpm_min', String(Math.max(1, bpm - 2)));
+      params.set('bpm_max', String(bpm + 2));
+      params.set('limit', '100');
+
       const res = await fetch(`/api/audio-loops?${params.toString()}`);
       const data = await res.json();
-      const sections: SongSection[] = (data.loops || []).map((l: any) => ({
+      let allSections: SongSection[] = (data.loops || []).map((l: any) => ({
         id: l.id,
         grooveName: l.grooveName || l.title,
         sectionType: l.sectionType || 'full_loop',
@@ -387,8 +387,25 @@ export default function Explore() {
         wavUrl: l.wavUrl,
         artist: l.artist || '',
       }));
+
+      // Broaden if few results
+      if (allSections.length <= 2) {
+        const wideParams = new URLSearchParams();
+        wideParams.set('artist', loop.artist);
+        wideParams.set('bpm_min', String(Math.max(1, bpm - 10)));
+        wideParams.set('bpm_max', String(bpm + 10));
+        wideParams.set('limit', '50');
+        const wideRes = await fetch(`/api/audio-loops?${wideParams.toString()}`);
+        const wideData = await wideRes.json();
+        const existing = new Set(allSections.map((s: any) => s.id));
+        allSections = [...allSections, ...(wideData.loops || []).filter((l: any) => !existing.has(l.id)).map((l: any) => ({
+          id: l.id, grooveName: l.grooveName || l.title, sectionType: l.sectionType || 'full_loop',
+          sectionNumber: l.sectionNumber ?? null, bpm: l.bpm ?? null, wavUrl: l.wavUrl, artist: l.artist || '',
+        }))];
+      }
+
       setSongBuilderData({
-        sections,
+        sections: allSections,
         artist: loop.artist || 'Unknown',
         collection: loop.collection || loop.grooveName || loop.title,
         bpm: loop.bpm ?? null,

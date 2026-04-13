@@ -118,19 +118,23 @@ export default function LoopLibrary() {
   const [songBuilderLoading, setSongBuilderLoading] = useState(false);
 
   const openSongBuilder = useCallback(async (loop: AudioLoopData) => {
-    if (!loop.collection && !loop.artist) return;
+    if (!loop.artist) return;
     setSongBuilderLoading(true);
     try {
+      // Strategy: search by ARTIST + BPM range to find all related sections
+      // This works for both multi-section compositions (Rich Redmond at 123 BPM)
+      // and standalone loops (Ryan Gruss — shows other loops at similar tempo)
+      const bpm = loop.bpm || 100;
       const params = new URLSearchParams();
-      if (loop.collection) params.set('collection', loop.collection);
-      if (loop.bpm) {
-        params.set('bpm_min', String(loop.bpm));
-        params.set('bpm_max', String(loop.bpm));
-      }
-      params.set('limit', '50');
+      params.set('artist', loop.artist);
+      params.set('bpm_min', String(Math.max(1, bpm - 2)));
+      params.set('bpm_max', String(bpm + 2));
+      params.set('limit', '100');
+      params.set('sort', 'newest');
+
       const res = await fetch(`/api/audio-loops?${params.toString()}`);
       const data = await res.json();
-      const sections: SongSection[] = (data.loops || []).map((l: any) => ({
+      let allSections: SongSection[] = (data.loops || []).map((l: any) => ({
         id: l.id,
         grooveName: l.grooveName || l.title,
         sectionType: l.sectionType || 'full_loop',
@@ -139,8 +143,33 @@ export default function LoopLibrary() {
         wavUrl: l.wavUrl,
         artist: l.artist || '',
       }));
+
+      // If only 1-2 results, broaden: search by artist + wider BPM range
+      if (allSections.length <= 2) {
+        const wideParams = new URLSearchParams();
+        wideParams.set('artist', loop.artist);
+        wideParams.set('bpm_min', String(Math.max(1, bpm - 10)));
+        wideParams.set('bpm_max', String(bpm + 10));
+        wideParams.set('limit', '50');
+        const wideRes = await fetch(`/api/audio-loops?${wideParams.toString()}`);
+        const wideData = await wideRes.json();
+        const existing = new Set(allSections.map(s => s.id));
+        const moreSections = (wideData.loops || [])
+          .filter((l: any) => !existing.has(l.id))
+          .map((l: any) => ({
+            id: l.id,
+            grooveName: l.grooveName || l.title,
+            sectionType: l.sectionType || 'full_loop',
+            sectionNumber: l.sectionNumber ?? null,
+            bpm: l.bpm ?? null,
+            wavUrl: l.wavUrl,
+            artist: l.artist || '',
+          }));
+        allSections = [...allSections, ...moreSections];
+      }
+
       setSongBuilderData({
-        sections,
+        sections: allSections,
         artist: loop.artist || 'Unknown',
         collection: loop.collection || loop.grooveName || loop.title,
         bpm: loop.bpm ?? null,
