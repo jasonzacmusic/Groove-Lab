@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import { useLocation } from 'wouter';
 
 interface PlayerState {
   loopId: string | null;
@@ -27,6 +28,15 @@ export const usePlayer = () => useContext(PlayerContext);
 export const PlayerProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [current, setCurrent] = useState<PlayerState | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [location] = useLocation();
+
+  // Close player on navigation
+  useEffect(() => {
+    if (isOpen) {
+      setIsOpen(false);
+      setCurrent(null);
+    }
+  }, [location]);
 
   const playLoop = useCallback((loop: any) => {
     setCurrent({

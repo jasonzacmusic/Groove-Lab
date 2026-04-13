@@ -21,7 +21,7 @@ export default function Auth() {
         <div className="flex flex-col items-center mb-8">
           <Disc3 className="w-12 h-12 text-primary mb-3" />
           <h1 className="font-serif italic text-3xl text-foreground">
-            GrooveLab
+            GrooveKit
           </h1>
           <p className="text-muted-foreground text-sm mt-1">
             {tab === "login"

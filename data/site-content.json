@@ -1,6 +1,6 @@
 {
   "branding": {
-    "name": "GrooveLab",
+    "name": "The Groove Kit",
     "tagline": "Where Rhythm Meets Discovery",
     "description": "An interactive music education platform designed for drummers, percussionists, and rhythm enthusiasts of all skill levels.",
     "school": "Nathaniel School of Music",
@@ -8,7 +8,7 @@
   },
   "features": [
     {
-      "name": "The Pizza Lab",
+      "name": "Rhythm Circles",
       "icon": "music",
       "description": "A circular beat sequencer inspired by BeatScholar. Create patterns using pizza-slice subdivisions with 4 drum kits.",
       "path": "/sequencer"

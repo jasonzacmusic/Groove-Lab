@@ -69,7 +69,7 @@ export default function Home() {
       {/* Hero */}
       <section className="text-center py-6 md:py-10">
         <h1 className="font-serif text-4xl md:text-5xl mb-3">
-          Welcome to <span className="text-primary">GrooveLab</span>
+          Welcome to <span className="text-primary">The Groove Kit</span>
         </h1>
         <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
           Music education platform with drum loops, backing tracks, chord progressions, and practice tools.
