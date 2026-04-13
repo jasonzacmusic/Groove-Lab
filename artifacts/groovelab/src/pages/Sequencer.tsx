@@ -93,56 +93,157 @@ interface GroovePreset {
 }
 
 const GROOVE_PRESETS: GroovePreset[] = [
+  // ── ROCK ──
   {
     name: 'Basic Rock',
     kit: 'rock',
     bpm: 120,
     timeSig: [4, 4],
-    subdivisions: [4, 4, 4, 4],
+    subdivisions: [2, 2, 2, 2], // 8th notes
     pattern: [
-      ['kick', 'hihatClosed', null, 'hihatClosed'],
-      ['snare', 'hihatClosed', null, 'hihatClosed'],
-      ['kick', 'hihatClosed', null, 'hihatClosed'],
-      ['snare', 'hihatClosed', null, 'hihatClosed'],
+      ['kick', 'hihatClosed'],      // Beat 1: kick + hihat
+      ['snare', 'hihatClosed'],     // Beat 2: snare + hihat
+      ['kick', 'hihatClosed'],      // Beat 3: kick + hihat
+      ['snare', 'hihatClosed'],     // Beat 4: snare + hihat
     ],
   },
+  {
+    name: 'Hard Rock',
+    kit: 'rock',
+    bpm: 130,
+    timeSig: [4, 4],
+    subdivisions: [4, 4, 4, 4], // 16th notes
+    pattern: [
+      ['kick', 'hihatClosed', 'hihatClosed', 'hihatClosed'],
+      ['snare', 'hihatClosed', 'hihatClosed', 'kick'],
+      ['kick', 'hihatClosed', 'hihatClosed', 'hihatClosed'],
+      ['snare', 'hihatClosed', 'kick', 'hihatClosed'],
+    ],
+  },
+  // ── POP ──
+  {
+    name: 'Pop Beat',
+    kit: 'rock',
+    bpm: 110,
+    timeSig: [4, 4],
+    subdivisions: [4, 4, 4, 4],
+    pattern: [
+      ['kick', 'hihatClosed', 'hihatClosed', 'hihatClosed'],
+      ['snare', 'hihatClosed', 'hihatClosed', 'hihatClosed'],
+      ['kick', 'hihatClosed', 'kick', 'hihatClosed'],
+      ['snare', 'hihatClosed', 'hihatClosed', 'hihatClosed'],
+    ],
+  },
+  // ── JAZZ ──
   {
     name: 'Jazz Swing',
     kit: 'jazz',
     bpm: 140,
     timeSig: [4, 4],
-    subdivisions: [3, 3, 3, 3],
+    subdivisions: [3, 3, 3, 3], // triplets (swing feel)
     pattern: [
-      ['ride', null, 'ride'],
-      ['ride', null, 'ride'],
-      ['ride', null, 'ride'],
-      ['ride', null, 'ride'],
+      // Standard jazz ride pattern: ding-da-ding with kick on 1, snare on 4
+      ['kick', null, 'ride'],       // Beat 1: kick + ride skip
+      ['ride', null, 'ride'],       // Beat 2: ride pattern
+      ['ride', null, 'ride'],       // Beat 3: ride pattern
+      ['snare', null, 'ride'],      // Beat 4: snare + ride
     ],
   },
   {
-    name: 'Bossa Nova',
+    name: 'Jazz Waltz',
     kit: 'jazz',
-    bpm: 130,
-    timeSig: [4, 4],
-    subdivisions: [4, 4, 4, 4],
+    bpm: 160,
+    timeSig: [3, 4],
+    subdivisions: [3, 3, 3], // triplets
     pattern: [
-      ['kick', 'hihatClosed', null, 'hihatClosed'],
-      [null, 'hihatClosed', 'crossStick', 'hihatClosed'],
-      [null, 'hihatClosed', 'kick', 'hihatClosed'],
-      ['crossStick', 'hihatClosed', null, 'hihatClosed'],
+      ['kick', null, 'ride'],       // Beat 1: kick
+      ['ride', null, 'hihatClosed'], // Beat 2: ride + hihat
+      ['ride', null, 'ride'],       // Beat 3: ride
     ],
   },
+  // ── BLUES ──
+  {
+    name: 'Blues Shuffle',
+    kit: 'jazz',
+    bpm: 100,
+    timeSig: [4, 4],
+    subdivisions: [3, 3, 3, 3], // triplet shuffle
+    pattern: [
+      ['kick', null, 'hihatClosed'],   // Beat 1: kick + shuffle hat
+      ['snare', null, 'hihatClosed'],  // Beat 2: snare + shuffle hat
+      ['kick', null, 'hihatClosed'],   // Beat 3: kick + shuffle hat
+      ['snare', null, 'hihatClosed'],  // Beat 4: snare + shuffle hat
+    ],
+  },
+  {
+    name: 'Slow Blues',
+    kit: 'jazz',
+    bpm: 65,
+    timeSig: [4, 4],
+    subdivisions: [3, 3, 3, 3],
+    pattern: [
+      ['kick', null, 'ride'],
+      ['snare', null, 'ride'],
+      ['kick', null, 'ride'],
+      ['snare', null, 'ride'],
+    ],
+  },
+  // ── FUNK ──
   {
     name: 'Funk Groove',
     kit: 'rock',
     bpm: 100,
     timeSig: [4, 4],
-    subdivisions: [4, 4, 4, 4],
+    subdivisions: [4, 4, 4, 4], // 16th note funk
     pattern: [
       ['kick', 'hihatClosed', 'hihatClosed', 'hihatClosed'],
       ['snare', 'hihatClosed', null, 'kick'],
-      ['hihatClosed', 'hihatClosed', 'kick', 'hihatClosed'],
-      ['snare', 'hihatClosed', 'hihatClosed', null],
+      ['hihatClosed', 'kick', 'hihatClosed', 'hihatClosed'],
+      ['snare', 'hihatClosed', 'hihatClosed', 'kick'],
+    ],
+  },
+  // ── REGGAE ──
+  {
+    name: 'Reggae One Drop',
+    kit: 'rock',
+    bpm: 76,
+    timeSig: [4, 4],
+    subdivisions: [2, 2, 2, 2], // 8th notes
+    pattern: [
+      // Classic one drop: nothing on 1, cross-stick on 2&4, kick+snare on 3
+      [null, 'hihatClosed'],        // Beat 1: hihat only (no kick!)
+      ['crossStick', 'hihatClosed'], // Beat 2: cross-stick + hihat
+      ['kick', 'snare'],            // Beat 3: KICK + SNARE together (the "drop")
+      ['crossStick', 'hihatClosed'], // Beat 4: cross-stick + hihat
+    ],
+  },
+  // ── BOSSA NOVA ──
+  {
+    name: 'Bossa Nova',
+    kit: 'jazz',
+    bpm: 130,
+    timeSig: [4, 4],
+    subdivisions: [4, 4, 4, 4], // 16th notes for the bossa pattern
+    pattern: [
+      // Classic bossa: kick on 1, cross-stick on rim pattern
+      ['kick', null, null, 'hihatClosed'],
+      ['crossStick', null, 'kick', 'hihatClosed'],
+      [null, null, 'crossStick', 'hihatClosed'],
+      ['kick', null, null, 'hihatClosed'],
+    ],
+  },
+  // ── HIP HOP ──
+  {
+    name: 'Hip-Hop Boom Bap',
+    kit: '808',
+    bpm: 90,
+    timeSig: [4, 4],
+    subdivisions: [4, 4, 4, 4],
+    pattern: [
+      ['kick', null, 'hihatClosed', 'hihatClosed'],
+      ['snare', 'hihatClosed', null, 'hihatClosed'],
+      ['kick', 'hihatClosed', 'kick', 'hihatClosed'],
+      ['snare', 'hihatClosed', null, 'hihatClosed'],
     ],
   },
   {
@@ -153,49 +254,158 @@ const GROOVE_PRESETS: GroovePreset[] = [
     subdivisions: [4, 4, 4, 4],
     pattern: [
       ['kick', null, null, 'hihatClosed'],
-      [null, 'hihatClosed', 'snare', 'hihatClosed'],
-      [null, 'hihatClosed', null, 'hihatClosed'],
-      ['kick', 'hihatClosed', 'snare', null],
+      ['hihatClosed', 'hihatClosed', 'clap', 'hihatClosed'],
+      ['hihatClosed', 'hihatClosed', null, 'hihatClosed'],
+      ['kick', 'hihatClosed', 'clap', 'hihatClosed'],
     ],
   },
+  // ── COUNTRY ──
   {
-    name: 'Reggae One Drop',
+    name: 'Country Train Beat',
     kit: 'rock',
-    bpm: 80,
+    bpm: 115,
     timeSig: [4, 4],
     subdivisions: [4, 4, 4, 4],
     pattern: [
-      [null, 'hihatClosed', null, 'hihatClosed'],
-      [null, 'hihatClosed', null, 'hihatClosed'],
-      ['kick', 'hihatClosed', 'snare', 'hihatClosed'],
-      [null, 'hihatClosed', null, 'hihatClosed'],
+      // Train beat: kick on 1&3, snare on 2&4, cross-stick 16th shuffle
+      ['kick', 'crossStick', 'hihatClosed', 'crossStick'],
+      ['snare', 'crossStick', 'hihatClosed', 'crossStick'],
+      ['kick', 'crossStick', 'hihatClosed', 'crossStick'],
+      ['snare', 'crossStick', 'hihatClosed', 'crossStick'],
     ],
   },
+  // ── MOTOWN / SOUL ──
   {
-    name: 'Shuffle Blues',
-    kit: 'jazz',
-    bpm: 100,
+    name: 'Motown',
+    kit: 'rock',
+    bpm: 118,
     timeSig: [4, 4],
-    subdivisions: [3, 3, 3, 3],
+    subdivisions: [4, 4, 4, 4],
     pattern: [
-      ['kick', null, 'hihatClosed'],
-      ['snare', null, 'hihatClosed'],
-      ['kick', null, 'hihatClosed'],
-      ['snare', null, 'hihatClosed'],
+      ['kick', 'hihatClosed', 'hihatClosed', 'hihatClosed'],
+      ['snare', 'hihatClosed', 'hihatClosed', 'hihatClosed'],
+      ['kick', 'hihatClosed', 'kick', 'hihatClosed'],
+      ['snare', 'hihatClosed', 'hihatClosed', 'hihatClosed'],
     ],
   },
+  // ── DISCO ──
+  {
+    name: 'Disco',
+    kit: 'rock',
+    bpm: 120,
+    timeSig: [4, 4],
+    subdivisions: [4, 4, 4, 4],
+    pattern: [
+      // Four on the floor kick, open hihat on offbeats
+      ['kick', 'hihatClosed', 'hihatOpen', 'hihatClosed'],
+      ['kick', 'snare', 'hihatOpen', 'hihatClosed'],
+      ['kick', 'hihatClosed', 'hihatOpen', 'hihatClosed'],
+      ['kick', 'snare', 'hihatOpen', 'hihatClosed'],
+    ],
+  },
+  // ── LATIN ──
+  {
+    name: 'Latin Salsa',
+    kit: 'latin',
+    bpm: 180,
+    timeSig: [4, 4],
+    subdivisions: [4, 4, 4, 4],
+    pattern: [
+      // Son clave-inspired with timbale and cowbell
+      ['cowbell', null, 'cowbell', null],
+      ['cowbell', 'crossStick', null, 'cowbell'],
+      [null, 'cowbell', null, 'cowbell'],
+      ['crossStick', null, 'cowbell', null],
+    ],
+  },
+  // ── AFROBEAT ──
+  {
+    name: 'Afrobeat',
+    kit: 'rock',
+    bpm: 115,
+    timeSig: [4, 4],
+    subdivisions: [4, 4, 4, 4],
+    pattern: [
+      // Tony Allen-inspired: kick on 1, open hihat, syncopated snare
+      ['kick', 'hihatOpen', 'hihatClosed', 'hihatClosed'],
+      ['hihatClosed', 'hihatClosed', 'snare', 'hihatClosed'],
+      ['kick', 'hihatOpen', 'hihatClosed', 'hihatClosed'],
+      ['hihatClosed', 'snare', 'hihatClosed', 'hihatClosed'],
+    ],
+  },
+  // ── 6/8 ──
+  {
+    name: '6/8 Afro-Cuban',
+    kit: 'latin',
+    bpm: 100,
+    timeSig: [6, 8],
+    subdivisions: [2, 2, 2, 2, 2, 2],
+    pattern: [
+      ['kick', 'hihatClosed'],
+      [null, 'hihatClosed'],
+      ['crossStick', 'hihatClosed'],
+      ['kick', 'hihatClosed'],
+      ['crossStick', 'hihatClosed'],
+      [null, 'hihatClosed'],
+    ],
+  },
+  // ── ODD METERS ──
   {
     name: '5/4 Take Five',
     kit: 'jazz',
-    bpm: 170,
+    bpm: 174,
     timeSig: [5, 4],
-    subdivisions: [4, 4, 4, 4, 4],
+    subdivisions: [2, 2, 2, 2, 2],
     pattern: [
-      ['ride', null, null, 'ride'],
-      [null, 'ride', null, null],
-      ['snare', null, 'ride', null],
-      [null, null, 'ride', null],
-      ['kick', null, null, 'ride'],
+      ['kick', 'ride'],        // 1
+      ['hihatClosed', 'ride'], // 2
+      ['snare', 'ride'],      // 3
+      ['hihatClosed', 'ride'], // 4
+      ['kick', 'ride'],       // 5
+    ],
+  },
+  {
+    name: '7/8 Progressive',
+    kit: 'rock',
+    bpm: 150,
+    timeSig: [7, 8],
+    subdivisions: [2, 2, 2, 2, 2, 2, 2],
+    pattern: [
+      ['kick', 'hihatClosed'],
+      ['hihatClosed', 'hihatClosed'],
+      ['snare', 'hihatClosed'],
+      ['hihatClosed', 'hihatClosed'],
+      ['kick', 'hihatClosed'],
+      ['snare', 'hihatClosed'],
+      ['hihatClosed', 'hihatClosed'],
+    ],
+  },
+  // ── NEO SOUL ──
+  {
+    name: 'Neo Soul',
+    kit: 'jazz',
+    bpm: 72,
+    timeSig: [4, 4],
+    subdivisions: [4, 4, 4, 4],
+    pattern: [
+      ['kick', null, 'hihatClosed', null],
+      ['snare', null, 'hihatClosed', 'kick'],
+      [null, 'hihatClosed', null, 'hihatClosed'],
+      ['snare', null, 'hihatClosed', null],
+    ],
+  },
+  // ── GOSPEL ──
+  {
+    name: 'Gospel Shuffle',
+    kit: 'rock',
+    bpm: 108,
+    timeSig: [4, 4],
+    subdivisions: [3, 3, 3, 3], // triplet shuffle
+    pattern: [
+      ['kick', null, 'hihatClosed'],
+      ['snare', null, 'hihatClosed'],
+      ['kick', 'kick', 'hihatClosed'],
+      ['snare', null, 'hihatClosed'],
     ],
   },
 ];

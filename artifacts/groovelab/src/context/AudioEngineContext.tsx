@@ -182,16 +182,17 @@ export const AudioEngineProvider: React.FC<{ children: React.ReactNode }> = ({ c
     if ((status & 0xf0) === 0x90 && velocity > 0) {
       const instrument = MIDI_NOTE_MAP[note];
       if (instrument) {
-        // Play preview sound
+        // Play preview sound with ZERO latency
         const kit = storeRef.current.selectedKit;
         const synth = synths.current[instrument];
+        const now = Tone.now(); // immediate
         if (synth) {
           if (synth instanceof Tone.MembraneSynth) {
-            synth.triggerAttackRelease(getPitch(instrument, kit), '8n');
+            synth.triggerAttackRelease(getPitch(instrument, kit), '8n', now);
           } else if (synth instanceof Tone.NoiseSynth) {
-            synth.triggerAttackRelease('16n');
+            synth.triggerAttackRelease('16n', now);
           } else if (synth instanceof Tone.MetalSynth) {
-            synth.triggerAttackRelease(getPitch(instrument, kit), '16n');
+            synth.triggerAttackRelease(getPitch(instrument, kit), '16n', now);
           }
         }
 
@@ -220,9 +221,19 @@ export const AudioEngineProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const startEngine = async () => {
     await Tone.start();
     if (!isInitialized) {
+      // Minimize latency
+      Tone.getContext().lookAhead = 0.01;
       Tone.Transport.bpm.value = store.bpm;
       synths.current = createSynthsForKit(store.selectedKit);
       currentKitRef.current = store.selectedKit;
+      // Warm up synths with silent trigger
+      Object.values(synths.current).forEach((s: any) => {
+        try {
+          if (s instanceof Tone.MembraneSynth) s.triggerAttackRelease('C2', '128n', Tone.now(), 0);
+          else if (s instanceof Tone.NoiseSynth) s.triggerAttackRelease('128n', Tone.now(), 0);
+          else if (s instanceof Tone.MetalSynth) s.triggerAttackRelease('C4', '128n', Tone.now(), 0);
+        } catch {}
+      });
       setIsInitialized(true);
     }
   };
@@ -299,47 +310,53 @@ export const AudioEngineProvider: React.FC<{ children: React.ReactNode }> = ({ c
     const scheduleAllEvents = () => {
       Tone.Transport.cancel();
       const st = storeRef.current;
-      const beatDur = beatDurationSeconds();
-      const measDur = numerator * beatDur;
-      Tone.Transport.loopEnd = measDur;
+
+      // Use Tone.Transport time notation so BPM changes auto-scale
+      // "0:B:S" = measure 0, beat B, subdivision S
+      // Each beat = one quarter note at the transport BPM
+      Tone.Transport.timeSignature = numerator;
+      Tone.Transport.loopEnd = `${numerator}:0:0`;
+
+      // Set swing at transport level for proper swing feel
+      const swingVal = storeRef.current.swing;
+      Tone.Transport.swing = Math.abs(swingVal) / 200; // 0-0.5 range
+      Tone.Transport.swingSubdivision = '8n';
 
       let globalIdx = 0;
-      let timeOffset = 0;
 
       for (let b = 0; b < st.timeSignature.numerator; b++) {
         const numSlices = st.subdivisions[b] || 4;
-        const sliceDur = beatDur / numSlices;
 
         for (let s = 0; s < numSlices; s++) {
           const capturedGlobalIdx = globalIdx;
           const capturedBeat = b;
           const capturedSlice = s;
 
-          // Swing: offset even-indexed slices (0-based; "even" here means the off-beat,
-          // i.e. slices 1, 3, 5... within each beat)
-          let swingOffset = 0;
-          if (capturedSlice % 2 !== 0) {
-            const swingVal = storeRef.current.swing;
-            // Max swing offset is half a slice duration
-            swingOffset = (swingVal / 100) * (sliceDur * 0.5);
-          }
-
-          const eventTime = timeOffset + swingOffset;
+          // Calculate time in transport notation
+          // Each beat is 1 quarter note, subdivide within it
+          const beatFraction = s / numSlices;
+          // Convert to ticks: one beat = PPQ ticks
+          const ppq = Tone.Transport.PPQ;
+          const ticksInBeat = ppq;
+          const tickOffset = Math.round(beatFraction * ticksInBeat);
+          const eventTime = `0:${b}:0`;
+          const eventTimeTicks = b * ticksInBeat + tickOffset;
 
           Tone.Transport.schedule((time) => {
             const currentState = storeRef.current;
             const sliceData = currentState.beats[capturedBeat]?.[capturedSlice];
 
-            // Update playhead
-            currentState.setCurrentStep(capturedGlobalIdx);
+            // Update playhead via Tone.Draw for UI thread safety
+            Tone.Draw.schedule(() => {
+              currentState.setCurrentStep(capturedGlobalIdx);
+            }, time);
 
             if (sliceData && sliceData.instrument) {
               triggerInstrument(sliceData.instrument, time, currentState.selectedKit);
             }
-          }, eventTime);
+          }, Tone.Ticks(eventTimeTicks));
 
           globalIdx++;
-          timeOffset += sliceDur;
         }
       }
     };
@@ -392,9 +409,11 @@ export const AudioEngineProvider: React.FC<{ children: React.ReactNode }> = ({ c
     if (!isInitialized || !synths.current[instrument]) return;
     const kit = storeRef.current.selectedKit;
     const synth = synths.current[instrument];
+    // Use Tone.now() for ZERO latency — plays immediately
+    const now = Tone.now();
 
     if (synth instanceof Tone.MembraneSynth) {
-      synth.triggerAttackRelease(getPitch(instrument, kit), '8n');
+      synth.triggerAttackRelease(getPitch(instrument, kit), '8n', now);
     } else if (synth instanceof Tone.NoiseSynth) {
       synth.triggerAttackRelease('16n');
     } else if (synth instanceof Tone.MetalSynth) {

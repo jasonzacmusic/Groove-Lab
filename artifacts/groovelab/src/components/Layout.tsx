@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'wouter';
-import { Compass, Music, Cpu, Piano, BookOpen, Radio, Target, Search, Sun, Moon, Play, Pause, Disc3, Timer, LogOut, User, ListMusic, GraduationCap, Headphones } from 'lucide-react';
+import { Compass, Music, Cpu, Piano, BookOpen, Radio, Target, Search, Sun, Moon, Play, Pause, Timer, LogOut, User, ListMusic, GraduationCap, Headphones } from 'lucide-react';
+import { Logo } from './Logo';
 import { useTheme } from 'next-themes';
 import { useAuth } from '@/context/AuthContext';
 import { usePlayer } from '@/context/PlayerContext';
@@ -40,9 +41,8 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     <div className="flex h-[100dvh] w-full bg-background overflow-hidden flex-col md:flex-row">
       {/* Desktop Sidebar */}
       <aside className="hidden md:flex w-64 flex-col border-r border-border bg-sidebar h-full z-10">
-        <div className="p-6 flex items-center gap-3">
-          <Disc3 className="w-8 h-8 text-primary" />
-          <h1 className="font-serif italic text-2xl text-foreground">GrooveKit</h1>
+        <div className="p-6">
+          <Logo compact />
         </div>
         <nav className="flex-1 px-4 flex flex-col gap-2">
           {NAV_ITEMS.map((item) => {
@@ -65,9 +65,8 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
       <div className="flex-1 flex flex-col min-w-0 h-full relative">
         {/* Top Navbar */}
         <header className="h-16 border-b border-border bg-background/80 backdrop-blur-md flex items-center justify-between px-4 md:px-8 z-10">
-          <div className="md:hidden flex items-center gap-2">
-            <Disc3 className="w-6 h-6 text-primary" />
-            <h1 className="font-serif italic text-xl text-foreground">GrooveKit</h1>
+          <div className="md:hidden">
+            <Logo compact />
           </div>
           
           <div className="flex-1 max-w-xl mx-4 hidden md:block">

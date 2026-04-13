@@ -68,13 +68,17 @@ interface StarterPattern {
 
 const STARTER_PATTERNS: StarterPattern[] = [
   { name: 'Basic Rock Beat', genre: 'Rock', bpm: 120, timeSig: '4/4', description: 'Kick on 1&3, snare on 2&4, hihats on 8ths' },
-  { name: 'Jazz Swing', genre: 'Jazz', bpm: 140, timeSig: '4/4', description: 'Ride cymbal swing pattern with kick/snare comping' },
-  { name: 'Bossa Nova', genre: 'Latin', bpm: 130, timeSig: '4/4', description: 'Classic bossa cross-stick pattern' },
-  { name: 'Shuffle Blues', genre: 'Blues', bpm: 100, timeSig: '12/8', description: 'Triplet shuffle with walking bass drum' },
-  { name: 'Funk Groove', genre: 'Funk', bpm: 110, timeSig: '4/4', description: 'Syncopated 16th note hihat with ghost notes' },
-  { name: 'Reggae One Drop', genre: 'Reggae', bpm: 80, timeSig: '4/4', description: 'Kick and snare on beat 3, cross-stick on 2&4' },
-  { name: 'Afrobeat 12/8', genre: 'Afrobeat', bpm: 120, timeSig: '12/8', description: 'Tony Allen inspired pattern with bell' },
-  { name: '5/4 Odd Meter', genre: 'Progressive', bpm: 120, timeSig: '5/4', description: 'Take Five inspired pattern' },
+  { name: 'Jazz Swing', genre: 'Jazz', bpm: 140, timeSig: '4/4', description: 'Ride cymbal swing pattern with kick feathering and hihat on 2&4' },
+  { name: 'Bossa Nova', genre: 'Latin', bpm: 130, timeSig: '4/4', description: 'Classic bossa kick + cross-stick pattern with soft hihats' },
+  { name: 'Shuffle Blues', genre: 'Blues', bpm: 100, timeSig: '12/8', description: 'Triplet shuffle hihats with walking kick and backbeat snare' },
+  { name: 'Funk Groove', genre: 'Funk', bpm: 110, timeSig: '4/4', description: 'Syncopated 16th note hihats with ghost snares and open hats' },
+  { name: 'Reggae One Drop', genre: 'Reggae', bpm: 76, timeSig: '4/4', description: 'No kick on 1, cross-stick on 2&4, kick+snare on 3' },
+  { name: 'Afrobeat 12/8', genre: 'Afrobeat', bpm: 115, timeSig: '12/8', description: 'Tony Allen-style bell pattern with syncopated kick and snare' },
+  { name: '5/4 Odd Meter', genre: 'Progressive', bpm: 174, timeSig: '5/4', description: 'Take Five-inspired ride pattern with kick on 1&4, snare on 3&5' },
+  { name: 'Hip-Hop Boom Bap', genre: 'Hip-Hop', bpm: 90, timeSig: '4/4', description: 'Classic boom bap with punchy kick, snappy snare, and hihats' },
+  { name: 'Disco', genre: 'Disco', bpm: 120, timeSig: '4/4', description: 'Four on the floor kick with open hihat on offbeats' },
+  { name: 'Neo Soul', genre: 'Soul', bpm: 72, timeSig: '4/4', description: 'Laid-back groove with sparse hihats and ghosted snare' },
+  { name: 'Gospel Shuffle', genre: 'Gospel', bpm: 108, timeSig: '12/8', description: 'Triplet shuffle with double kick on beat 3' },
 ];
 
 function generateMidiPattern(pattern: StarterPattern): Midi {
@@ -114,12 +118,13 @@ function generateMidiPattern(pattern: StarterPattern): Midi {
           track.addNote({ midi: RIDE, time: t, duration: 0.05, velocity: 0.7 });
           track.addNote({ midi: RIDE, time: t + beat * 2 / 3, duration: 0.05, velocity: 0.5 });
         }
-        // Kick comping on 1 and 3
-        track.addNote({ midi: KICK, time: o, duration: 0.1, velocity: 0.6 });
-        track.addNote({ midi: KICK, time: o + 2 * beat, duration: 0.1, velocity: 0.5 });
+        // Kick feathering on all 4 beats (soft)
+        for (let b = 0; b < 4; b++) {
+          track.addNote({ midi: KICK, time: o + b * beat, duration: 0.1, velocity: 0.3 });
+        }
         // Snare comping on 4-and (swung)
         track.addNote({ midi: SNARE, time: o + 3 * beat + beat * 2 / 3, duration: 0.1, velocity: 0.45 });
-        // Hihat on 2 and 4 (foot)
+        // Hihat foot on 2 and 4
         track.addNote({ midi: HIHAT, time: o + beat, duration: 0.05, velocity: 0.4 });
         track.addNote({ midi: HIHAT, time: o + 3 * beat, duration: 0.05, velocity: 0.4 });
       }
@@ -128,12 +133,12 @@ function generateMidiPattern(pattern: StarterPattern): Midi {
     case 'Bossa Nova': {
       for (let bar = 0; bar < 4; bar++) {
         const o = bar * 4 * beat;
-        // Cross-stick pattern: classic bossa "1-and 2-and-a 3-and 4-and-a" feel
+        // Cross-stick pattern: classic bossa rim pattern
         track.addNote({ midi: CROSS, time: o, duration: 0.05, velocity: 0.7 });
         track.addNote({ midi: CROSS, time: o + beat * 1.5, duration: 0.05, velocity: 0.6 });
         track.addNote({ midi: CROSS, time: o + 2 * beat, duration: 0.05, velocity: 0.5 });
         track.addNote({ midi: CROSS, time: o + beat * 3.5, duration: 0.05, velocity: 0.6 });
-        // Kick: bossa pattern
+        // Kick: bossa bass drum pattern
         track.addNote({ midi: KICK, time: o, duration: 0.1, velocity: 0.8 });
         track.addNote({ midi: KICK, time: o + beat * 1.5, duration: 0.1, velocity: 0.6 });
         track.addNote({ midi: KICK, time: o + 3 * beat, duration: 0.1, velocity: 0.7 });
@@ -151,9 +156,9 @@ function generateMidiPattern(pattern: StarterPattern): Midi {
         const o = bar * 4 * beat;
         for (let b = 0; b < 4; b++) {
           const t = o + b * beat;
-          // Hihats on triplets
+          // Hihats on triplets (shuffle = accent 1st and 3rd)
           track.addNote({ midi: HIHAT, time: t, duration: 0.04, velocity: 0.6 });
-          track.addNote({ midi: HIHAT, time: t + triplet, duration: 0.04, velocity: 0.35 });
+          track.addNote({ midi: HIHAT, time: t + triplet, duration: 0.04, velocity: 0.3 });
           track.addNote({ midi: HIHAT, time: t + 2 * triplet, duration: 0.04, velocity: 0.5 });
         }
         // Walking kick: 1, 2-and (triplet), 3, 4-and (triplet)
@@ -198,6 +203,7 @@ function generateMidiPattern(pattern: StarterPattern): Midi {
     case 'Reggae One Drop': {
       for (let bar = 0; bar < 4; bar++) {
         const o = bar * 4 * beat;
+        // NO kick on beat 1 (the defining feature of one drop)
         // Kick and snare together on beat 3 (the "drop")
         track.addNote({ midi: KICK, time: o + 2 * beat, duration: 0.1, velocity: 0.9 });
         track.addNote({ midi: SNARE, time: o + 2 * beat, duration: 0.1, velocity: 0.8 });
@@ -221,7 +227,7 @@ function generateMidiPattern(pattern: StarterPattern): Midi {
         bellPattern.forEach(pos => {
           track.addNote({ midi: COWBELL, time: o + pos * triplet, duration: 0.04, velocity: 0.7 });
         });
-        // Kick pattern
+        // Kick pattern - syncopated Tony Allen style
         track.addNote({ midi: KICK, time: o, duration: 0.1, velocity: 0.9 });
         track.addNote({ midi: KICK, time: o + 3 * triplet, duration: 0.1, velocity: 0.6 });
         track.addNote({ midi: KICK, time: o + 6 * triplet, duration: 0.1, velocity: 0.85 });
@@ -240,20 +246,97 @@ function generateMidiPattern(pattern: StarterPattern): Midi {
       // 5/4 time, 4 bars - Take Five inspired
       for (let bar = 0; bar < 4; bar++) {
         const o = bar * 5 * beat;
-        // Ride on all 5 beats
+        // Ride on all 5 beats plus "and" of each
         for (let b = 0; b < 5; b++) {
           track.addNote({ midi: RIDE, time: o + b * beat, duration: 0.05, velocity: 0.65 });
+          track.addNote({ midi: RIDE, time: o + b * beat + beat / 2, duration: 0.05, velocity: 0.45 });
         }
-        // Kick on 1 and 4
+        // Kick on 1 and 5
         track.addNote({ midi: KICK, time: o, duration: 0.1, velocity: 0.85 });
-        track.addNote({ midi: KICK, time: o + 3 * beat, duration: 0.1, velocity: 0.75 });
-        // Snare on 3 and 5
+        track.addNote({ midi: KICK, time: o + 4 * beat, duration: 0.1, velocity: 0.75 });
+        // Snare on 3
         track.addNote({ midi: SNARE, time: o + 2 * beat, duration: 0.1, velocity: 0.75 });
-        track.addNote({ midi: SNARE, time: o + 4 * beat, duration: 0.1, velocity: 0.7 });
-        // Hihat on "and" of each beat
-        for (let b = 0; b < 5; b++) {
-          track.addNote({ midi: HIHAT, time: o + b * beat + beat / 2, duration: 0.04, velocity: 0.4 });
+        // Hihat foot on 2 and 4
+        track.addNote({ midi: HIHAT, time: o + beat, duration: 0.04, velocity: 0.4 });
+        track.addNote({ midi: HIHAT, time: o + 3 * beat, duration: 0.04, velocity: 0.4 });
+      }
+      break;
+    }
+    case 'Hip-Hop Boom Bap': {
+      const sixteenth = beat / 4;
+      for (let bar = 0; bar < 4; bar++) {
+        const o = bar * 4 * beat;
+        // Kick pattern: beat 1, "and" of 2, beat 3, "and" of 3
+        track.addNote({ midi: KICK, time: o, duration: 0.1, velocity: 0.95 });
+        track.addNote({ midi: KICK, time: o + 2 * beat, duration: 0.1, velocity: 0.9 });
+        track.addNote({ midi: KICK, time: o + 2 * beat + 2 * sixteenth, duration: 0.1, velocity: 0.7 });
+        // Snare on 2 and 4
+        track.addNote({ midi: SNARE, time: o + beat, duration: 0.1, velocity: 0.85 });
+        track.addNote({ midi: SNARE, time: o + 3 * beat, duration: 0.1, velocity: 0.85 });
+        // Hihats on 8ths
+        for (let i = 0; i < 8; i++) {
+          track.addNote({ midi: HIHAT, time: o + i * beat / 2, duration: 0.04, velocity: i % 2 === 0 ? 0.6 : 0.45 });
         }
+      }
+      break;
+    }
+    case 'Disco': {
+      const sixteenth = beat / 4;
+      for (let bar = 0; bar < 4; bar++) {
+        const o = bar * 4 * beat;
+        // Four on the floor kick
+        for (let b = 0; b < 4; b++) {
+          track.addNote({ midi: KICK, time: o + b * beat, duration: 0.1, velocity: 0.9 });
+        }
+        // Snare on 2 and 4
+        track.addNote({ midi: SNARE, time: o + beat, duration: 0.1, velocity: 0.8 });
+        track.addNote({ midi: SNARE, time: o + 3 * beat, duration: 0.1, velocity: 0.8 });
+        // Open hihat on offbeats, closed on beats
+        for (let b = 0; b < 4; b++) {
+          track.addNote({ midi: HIHAT, time: o + b * beat, duration: 0.04, velocity: 0.55 });
+          track.addNote({ midi: HIHAT_OPEN, time: o + b * beat + beat / 2, duration: 0.08, velocity: 0.65 });
+        }
+      }
+      break;
+    }
+    case 'Neo Soul': {
+      const sixteenth = beat / 4;
+      for (let bar = 0; bar < 4; bar++) {
+        const o = bar * 4 * beat;
+        // Sparse, laid-back kick
+        track.addNote({ midi: KICK, time: o, duration: 0.1, velocity: 0.8 });
+        track.addNote({ midi: KICK, time: o + beat + 3 * sixteenth, duration: 0.1, velocity: 0.6 });
+        // Snare on 2 and 4 (soft, ghosted feel)
+        track.addNote({ midi: SNARE, time: o + beat, duration: 0.1, velocity: 0.5 });
+        track.addNote({ midi: SNARE, time: o + 3 * beat, duration: 0.1, velocity: 0.5 });
+        // Ghost snare notes
+        track.addNote({ midi: SNARE, time: o + 2 * beat + 2 * sixteenth, duration: 0.05, velocity: 0.2 });
+        // Hihats sparse, on some 8ths
+        track.addNote({ midi: HIHAT, time: o + beat / 2, duration: 0.04, velocity: 0.4 });
+        track.addNote({ midi: HIHAT, time: o + beat + beat / 2, duration: 0.04, velocity: 0.4 });
+        track.addNote({ midi: HIHAT, time: o + 2 * beat + beat / 2, duration: 0.04, velocity: 0.35 });
+        track.addNote({ midi: HIHAT, time: o + 3 * beat + beat / 2, duration: 0.04, velocity: 0.35 });
+      }
+      break;
+    }
+    case 'Gospel Shuffle': {
+      // Triplet shuffle with double kick on beat 3
+      const triplet = beat / 3;
+      for (let bar = 0; bar < 4; bar++) {
+        const o = bar * 4 * beat;
+        for (let b = 0; b < 4; b++) {
+          const t = o + b * beat;
+          // Hihat shuffle: hit on 1st and 3rd triplet
+          track.addNote({ midi: HIHAT, time: t, duration: 0.04, velocity: 0.6 });
+          track.addNote({ midi: HIHAT, time: t + 2 * triplet, duration: 0.04, velocity: 0.5 });
+        }
+        // Kick on 1 and 3, double kick on 3
+        track.addNote({ midi: KICK, time: o, duration: 0.1, velocity: 0.9 });
+        track.addNote({ midi: KICK, time: o + 2 * beat, duration: 0.1, velocity: 0.85 });
+        track.addNote({ midi: KICK, time: o + 2 * beat + triplet, duration: 0.1, velocity: 0.7 });
+        // Snare on 2 and 4
+        track.addNote({ midi: SNARE, time: o + beat, duration: 0.1, velocity: 0.8 });
+        track.addNote({ midi: SNARE, time: o + 3 * beat, duration: 0.1, velocity: 0.8 });
       }
       break;
     }
@@ -282,6 +365,10 @@ const GENRE_COLORS: Record<string, string> = {
   Reggae: 'bg-green-500/15 text-green-400 border-green-500/30',
   Afrobeat: 'bg-yellow-500/15 text-yellow-400 border-yellow-500/30',
   Progressive: 'bg-purple-500/15 text-purple-400 border-purple-500/30',
+  'Hip-Hop': 'bg-sky-500/15 text-sky-400 border-sky-500/30',
+  Disco: 'bg-fuchsia-500/15 text-fuchsia-400 border-fuchsia-500/30',
+  Soul: 'bg-rose-500/15 text-rose-400 border-rose-500/30',
+  Gospel: 'bg-teal-500/15 text-teal-400 border-teal-500/30',
 };
 
 export default function MidiPage() {
