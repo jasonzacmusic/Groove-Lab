@@ -486,27 +486,12 @@ export default function Metronome() {
 
   // --- Tap tempo ---
   const [tapInfo, setTapInfo] = useState<{ count: number; avgBpm: number | null }>({ count: 0, avgBpm: null });
+  const [tapSoundOn, setTapSoundOn] = useState(false); // OFF by default
   const tapResetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // ZERO LATENCY tap tempo — fully synchronous, no await
+  // ZERO LATENCY tap tempo — pure performance.now(), no audio by default
   const handleTapTempo = useCallback(() => {
-    // Init Tone in background (don't block the tap)
-    if (!toneStarted) {
-      Tone.start().then(() => {
-        setToneStarted(true);
-        ensureSynth();
-      });
-    }
-
-    // Click feedback (non-blocking)
-    if (synthRef.current) {
-      try {
-        synthRef.current.triggerAttackRelease(
-          SOUND_FREQS[beatSoundRef.current].accent, '32n', Tone.now(), 0.5
-        );
-      } catch {}
-    }
-
+    // Record the tap FIRST — before any audio processing
     const now = performance.now();
     const taps = tapTimesRef.current;
 
@@ -514,6 +499,10 @@ export default function Metronome() {
     if (taps.length > 0 && now - taps[taps.length - 1] > 2500) {
       tapTimesRef.current = [now];
       setTapInfo({ count: 1, avgBpm: null });
+      // Optional click AFTER recording (non-blocking)
+      if (tapSoundOn && synthRef.current) {
+        try { synthRef.current.triggerAttackRelease(SOUND_FREQS[beatSoundRef.current].accent, '32n', Tone.now(), 0.3); } catch {}
+      }
       return;
     }
 
@@ -523,6 +512,16 @@ export default function Metronome() {
     // Auto-clear after 3s
     if (tapResetTimerRef.current) clearTimeout(tapResetTimerRef.current);
     tapResetTimerRef.current = setTimeout(() => setTapInfo({ count: 0, avgBpm: null }), 3000);
+
+    // Optional click sound AFTER recording tap time
+    if (tapSoundOn && synthRef.current) {
+      try { synthRef.current.triggerAttackRelease(SOUND_FREQS[beatSoundRef.current].accent, '32n', Tone.now(), 0.3); } catch {}
+    }
+
+    // Init Tone in background only if needed (for when user starts metronome later)
+    if (!toneStarted) {
+      Tone.start().then(() => { setToneStarted(true); ensureSynth(); });
+    }
 
     if (taps.length >= 2) {
       const intervals: number[] = [];
@@ -541,7 +540,7 @@ export default function Metronome() {
     } else {
       setTapInfo({ count: 1, avgBpm: null });
     }
-  }, [toneStarted, ensureSynth, isPlaying, isRamping]);
+  }, [toneStarted, ensureSynth, isPlaying, isRamping, tapSoundOn]);
 
   // --- Keyboard shortcuts ---
   useEffect(() => {
@@ -723,13 +722,26 @@ export default function Metronome() {
             </div>
 
             {/* Tap Tempo */}
-            <Button
-              variant="outline"
-              className="mt-4 font-mono text-sm tracking-wide border-primary/40 hover:bg-primary/10"
-              onClick={handleTapTempo}
-            >
-              TAP TEMPO {tapInfo.count > 0 && <span className="ml-1 opacity-70">({tapInfo.count} taps{tapInfo.avgBpm ? ` = ${tapInfo.avgBpm}` : ''})</span>}
-            </Button>
+            <div className="mt-4 flex items-center justify-center gap-3">
+              <Button
+                variant="outline"
+                className="font-mono text-sm tracking-wide border-primary/40 hover:bg-primary/10 px-6"
+                onClick={handleTapTempo}
+              >
+                TAP TEMPO {tapInfo.count > 0 && <span className="ml-1 opacity-70">({tapInfo.count}{tapInfo.avgBpm ? ` = ${tapInfo.avgBpm}` : ''})</span>}
+              </Button>
+              <div className="flex items-center gap-1.5">
+                <Switch
+                  id="tap-sound"
+                  checked={tapSoundOn}
+                  onCheckedChange={setTapSoundOn}
+                  className="scale-75"
+                />
+                <label htmlFor="tap-sound" className="text-[10px] text-muted-foreground cursor-pointer">
+                  Sound
+                </label>
+              </div>
+            </div>
             {tapInfo.count >= 2 && tapInfo.avgBpm && (
               <p className="text-xs text-muted-foreground mt-1 font-mono">
                 Average of {tapInfo.count} taps: {tapInfo.avgBpm} BPM
