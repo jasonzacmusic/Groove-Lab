@@ -247,7 +247,8 @@ function parsePath(line: string): LoopRecord | null {
 
   if (!product) return null;
 
-  const artist = ARTIST_MAP[product] || "Yurt Rock";
+  // Artist = clean product folder name. Use ARTIST_MAP for known artists, otherwise derive from folder name.
+  const artist = ARTIST_MAP[product] || cleanProductName(product);
 
   // Collection = the "song" level folder (second level after product)
   // For paths like Product/SongFolder/file.wav → collection = SongFolder
