@@ -11,14 +11,36 @@ import { Piano, Play, Square, ArrowUp, ArrowDown, Star } from 'lucide-react';
 import { YouTubeInline } from '@/components/YouTubeInline';
 import * as Tone from 'tone';
 
-// Curated backing track video IDs for common progression types.
-// When a video ID is present, the embed uses /embed/{id}; otherwise falls back to search_query.
+// Curated backing track video IDs keyed by progression type.
 const CURATED_CHORD_VIDEOS: Record<string, string> = {
   'ii-V-I':          'RnHBi8R0CAw',
   'Blues':           'yxTOFJVHBiQ',
   'Rhythm Changes':  'KYM-bDOJPr8',
   'Modal':           'FsijyBivMgg',
   'I-vi-ii-V':       '7qvZpIKa5aA',
+  'Funk':            'd7FQLR23dXQ',
+  'Reggae':          'J5GOSdtFMks',
+  'Latin':           'Z2JqZkXiV4Q',
+  'Neo Soul':        'bGLjOEDRKLk',
+  'Afrobeat':        '5L1y5FWPJDI',
+  'Gospel':          'h3ByOYdnhOs',
+  'R&B':             'cKBVOxrIMuQ',
+};
+
+// Curated second-slot video IDs keyed by genre name (lowercase).
+const CURATED_GENRE_VIDEOS: Record<string, string> = {
+  'jazz':     'RnHBi8R0CAw',
+  'blues':    'yxTOFJVHBiQ',
+  'funk':     'd7FQLR23dXQ',
+  'reggae':   'J5GOSdtFMks',
+  'latin':    'Z2JqZkXiV4Q',
+  'neo soul': 'bGLjOEDRKLk',
+  'afrobeat': '5L1y5FWPJDI',
+  'gospel':   'h3ByOYdnhOs',
+  'r&b':      'cKBVOxrIMuQ',
+  'soul':     '3K3RQyHxXtY',
+  'rock':     'KnPJqA9fJDc',
+  'pop':      '8gcB1TKhDzA',
 };
 
 const CHORD_TABS = ['All', 'ii-V-I', 'I-vi-ii-V', 'Blues', 'Rhythm Changes', 'Modal'];
@@ -300,15 +322,18 @@ export default function Chords() {
                           title={`${progName} in ${displayKey}`}
                         />
                       ) : (
+                        <div className="flex items-center justify-center rounded-lg border border-border bg-muted/30 aspect-video">
+                          <p className="text-xs text-muted-foreground text-center px-4">
+                            No curated video for <span className="font-medium text-foreground">{progName}</span> yet
+                          </p>
+                        </div>
+                      )}
+                      {CURATED_GENRE_VIDEOS[genre.toLowerCase()] && (
                         <YouTubeInline
-                          searchQuery={`${progName} ${displayKey} backing track`}
-                          title={`${progName} in ${displayKey}`}
+                          videoId={CURATED_GENRE_VIDEOS[genre.toLowerCase()]}
+                          title={`${genre} backing track`}
                         />
                       )}
-                      <YouTubeInline
-                        searchQuery={`${displayKey} ${genre} backing track`}
-                        title={`${displayKey} ${genre}`}
-                      />
                     </div>
                   </div>
                 </CardContent>

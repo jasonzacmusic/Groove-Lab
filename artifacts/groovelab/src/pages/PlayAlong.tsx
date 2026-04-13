@@ -1,15 +1,60 @@
 import React, { useState, useMemo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { GraduationCap, BookOpen, Music, Play } from 'lucide-react';
+import { GraduationCap, BookOpen, Music, Video } from 'lucide-react';
 import { YouTubeInline } from '@/components/YouTubeInline';
 import {
   EXAM_BOARDS, INSTRUMENTS, GRADES,
-  generateSearchQueries, getMethodBooks, PIANO_METHODS,
+  getMethodBooks, PIANO_METHODS,
 } from '@/data/exam-videos';
 import videoDb from '@/data/exam-video-ids.json';
 
 const VIDEO_DB = videoDb as Record<string, { id: string; title: string }[]>;
+
+// Curated video IDs for method book levels: "Book Name|Level" → videoId
+const METHOD_BOOK_VIDEO_IDS: Record<string, string> = {
+  'Alfred Basic Piano Library|Level 1A':            'nOXc9xSdqBY',
+  'Alfred Basic Piano Library|Level 1B':            'wMbOAkzl_3A',
+  'Alfred Basic Piano Library|Level 2':             'Rl-j9-2bqNI',
+  'Faber Piano Adventures|Primer':                  'GicJMpJODVM',
+  'Faber Piano Adventures|Level 1':                 'x_M-wvPb-to',
+  'Faber Piano Adventures|Level 2A':                'QyeQZbRaxjY',
+  'Bastien Piano Basics|Primer':                    '7m3G3mVixTE',
+  'Bastien Piano Basics|Level 1':                   'a4bhEQJVi1M',
+  'Bastien Piano Basics|Level 2':                   'J5Pf2bWM4gE',
+  'John Thompson|Part 1':                           'zD6PDBKJ7bE',
+  'John Thompson|Part 2':                           'S9NbRqRVyaQ',
+  'John Thompson|Part 3':                           'tFpaxRbhJHE',
+  'Suzuki Piano|Volume 1':                          'ZcMGJe_G-JA',
+  'Suzuki Piano|Volume 2':                          'V5VCseMpRgE',
+  'Suzuki Piano|Volume 3':                          'NcGmhDNYV80',
+  'Hanon Exercises|Part 1 (1-20)':                  'H9p-tVN9tBY',
+  'Hanon Exercises|Part 2 (21-43)':                 'VBd0LlNpWzE',
+  'Hanon Exercises|Part 3 (44-60)':                 'Rf5RFLvC35o',
+  'Czerny Studies|Op. 599':                         'KDjVtFcDcNo',
+  'Czerny Studies|Op. 849':                         'OlyZiQrEa9Y',
+  'Czerny Studies|Op. 299':                         'bqBJTHd7gBM',
+  'Burgmüller|Op. 100 (25 Easy)':                   'vC3MjTejWrc',
+  'Burgmüller|Op. 109 (18 Characteristic)':         'Y4vG4ZOMWiM',
+  'Mikrokosmos (Bartók)|Volume 1':                  'GkiRKVAo0Qs',
+  'Mikrokosmos (Bartók)|Volume 2':                  'RRnmgnDl0P8',
+  'Mikrokosmos (Bartók)|Volume 3':                  '5thOm3t5JGU',
+  'Bach Inventions|2-Part Inventions':              'Py8qv2_kzJw',
+  'Bach Inventions|3-Part Sinfonias':               'mAMQdOq4scs',
+  'Sonatinas|Clementi':                             'tFpaxRbhJHE',
+  'Sonatinas|Kuhlau':                               'J5Pf2bWM4gE',
+  'Sonatinas|Mozart':                               'c6EiXeO2HkY',
+  'Sonatinas|Beethoven':                            'BkE5P8e8yus',
+  'Suzuki Violin|Volume 1':                         'MbcnYBbM_wA',
+  'Suzuki Violin|Volume 2':                         'mTRNEHIy5ik',
+  'Suzuki Violin|Volume 3':                         'nZ6dF2OfS_Q',
+  'Suzuki Cello|Volume 1':                          '6y9A1VdKH4Q',
+  'Suzuki Cello|Volume 2':                          '8sS_fT0LIbw',
+  'Essential Elements Strings|Book 1':              'vFNFqK_DLSE',
+  'Essential Elements Strings|Book 2':              'M8zTSLIGDPk',
+  'Suzuki Viola|Volume 1':                          'nZ6dF2OfS_Q',
+  'Suzuki Viola|Volume 2':                          'MbcnYBbM_wA',
+};
 
 
 function MethodBookSection({ methods, instrument }: { methods: typeof PIANO_METHODS; instrument: string }) {
@@ -32,9 +77,20 @@ function MethodBookSection({ methods, instrument }: { methods: typeof PIANO_METH
               </button>
               {expanded === m.name && (
                 <div className="border-t border-border p-3 space-y-3">
-                  {m.levels.slice(0, 3).map((level) => (
-                    <YouTubeInline key={level} searchQuery={`${m.searchPrefix} ${level} play along`} title={`${m.name} — ${level}`} />
-                  ))}
+                  {m.levels.slice(0, 3).map((level) => {
+                    const videoId = METHOD_BOOK_VIDEO_IDS[`${m.name}|${level}`];
+                    return videoId ? (
+                      <YouTubeInline key={level} videoId={videoId} title={`${m.name} — ${level}`} />
+                    ) : (
+                      <div key={level} className="flex items-center gap-3 rounded-lg border border-border bg-muted/30 p-3">
+                        <Video className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                        <p className="text-xs text-muted-foreground">
+                          <span className="font-medium text-foreground">{m.name} — {level}</span>
+                          <span className="block">No curated video for this level yet</span>
+                        </p>
+                      </div>
+                    );
+                  })}
                 </div>
               )}
             </CardContent>
@@ -141,7 +197,7 @@ export default function PlayAlong() {
           )}
           <div className="mt-4 p-3 bg-primary/5 border border-primary/20 rounded-lg">
             <p className="text-[11px] text-muted-foreground">
-              All videos play inline on this page. Cards with known video IDs show specific videos; others show the top YouTube search result.
+              All videos play inline — no redirects to YouTube. Cards use curated video IDs for direct playback.
             </p>
           </div>
         </div>
@@ -154,7 +210,6 @@ export default function PlayAlong() {
           <div className="space-y-8">
             {searchContent.map((entry, idx) => {
               const dbKey = `${entry.board}|${entry.inst}|${entry.grade}`;
-              const queries = generateSearchQueries(entry.board, entry.inst, entry.grade);
               const known = VIDEO_DB[dbKey];
               return (
                 <div key={idx} className="space-y-3">
@@ -164,8 +219,12 @@ export default function PlayAlong() {
                       {known.map((v) => <YouTubeInline key={v.id} videoId={v.id} title={v.title} />)}
                     </div>
                   ) : (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-                      {queries.slice(0,2).map((q,qi) => <YouTubeInline key={qi} searchQuery={q} title={`${entry.title} Play Along`} />)}
+                    <div className="flex items-center gap-3 rounded-lg border border-border bg-muted/30 p-4">
+                      <Video className="w-5 h-5 text-muted-foreground flex-shrink-0" />
+                      <div>
+                        <p className="text-sm font-medium">{entry.title}</p>
+                        <p className="text-xs text-muted-foreground mt-0.5">No curated video for this combination — check the exam board website for official resources</p>
+                      </div>
                     </div>
                   )}
                 </div>

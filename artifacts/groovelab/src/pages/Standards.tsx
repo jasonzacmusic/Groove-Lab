@@ -27,50 +27,6 @@ const TRANSPOSITION_PRESETS = [
   { label: 'Bass Clef (Concert) \u2014 Bass, Trombone, Tuba, Cello', semitones: 0 },
 ];
 
-// Curated backing track queries — specific enough to reliably surface the correct content.
-// These build on title + key + style for the best search results.
-const CURATED_BACKING_QUERIES: Record<string, string[]> = {
-  'Autumn Leaves': [
-    'Autumn Leaves jazz backing track Gm piano',
-    'Autumn Leaves play along Bb jazz standard',
-  ],
-  'All The Things You Are': [
-    'All The Things You Are jazz backing track Ab',
-    'All The Things You Are play along ii V I',
-  ],
-  'Blue Bossa': [
-    'Blue Bossa backing track bossa nova jazz Cm',
-    'Blue Bossa play along bass piano',
-  ],
-  'Take Five': [
-    'Take Five backing track 5/4 jazz Dave Brubeck Eb minor',
-    'Take Five play along drum kit jazz',
-  ],
-  'So What': [
-    'So What Miles Davis backing track modal jazz Dm',
-    'So What play along Dorian jazz',
-  ],
-  'Summertime': [
-    'Summertime jazz backing track Am Gershwin',
-    'Summertime play along blues jazz standard',
-  ],
-  'Misty': [
-    'Misty Erroll Garner jazz backing track Eb',
-    'Misty play along piano jazz standard',
-  ],
-  'Giant Steps': [
-    'Giant Steps Coltrane backing track Cb modulation',
-    'Giant Steps jazz play along chords',
-  ],
-  'Stella By Starlight': [
-    'Stella By Starlight jazz backing track Bb',
-    'Stella By Starlight play along jazz standard',
-  ],
-  'There Will Never Be Another You': [
-    'There Will Never Be Another You jazz backing Eb',
-    'There Will Never Be Another You play along piano',
-  ],
-};
 
 const GROOVES = [
   { name: 'Swing', description: 'Medium swing feel', swing: 60 },
@@ -1202,18 +1158,38 @@ export default function Standards() {
 
               {(() => {
                 const KNOWN_BACKING_TRACKS: Record<string, { id: string; title: string }[]> = {
-                  'Autumn Leaves': [{ id: 'Xjf2kiDO19Y', title: 'Autumn Leaves (120 bpm) - Backing Track' }],
-                  'Blue Bossa': [{ id: '7H7Xg6U7P5g', title: 'Blue Bossa (150 bpm) - Backing Track' }],
-                  'All Of Me': [{ id: '0HuIRNWgkAg', title: 'All Of Me - Jazz Backing Track' }],
-                  'Fly Me To The Moon': [{ id: 'USctbnHFLZE', title: 'Fly Me To The Moon - Backing Track' }],
-                  'Summertime': [{ id: 'aaRxHmUeQC4', title: 'Summertime - Jazz Backing Track' }],
-                  'So What': [{ id: 'vRJfV4pG3Do', title: 'So What - Modal Jazz Backing Track' }],
-                  'Misty': [{ id: 'L9PeqG9C5os', title: 'Misty - Ballad Backing Track' }],
-                  'All The Things You Are': [{ id: 'ylXk1LBvIqU', title: 'All The Things You Are - Jazz Backing Track' }],
-                  'Take Five': [{ id: 'vJnv4bHHxq4', title: 'Take Five (5/4) - Backing Track' }],
-                  'Giant Steps': [{ id: 'FsijyBivMgg', title: 'Giant Steps - Jazz Backing Track' }],
-                  'Stella By Starlight': [{ id: '7qvZpIKa5aA', title: 'Stella By Starlight - Jazz Backing Track' }],
+                  'Autumn Leaves':                   [{ id: 'Xjf2kiDO19Y', title: 'Autumn Leaves (120 bpm) - Backing Track' },
+                                                      { id: 'Ze7YxMeRoFE', title: 'Autumn Leaves - Jazz Backing Track (Gm)' }],
+                  'Blue Bossa':                      [{ id: '7H7Xg6U7P5g', title: 'Blue Bossa (150 bpm) - Backing Track' },
+                                                      { id: 'Y4vG4ZOMWiM', title: 'Blue Bossa - Bossa Nova Backing Track' }],
+                  'All Of Me':                       [{ id: '0HuIRNWgkAg', title: 'All Of Me - Jazz Backing Track' }],
+                  'Fly Me To The Moon':              [{ id: 'USctbnHFLZE', title: 'Fly Me To The Moon - Backing Track' }],
+                  'Summertime':                      [{ id: 'aaRxHmUeQC4', title: 'Summertime - Jazz Backing Track' }],
+                  'So What':                         [{ id: 'vRJfV4pG3Do', title: 'So What - Modal Jazz Backing Track' }],
+                  'Misty':                           [{ id: 'L9PeqG9C5os', title: 'Misty - Ballad Backing Track' }],
+                  'All The Things You Are':          [{ id: 'ylXk1LBvIqU', title: 'All The Things You Are - Jazz Backing Track' }],
+                  'Take Five':                       [{ id: 'vJnv4bHHxq4', title: 'Take Five (5/4) - Backing Track' }],
+                  'Giant Steps':                     [{ id: 'FsijyBivMgg', title: 'Giant Steps - Jazz Backing Track' }],
+                  'Stella By Starlight':             [{ id: '7qvZpIKa5aA', title: 'Stella By Starlight - Jazz Backing Track' }],
                   'There Will Never Be Another You': [{ id: 'kFLJ3OFbWe8', title: 'There Will Never Be Another You - Backing Track' }],
+                  "'Round Midnight":                 [{ id: 'BkE5P8e8yus', title: "'Round Midnight - Jazz Backing Track" }],
+                  'How High The Moon':               [{ id: 'yxGLRc9y7SE', title: 'How High The Moon - Backing Track' }],
+                  'Body and Soul':                   [{ id: '2YxTXxJqFag', title: 'Body and Soul - Jazz Backing Track' }],
+                  'Cherokee':                        [{ id: 'j5tSIBJ0Bv0', title: 'Cherokee - Jazz Backing Track' }],
+                  'On Green Dolphin Street':         [{ id: 'lkiHf4zRRFw', title: 'On Green Dolphin Street - Backing Track' }],
+                  'Just Friends':                    [{ id: '3L-Vx5zrZkA', title: 'Just Friends - Jazz Backing Track' }],
+                  'My Favorite Things':              [{ id: 'c6EiXeO2HkY', title: 'My Favorite Things - Jazz Backing Track' }],
+                  'Confirmation':                    [{ id: 'eLTc9_oVgrc', title: 'Confirmation - Charlie Parker Backing Track' }],
+                  'Maiden Voyage':                   [{ id: '8jvKMpCtHR8', title: 'Maiden Voyage - Herbie Hancock Backing Track' }],
+                  'Cantaloupe Island':               [{ id: 'l-TJjB0F3E4', title: 'Cantaloupe Island - Backing Track' }],
+                  'Watermelon Man':                  [{ id: 'dYJd5tXb5cE', title: 'Watermelon Man - Backing Track' }],
+                  'The Girl from Ipanema':           [{ id: '4gJU-tP6IYE', title: 'The Girl from Ipanema - Bossa Nova Backing Track' }],
+                  'Night in Tunisia':                [{ id: 'BPHl1F8RQBU', title: 'Night in Tunisia - Jazz Backing Track' }],
+                  'Footprints':                      [{ id: 'wCDyGEhyqHs', title: 'Footprints - Wayne Shorter Backing Track' }],
+                  'Lady Bird':                       [{ id: 'E4Zt2gUvnwg', title: 'Lady Bird - Jazz Backing Track' }],
+                  'Billie\'s Bounce':               [{ id: '4-pheP_USPY', title: "Billie's Bounce - Charlie Parker Backing Track" }],
+                  'Tenor Madness':                   [{ id: 'dX3k_QDnzs0', title: 'Tenor Madness - Sonny Rollins Backing Track' }],
+                  'Recorda Me':                      [{ id: 's6xPgDY9JHo', title: 'Recorda Me - Joe Henderson Backing Track' }],
                 };
 
                 const name = selectedStandard.name;
@@ -1221,25 +1197,19 @@ export default function Standards() {
 
                 return (
                   <div className="space-y-3">
-                    {/* Inline embeds for standards with known video IDs */}
-                    {knownTracks && (
+                    {knownTracks && knownTracks.length > 0 ? (
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {knownTracks.map((track) => (
                           <YouTubeInline key={track.id} videoId={track.id} title={track.title} />
                         ))}
                       </div>
+                    ) : (
+                      <div className="flex items-center justify-center rounded-lg border border-border bg-muted/30 aspect-video">
+                        <p className="text-xs text-muted-foreground text-center px-4">
+                          No curated backing track for <span className="font-medium text-foreground">{name}</span> yet
+                        </p>
+                      </div>
                     )}
-
-                    {/* Search-query inline embed — uses curated query when available */}
-                    {(() => {
-                      const curatedQueries = CURATED_BACKING_QUERIES[name];
-                      const fallbackQuery = curatedQueries
-                        ? curatedQueries[0]
-                        : `${name} ${displayKey} backing track jazz`;
-                      return (
-                        <YouTubeInline searchQuery={fallbackQuery} title={`${name} backing track`} />
-                      );
-                    })()}
                   </div>
                 );
               })()}

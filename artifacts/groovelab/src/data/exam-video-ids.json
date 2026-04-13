@@ -5,5 +5,24 @@
   "standard|Fly Me To The Moon": [{"id": "USctbnHFLZE", "title": "Fly Me To The Moon - Backing Track"}],
   "standard|Summertime": [{"id": "aaRxHmUeQC4", "title": "Summertime - Jazz Backing Track"}],
   "standard|So What": [{"id": "vRJfV4pG3Do", "title": "So What - Modal Jazz Backing Track"}],
-  "standard|Misty": [{"id": "L9PeqG9C5os", "title": "Misty - Ballad Backing Track"}]
+  "standard|Misty": [{"id": "L9PeqG9C5os", "title": "Misty - Ballad Backing Track"}],
+
+  "ABRSM|Piano|Grade 1": [{"id": "E8Zt3iJXzPk", "title": "ABRSM Grade 1 Piano - Play Along"}],
+  "ABRSM|Piano|Grade 3": [{"id": "dC2q1J_Lx-w", "title": "ABRSM Grade 3 Piano - Play Along"}],
+  "ABRSM|Piano|Grade 5": [{"id": "gL_T7M4z7-w", "title": "ABRSM Grade 5 Piano - Play Along"}],
+  "ABRSM|Violin|Grade 5": [{"id": "ZNsf_-FkNAQ", "title": "ABRSM Grade 5 Violin - Backing Track"}],
+  "ABRSM|Flute|Grade 3": [{"id": "L8FXJL5vSGk", "title": "ABRSM Grade 3 Flute - Backing Track"}],
+
+  "Trinity|Guitar|Grade 3": [{"id": "eM7tKJM9kHA", "title": "Trinity Grade 3 Guitar - Backing Track"}],
+  "Trinity|Guitar|Grade 5": [{"id": "6xmcV0dBiFk", "title": "Trinity Grade 5 Guitar - Backing Track"}],
+  "Trinity|Saxophone|Grade 4": [{"id": "H3QP_vXVqsc", "title": "Trinity Grade 4 Saxophone - Backing Track"}],
+  "Trinity|Drums|Grade 3": [{"id": "8mHk3QsSf6A", "title": "Trinity Grade 3 Drums - Backing Track"}],
+
+  "Rockschool|Drums|Grade 2": [{"id": "kicYsAIxDFk", "title": "Rockschool Grade 2 Drums - Backing Track"}],
+  "Rockschool|Drums|Grade 3": [{"id": "c1DgcgKg_Pk", "title": "Rockschool Grade 3 Drums - Backing Track"}],
+  "Rockschool|Guitar|Grade 2": [{"id": "vQp7-bnDIms", "title": "Rockschool Grade 2 Guitar - Backing Track"}],
+  "Rockschool|Bass|Grade 3": [{"id": "WJ4GqhSfMJc", "title": "Rockschool Grade 3 Bass - Backing Track"}],
+
+  "RCM|Piano|Level 3": [{"id": "yiE32mdMFjo", "title": "RCM Level 3 Piano - Play Along"}],
+  "RCM|Piano|Level 5": [{"id": "xOfqvWVj3I8", "title": "RCM Level 5 Piano - Play Along"}]
 }

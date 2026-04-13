@@ -11,7 +11,7 @@ import {
   Compass, Play, Music, Timer, Cpu, Piano, BookOpen,
   GraduationCap, Radio, Star,
 } from 'lucide-react';
-import { YouTubeSearchGrid } from '@/components/YouTubeInline';
+import { YouTubeInline } from '@/components/YouTubeInline';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
@@ -24,13 +24,13 @@ const TOOLS = [
   { name: 'Play-Alongs', desc: 'Trinity & ABRSM exam content', icon: GraduationCap, path: '/play-along', color: 'text-cyan-400' },
 ];
 
-const FEATURED_SEARCHES = [
-  { label: 'Jazz Drum Loops', query: 'jazz drum loop backing track BPM', color: 'text-amber-400', bg: 'bg-amber-500/10' },
-  { label: 'Blues Backing Tracks', query: 'blues backing track 12 bar', color: 'text-indigo-400', bg: 'bg-indigo-500/10' },
-  { label: 'Funk Grooves', query: 'funk drum loop groove backing track', color: 'text-orange-400', bg: 'bg-orange-500/10' },
-  { label: 'Bossa Nova', query: 'bossa nova backing track jazz', color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
-  { label: 'Rock Drum Loops', query: 'rock drum loop 120 BPM', color: 'text-red-400', bg: 'bg-red-500/10' },
-  { label: 'Neo Soul', query: 'neo soul drum loop backing track', color: 'text-purple-400', bg: 'bg-purple-500/10' },
+const FEATURED_VIDEOS = [
+  { label: 'Jazz Drum Loops',      videoId: '8gcB1TKhDzA', color: 'text-amber-400',   bg: 'bg-amber-500/10' },
+  { label: 'Blues Backing Tracks', videoId: '5thOm3t5JGU', color: 'text-indigo-400',  bg: 'bg-indigo-500/10' },
+  { label: 'Funk Grooves',         videoId: 'cKBVOxrIMuQ', color: 'text-orange-400',  bg: 'bg-orange-500/10' },
+  { label: 'Bossa Nova',           videoId: 'QL7IZFL1pKo', color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
+  { label: 'Rock Drum Loops',      videoId: 'KnPJqA9fJDc', color: 'text-red-400',     bg: 'bg-red-500/10' },
+  { label: 'Neo Soul',             videoId: '3K3RQyHxXtY', color: 'text-purple-400',  bg: 'bg-purple-500/10' },
 ];
 
 export default function Home() {
@@ -155,15 +155,22 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Practice Content — inline YouTube embeds */}
+      {/* Featured Practice Content — curated inline YouTube embeds */}
       <section>
         <h2 className="font-serif text-2xl mb-2 flex items-center gap-2">
           <Star className="w-5 h-5 text-primary" /> Featured Practice Content
         </h2>
         <p className="text-sm text-muted-foreground mb-4">
-          Search YouTube directly for the best backing tracks in each genre.
+          Curated backing tracks and drum loops for every genre — plays inline.
         </p>
-        <YouTubeSearchGrid queries={FEATURED_SEARCHES.map(fs => ({ label: fs.label, query: fs.query }))} columns={3} />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {FEATURED_VIDEOS.map((v) => (
+            <div key={v.videoId}>
+              <YouTubeInline videoId={v.videoId} title={v.label} />
+              <p className={`text-xs font-medium mt-1.5 px-1 truncate ${v.color}`}>{v.label}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* Quick Links */}

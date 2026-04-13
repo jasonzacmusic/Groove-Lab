@@ -47,7 +47,10 @@
       "Bash(pnpm --filter @workspace/scripts exec tsx scripts/src/parse-catalog.ts scripts/catalog-yurtrock.txt)",
       "Bash(env)",
       "Bash(export BUNNY_STORAGE_PASSWORD=\"25e208b1-2c67-4f2b-ab197790a4b5-27aa-4fa9\")",
-      "Bash(python3 -c ':*)"
+      "Bash(python3 -c ':*)",
+      "Bash(awk -F/ '{print NF}' /home/runner/workspace/scripts/bunny-wavs.txt)",
+      "Bash(awk -F/ '{print $2}')",
+      "Bash(awk -F/ '{print $NF}')"
     ]
   }
 }
