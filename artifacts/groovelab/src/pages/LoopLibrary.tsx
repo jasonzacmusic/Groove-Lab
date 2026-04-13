@@ -11,7 +11,7 @@ import { Search, Play, Pause, Headphones, SlidersHorizontal, X, ChevronLeft, Che
 import { LoopPlayer, type AudioLoopData } from '@/components/LoopPlayer';
 
 // These match the ACTUAL values in the database (case-sensitive)
-const GENRES = ['All', 'Drums', 'Rock', 'Pop', 'R&B', 'Folk', 'Funk', 'Indie Rock', 'Blues', 'Cinematic', 'Hip Hop', 'Jazz', 'Electronic', 'World', 'Latin', 'Reggae', 'Soul', 'Alternative Rock'];
+const GENRES = ['All', 'Drums', 'Rock', 'Pop', 'R&B', 'Funk', 'Blues', 'Jazz', 'Folk', 'Indie Rock', 'Hip Hop', 'Percussion', 'Bass', 'Guitar', 'Cinematic', 'Electronic', 'World', 'Latin', 'Reggae', 'Soul', 'Horns'];
 const FEELS = ['All', 'straight', 'shuffle', 'swing', 'laid_back'];
 const INSTRUMENTS = ['All', 'drums', 'percussion', 'bass', 'guitar', 'electronic', 'horns'];
 const TIME_SIGNATURES = ['All', '4/4', '3/4', '6/8', '5/4', '7/8', '12/8', 'odd'];
