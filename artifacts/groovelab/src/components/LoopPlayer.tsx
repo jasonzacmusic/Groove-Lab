@@ -1,5 +1,4 @@
 import React, { useRef, useState, useEffect, useCallback, useMemo } from 'react';
-import WaveSurfer from 'wavesurfer.js';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { Badge } from '@/components/ui/badge';
@@ -26,6 +25,7 @@ import {
 interface Stem {
   name: string;
   filename: string;
+  cdn_url?: string;
   type: string;
 }
 
@@ -63,6 +63,19 @@ interface LoopPlayerProps {
 }
 
 /* ------------------------------------------------------------------ */
+/*  Stem player type (per-stem audio state)                            */
+/* ------------------------------------------------------------------ */
+
+interface StemPlayerState {
+  buffer: AudioBuffer;
+  source: AudioBufferSourceNode | null;
+  gain: GainNode;
+  muted: boolean;
+  soloed: boolean;
+  volume: number; // 0-1
+}
+
+/* ------------------------------------------------------------------ */
 /*  Helpers                                                            */
 /* ------------------------------------------------------------------ */
 
@@ -87,6 +100,64 @@ function transposedKey(original: string | undefined, semitones: number): string 
   if (noteIdx === -1) return null;
   const newIdx = ((noteIdx + semitones) % 12 + 12) % 12;
   return `${NOTES[newIdx]}${match[2]}`;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Waveform drawing                                                   */
+/* ------------------------------------------------------------------ */
+
+function drawWaveform(
+  buffer: AudioBuffer,
+  canvas: HTMLCanvasElement,
+  progress: number,
+  duration: number,
+) {
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  const w = Math.floor(rect.width * dpr);
+  const h = Math.floor(rect.height * dpr);
+
+  if (canvas.width !== w || canvas.height !== h) {
+    canvas.width = w;
+    canvas.height = h;
+  }
+
+  const data = buffer.getChannelData(0);
+  const step = Math.max(1, Math.floor(data.length / w));
+
+  ctx.clearRect(0, 0, w, h);
+
+  const progressPct = duration > 0 ? progress / duration : 0;
+
+  for (let i = 0; i < w; i++) {
+    let min = 1;
+    let max = -1;
+    const base = i * step;
+    for (let j = 0; j < step; j++) {
+      const idx = base + j;
+      if (idx >= data.length) break;
+      const val = data[idx];
+      if (val < min) min = val;
+      if (val > max) max = val;
+    }
+
+    const isPast = i / w < progressPct;
+    ctx.fillStyle = isPast ? '#e2a832' : 'rgba(226, 168, 50, 0.25)';
+    const barH = Math.max((max - min) * h * 0.4, dpr);
+    ctx.fillRect(i, (h - barH) / 2, 1, barH);
+  }
+
+  // Playhead line
+  const px = progressPct * w;
+  ctx.strokeStyle = '#e2a832';
+  ctx.lineWidth = 2 * dpr;
+  ctx.beginPath();
+  ctx.moveTo(px, 0);
+  ctx.lineTo(px, h);
+  ctx.stroke();
 }
 
 /* ------------------------------------------------------------------ */
@@ -151,9 +222,19 @@ function StemRow({ stem, isMuted, isSoloed, volume, onToggleMute, onToggleSolo, 
 /* ------------------------------------------------------------------ */
 
 export function LoopPlayer({ loop, onClose }: LoopPlayerProps) {
-  /* -- refs -------------------------------------------------------- */
-  const waveformContainerRef = useRef<HTMLDivElement | null>(null);
-  const wavesurferRef = useRef<WaveSurfer | null>(null);
+  /* -- Audio engine refs (not state, for performance) --------------- */
+  const audioCtxRef = useRef<AudioContext | null>(null);
+  const bufferRef = useRef<AudioBuffer | null>(null);
+  const sourceRef = useRef<AudioBufferSourceNode | null>(null);
+  const gainRef = useRef<GainNode | null>(null);
+  const startTimeRef = useRef(0);
+  const offsetRef = useRef(0);
+  const tempoRatioRef = useRef(1);
+  const rafRef = useRef(0);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  /* -- Stem audio refs --------------------------------------------- */
+  const stemPlayersRef = useRef<Map<string, StemPlayerState>>(new Map());
 
   /* -- state ------------------------------------------------------- */
   const [isPlaying, setIsPlaying] = useState(false);
@@ -178,6 +259,16 @@ export function LoopPlayer({ loop, onClose }: LoopPlayerProps) {
   // Sections
   const [activeSection, setActiveSection] = useState<number | null>(null);
 
+  /* -- Refs that track latest state for use in non-reactive code ---- */
+  const isLoopingRef = useRef(isLooping);
+  useEffect(() => { isLoopingRef.current = isLooping; }, [isLooping]);
+
+  const isMutedRef = useRef(isMuted);
+  useEffect(() => { isMutedRef.current = isMuted; }, [isMuted]);
+
+  const volumeRef = useRef(volume);
+  useEffect(() => { volumeRef.current = volume; }, [volume]);
+
   /* -- derived ----------------------------------------------------- */
   const originalBpm = loop.bpm ?? 120;
   const adjustedBpm = Math.round(originalBpm * tempoRatio);
@@ -185,7 +276,6 @@ export function LoopPlayer({ loop, onClose }: LoopPlayerProps) {
   const transposed = transposedKey(loop.keySignature, semitones);
   const audioUrl = loop.previewUrl || loop.wavUrl;
 
-  // Sections: use provided or derive from sectionType
   const sections = useMemo(() => {
     if (loop.sections && loop.sections.length > 0) return loop.sections;
     if (loop.sectionType) {
@@ -194,109 +284,358 @@ export function LoopPlayer({ loop, onClose }: LoopPlayerProps) {
     return [];
   }, [loop.sections, loop.sectionType, duration]);
 
-  /* -- WaveSurfer init --------------------------------------------- */
+  /* ================================================================ */
+  /*  Audio Context + Buffer Loading                                   */
+  /* ================================================================ */
+
+  const getAudioContext = useCallback(() => {
+    if (!audioCtxRef.current) {
+      audioCtxRef.current = new AudioContext();
+    }
+    return audioCtxRef.current;
+  }, []);
+
+  // Load main audio buffer
   useEffect(() => {
-    if (!waveformContainerRef.current) return;
+    let cancelled = false;
 
     setLoadingState('loading');
     setErrorMsg('');
+    setCurrentTime(0);
+    offsetRef.current = 0;
 
-    const ws = WaveSurfer.create({
-      container: waveformContainerRef.current,
-      waveColor: 'rgba(226, 168, 50, 0.35)',
-      progressColor: '#e2a832',
-      cursorColor: '#e2a832',
-      cursorWidth: 2,
-      barWidth: 2,
-      barGap: 1,
-      barRadius: 2,
-      height: 80,
-      normalize: true,
-      hideScrollbar: true,
-      fillParent: true,
-      mediaControls: false,
-      autoplay: false,
-      interact: true,
-    });
+    const ctx = getAudioContext();
 
-    wavesurferRef.current = ws;
+    // Create master gain if not exists
+    if (!gainRef.current) {
+      gainRef.current = ctx.createGain();
+      gainRef.current.connect(ctx.destination);
+    }
 
-    ws.load(audioUrl);
+    async function loadAudio() {
+      try {
+        const response = await fetch(audioUrl);
+        if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        const arrayBuffer = await response.arrayBuffer();
+        if (cancelled) return;
 
-    ws.on('ready', () => {
-      setDuration(ws.getDuration());
-      setLoadingState('ready');
-      ws.setVolume(volume / 100);
-    });
+        const audioBuffer = await ctx.decodeAudioData(arrayBuffer);
+        if (cancelled) return;
 
-    ws.on('audioprocess', () => {
-      setCurrentTime(ws.getCurrentTime());
-    });
-
-    ws.on('seeking', () => {
-      setCurrentTime(ws.getCurrentTime());
-    });
-
-    ws.on('play', () => setIsPlaying(true));
-    ws.on('pause', () => setIsPlaying(false));
-
-    ws.on('finish', () => {
-      if (isLoopingRef.current) {
-        ws.seekTo(0);
-        ws.play();
-      } else {
-        setIsPlaying(false);
+        bufferRef.current = audioBuffer;
+        setDuration(audioBuffer.duration);
+        setLoadingState('ready');
+      } catch (err) {
+        if (cancelled) return;
+        console.error('Audio load error:', err);
+        setLoadingState('error');
+        setErrorMsg(err instanceof Error ? err.message : 'Failed to load audio');
       }
-    });
+    }
 
-    ws.on('error', (msg) => {
-      console.error('WaveSurfer error:', msg);
-      setLoadingState('error');
-      setErrorMsg(typeof msg === 'string' ? msg : 'Failed to load audio');
-    });
+    loadAudio();
 
     return () => {
-      ws.destroy();
-      wavesurferRef.current = null;
+      cancelled = true;
+      // Stop any playing source
+      if (sourceRef.current) {
+        try { sourceRef.current.stop(); } catch { /* already stopped */ }
+        sourceRef.current = null;
+      }
+      setIsPlaying(false);
     };
-    // Only re-init on URL change
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [audioUrl]);
 
-  /* Keep loop ref in sync so the finish handler always has the latest */
-  const isLoopingRef = useRef(isLooping);
-  useEffect(() => {
-    isLoopingRef.current = isLooping;
-  }, [isLooping]);
+  /* ================================================================ */
+  /*  Load stem buffers when stems panel opens                         */
+  /* ================================================================ */
 
-  /* -- Sync volume to wavesurfer ---------------------------------- */
   useEffect(() => {
-    const ws = wavesurferRef.current;
-    if (!ws) return;
-    ws.setVolume(isMuted ? 0 : volume / 100);
-  }, [volume, isMuted]);
+    if (!showStems || !loop.isMultitrack || !loop.stems || loop.stems.length === 0) return;
+    let cancelled = false;
+    const ctx = getAudioContext();
 
-  /* -- Sync playbackRate to wavesurfer ---------------------------- */
-  useEffect(() => {
-    const ws = wavesurferRef.current;
-    if (!ws) return;
-    ws.setPlaybackRate(tempoRatio);
-  }, [tempoRatio]);
+    async function loadStems() {
+      if (!loop.stems) return;
 
-  /* -- Actions ---------------------------------------------------- */
+      const promises = loop.stems.map(async (stem) => {
+        if (stemPlayersRef.current.has(stem.name)) return; // already loaded
+
+        const stemUrl = stem.cdn_url || stem.filename;
+        try {
+          const response = await fetch(stemUrl);
+          if (!response.ok) throw new Error(`Stem ${stem.name}: HTTP ${response.status}`);
+          const arrayBuffer = await response.arrayBuffer();
+          if (cancelled) return;
+
+          const audioBuffer = await ctx.decodeAudioData(arrayBuffer);
+          if (cancelled) return;
+
+          const stemGain = ctx.createGain();
+          stemGain.connect(gainRef.current || ctx.destination);
+
+          stemPlayersRef.current.set(stem.name, {
+            buffer: audioBuffer,
+            source: null,
+            gain: stemGain,
+            muted: false,
+            soloed: false,
+            volume: 0.8,
+          });
+        } catch (err) {
+          console.error(`Failed to load stem ${stem.name}:`, err);
+        }
+      });
+
+      await Promise.all(promises);
+    }
+
+    loadStems();
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showStems, loop.isMultitrack, loop.stems]);
+
+  /* ================================================================ */
+  /*  Play / Pause                                                     */
+  /* ================================================================ */
+
+  const play = useCallback(() => {
+    const buf = bufferRef.current;
+    const ctx = audioCtxRef.current;
+    if (!buf || !ctx) return;
+
+    // Resume AudioContext if suspended (browser autoplay policy)
+    if (ctx.state === 'suspended') {
+      ctx.resume();
+    }
+
+    // Create a new source (AudioBufferSourceNode is single-use)
+    const source = ctx.createBufferSource();
+    source.buffer = buf;
+    source.loop = isLoopingRef.current;
+    source.playbackRate.value = tempoRatioRef.current;
+    source.connect(gainRef.current!);
+
+    // Handle non-looping end
+    source.onended = () => {
+      if (!isLoopingRef.current) {
+        setIsPlaying(false);
+        offsetRef.current = 0;
+      }
+    };
+
+    startTimeRef.current = ctx.currentTime;
+    source.start(0, offsetRef.current);
+    sourceRef.current = source;
+
+    // Start all loaded stem sources in sync
+    stemPlayersRef.current.forEach((sp) => {
+      if (sp.source) {
+        try { sp.source.stop(); } catch { /* ok */ }
+      }
+      const stemSource = ctx.createBufferSource();
+      stemSource.buffer = sp.buffer;
+      stemSource.loop = isLoopingRef.current;
+      stemSource.playbackRate.value = tempoRatioRef.current;
+      stemSource.connect(sp.gain);
+      stemSource.start(0, offsetRef.current);
+      sp.source = stemSource;
+    });
+
+    setIsPlaying(true);
+  }, []);
+
+  const pause = useCallback(() => {
+    const ctx = audioCtxRef.current;
+    const src = sourceRef.current;
+    const buf = bufferRef.current;
+    if (!ctx || !src || !buf) return;
+
+    // Calculate where we are in the buffer
+    const elapsed = ctx.currentTime - startTimeRef.current;
+    const rawOffset = offsetRef.current + elapsed * src.playbackRate.value;
+    offsetRef.current = rawOffset % buf.duration;
+
+    src.stop();
+    sourceRef.current = null;
+
+    // Stop all stem sources
+    stemPlayersRef.current.forEach((sp) => {
+      if (sp.source) {
+        try { sp.source.stop(); } catch { /* ok */ }
+        sp.source = null;
+      }
+    });
+
+    setIsPlaying(false);
+  }, []);
+
   const togglePlay = useCallback(() => {
-    const ws = wavesurferRef.current;
-    if (!ws || loadingState !== 'ready') return;
-    ws.playPause();
-  }, [loadingState]);
+    if (loadingState !== 'ready') return;
+    if (isPlaying) {
+      pause();
+    } else {
+      play();
+    }
+  }, [isPlaying, loadingState, play, pause]);
 
   const toggleLoop = useCallback(() => {
-    setIsLooping((prev) => !prev);
+    setIsLooping((prev) => {
+      const next = !prev;
+      // Update running source's loop property in real-time
+      if (sourceRef.current) {
+        sourceRef.current.loop = next;
+      }
+      stemPlayersRef.current.forEach((sp) => {
+        if (sp.source) sp.source.loop = next;
+      });
+      return next;
+    });
   }, []);
 
   const toggleMute = useCallback(() => {
-    setIsMuted((prev) => !prev);
+    setIsMuted((prev) => {
+      const next = !prev;
+      if (gainRef.current) {
+        gainRef.current.gain.value = next ? 0 : volumeRef.current / 100;
+      }
+      return next;
+    });
   }, []);
+
+  /* ================================================================ */
+  /*  Volume sync                                                      */
+  /* ================================================================ */
+
+  useEffect(() => {
+    if (gainRef.current) {
+      gainRef.current.gain.value = isMuted ? 0 : volume / 100;
+    }
+  }, [volume, isMuted]);
+
+  /* ================================================================ */
+  /*  Tempo control (real-time, no re-scheduling)                      */
+  /* ================================================================ */
+
+  useEffect(() => {
+    tempoRatioRef.current = tempoRatio;
+    if (sourceRef.current) {
+      sourceRef.current.playbackRate.value = tempoRatio;
+    }
+    stemPlayersRef.current.forEach((sp) => {
+      if (sp.source) {
+        sp.source.playbackRate.value = tempoRatio;
+      }
+    });
+  }, [tempoRatio]);
+
+  /* ================================================================ */
+  /*  Progress tracking via requestAnimationFrame                      */
+  /* ================================================================ */
+
+  useEffect(() => {
+    if (!isPlaying) return;
+
+    const update = () => {
+      const ctx = audioCtxRef.current;
+      const src = sourceRef.current;
+      const buf = bufferRef.current;
+      if (ctx && src && buf) {
+        const elapsed = ctx.currentTime - startTimeRef.current;
+        const pos = (offsetRef.current + elapsed * src.playbackRate.value) % buf.duration;
+        setCurrentTime(pos);
+
+        // Draw waveform on canvas
+        if (canvasRef.current) {
+          drawWaveform(buf, canvasRef.current, pos, buf.duration);
+        }
+      }
+      rafRef.current = requestAnimationFrame(update);
+    };
+
+    rafRef.current = requestAnimationFrame(update);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [isPlaying]);
+
+  // Draw initial static waveform when buffer is loaded (not playing)
+  useEffect(() => {
+    if (loadingState === 'ready' && !isPlaying && bufferRef.current && canvasRef.current) {
+      drawWaveform(bufferRef.current, canvasRef.current, currentTime, bufferRef.current.duration);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loadingState, isPlaying]);
+
+  /* ================================================================ */
+  /*  Seek by clicking on the waveform canvas                          */
+  /* ================================================================ */
+
+  const handleCanvasClick = useCallback(
+    (e: React.MouseEvent<HTMLCanvasElement>) => {
+      const canvas = canvasRef.current;
+      const buf = bufferRef.current;
+      if (!canvas || !buf || loadingState !== 'ready') return;
+
+      const rect = canvas.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const pct = Math.max(0, Math.min(1, clickX / rect.width));
+      const newOffset = pct * buf.duration;
+
+      if (isPlaying) {
+        // Stop current source, update offset, restart
+        pause();
+        offsetRef.current = newOffset;
+        play();
+      } else {
+        offsetRef.current = newOffset;
+        setCurrentTime(newOffset);
+        if (canvasRef.current) {
+          drawWaveform(buf, canvasRef.current, newOffset, buf.duration);
+        }
+      }
+    },
+    [isPlaying, loadingState, pause, play],
+  );
+
+  /* ================================================================ */
+  /*  Seek by arrow keys                                               */
+  /* ================================================================ */
+
+  const seekBy = useCallback(
+    (seconds: number) => {
+      const buf = bufferRef.current;
+      if (!buf || duration <= 0) return;
+
+      const curPos = isPlaying
+        ? (() => {
+            const ctx = audioCtxRef.current;
+            const src = sourceRef.current;
+            if (!ctx || !src) return offsetRef.current;
+            const elapsed = ctx.currentTime - startTimeRef.current;
+            return (offsetRef.current + elapsed * src.playbackRate.value) % buf.duration;
+          })()
+        : offsetRef.current;
+
+      const newOffset = Math.max(0, Math.min(buf.duration, curPos + seconds));
+
+      if (isPlaying) {
+        pause();
+        offsetRef.current = newOffset;
+        play();
+      } else {
+        offsetRef.current = newOffset;
+        setCurrentTime(newOffset);
+        if (canvasRef.current) {
+          drawWaveform(buf, canvasRef.current, newOffset, buf.duration);
+        }
+      }
+    },
+    [duration, isPlaying, pause, play],
+  );
+
+  /* ================================================================ */
+  /*  Volume / Tempo handlers                                          */
+  /* ================================================================ */
 
   const handleVolumeChange = useCallback((v: number[]) => {
     setVolume(v[0]);
@@ -307,56 +646,99 @@ export function LoopPlayer({ loop, onClose }: LoopPlayerProps) {
     setTempoRatio(v[0] / 100);
   }, []);
 
-  const seekBy = useCallback(
-    (seconds: number) => {
-      const ws = wavesurferRef.current;
-      if (!ws || duration <= 0) return;
-      const target = Math.max(0, Math.min(duration, ws.getCurrentTime() + seconds));
-      ws.seekTo(target / duration);
-    },
-    [duration],
-  );
+  /* ================================================================ */
+  /*  Stem mixer actions                                               */
+  /* ================================================================ */
 
-  const playSection = useCallback(
-    (section: { startTime: number; endTime: number }, index: number) => {
-      const ws = wavesurferRef.current;
-      if (!ws || duration <= 0) return;
-      setActiveSection(index);
-      ws.seekTo(section.startTime / duration);
-      if (!isPlaying) ws.play();
-    },
-    [duration, isPlaying],
-  );
+  const updateStemGains = useCallback((muted: Set<string>, soloed: Set<string>, volumes: Record<string, number>) => {
+    const anySoloed = soloed.size > 0;
+    stemPlayersRef.current.forEach((sp, name) => {
+      const vol = (volumes[name] ?? 80) / 100;
+      const isStemMuted = muted.has(name);
+      const isStemSoloed = soloed.has(name);
 
-  /* -- Stem mixer actions ----------------------------------------- */
+      let effectiveGain: number;
+      if (isStemMuted) {
+        effectiveGain = 0;
+      } else if (anySoloed && !isStemSoloed) {
+        effectiveGain = 0;
+      } else {
+        effectiveGain = vol;
+      }
+
+      sp.gain.gain.setValueAtTime(effectiveGain, audioCtxRef.current?.currentTime ?? 0);
+    });
+  }, []);
+
   const toggleStemMute = useCallback((name: string) => {
     setMutedStems((prev) => {
       const next = new Set(prev);
       if (next.has(name)) next.delete(name);
       else next.add(name);
+      // Use a microtask so soloedStems is resolved
+      setTimeout(() => {
+        updateStemGains(next, soloedStems, stemVolumes);
+      }, 0);
       return next;
     });
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [updateStemGains, soloedStems, stemVolumes]);
 
   const toggleStemSolo = useCallback((name: string) => {
     setSoloedStems((prev) => {
       const next = new Set(prev);
       if (next.has(name)) next.delete(name);
       else next.add(name);
+      setTimeout(() => {
+        updateStemGains(mutedStems, next, stemVolumes);
+      }, 0);
       return next;
     });
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [updateStemGains, mutedStems, stemVolumes]);
 
   const handleStemVolume = useCallback((name: string, v: number) => {
-    setStemVolumes((prev) => ({ ...prev, [name]: v }));
-  }, []);
+    setStemVolumes((prev) => {
+      const next = { ...prev, [name]: v };
+      setTimeout(() => {
+        updateStemGains(mutedStems, soloedStems, next);
+      }, 0);
+      return next;
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [updateStemGains, mutedStems, soloedStems]);
 
-  /* -- Keyboard shortcuts ----------------------------------------- */
+  /* ================================================================ */
+  /*  Section playback                                                 */
+  /* ================================================================ */
+
+  const playSection = useCallback(
+    (section: { startTime: number; endTime: number }, index: number) => {
+      const buf = bufferRef.current;
+      if (!buf || duration <= 0) return;
+      setActiveSection(index);
+
+      if (isPlaying) pause();
+      offsetRef.current = section.startTime;
+      play();
+    },
+    [duration, isPlaying, pause, play],
+  );
+
+  /* ================================================================ */
+  /*  Keyboard shortcuts                                               */
+  /* ================================================================ */
+
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
-      // Don't capture if user is typing in an input
       const target = e.target as HTMLElement;
-      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT' || target.tagName === 'IFRAME' || target.isContentEditable) return;
+      if (
+        target.tagName === 'INPUT' ||
+        target.tagName === 'TEXTAREA' ||
+        target.tagName === 'SELECT' ||
+        target.tagName === 'IFRAME' ||
+        target.isContentEditable
+      ) return;
       if (document.activeElement?.tagName === 'IFRAME') return;
 
       switch (e.code) {
@@ -395,14 +777,58 @@ export function LoopPlayer({ loop, onClose }: LoopPlayerProps) {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [togglePlay, toggleLoop, seekBy, toggleMute]);
 
-  /* -- Increment play count --------------------------------------- */
+  /* ================================================================ */
+  /*  Increment play count                                             */
+  /* ================================================================ */
+
   useEffect(() => {
     if (isPlaying) {
       fetch(`/api/audio-loops/${loop.id}`, { method: 'POST' }).catch(() => {});
     }
   }, [isPlaying, loop.id]);
 
-  /* -- Drum element badges ---------------------------------------- */
+  /* ================================================================ */
+  /*  Cleanup on unmount                                               */
+  /* ================================================================ */
+
+  useEffect(() => {
+    return () => {
+      // Cancel animation frame
+      cancelAnimationFrame(rafRef.current);
+
+      // Stop main source
+      if (sourceRef.current) {
+        try { sourceRef.current.stop(); } catch { /* ok */ }
+        sourceRef.current = null;
+      }
+
+      // Stop all stem sources
+      stemPlayersRef.current.forEach((sp) => {
+        if (sp.source) {
+          try { sp.source.stop(); } catch { /* ok */ }
+        }
+        sp.gain.disconnect();
+      });
+      stemPlayersRef.current.clear();
+
+      // Disconnect gain and close context
+      if (gainRef.current) {
+        gainRef.current.disconnect();
+        gainRef.current = null;
+      }
+      if (audioCtxRef.current) {
+        audioCtxRef.current.close().catch(() => {});
+        audioCtxRef.current = null;
+      }
+
+      bufferRef.current = null;
+    };
+  }, []);
+
+  /* ================================================================ */
+  /*  Drum element badges                                              */
+  /* ================================================================ */
+
   const drumElements = useMemo(() => {
     if (loop.instrumentCategory !== 'drums') return [];
     const items: string[] = [];
@@ -420,7 +846,7 @@ export function LoopPlayer({ loop, onClose }: LoopPlayerProps) {
 
   return (
     <div className="bg-card border border-border rounded-xl overflow-hidden shadow-lg select-none">
-      {/* ── Header ─────────────────────────────────────────────────── */}
+      {/* -- Header -------------------------------------------------- */}
       <div className="p-4 pb-3 border-b border-border">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 flex-1">
@@ -476,7 +902,7 @@ export function LoopPlayer({ loop, onClose }: LoopPlayerProps) {
         </div>
       </div>
 
-      {/* ── Waveform ───────────────────────────────────────────────── */}
+      {/* -- Waveform (canvas-based) --------------------------------- */}
       <div className="px-4 py-3 bg-black/20 relative">
         {loadingState === 'loading' && (
           <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/30 rounded">
@@ -490,10 +916,11 @@ export function LoopPlayer({ loop, onClose }: LoopPlayerProps) {
             <span className="text-sm text-destructive">{errorMsg || 'Failed to load audio'}</span>
           </div>
         )}
-        <div
-          ref={waveformContainerRef}
+        <canvas
+          ref={canvasRef}
+          onClick={handleCanvasClick}
           className="w-full rounded cursor-pointer"
-          style={{ minHeight: 80 }}
+          style={{ height: 80, width: '100%' }}
         />
         <div className="flex justify-between mt-1.5 text-xs font-mono text-muted-foreground">
           <span>{formatTime(currentTime)}</span>
@@ -501,7 +928,7 @@ export function LoopPlayer({ loop, onClose }: LoopPlayerProps) {
         </div>
       </div>
 
-      {/* ── Transport Controls ─────────────────────────────────────── */}
+      {/* -- Transport Controls -------------------------------------- */}
       <div className="p-4 space-y-3">
         {/* Row 1: Play, Loop, Volume */}
         <div className="flex items-center gap-3 flex-wrap">
@@ -616,7 +1043,7 @@ export function LoopPlayer({ loop, onClose }: LoopPlayerProps) {
         )}
       </div>
 
-      {/* ── Keyboard shortcuts panel ───────────────────────────────── */}
+      {/* -- Keyboard shortcuts panel -------------------------------- */}
       {showShortcuts && (
         <div className="px-4 pb-3 border-t border-border pt-3">
           <p className="text-xs uppercase font-bold text-muted-foreground tracking-wider mb-2">Keyboard Shortcuts</p>
@@ -639,7 +1066,7 @@ export function LoopPlayer({ loop, onClose }: LoopPlayerProps) {
         </div>
       )}
 
-      {/* ── Section buttons ────────────────────────────────────────── */}
+      {/* -- Section buttons ----------------------------------------- */}
       {sections.length > 1 && (
         <div className="px-4 pb-3 border-t border-border pt-3">
           <p className="text-xs uppercase font-bold text-muted-foreground tracking-wider mb-2">Sections</p>
@@ -661,7 +1088,7 @@ export function LoopPlayer({ loop, onClose }: LoopPlayerProps) {
         </div>
       )}
 
-      {/* ── Stem mixer ─────────────────────────────────────────────── */}
+      {/* -- Stem mixer ---------------------------------------------- */}
       {loop.isMultitrack && loop.stems && loop.stems.length > 0 && (
         <div className="border-t border-border">
           <button
@@ -697,7 +1124,7 @@ export function LoopPlayer({ loop, onClose }: LoopPlayerProps) {
         </div>
       )}
 
-      {/* ── Download bar ───────────────────────────────────────────── */}
+      {/* -- Download bar -------------------------------------------- */}
       <div className="px-4 py-3 border-t border-border flex items-center gap-2 flex-wrap">
         <Button variant="outline" size="sm" asChild>
           <a href={loop.wavUrl} download className="inline-flex items-center gap-1.5">
