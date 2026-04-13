@@ -7,7 +7,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
   if (cors(req, res)) return;
 
   const { artist, genre, bpm_min, bpm_max, key, feel, instrument_category,
-          time_signature, section_type, search, sort, page: pageStr, limit: limitStr } = req.query;
+          time_signature, section_type, collection, search, sort, page: pageStr, limit: limitStr } = req.query;
 
   const page = Number(pageStr) || 1;
   const limit = Math.min(Number(limitStr) || 20, 100);
@@ -21,6 +21,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
   if (time_signature) conditions.push(eq(audioLoops.timeSignature, time_signature as string));
   if (section_type) conditions.push(sql`${audioLoops.sectionType} ILIKE ${section_type as string}`);
   if (key) conditions.push(sql`${audioLoops.keySignature} ILIKE ${key as string}`);
+  if (collection) conditions.push(sql`${audioLoops.collection} ILIKE ${collection as string}`);
   if (bpm_min) conditions.push(gte(audioLoops.bpm, Number(bpm_min)));
   if (bpm_max) conditions.push(lte(audioLoops.bpm, Number(bpm_max)));
   if (search) conditions.push(sql`(${audioLoops.title} ILIKE ${'%' + search + '%'} OR ${audioLoops.grooveName} ILIKE ${'%' + search + '%'} OR ${audioLoops.artist} ILIKE ${'%' + search + '%'})`);

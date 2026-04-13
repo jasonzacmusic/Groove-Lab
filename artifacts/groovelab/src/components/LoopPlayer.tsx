@@ -42,6 +42,8 @@ export interface AudioLoopData {
   feel?: string;
   intensity?: string;
   sectionType?: string;
+  sectionNumber?: number | null;
+  collection?: string;
   instrumentCategory: string;
   isMultitrack?: boolean;
   stems?: Stem[];

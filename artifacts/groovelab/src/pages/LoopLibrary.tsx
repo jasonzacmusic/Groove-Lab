@@ -7,8 +7,9 @@ import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Slider } from '@/components/ui/slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Search, Play, Pause, Headphones, SlidersHorizontal, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Search, Play, Pause, Headphones, SlidersHorizontal, X, ChevronLeft, ChevronRight, ListMusic } from 'lucide-react';
 import { LoopPlayer, type AudioLoopData } from '@/components/LoopPlayer';
+import { SongBuilder, type SongSection } from '@/components/SongBuilder';
 
 // These match the ACTUAL values in the database (case-sensitive)
 const GENRES = ['All', 'Drums', 'Rock', 'Pop', 'R&B', 'Funk', 'Blues', 'Jazz', 'Folk', 'Indie Rock', 'Hip Hop', 'Percussion', 'Bass', 'Guitar', 'Cinematic', 'Electronic', 'World', 'Latin', 'Reggae', 'Soul', 'Horns'];
@@ -108,6 +109,48 @@ export default function LoopLibrary() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [showFilters, setShowFilters] = useState(true);
   const [searchInput, setSearchInput] = useState('');
+  const [songBuilderData, setSongBuilderData] = useState<{
+    sections: SongSection[];
+    artist: string;
+    collection: string;
+    bpm: number | null;
+  } | null>(null);
+  const [songBuilderLoading, setSongBuilderLoading] = useState(false);
+
+  const openSongBuilder = useCallback(async (loop: AudioLoopData) => {
+    if (!loop.collection && !loop.artist) return;
+    setSongBuilderLoading(true);
+    try {
+      const params = new URLSearchParams();
+      if (loop.collection) params.set('collection', loop.collection);
+      if (loop.bpm) {
+        params.set('bpm_min', String(loop.bpm));
+        params.set('bpm_max', String(loop.bpm));
+      }
+      params.set('limit', '50');
+      const res = await fetch(`/api/audio-loops?${params.toString()}`);
+      const data = await res.json();
+      const sections: SongSection[] = (data.loops || []).map((l: any) => ({
+        id: l.id,
+        grooveName: l.grooveName || l.title,
+        sectionType: l.sectionType || 'full_loop',
+        sectionNumber: l.sectionNumber ?? null,
+        bpm: l.bpm ?? null,
+        wavUrl: l.wavUrl,
+        artist: l.artist || '',
+      }));
+      setSongBuilderData({
+        sections,
+        artist: loop.artist || 'Unknown',
+        collection: loop.collection || loop.grooveName || loop.title,
+        bpm: loop.bpm ?? null,
+      });
+    } catch (err) {
+      console.error('Failed to load sections for Song Builder:', err);
+    } finally {
+      setSongBuilderLoading(false);
+    }
+  }, []);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['audio-loops', filters],
@@ -411,6 +454,22 @@ export default function LoopLibrary() {
                   {expandedId === loop.id && (
                     <div className="animate-in slide-in-from-top-2 duration-200">
                       <LoopPlayer loop={loop} onClose={() => setExpandedId(null)} />
+                      <div className="px-4 pb-3 -mt-1">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="gap-1.5 text-xs"
+                          onClick={(e) => { e.stopPropagation(); openSongBuilder(loop); }}
+                          disabled={songBuilderLoading}
+                        >
+                          {songBuilderLoading ? (
+                            <span className="animate-spin w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full" />
+                          ) : (
+                            <ListMusic className="w-3.5 h-3.5" />
+                          )}
+                          Build Song
+                        </Button>
+                      </div>
                     </div>
                   )}
                 </React.Fragment>
@@ -466,6 +525,17 @@ export default function LoopLibrary() {
           )}
         </div>
       </div>
+
+      {/* Song Builder Modal */}
+      {songBuilderData && (
+        <SongBuilder
+          sections={songBuilderData.sections}
+          artist={songBuilderData.artist}
+          collection={songBuilderData.collection}
+          bpm={songBuilderData.bpm}
+          onClose={() => setSongBuilderData(null)}
+        />
+      )}
     </div>
   );
 }

@@ -9,11 +9,12 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Slider } from '@/components/ui/slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Play, Music, Map as MapIcon, List, Search, X, Heart } from 'lucide-react';
+import { Play, Music, Map as MapIcon, List, Search, X, Heart, ListMusic } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { useAuth } from '@/context/AuthContext';
 import { usePlayer } from '@/context/PlayerContext';
 import { useToast } from '@/hooks/use-toast';
+import { SongBuilder, type SongSection } from '@/components/SongBuilder';
 
 /* ------------------------------------------------------------------ */
 /*  Genre Map Component (SVG-based 2D interactive map)                */
@@ -352,9 +353,52 @@ export default function Explore() {
   const [selectedFeelId, setSelectedFeelId] = useState<number | null>(null);
   const [selectedGenreId, setSelectedGenreId] = useState<number | null>(null);
 
+  const [songBuilderData, setSongBuilderData] = useState<{
+    sections: SongSection[];
+    artist: string;
+    collection: string;
+    bpm: number | null;
+  } | null>(null);
+  const [songBuilderLoading, setSongBuilderLoading] = useState<string | null>(null);
+
   const { user } = useAuth();
   const { playLoop } = usePlayer();
   const { toast } = useToast();
+
+  const openSongBuilder = useCallback(async (loop: any) => {
+    if (!loop.collection && !loop.artist) return;
+    setSongBuilderLoading(loop.id);
+    try {
+      const params = new URLSearchParams();
+      if (loop.collection) params.set('collection', loop.collection);
+      if (loop.bpm) {
+        params.set('bpm_min', String(loop.bpm));
+        params.set('bpm_max', String(loop.bpm));
+      }
+      params.set('limit', '50');
+      const res = await fetch(`/api/audio-loops?${params.toString()}`);
+      const data = await res.json();
+      const sections: SongSection[] = (data.loops || []).map((l: any) => ({
+        id: l.id,
+        grooveName: l.grooveName || l.title,
+        sectionType: l.sectionType || 'full_loop',
+        sectionNumber: l.sectionNumber ?? null,
+        bpm: l.bpm ?? null,
+        wavUrl: l.wavUrl,
+        artist: l.artist || '',
+      }));
+      setSongBuilderData({
+        sections,
+        artist: loop.artist || 'Unknown',
+        collection: loop.collection || loop.grooveName || loop.title,
+        bpm: loop.bpm ?? null,
+      });
+    } catch (err) {
+      console.error('Failed to load sections for Song Builder:', err);
+    } finally {
+      setSongBuilderLoading(null);
+    }
+  }, []);
 
   // Fetch user's favorites on mount
   useEffect(() => {
@@ -674,6 +718,22 @@ export default function Explore() {
                             <Badge variant="outline" className="text-[9px]">{loop.instrumentCategory}</Badge>
                           )}
                         </div>
+                        {loop.collection && (
+                          <div className="mt-2">
+                            <button
+                              className="flex items-center gap-1 text-[10px] text-muted-foreground hover:text-primary transition-colors"
+                              onClick={(e) => { e.stopPropagation(); openSongBuilder(loop); }}
+                              disabled={songBuilderLoading === loop.id}
+                            >
+                              {songBuilderLoading === loop.id ? (
+                                <span className="animate-spin w-3 h-3 border border-current border-t-transparent rounded-full" />
+                              ) : (
+                                <ListMusic className="w-3 h-3" />
+                              )}
+                              Build Song
+                            </button>
+                          </div>
+                        )}
                       </CardContent>
                     </Card>
                   ))
@@ -711,6 +771,17 @@ export default function Explore() {
           )}
         </div>
       </div>
+
+      {/* Song Builder Modal */}
+      {songBuilderData && (
+        <SongBuilder
+          sections={songBuilderData.sections}
+          artist={songBuilderData.artist}
+          collection={songBuilderData.collection}
+          bpm={songBuilderData.bpm}
+          onClose={() => setSongBuilderData(null)}
+        />
+      )}
     </div>
   );
 }
