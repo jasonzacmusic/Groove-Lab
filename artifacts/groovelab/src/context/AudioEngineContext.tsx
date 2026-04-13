@@ -219,10 +219,11 @@ export const AudioEngineProvider: React.FC<{ children: React.ReactNode }> = ({ c
   // ---------- startEngine ----------
 
   const startEngine = async () => {
+    // Set minimum latency BEFORE starting the context
+    Tone.getContext().lookAhead = 0.005; // 5ms — lowest safe value
     await Tone.start();
     if (!isInitialized) {
-      // Minimize latency
-      Tone.getContext().lookAhead = 0.01;
+      Tone.getContext().lookAhead = 0.005;
       Tone.Transport.bpm.value = store.bpm;
       synths.current = createSynthsForKit(store.selectedKit);
       currentKitRef.current = store.selectedKit;
@@ -412,12 +413,16 @@ export const AudioEngineProvider: React.FC<{ children: React.ReactNode }> = ({ c
     // Use Tone.now() for ZERO latency — plays immediately
     const now = Tone.now();
 
-    if (synth instanceof Tone.MembraneSynth) {
-      synth.triggerAttackRelease(getPitch(instrument, kit), '8n', now);
-    } else if (synth instanceof Tone.NoiseSynth) {
-      synth.triggerAttackRelease('16n');
-    } else if (synth instanceof Tone.MetalSynth) {
-      synth.triggerAttackRelease(getPitch(instrument, kit), '16n');
+    try {
+      if (synth instanceof Tone.MembraneSynth) {
+        synth.triggerAttackRelease(getPitch(instrument, kit), '8n', now);
+      } else if (synth instanceof Tone.NoiseSynth) {
+        synth.triggerAttackRelease('16n', now);
+      } else if (synth instanceof Tone.MetalSynth) {
+        synth.triggerAttackRelease(getPitch(instrument, kit), '16n', now);
+      }
+    } catch {
+      // Ignore rapid trigger errors
     }
   };
 
