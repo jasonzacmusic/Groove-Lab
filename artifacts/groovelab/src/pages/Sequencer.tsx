@@ -896,22 +896,33 @@ export default function Sequencer() {
     }, 10);
   }, [store]);
 
-  // Keyboard shortcuts
-  // Keyboard shortcuts — only active on sequencer page, not when
-  // focus is in inputs or when other audio players are active
+  // BeatScholar-style keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       const tag = (e.target as HTMLElement)?.tagName;
       if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
-      // Don't capture if an iframe (YouTube) or audio player has focus
       if (document.activeElement?.tagName === 'IFRAME') return;
 
-      if (e.code === 'Space') {
+      // Space = Play/Stop
+      if (e.code === 'Space') { e.preventDefault(); handleStart(); return; }
+      // + / = = BPM up
+      if (e.key === '+' || e.key === '=') { e.preventDefault(); store.setBpm(Math.min(300, store.bpm + 1)); return; }
+      // - = BPM down
+      if (e.key === '-') { e.preventDefault(); store.setBpm(Math.max(20, store.bpm - 1)); return; }
+      // [ = BPM -5
+      if (e.key === '[') { e.preventDefault(); store.setBpm(Math.max(20, store.bpm - 5)); return; }
+      // ] = BPM +5
+      if (e.key === ']') { e.preventDefault(); store.setBpm(Math.min(300, store.bpm + 5)); return; }
+      // Delete/Backspace = Clear all
+      if (e.code === 'Delete' || e.code === 'Backspace') { e.preventDefault(); store.clearAll(); return; }
+      // Escape = Stop
+      if (e.code === 'Escape') {
         e.preventDefault();
-        handleStart();
+        if (isPlaying) { togglePlayback(); }
         return;
       }
 
+      // Instrument selection (BeatScholar style: Q-I for pads 1-8)
       const key = e.key.toLowerCase();
       const instrument = KEY_TO_INSTRUMENT[key];
       if (instrument) {
@@ -923,7 +934,7 @@ export default function Sequencer() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [handleStart, store, playPreview]);
+  }, [handleStart, store, playPreview, isPlaying, togglePlayback]);
 
   // MIDI export
   const exportMidi = () => {
@@ -1197,6 +1208,10 @@ export default function Sequencer() {
               <span><kbd className="bg-muted px-1 rounded text-foreground/60">P</kbd> Clap</span>
               <span><kbd className="bg-muted px-1 rounded text-foreground/60">X</kbd> X-Stick</span>
               <span><kbd className="bg-muted px-1 rounded text-foreground/60">Space</kbd> Play/Stop</span>
+              <span><kbd className="bg-muted px-1 rounded text-foreground/60">+/-</kbd> BPM ±1</span>
+              <span><kbd className="bg-muted px-1 rounded text-foreground/60">[/]</kbd> BPM ±5</span>
+              <span><kbd className="bg-muted px-1 rounded text-foreground/60">Del</kbd> Clear</span>
+              <span><kbd className="bg-muted px-1 rounded text-foreground/60">Esc</kbd> Stop</span>
             </div>
           </div>
         </div>

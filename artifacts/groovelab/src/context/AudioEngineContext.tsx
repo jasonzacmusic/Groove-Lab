@@ -312,11 +312,10 @@ export const AudioEngineProvider: React.FC<{ children: React.ReactNode }> = ({ c
       Tone.Transport.cancel();
       const st = storeRef.current;
 
-      // Use Tone.Transport time notation so BPM changes auto-scale
-      // "0:B:S" = measure 0, beat B, subdivision S
-      // Each beat = one quarter note at the transport BPM
+      // Set time signature so 1 measure = the right number of beats
+      // Then loop exactly 1 measure: "1:0:0"
       Tone.Transport.timeSignature = numerator;
-      Tone.Transport.loopEnd = `${numerator}:0:0`;
+      Tone.Transport.loopEnd = '1:0:0';
 
       // Set swing at transport level for proper swing feel
       const swingVal = storeRef.current.swing;

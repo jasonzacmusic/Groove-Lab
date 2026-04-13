@@ -661,52 +661,45 @@ export default function Metronome() {
               {getTempoMarking(bpm)}
             </p>
             <div className="flex items-center justify-center gap-3">
-              {/* -1 / -0.1 buttons */}
+              {/* Decrement buttons: -10, -5, -3, -1 */}
               <div className="flex flex-col gap-1">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-8 w-10 text-xs font-mono"
-                  onClick={() => adjustBpm(-1)}
-                >
-                  -1
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-6 w-10 text-[10px] font-mono text-muted-foreground"
-                  onClick={() => adjustBpm(-0.1)}
-                >
-                  -.1
-                </Button>
+                <div className="flex gap-0.5">
+                  <Button variant="ghost" size="sm" className="h-7 w-8 text-[10px] font-mono text-muted-foreground" onClick={() => adjustBpm(-10)}>-10</Button>
+                  <Button variant="ghost" size="sm" className="h-7 w-8 text-[10px] font-mono text-muted-foreground" onClick={() => adjustBpm(-5)}>-5</Button>
+                </div>
+                <div className="flex gap-0.5">
+                  <Button variant="outline" size="sm" className="h-8 w-8 text-xs font-mono" onClick={() => adjustBpm(-3)}>-3</Button>
+                  <Button variant="outline" size="sm" className="h-8 w-8 text-xs font-mono" onClick={() => adjustBpm(-1)}>-1</Button>
+                </div>
               </div>
 
-              {/* Large BPM */}
-              <div className="select-none">
-                <span className="font-mono text-7xl md:text-8xl font-bold text-primary tabular-nums leading-none">
-                  {Math.round(bpm)}
-                </span>
-                <p className="text-xs text-muted-foreground mt-1 font-mono">BPM</p>
+              {/* Large BPM — click to type */}
+              <div>
+                <input
+                  type="number"
+                  value={Math.round(bpm)}
+                  onChange={(e) => {
+                    const v = Number(e.target.value);
+                    if (v >= 20 && v <= 300) setBpm(v);
+                  }}
+                  className="font-mono text-7xl md:text-8xl font-bold text-primary tabular-nums leading-none bg-transparent text-center w-48 border-none outline-none focus:ring-0 [-moz-appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                  min={20}
+                  max={300}
+                />
+                <p className="text-xs text-muted-foreground mt-1 font-mono">BPM (click to type)</p>
               </div>
 
               {/* +1 / +0.1 buttons */}
+              {/* Increment buttons: +1, +3, +5, +10 */}
               <div className="flex flex-col gap-1">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-8 w-10 text-xs font-mono"
-                  onClick={() => adjustBpm(1)}
-                >
-                  +1
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-6 w-10 text-[10px] font-mono text-muted-foreground"
-                  onClick={() => adjustBpm(0.1)}
-                >
-                  +.1
-                </Button>
+                <div className="flex gap-0.5">
+                  <Button variant="outline" size="sm" className="h-8 w-8 text-xs font-mono" onClick={() => adjustBpm(1)}>+1</Button>
+                  <Button variant="outline" size="sm" className="h-8 w-8 text-xs font-mono" onClick={() => adjustBpm(3)}>+3</Button>
+                </div>
+                <div className="flex gap-0.5">
+                  <Button variant="ghost" size="sm" className="h-7 w-8 text-[10px] font-mono text-muted-foreground" onClick={() => adjustBpm(5)}>+5</Button>
+                  <Button variant="ghost" size="sm" className="h-7 w-8 text-[10px] font-mono text-muted-foreground" onClick={() => adjustBpm(10)}>+10</Button>
+                </div>
               </div>
             </div>
 
