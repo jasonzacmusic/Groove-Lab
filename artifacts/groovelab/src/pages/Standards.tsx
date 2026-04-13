@@ -137,11 +137,12 @@ function chordToVoicing(symbol: string): string[] {
     intervals = [0, 4, 7];
   }
 
-  // Rootless voicing in octave 3-4
+  // Voiced in octave 3-4, spread across the keyboard like a pianist
   return intervals.map((interval, i) => {
     const noteIdx = (r + interval) % 12;
     const noteName = CHROMATIC[noteIdx];
-    const octave = i === 0 ? 3 : (r + interval >= 12 ? 4 : (interval > 6 ? 4 : 3));
+    // Root and lower intervals in octave 3, upper intervals in octave 4
+    const octave = interval >= 10 ? 4 : 3;
     const displayNote = SHARP_TO_FLAT[noteName] || noteName;
     return displayNote + octave;
   });
@@ -153,36 +154,62 @@ function chordRoot(symbol: string): string {
   return match ? match[1] : 'C';
 }
 
-/** Get a walking bass note sequence from one chord to the next */
-function walkingBassNotes(currentRoot: string, nextRoot: string, beats: number): string[] {
+/** Walking bass line generator — musically correct for jazz standards.
+ *  Uses chord tones (root, 3rd, 5th, 7th) and chromatic approaches.
+ *  CRITICAL: minor chords get minor 3rd, major chords get major 3rd. */
+function walkingBassNotes(chordSymbol: string, nextRoot: string, beats: number): string[] {
+  const match = chordSymbol.match(/^([A-G][#b]?)(.*)/);
+  const currentRoot = match ? match[1] : 'C';
+  const quality = match ? match[2].toLowerCase().replace(/\s/g, '') : '';
   const curIdx = rootToIndex(currentRoot);
   const nxtIdx = rootToIndex(nextRoot);
-  const notes: string[] = [];
-  if (beats <= 1) {
-    notes.push((SHARP_TO_FLAT[CHROMATIC[curIdx]] || CHROMATIC[curIdx]) + '2');
-  } else if (beats === 2) {
-    notes.push((SHARP_TO_FLAT[CHROMATIC[curIdx]] || CHROMATIC[curIdx]) + '2');
-    // Approach note: chromatic approach to next root
+
+  // Determine chord intervals based on quality
+  const isMinor = quality.includes('m') || quality.includes('min') || quality.startsWith('-')
+    || quality.includes('dim') || quality.includes('°') || quality.includes('ø');
+  const isDim = quality.includes('dim') || quality.includes('°') || quality.includes('ø');
+  const isHalfDim = quality.includes('m7b5') || quality.includes('ø');
+
+  const third = isMinor ? 3 : 4;
+  const fifth = isDim ? 6 : 7;
+  const seventh = quality.includes('maj7') ? 11
+    : (quality.includes('7') || isMinor) ? 10
+    : quality.includes('dim7') ? 9
+    : -1; // no 7th
+
+  const note = (interval: number) => {
+    const idx = (curIdx + interval) % 12;
+    return (SHARP_TO_FLAT[CHROMATIC[idx]] || CHROMATIC[idx]) + '2';
+  };
+
+  if (beats <= 1) return [note(0)]; // just root
+
+  if (beats === 2) {
+    // Root + chromatic approach to next root
     const approach = ((nxtIdx - 1) + 12) % 12;
-    notes.push((SHARP_TO_FLAT[CHROMATIC[approach]] || CHROMATIC[approach]) + '2');
-  } else {
-    // Root
-    notes.push((SHARP_TO_FLAT[CHROMATIC[curIdx]] || CHROMATIC[curIdx]) + '2');
-    // Fifth
-    const fifth = (curIdx + 7) % 12;
-    notes.push((SHARP_TO_FLAT[CHROMATIC[fifth]] || CHROMATIC[fifth]) + '2');
-    if (beats >= 3) {
-      // Third or chromatic passing
-      const third = (curIdx + 4) % 12;
-      notes.push((SHARP_TO_FLAT[CHROMATIC[third]] || CHROMATIC[third]) + '2');
-    }
-    if (beats >= 4) {
-      // Chromatic approach to next
-      const approach = ((nxtIdx - 1) + 12) % 12;
-      notes.push((SHARP_TO_FLAT[CHROMATIC[approach]] || CHROMATIC[approach]) + '2');
-    }
+    return [note(0), (SHARP_TO_FLAT[CHROMATIC[approach]] || CHROMATIC[approach]) + '2'];
   }
-  return notes;
+
+  // Standard 4-beat walking bass patterns (varied for musicality)
+  // Pattern 1: Root → 3rd → 5th → approach (most common)
+  // Pattern 2: Root → 5th → 3rd → approach (descending)
+  // Pattern 3: Root → 3rd → 5th → 7th (when 7th available and same chord continues)
+
+  const approach = ((nxtIdx - 1) + 12) % 12;
+  const approachNote = (SHARP_TO_FLAT[CHROMATIC[approach]] || CHROMATIC[approach]) + '2';
+
+  if (beats === 3) {
+    return [note(0), note(third), approachNote];
+  }
+
+  // 4 beats — the classic walking bass bar
+  // Use ascending pattern: Root → 3rd → 5th → chromatic approach
+  return [
+    note(0),       // Beat 1: Root
+    note(third),   // Beat 2: 3rd (MINOR for m7, MAJOR for maj7/dom7)
+    note(fifth),   // Beat 3: 5th (diminished 5th for dim/half-dim)
+    approachNote,  // Beat 4: Chromatic approach to next root
+  ];
 }
 
 /** Bossa bass pattern: root, fifth */
@@ -437,13 +464,15 @@ export default function Standards() {
       },
     }).toDestination();
 
-    // Upright bass - deeper, warmer MonoSynth with envelope shaped like a plucked bass
+    // Upright jazz bass — warm, round, plucked acoustic character
+    // Uses triangle wave (warm fundamental) with gentle low-pass filter
+    // and a fast attack + medium decay to simulate finger plucking
     bassRef.current = new Tone.MonoSynth({
-      oscillator: { type: 'fmsawtooth', modulationType: 'sine', modulationIndex: 0.8 },
-      filter: { type: 'lowpass', frequency: 600, Q: 2, rolloff: -24 },
-      envelope: { attack: 0.01, decay: 0.4, sustain: 0.3, release: 0.5 },
-      filterEnvelope: { attack: 0.01, decay: 0.15, sustain: 0.3, release: 0.4, baseFrequency: 150, octaves: 2.5 },
-      volume: -6,
+      oscillator: { type: 'triangle' }, // warm, round — closest to upright bass
+      filter: { type: 'lowpass', frequency: 400, Q: 1, rolloff: -12 },
+      envelope: { attack: 0.005, decay: 0.6, sustain: 0.15, release: 0.4 },
+      filterEnvelope: { attack: 0.005, decay: 0.2, sustain: 0.2, release: 0.3, baseFrequency: 120, octaves: 1.8 },
+      volume: -4,
     }).toDestination();
 
     // Jazz ride cymbal - metallic noise burst with long ring
@@ -575,7 +604,7 @@ export default function Standards() {
         }, `0:${chordStartBeat}:0`);
       } else {
         // Walking bass
-        const bassNotes = walkingBassNotes(root, nextRoot, chordBeats);
+        const bassNotes = walkingBassNotes(chord.chord, nextRoot, chordBeats);
         bassNotes.forEach((note, b) => {
           transport.schedule((time) => {
             if (bassRef.current) bassRef.current.triggerAttackRelease(note, '8n', time, 0.7);
