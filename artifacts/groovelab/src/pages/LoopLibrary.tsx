@@ -10,11 +10,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Search, Play, Pause, Headphones, SlidersHorizontal, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { LoopPlayer, type AudioLoopData } from '@/components/LoopPlayer';
 
-const GENRES = ['All', 'Jazz', 'Blues', 'Funk', 'R&B', 'Soul', 'Gospel', 'Rock', 'Pop', 'Latin', 'Afrobeat', 'Hip-Hop', 'Neo-Soul', 'Fusion'];
-const FEELS = ['All', 'Swing', 'Straight', 'Shuffle', 'Laid-back', 'Driving', 'Bouncy', 'Funky'];
-const INSTRUMENTS = ['All', 'Drums', 'Bass', 'Guitar', 'Keys', 'Horns', 'Strings', 'Vocals', 'Percussion', 'Full Band'];
-const TIME_SIGNATURES = ['All', '4/4', '3/4', '6/8', '5/4', '7/8', '12/8'];
-const KEYS = ['All', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'];
+// These match the ACTUAL values in the database (case-sensitive)
+const GENRES = ['All', 'Drums', 'Rock', 'Pop', 'R&B', 'Folk', 'Funk', 'Indie Rock', 'Blues', 'Cinematic', 'Hip Hop', 'Jazz', 'Electronic', 'World', 'Latin', 'Reggae', 'Soul', 'Alternative Rock'];
+const FEELS = ['All', 'straight', 'shuffle', 'swing', 'laid_back'];
+const INSTRUMENTS = ['All', 'drums', 'percussion', 'bass', 'guitar', 'electronic', 'horns'];
+const TIME_SIGNATURES = ['All', '4/4', '3/4', '6/8', '5/4', '7/8', '12/8', 'odd'];
+const KEYS = ['All', 'A', 'B', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'Bb', 'Db'];
 const SORT_OPTIONS = [
   { value: 'newest', label: 'Newest' },
   { value: 'bpm_asc', label: 'BPM (Low-High)' },
@@ -25,6 +26,12 @@ const SORT_OPTIONS = [
 ];
 
 const ITEMS_PER_PAGE = 24;
+
+// Display label helper for DB values
+function displayLabel(val: string): string {
+  if (val === 'All') return 'All';
+  return val.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+}
 
 interface LoopFilters {
   search: string;
@@ -215,7 +222,7 @@ export default function LoopLibrary() {
               <Select value={filters.feel} onValueChange={(v) => updateFilter('feel', v)}>
                 <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
                 <SelectContent>
-                  {FEELS.map(f => <SelectItem key={f} value={f}>{f}</SelectItem>)}
+                  {FEELS.map(f => <SelectItem key={f} value={f}>{displayLabel(f)}</SelectItem>)}
                 </SelectContent>
               </Select>
             </div>
@@ -226,7 +233,7 @@ export default function LoopLibrary() {
               <Select value={filters.instrument} onValueChange={(v) => updateFilter('instrument', v)}>
                 <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
                 <SelectContent>
-                  {INSTRUMENTS.map(i => <SelectItem key={i} value={i}>{i}</SelectItem>)}
+                  {INSTRUMENTS.map(i => <SelectItem key={i} value={i}>{displayLabel(i)}</SelectItem>)}
                 </SelectContent>
               </Select>
             </div>
@@ -278,17 +285,17 @@ export default function LoopLibrary() {
                 )}
                 {filters.genre !== 'All' && (
                   <Badge variant="secondary" className="text-[10px] cursor-pointer" onClick={() => updateFilter('genre', 'All')}>
-                    {filters.genre} <X className="w-2.5 h-2.5 ml-1" />
+                    {displayLabel(filters.genre)} <X className="w-2.5 h-2.5 ml-1" />
                   </Badge>
                 )}
                 {filters.feel !== 'All' && (
                   <Badge variant="secondary" className="text-[10px] cursor-pointer" onClick={() => updateFilter('feel', 'All')}>
-                    {filters.feel} <X className="w-2.5 h-2.5 ml-1" />
+                    {displayLabel(filters.feel)} <X className="w-2.5 h-2.5 ml-1" />
                   </Badge>
                 )}
                 {filters.instrument !== 'All' && (
                   <Badge variant="secondary" className="text-[10px] cursor-pointer" onClick={() => updateFilter('instrument', 'All')}>
-                    {filters.instrument} <X className="w-2.5 h-2.5 ml-1" />
+                    {displayLabel(filters.instrument)} <X className="w-2.5 h-2.5 ml-1" />
                   </Badge>
                 )}
               </div>
