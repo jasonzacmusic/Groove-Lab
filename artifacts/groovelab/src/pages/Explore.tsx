@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { useGetLoops, useGetTaxonomy, useGetGenreMap, useGetGrooveMatch } from '@workspace/api-client-react';
+import { useGetTaxonomy, useGetGenreMap, useGetGrooveMatch } from '@workspace/api-client-react';
+import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -411,15 +412,35 @@ export default function Explore() {
   );
 
   const { data: taxonomy, isLoading: isTaxonomyLoading } = useGetTaxonomy();
-  const bpmFilterActive = bpmRange[0] > 40 || bpmRange[1] < 300;
-  const { data: loopsData, isLoading: isLoopsLoading } = useGetLoops({
-    search: search || undefined,
-    ...(bpmFilterActive ? { bpmMin: bpmRange[0], bpmMax: bpmRange[1] } : {}),
-    ...(selectedTimeSigId ? { timeSignatureId: selectedTimeSigId } : {}),
-    ...(selectedFeelId ? { feelId: selectedFeelId } : {}),
-    ...(selectedGenreId ? { genreId: selectedGenreId } : {}),
-  });
   const { data: genreMap } = useGetGenreMap();
+
+  // Fetch from the REAL audio loops endpoint (5,429 loops) instead of old YouTube loops
+  const bpmFilterActive = bpmRange[0] > 40 || bpmRange[1] < 300;
+  const audioLoopParams = new URLSearchParams();
+  audioLoopParams.set('limit', '24');
+  if (search) audioLoopParams.set('search', search);
+  if (bpmFilterActive) { audioLoopParams.set('bpm_min', String(bpmRange[0])); audioLoopParams.set('bpm_max', String(bpmRange[1])); }
+  // Map taxonomy IDs to actual values for the audio-loops API
+  if (selectedTimeSigId && taxonomy?.timeSignatures) {
+    const ts = taxonomy.timeSignatures.find(t => t.id === selectedTimeSigId);
+    if (ts) audioLoopParams.set('time_signature', ts.displayName);
+  }
+  if (selectedFeelId && taxonomy?.feels) {
+    const f = taxonomy.feels.find(f => f.id === selectedFeelId);
+    if (f) audioLoopParams.set('feel', f.name);
+  }
+  if (selectedGenreId && taxonomy?.genres) {
+    const g = taxonomy.genres.find(g => g.id === selectedGenreId);
+    if (g) audioLoopParams.set('genre', g.name);
+  }
+
+  const { data: loopsData, isLoading: isLoopsLoading } = useQuery({
+    queryKey: ['audio-loops-explore', audioLoopParams.toString()],
+    queryFn: async () => {
+      const res = await fetch(`/api/audio-loops?${audioLoopParams.toString()}`);
+      return res.json();
+    },
+  });
 
   const handleGenreMapClick = useCallback((genreId: number, genreName: string) => {
     setGenreFilter(genreName);
@@ -439,7 +460,7 @@ export default function Explore() {
 
   const handleMatchClick = useCallback((loopId: string) => {
     // Find the match title from the loops data or just use the id
-    const matchLoop = loopsData?.loops.find((l) => l.id === loopId);
+    const matchLoop = loopsData?.loops?.find((l: any) => l.id === loopId);
     setSelectedLoopId(loopId);
     setSelectedLoopTitle(matchLoop?.title || 'Selected Loop');
   }, [loopsData]);
@@ -605,7 +626,7 @@ export default function Explore() {
                     </Button>
                   </div>
                 ) : (
-                  loopsData?.loops.map((loop) => (
+                  loopsData?.loops?.map((loop: any) => (
                     <Card
                       key={loop.id}
                       className={`overflow-hidden border-border bg-card hover:border-primary/50 transition-colors cursor-pointer group vinyl-hover ${
@@ -613,47 +634,30 @@ export default function Explore() {
                       }`}
                       onClick={() => handleLoopCardClick(loop.id, loop.title)}
                     >
-                      <div className="aspect-video relative bg-muted flex items-center justify-center group-hover:bg-primary/10 transition-colors">
-                        {loop.youtubeVideoId ? (
-                          <img src={`https://img.youtube.com/vi/${loop.youtubeVideoId}/mqdefault.jpg`} alt={loop.title} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
-                        ) : (
-                          <Music className="w-12 h-12 text-muted-foreground group-hover:text-primary transition-colors" />
-                        )}
-                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                          onClick={(e) => { e.stopPropagation(); playLoop(loop); }}>
-                          <Play className="w-12 h-12 text-white drop-shadow-md" fill="currentColor" />
+                      <div className="aspect-video relative bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
+                        <Music className="w-10 h-10 text-primary/40 group-hover:text-primary/60 transition-colors" />
+                        <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                          <Play className="w-10 h-10 text-white drop-shadow-md" fill="currentColor" />
                         </div>
-                        <button
-                          className="absolute top-2 right-2 z-10 p-1.5 rounded-full bg-black/50 hover:bg-black/70 transition-colors"
-                          onClick={(e) => toggleFavorite(e, loop.id)}
-                          aria-label={favoritedIds.has(loop.id) ? 'Remove from favorites' : 'Add to favorites'}
-                        >
-                          <Heart
-                            className={`w-4 h-4 transition-colors ${
-                              favoritedIds.has(loop.id) ? 'text-red-500 fill-red-500' : 'text-white'
-                            }`}
-                          />
-                        </button>
+                        {loop.genre && <Badge className="absolute top-2 left-2 text-[9px] bg-primary/80">{loop.genre}</Badge>}
+                        {loop.instrumentCategory && <Badge variant="outline" className="absolute top-2 right-2 text-[9px] bg-background/80">{loop.instrumentCategory}</Badge>}
                       </div>
                       <CardContent className="p-4">
-                        <h4 className="font-medium text-lg truncate mb-2">{loop.title}</h4>
+                        <h4 className="font-medium text-lg truncate mb-2">{loop.grooveName || loop.title}</h4>
                         <div className="flex flex-wrap items-center gap-2 mb-3">
                           {loop.bpm && <Badge variant="secondary" className="font-mono text-xs bg-primary/10 text-primary">{loop.bpm} BPM</Badge>}
-                          {loop.timeSignatures?.[0] && <Badge variant="outline" className="font-mono text-xs">{loop.timeSignatures[0].displayName}</Badge>}
-                          {loop.feels?.[0] && <Badge variant="outline" className="text-[10px]">{loop.feels[0].name}</Badge>}
+                          {loop.timeSignature && <Badge variant="outline" className="font-mono text-xs">{loop.timeSignature}</Badge>}
+                          {loop.feel && <Badge variant="outline" className="text-[10px]">{loop.feel}</Badge>}
+                          {loop.sectionType && <Badge variant="outline" className="text-[10px]">{loop.sectionType}</Badge>}
                         </div>
                         <div className="flex items-center justify-between mt-4 pt-4 border-t border-border">
                           <div className="flex items-center gap-2">
                             <Avatar className="w-6 h-6">
-                              <AvatarFallback className="text-[10px]">{loop.creator?.channelName.substring(0, 2).toUpperCase() || 'GL'}</AvatarFallback>
+                              <AvatarFallback className="text-[10px]">{loop.artist?.substring(0, 2).toUpperCase() || 'GK'}</AvatarFallback>
                             </Avatar>
-                            <span className="text-xs text-muted-foreground truncate max-w-[100px]">{loop.creator?.channelName || 'Unknown'}</span>
+                            <span className="text-xs text-muted-foreground truncate max-w-[100px]">{loop.artist || 'Unknown'}</span>
                           </div>
-                          <div className="flex gap-1 items-center text-primary">
-                            {Array.from({ length: 5 }).map((_, i) => (
-                              <div key={i} className={`w-1.5 h-1.5 rounded-full ${i < loop.qualityScore ? 'bg-primary' : 'bg-muted'}`} />
-                            ))}
-                          </div>
+                          {loop.isMultitrack && <Badge variant="secondary" className="text-[9px]">Multitrack</Badge>}
                         </div>
                       </CardContent>
                     </Card>

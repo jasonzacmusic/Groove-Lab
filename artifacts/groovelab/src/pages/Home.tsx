@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'wouter';
-import { useGetLoops, useGetTaxonomy } from '@workspace/api-client-react';
+import { useGetTaxonomy } from '@workspace/api-client-react';
+import { useQuery } from '@tanstack/react-query';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -34,7 +35,14 @@ const FEATURED_SEARCHES = [
 
 export default function Home() {
   const { data: taxonomy } = useGetTaxonomy();
-  const { data: loopsData, isLoading } = useGetLoops({ limit: 8 });
+  // Fetch from the REAL audio loops endpoint (5,429 loops), not the old YouTube loops
+  const { data: loopsData, isLoading } = useQuery({
+    queryKey: ['audio-loops-home'],
+    queryFn: async () => {
+      const res = await fetch('/api/audio-loops?limit=8&sort=most_played');
+      return res.json();
+    },
+  });
   const { playLoop } = usePlayer();
 
   return (
@@ -75,7 +83,7 @@ export default function Home() {
           <h2 className="font-serif text-2xl flex items-center gap-2">
             <Play className="w-5 h-5 text-primary" /> Drum Loops & Backing Tracks
           </h2>
-          <Link href="/explore">
+          <Link href="/loop-library">
             <Button variant="outline" size="sm">View All</Button>
           </Link>
         </div>
@@ -106,42 +114,42 @@ export default function Home() {
               </Card>
             ))
           ) : (
-            loopsData?.loops?.map((loop) => (
-              <Card key={loop.id} className="overflow-hidden hover:border-primary/50 transition-colors cursor-pointer group"
-                onClick={() => playLoop(loop)}>
-                <div className="aspect-video relative bg-muted">
-                  {loop.youtubeVideoId ? (
-                    <img src={`https://img.youtube.com/vi/${loop.youtubeVideoId}/mqdefault.jpg`}
-                      alt={loop.title} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <Music className="w-10 h-10 text-muted-foreground" />
-                    </div>
-                  )}
-                  <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+            loopsData?.loops?.map((loop: any) => (
+              <Link key={loop.id} href="/loop-library">
+              <Card className="overflow-hidden hover:border-primary/50 transition-colors cursor-pointer group">
+                <div className="aspect-video relative bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
+                  <Music className="w-10 h-10 text-primary/40 group-hover:text-primary/60 transition-colors" />
+                  <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                     <Play className="w-10 h-10 text-white" fill="currentColor" />
                   </div>
+                  {loop.genre && (
+                    <Badge className="absolute top-2 left-2 text-[9px] bg-primary/80">{loop.genre}</Badge>
+                  )}
+                  {loop.feel && (
+                    <Badge variant="outline" className="absolute top-2 right-2 text-[9px] bg-background/80">{loop.feel}</Badge>
+                  )}
                 </div>
                 <CardContent className="p-3">
-                  <h4 className="font-medium text-sm truncate">{loop.title}</h4>
+                  <h4 className="font-medium text-sm truncate">{loop.grooveName || loop.title}</h4>
                   <div className="flex items-center gap-2 mt-1">
                     {loop.bpm && <Badge variant="secondary" className="font-mono text-[10px]">{loop.bpm} BPM</Badge>}
-                    {loop.timeSignatures?.[0] && <Badge variant="outline" className="font-mono text-[10px]">{loop.timeSignatures[0].displayName}</Badge>}
+                    {loop.timeSignature && <Badge variant="outline" className="font-mono text-[10px]">{loop.timeSignature}</Badge>}
                   </div>
                   <div className="flex items-center gap-1.5 mt-2 text-xs text-muted-foreground">
                     <Avatar className="w-4 h-4">
-                      <AvatarFallback className="text-[8px]">{loop.creator?.channelName?.substring(0, 2).toUpperCase() || 'GL'}</AvatarFallback>
+                      <AvatarFallback className="text-[8px]">{loop.artist?.substring(0, 2).toUpperCase() || 'GK'}</AvatarFallback>
                     </Avatar>
-                    <span className="truncate">{loop.creator?.channelName || 'Unknown'}</span>
+                    <span className="truncate">{loop.artist || 'Unknown'}</span>
                   </div>
                 </CardContent>
               </Card>
+              </Link>
             ))
           )}
         </div>
       </section>
 
-      {/* Featured Practice Content — YouTube search links */}
+      {/* Featured Practice Content — inline YouTube embeds */}
       <section>
         <h2 className="font-serif text-2xl mb-2 flex items-center gap-2">
           <Star className="w-5 h-5 text-primary" /> Featured Practice Content
