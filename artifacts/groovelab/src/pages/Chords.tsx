@@ -7,7 +7,8 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Piano, Play, Square, ArrowUp, ArrowDown, Star, ExternalLink } from 'lucide-react';
+import { Piano, Play, Square, ArrowUp, ArrowDown, Star } from 'lucide-react';
+import { YouTubeInline } from '@/components/YouTubeInline';
 import * as Tone from 'tone';
 
 // Curated backing track video IDs for common progression types.
@@ -69,36 +70,6 @@ function chordToNotes(symbol: string): string[] {
   return [note(4, 3), note(7, 3), note(0, 4)];
 }
 
-function YouTubeBackingTrack({ query, title, videoId }: { query: string; title: string; videoId?: string }) {
-  const src = videoId
-    ? `https://www.youtube-nocookie.com/embed/${videoId}`
-    : `https://www.youtube-nocookie.com/embed?search_query=${encodeURIComponent(query)}`;
-  return (
-    <div className="rounded-lg border border-border overflow-hidden" onClick={(e) => e.stopPropagation()}>
-      <div className="aspect-video bg-muted">
-        <iframe
-          src={src}
-          className="w-full h-full"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          title={title}
-        />
-      </div>
-      <div className="px-3 py-1.5 flex items-center justify-between bg-card">
-        <p className="text-[10px] text-muted-foreground font-mono truncate mr-2">"{query}"</p>
-        <a
-          href={`https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex-shrink-0 flex items-center gap-1 text-[10px] text-red-500 hover:text-red-600 font-medium whitespace-nowrap"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <ExternalLink className="w-2.5 h-2.5" /> Open in YouTube
-        </a>
-      </div>
-    </div>
-  );
-}
 
 export default function Chords() {
   const [activeTab, setActiveTab] = useState('All');
@@ -322,14 +293,20 @@ export default function Chords() {
                     <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
                       Backing Tracks in {displayKey}
                     </h4>
-                    <div className="grid grid-cols-1 gap-3">
-                      <YouTubeBackingTrack
-                        query={`${progName} ${displayKey} backing track`}
-                        title={`${progName} in ${displayKey}`}
-                        videoId={curatedVideoId}
-                      />
-                      <YouTubeBackingTrack
-                        query={`${displayKey} ${genre} backing track`}
+                    <div className="grid grid-cols-1 gap-3" onClick={(e) => e.stopPropagation()}>
+                      {curatedVideoId ? (
+                        <YouTubeInline
+                          videoId={curatedVideoId}
+                          title={`${progName} in ${displayKey}`}
+                        />
+                      ) : (
+                        <YouTubeInline
+                          searchQuery={`${progName} ${displayKey} backing track`}
+                          title={`${progName} in ${displayKey}`}
+                        />
+                      )}
+                      <YouTubeInline
+                        searchQuery={`${displayKey} ${genre} backing track`}
                         title={`${displayKey} ${genre}`}
                       />
                     </div>

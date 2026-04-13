@@ -9,8 +9,9 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   BookOpen, Search, Play, Square, ChevronRight, ArrowUp, ArrowDown,
-  Music, Repeat, Minus, Plus, ExternalLink,
+  Music, Repeat, Minus, Plus,
 } from 'lucide-react';
+import { YouTubeInline } from '@/components/YouTubeInline';
 import * as Tone from 'tone';
 
 // ── Constants ────────────────────────────────────────────────────────────────────
@@ -1220,52 +1221,23 @@ export default function Standards() {
 
                 return (
                   <div className="space-y-3">
-                    {/* Real iframe embeds for standards with known video IDs */}
+                    {/* Inline embeds for standards with known video IDs */}
                     {knownTracks && (
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {knownTracks.map((track) => (
-                          <div key={track.id} className="rounded-lg border border-border overflow-hidden">
-                            <iframe
-                              src={`https://www.youtube-nocookie.com/embed/${track.id}`}
-                              className="w-full aspect-video rounded-lg"
-                              allow="autoplay; encrypted-media"
-                              allowFullScreen
-                              title={track.title}
-                            />
-                          </div>
+                          <YouTubeInline key={track.id} videoId={track.id} title={track.title} />
                         ))}
                       </div>
                     )}
 
-                    {/* Embedded search-query fallback — uses curated query when available */}
+                    {/* Search-query inline embed — uses curated query when available */}
                     {(() => {
                       const curatedQueries = CURATED_BACKING_QUERIES[name];
                       const fallbackQuery = curatedQueries
                         ? curatedQueries[0]
                         : `${name} ${displayKey} backing track jazz`;
                       return (
-                        <div className="rounded-lg border border-border overflow-hidden">
-                          <div className="aspect-video bg-muted">
-                            <iframe
-                              src={`https://www.youtube-nocookie.com/embed?search_query=${encodeURIComponent(fallbackQuery)}`}
-                              className="w-full h-full"
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                              allowFullScreen
-                              title={`${name} backing track`}
-                            />
-                          </div>
-                          <div className="px-3 py-1.5 flex items-center justify-between bg-card">
-                            <p className="text-[10px] text-muted-foreground font-mono truncate mr-2">"{fallbackQuery}"</p>
-                            <a
-                              href={`https://www.youtube.com/results?search_query=${encodeURIComponent(fallbackQuery)}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex-shrink-0 flex items-center gap-1 text-[10px] text-red-500 hover:text-red-600 font-medium whitespace-nowrap"
-                            >
-                              <ExternalLink className="w-2.5 h-2.5" /> Open in YouTube
-                            </a>
-                          </div>
-                        </div>
+                        <YouTubeInline searchQuery={fallbackQuery} title={`${name} backing track`} />
                       );
                     })()}
                   </div>

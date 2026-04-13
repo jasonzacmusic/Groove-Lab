@@ -1,7 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { GraduationCap, BookOpen, Music, ExternalLink, Play } from 'lucide-react';
+import { GraduationCap, BookOpen, Music, Play } from 'lucide-react';
+import { YouTubeInline } from '@/components/YouTubeInline';
 import {
   EXAM_BOARDS, INSTRUMENTS, GRADES,
   generateSearchQueries, getMethodBooks, PIANO_METHODS,
@@ -10,41 +11,6 @@ import videoDb from '@/data/exam-video-ids.json';
 
 const VIDEO_DB = videoDb as Record<string, { id: string; title: string }[]>;
 
-function InlinePlayer({ videoId, title }: { videoId: string; title: string }) {
-  return (
-    <div className="rounded-lg overflow-hidden border border-border">
-      <div className="aspect-video">
-        <iframe
-          src={`https://www.youtube-nocookie.com/embed/${videoId}`}
-          className="w-full h-full"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          title={title}
-        />
-      </div>
-      <div className="px-3 py-2 bg-card">
-        <p className="text-sm text-foreground truncate">{title}</p>
-      </div>
-    </div>
-  );
-}
-
-function YouTubeSearchLink({ query, title }: { query: string; title: string }) {
-  return (
-    <a href={`https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`}
-      target="_blank" rel="noopener noreferrer"
-      className="flex items-center gap-4 p-4 rounded-lg bg-card border border-border hover:border-primary/50 transition-colors group">
-      <div className="w-12 h-12 rounded-lg bg-red-600/15 border border-red-500/20 flex items-center justify-center flex-shrink-0 group-hover:bg-red-600/25 transition-colors">
-        <Play className="w-5 h-5 text-red-500" fill="currentColor" />
-      </div>
-      <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">{title}</p>
-        <p className="text-xs text-muted-foreground font-mono mt-0.5 truncate">Opens YouTube: "{query}"</p>
-      </div>
-      <ExternalLink className="w-4 h-4 text-muted-foreground flex-shrink-0" />
-    </a>
-  );
-}
 
 function MethodBookSection({ methods, instrument }: { methods: typeof PIANO_METHODS; instrument: string }) {
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -67,7 +33,7 @@ function MethodBookSection({ methods, instrument }: { methods: typeof PIANO_METH
               {expanded === m.name && (
                 <div className="border-t border-border p-3 space-y-3">
                   {m.levels.slice(0, 3).map((level) => (
-                    <YouTubeSearchLink key={level} query={`${m.searchPrefix} ${level} play along`} title={`${m.name} — ${level}`} />
+                    <YouTubeInline key={level} searchQuery={`${m.searchPrefix} ${level} play along`} title={`${m.name} — ${level}`} />
                   ))}
                 </div>
               )}
@@ -175,7 +141,7 @@ export default function PlayAlong() {
           )}
           <div className="mt-4 p-3 bg-primary/5 border border-primary/20 rounded-lg">
             <p className="text-[11px] text-muted-foreground">
-              Cards with the play icon embed verified YouTube videos inline. Others open YouTube search in a new tab.
+              All videos play inline on this page. Cards with known video IDs show specific videos; others show the top YouTube search result.
             </p>
           </div>
         </div>
@@ -195,11 +161,11 @@ export default function PlayAlong() {
                   <h4 className="font-medium text-base flex items-center gap-2"><Music className="w-4 h-4 text-primary" />{entry.title}</h4>
                   {known && known.length > 0 ? (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                      {known.map((v) => <InlinePlayer key={v.id} videoId={v.id} title={v.title} />)}
+                      {known.map((v) => <YouTubeInline key={v.id} videoId={v.id} title={v.title} />)}
                     </div>
                   ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-                      {queries.slice(0,2).map((q,qi) => <YouTubeSearchLink key={qi} query={q} title={`${entry.title} Play Along`} />)}
+                      {queries.slice(0,2).map((q,qi) => <YouTubeInline key={qi} searchQuery={q} title={`${entry.title} Play Along`} />)}
                     </div>
                   )}
                 </div>
