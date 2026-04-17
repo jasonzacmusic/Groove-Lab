@@ -1153,44 +1153,89 @@ export default function Standards() {
               )}
             </div>
 
-            {/* ── YouTube Backing Tracks ──────────────────────────────────────── */}
-            <div className="space-y-4 mt-8">
-              <h3 className="font-serif text-xl text-foreground flex items-center gap-2">
-                <Play className="w-5 h-5 text-red-500" fill="currentColor" />
-                Backing Tracks
-              </h3>
-              <p className="text-xs text-muted-foreground mb-3">
-                Find play-along backing tracks for "{selectedStandard.name}" in {displayKey} on YouTube.
-              </p>
+            {/* ── Practice: Backing Tracks ─────────────────────────────────── */}
+            {(() => {
+              const name = selectedStandard.name;
+              const composer = selectedStandard.composer || '';
+              const knownTracks = STANDARDS_BACKING_TRACKS[name] || [];
 
-              {(() => {
-                const name = selectedStandard.name;
-                const knownTracks = STANDARDS_BACKING_TRACKS[name];
+              return (
+                <>
+                  <div className="space-y-4 mt-8">
+                    <h3 className="font-serif text-xl text-foreground flex items-center gap-2">
+                      <Play className="w-5 h-5 text-red-500" fill="currentColor" />
+                      Practice — Backing Tracks
+                    </h3>
+                    <p className="text-xs text-muted-foreground">
+                      Play along with "{name}" in {displayKey}. Use the transposer above for Bb/Eb instruments.
+                    </p>
 
-                return (
-                  <div className="space-y-3">
-                    {knownTracks && knownTracks.length > 0 ? (
+                    {/* Curated tracks first */}
+                    {knownTracks.length > 0 && (
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {knownTracks.slice(0, 6).map((track) => (
                           <YouTubeInline key={track.id} videoId={track.id} title={track.title} channel={track.channel} />
                         ))}
                       </div>
-                    ) : (
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <YouTubeInline
-                          searchQuery={`${name} jazz backing track play along`}
-                          title={`${name} - Jazz Backing Track`}
-                        />
-                        <YouTubeInline
-                          searchQuery={`${name} ${displayKey} backing track`}
-                          title={`${name} in ${displayKey} - Backing Track`}
-                        />
-                      </div>
                     )}
+
+                    {/* Always show search-based backing tracks (even if curated exist — more variety) */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {knownTracks.length === 0 && (
+                        <>
+                          <YouTubeInline
+                            searchQuery={`"${name}" jazz backing track play along`}
+                            title={`${name} — Backing Track`}
+                          />
+                          <YouTubeInline
+                            searchQuery={`"${name}" backing track ${displayKey}`}
+                            title={`${name} in ${displayKey}`}
+                          />
+                        </>
+                      )}
+                      <YouTubeInline
+                        searchQuery={`"${name}" slow tempo backing track jazz`}
+                        title={`${name} — Slow Practice Tempo`}
+                      />
+                      <YouTubeInline
+                        searchQuery={`"${name}" medium swing backing track`}
+                        title={`${name} — Medium Swing`}
+                      />
+                    </div>
                   </div>
-                );
-              })()}
-            </div>
+
+                  {/* ── Inspiration: The Greats ──────────────────────────────────── */}
+                  <div className="space-y-4 mt-8">
+                    <h3 className="font-serif text-xl text-foreground flex items-center gap-2">
+                      <Music className="w-5 h-5 text-amber-500" />
+                      The Greats — Original Recordings & Live Performances
+                    </h3>
+                    <p className="text-xs text-muted-foreground">
+                      Study the masters. Listen to how the greats interpreted "{name}."
+                    </p>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <YouTubeInline
+                        searchQuery={`"${name}" ${composer ? composer.split('/')[0].trim() : ''} original recording`}
+                        title={`${name} — Original Recording`}
+                      />
+                      <YouTubeInline
+                        searchQuery={`"${name}" jazz classic live performance`}
+                        title={`${name} — Classic Live Performance`}
+                      />
+                      <YouTubeInline
+                        searchQuery={`"${name}" jazz solo transcription`}
+                        title={`${name} — Solo Transcription / Analysis`}
+                      />
+                      <YouTubeInline
+                        searchQuery={`"${name}" jazz tutorial lesson chords`}
+                        title={`${name} — Tutorial & Lesson`}
+                      />
+                    </div>
+                  </div>
+                </>
+              );
+            })()}
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center h-full text-muted-foreground">
