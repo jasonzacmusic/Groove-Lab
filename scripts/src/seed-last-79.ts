@@ -57,7 +57,8 @@ async function main() {
   ]);
 
   // Check remaining gap
-  const remaining = 5472 - (await pool.query("SELECT COUNT(*)::int as c FROM audio_loops")).rows[0].c;
+  const countRes = await pool.query("SELECT COUNT(*)::int as c FROM audio_loops");
+  const remaining = 5472 - Number(countRes.rows[0].c);
   console.log(`\nInserted: ${total}`);
   if (remaining > 0) {
     console.log(`Still ${remaining} short — adding generic fills...`);
@@ -83,7 +84,8 @@ async function main() {
     console.log(`  Added ${added} generic variants`);
   }
 
-  const finalCount = (await pool.query("SELECT COUNT(*)::int as c FROM audio_loops")).rows[0].c;
+  const finalRes = await pool.query("SELECT COUNT(*)::int as c FROM audio_loops");
+  const finalCount = Number(finalRes.rows[0].c);
   console.log(`\n${"=".repeat(50)}`);
   console.log(`FINAL DATABASE TOTAL: ${finalCount} audio loops`);
   console.log(`TARGET: 5,472`);
