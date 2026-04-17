@@ -1171,15 +1171,20 @@ export default function Standards() {
                   <div className="space-y-3">
                     {knownTracks && knownTracks.length > 0 ? (
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {knownTracks.map((track) => (
+                        {knownTracks.slice(0, 6).map((track) => (
                           <YouTubeInline key={track.id} videoId={track.id} title={track.title} channel={track.channel} />
                         ))}
                       </div>
                     ) : (
-                      <div className="flex items-center justify-center rounded-lg border border-border bg-muted/30 aspect-video">
-                        <p className="text-xs text-muted-foreground text-center px-4">
-                          No curated backing track for <span className="font-medium text-foreground">{name}</span> yet
-                        </p>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <YouTubeInline
+                          searchQuery={`${name} jazz backing track play along`}
+                          title={`${name} - Jazz Backing Track`}
+                        />
+                        <YouTubeInline
+                          searchQuery={`${name} ${displayKey} backing track`}
+                          title={`${name} in ${displayKey} - Backing Track`}
+                        />
                       </div>
                     )}
                   </div>

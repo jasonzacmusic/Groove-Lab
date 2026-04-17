@@ -318,11 +318,10 @@ export default function Chords() {
                           />
                         ))
                       ) : (
-                        <div className="flex items-center justify-center rounded-lg border border-border bg-muted/30 aspect-video">
-                          <p className="text-xs text-muted-foreground text-center px-4">
-                            No curated video for <span className="font-medium text-foreground">{progName}</span> yet
-                          </p>
-                        </div>
+                        <YouTubeInline
+                          searchQuery={`${progName} ${displayKey} backing track play along`}
+                          title={`${progName} in ${displayKey} - Backing Track`}
+                        />
                       )}
                     </div>
                   </div>
