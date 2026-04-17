@@ -23,6 +23,7 @@ import Auth from "@/pages/Auth";
 import Playlists from "@/pages/Playlists";
 import Creators from "@/pages/Creators";
 import PlayAlong from "@/pages/PlayAlong";
+import ExamPractice from "@/pages/ExamPractice";
 import LoopLibrary from "@/pages/LoopLibrary";
 import SongBuilderPage from "@/pages/SongBuilderPage";
 
@@ -48,6 +49,7 @@ function Router() {
         <Route path="/chords" component={Chords} />
         <Route path="/standards" component={Standards} />
         <Route path="/play-along" component={PlayAlong} />
+        <Route path="/exam-practice" component={ExamPractice} />
         <Route path="/live" component={Live} />
         <Route path="/metronome" component={Metronome} />
         <Route path="/auth" component={Auth} />

@@ -27,6 +27,7 @@ const NAV_ITEMS = [
   { path: '/chords', label: 'Chords', icon: Piano },
   { path: '/standards', label: 'Standards', icon: BookOpen },
   { path: '/play-along', label: 'Play-Along', icon: GraduationCap },
+  { path: '/exam-practice', label: 'Exam Practice', icon: BookOpen },
   { path: '/live', label: 'Live', icon: Radio },
   { path: '/playlists', label: 'Playlists', icon: ListMusic },
   { path: '/practice', label: 'Practice', icon: Target },
