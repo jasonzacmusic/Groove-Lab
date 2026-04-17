@@ -1170,18 +1170,14 @@ export default function Standards() {
                       Play along with "{name}" in {displayKey}. Use the transposer above for Bb/Eb instruments.
                     </p>
 
-                    {/* Curated tracks first */}
-                    {knownTracks.length > 0 && (
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {knownTracks.slice(0, 6).map((track) => (
-                          <YouTubeInline key={track.id} videoId={track.id} title={track.title} channel={track.channel} />
-                        ))}
-                      </div>
-                    )}
-
-                    {/* Always show search-based backing tracks (even if curated exist — more variety) */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {knownTracks.length === 0 && (
+                      {knownTracks.length > 0 ? (
+                        /* Show curated videos only — no search duplicates */
+                        knownTracks.slice(0, 6).map((track) => (
+                          <YouTubeInline key={track.id} videoId={track.id} title={track.title} channel={track.channel} />
+                        ))
+                      ) : (
+                        /* No curated videos — show search cards */
                         <>
                           <YouTubeInline
                             searchQuery={`"${name}" jazz backing track play along`}
@@ -1191,16 +1187,16 @@ export default function Standards() {
                             searchQuery={`"${name}" backing track ${displayKey}`}
                             title={`${name} in ${displayKey}`}
                           />
+                          <YouTubeInline
+                            searchQuery={`"${name}" slow tempo backing track jazz`}
+                            title={`${name} — Slow Practice Tempo`}
+                          />
+                          <YouTubeInline
+                            searchQuery={`"${name}" medium swing backing track`}
+                            title={`${name} — Medium Swing`}
+                          />
                         </>
                       )}
-                      <YouTubeInline
-                        searchQuery={`"${name}" slow tempo backing track jazz`}
-                        title={`${name} — Slow Practice Tempo`}
-                      />
-                      <YouTubeInline
-                        searchQuery={`"${name}" medium swing backing track`}
-                        title={`${name} — Medium Swing`}
-                      />
                     </div>
                   </div>
 
