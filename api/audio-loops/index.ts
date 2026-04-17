@@ -28,7 +28,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
   if (time_signature) conditions.push(eq(audioLoops.timeSignature, time_signature as string));
   if (section_type) conditions.push(sql`${audioLoops.sectionType} ILIKE ${section_type as string}`);
   if (key) conditions.push(sql`${audioLoops.keySignature} ILIKE ${key as string}`);
-  if (collection) conditions.push(sql`${audioLoops.collection} ILIKE ${collection as string}`);
+  if (collection) conditions.push(eq(audioLoops.collection, collection as string));
   if (bpm_min) conditions.push(gte(audioLoops.bpm, Number(bpm_min)));
   if (bpm_max) conditions.push(lte(audioLoops.bpm, Number(bpm_max)));
   if (search) conditions.push(sql`(${audioLoops.title} ILIKE ${'%' + search + '%'} OR ${audioLoops.grooveName} ILIKE ${'%' + search + '%'} OR ${audioLoops.artist} ILIKE ${'%' + search + '%'} OR ${audioLoops.collection} ILIKE ${'%' + search + '%'})`);

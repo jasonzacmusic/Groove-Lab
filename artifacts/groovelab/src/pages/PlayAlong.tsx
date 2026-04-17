@@ -59,16 +59,10 @@ const METHOD_BOOK_VIDEO_IDS: Record<string, string> = {
   'Czerny Studies|Op. 849':                         'OlyZiQrEa9Y',
   'Czerny Studies|Op. 299':                         'bqBJTHd7gBM',
   'Burgmüller|Op. 100 (25 Easy)':                   'vC3MjTejWrc',
-  'Burgmüller|Op. 109 (18 Characteristic)':         'Y4vG4ZOMWiM',
   'Mikrokosmos (Bartók)|Volume 1':                  'GkiRKVAo0Qs',
   'Mikrokosmos (Bartók)|Volume 2':                  'RRnmgnDl0P8',
-  'Mikrokosmos (Bartók)|Volume 3':                  '5thOm3t5JGU',
   'Bach Inventions|2-Part Inventions':              'Py8qv2_kzJw',
   'Bach Inventions|3-Part Sinfonias':               'mAMQdOq4scs',
-  'Sonatinas|Clementi':                             'tFpaxRbhJHE',
-  'Sonatinas|Kuhlau':                               'J5Pf2bWM4gE',
-  'Sonatinas|Mozart':                               'c6EiXeO2HkY',
-  'Sonatinas|Beethoven':                            'BkE5P8e8yus',
   'Suzuki Violin|Volume 1':                         'MbcnYBbM_wA',
   'Suzuki Violin|Volume 2':                         'mTRNEHIy5ik',
   'Suzuki Violin|Volume 3':                         'nZ6dF2OfS_Q',
@@ -76,8 +70,6 @@ const METHOD_BOOK_VIDEO_IDS: Record<string, string> = {
   'Suzuki Cello|Volume 2':                          '8sS_fT0LIbw',
   'Essential Elements Strings|Book 1':              'vFNFqK_DLSE',
   'Essential Elements Strings|Book 2':              'M8zTSLIGDPk',
-  'Suzuki Viola|Volume 1':                          'nZ6dF2OfS_Q',
-  'Suzuki Viola|Volume 2':                          'MbcnYBbM_wA',
 };
 
 
