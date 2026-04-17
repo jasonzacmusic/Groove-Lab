@@ -276,6 +276,9 @@ importers:
       '@workspace/api-client-react':
         specifier: workspace:*
         version: link:../../lib/api-client-react
+      abcjs:
+        specifier: ^6.6.2
+        version: 6.6.2
       class-variance-authority:
         specifier: 'catalog:'
         version: 0.7.1
@@ -2072,6 +2075,9 @@ packages:
   abbrev@3.0.1:
     resolution: {integrity: sha512-AO2ac6pjRB3SJmGJo+v5/aK6Omggp6fsLrs6wN9bd35ulu4cCwaAU9+7ZhXjeqHVkaHThLuzH0nZr0YpCDhygg==}
     engines: {node: ^18.17.0 || >=20.5.0}
+
+  abcjs@6.6.2:
+    resolution: {integrity: sha512-YLbp5lYUq0uOywWZx9EuTdm0TcflKZi7hOzz366A/LFl3qoAXSYIjznJQmr/VeHg8NcLxZYoN8dLi7PqCpxKEA==}
 
   accepts@2.0.0:
     resolution: {integrity: sha512-5cvg6CtKwfgdmVqY1WIiXKc3Q1bkRqGLi+2W/6ao+6Y7gu/RCwRuAhGEzh5B4KlszSuTLgZYuqFqo5bImjNKng==}
@@ -5462,6 +5468,8 @@ snapshots:
       - supports-color
 
   abbrev@3.0.1: {}
+
+  abcjs@6.6.2: {}
 
   accepts@2.0.0:
     dependencies:

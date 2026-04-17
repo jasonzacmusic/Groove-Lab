@@ -9,10 +9,12 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   BookOpen, Search, Play, Square, ChevronRight, ArrowUp, ArrowDown,
-  Music, Repeat, Minus, Plus,
+  Music, Repeat, Minus, Plus, Music2,
 } from 'lucide-react';
 import { YouTubeInline } from '@/components/YouTubeInline';
+import { MelodyStaff } from '@/components/MelodyStaff';
 import { STANDARDS_BACKING_TRACKS } from '@/data/standards-videos';
+import { getMelody, hasMelody, type MelodyNote } from '@/data/standard-melodies';
 import * as Tone from 'tone';
 
 // ── Constants ────────────────────────────────────────────────────────────────────
@@ -259,6 +261,9 @@ export default function Standards() {
   const [currentChordIdx, setCurrentChordIdx] = useState<number>(-1);
   const [currentBarIdx, setCurrentBarIdx] = useState<number>(-1);
   const [chorusCount, setChorusCount] = useState(1);
+  const [showMelody, setShowMelody] = useState(false);
+  const [melodyEnabled, setMelodyEnabled] = useState(false);
+  const [currentMelodyNoteIdx, setCurrentMelodyNoteIdx] = useState(-1);
 
   // Refs for instruments
   const pianoRef = useRef<Tone.Sampler | null>(null);
@@ -266,9 +271,14 @@ export default function Standards() {
   const rideRef = useRef<Tone.MetalSynth | null>(null);
   const hihatRef = useRef<Tone.MetalSynth | null>(null);
   const kickRef = useRef<Tone.MembraneSynth | null>(null);
+  const melodyRef = useRef<Tone.Synth | null>(null);
   const transportStartedRef = useRef(false);
   const isLoopingRef = useRef(false);
+  const melodyEnabledRef = useRef(false);
   const chartRef = useRef<HTMLDivElement>(null);
+
+  // Keep melody ref in sync
+  useEffect(() => { melodyEnabledRef.current = melodyEnabled; }, [melodyEnabled]);
 
   // Keep looping ref in sync
   useEffect(() => { isLoopingRef.current = isLooping; }, [isLooping]);
@@ -462,6 +472,13 @@ export default function Standards() {
       volume: -14,
     }).toDestination();
 
+    // Melody synth — soft sine wave, distinct from piano comping
+    melodyRef.current = new Tone.Synth({
+      oscillator: { type: 'sine' },
+      envelope: { attack: 0.02, decay: 0.3, sustain: 0.4, release: 0.8 },
+      volume: -6,
+    }).toDestination();
+
     // If sampler doesn't load in 5s, fall back to ready state anyway
     setTimeout(() => { setSamplerLoading(false); setSamplerReady(true); }, 5000);
   }, []);
@@ -472,6 +489,7 @@ export default function Standards() {
     bassRef.current?.dispose(); bassRef.current = null;
     rideRef.current?.dispose(); rideRef.current = null;
     hihatRef.current?.dispose(); hihatRef.current = null;
+    melodyRef.current?.dispose(); melodyRef.current = null;
     kickRef.current?.dispose(); kickRef.current = null;
   }, []);
 
@@ -647,6 +665,12 @@ export default function Standards() {
       }
     }
 
+    // ── Melody: schedule notes if melody is enabled ──
+    if (melodyEnabledRef.current) {
+      const melodyData = getMelody(chords.length > 0 ? '' : ''); // placeholder — actual lookup happens in playChords
+      // Melody notes are scheduled from the caller (playChords) since we need the standard name
+    }
+
     return { totalBeats, endBeat: beatOffset };
   }, []);
 
@@ -659,6 +683,7 @@ export default function Standards() {
     setIsPlaying(false);
     setCurrentChordIdx(-1);
     setCurrentBarIdx(-1);
+    setCurrentMelodyNoteIdx(-1);
     setChorusCount(1);
   }, [disposeInstruments]);
 
@@ -679,6 +704,43 @@ export default function Standards() {
       transport.swingSubdivision = '8n';
 
       const { totalBeats } = scheduleChorus(0, transposedChords, groove);
+
+      // Schedule melody if enabled
+      if (melodyEnabledRef.current && selectedStandard) {
+        const melodyData = getMelody(selectedStandard.name);
+        if (melodyData) {
+          melodyData.notes.forEach((note, noteIdx) => {
+            // Transpose the pitch if needed
+            let pitch = note.pitch;
+            if (transposition !== 0) {
+              const CHROMATIC = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+              const FLAT_TO_SHARP: Record<string, string> = { Db: 'C#', Eb: 'D#', Gb: 'F#', Ab: 'G#', Bb: 'A#' };
+              const SHARP_TO_FLAT: Record<string, string> = { 'C#': 'Db', 'D#': 'Eb', 'F#': 'Gb', 'G#': 'Ab', 'A#': 'Bb' };
+              const match = pitch.match(/^([A-G][b#]?)(\d)$/);
+              if (match) {
+                const [, noteName, octave] = match;
+                const normalized = FLAT_TO_SHARP[noteName] || noteName;
+                const idx = CHROMATIC.indexOf(normalized);
+                if (idx >= 0) {
+                  const newIdx = (idx + transposition + 12) % 12;
+                  const newOctave = parseInt(octave) + Math.floor((idx + transposition) / 12);
+                  const newNote = SHARP_TO_FLAT[CHROMATIC[newIdx]] || CHROMATIC[newIdx];
+                  pitch = `${newNote}${newOctave}`;
+                }
+              }
+            }
+
+            transport.schedule((time) => {
+              if (melodyRef.current) {
+                melodyRef.current.triggerAttackRelease(pitch, note.duration, time, 0.7);
+              }
+              Tone.getDraw().schedule(() => {
+                setCurrentMelodyNoteIdx(noteIdx);
+              }, time);
+            }, `0:${note.beat}:0`);
+          });
+        }
+      }
 
       // Schedule end or loop
       transport.schedule((time) => {
@@ -1004,6 +1066,41 @@ export default function Standards() {
                 Loop
               </Button>
 
+              {/* Melody toggles */}
+              <div className="w-px h-6 bg-[#5a4a38] hidden md:block" />
+
+              <Button
+                variant="ghost"
+                size="sm"
+                className={`h-8 px-2 text-xs ${
+                  showMelody
+                    ? 'text-cyan-400 bg-cyan-900/30 hover:bg-cyan-900/50'
+                    : 'text-[#8a7a68] hover:text-[#e8d5b5] hover:bg-[#5a4a38]'
+                }`}
+                onClick={() => setShowMelody(prev => !prev)}
+                disabled={!selectedStandard || !hasMelody(selectedStandard.name)}
+                title={selectedStandard && hasMelody(selectedStandard.name) ? 'Show/hide melody notation' : 'Melody not yet available for this standard'}
+              >
+                <Music2 className="w-3.5 h-3.5 mr-1" />
+                Melody
+              </Button>
+
+              <Button
+                variant="ghost"
+                size="sm"
+                className={`h-8 px-2 text-xs ${
+                  melodyEnabled
+                    ? 'text-green-400 bg-green-900/30 hover:bg-green-900/50'
+                    : 'text-[#8a7a68] hover:text-[#e8d5b5] hover:bg-[#5a4a38]'
+                }`}
+                onClick={() => setMelodyEnabled(prev => !prev)}
+                disabled={!selectedStandard || !hasMelody(selectedStandard.name)}
+                title={selectedStandard && hasMelody(selectedStandard.name) ? 'Play melody with backing track' : 'Melody not yet available'}
+              >
+                <Play className="w-3 h-3 mr-1" fill="currentColor" />
+                {melodyEnabled ? 'Melody On' : 'Melody Off'}
+              </Button>
+
               {/* Chorus counter */}
               {isPlaying && (
                 <span className="text-[11px] text-[#8a7a68] font-mono ml-auto">
@@ -1011,6 +1108,19 @@ export default function Standards() {
                 </span>
               )}
             </div>
+
+            {/* ── Melody Staff Notation ──────────────────────────────────────── */}
+            {selectedStandard && (() => {
+              const melodyData = getMelody(selectedStandard.name);
+              return melodyData ? (
+                <MelodyStaff
+                  abc={melodyData.abc}
+                  currentNoteIdx={currentMelodyNoteIdx}
+                  isVisible={showMelody}
+                  transposition={transposition}
+                />
+              ) : null;
+            })()}
 
             {/* ── Chord Chart (Real Book style) ──────────────────────────────── */}
             <div
