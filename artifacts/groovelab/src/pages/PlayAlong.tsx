@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { GraduationCap, BookOpen, Music, Video } from 'lucide-react';
+import { GraduationCap, BookOpen, Music } from 'lucide-react';
 import { YouTubeInline } from '@/components/YouTubeInline';
 import {
   EXAM_BOARDS, INSTRUMENTS, GRADES,
@@ -66,13 +66,7 @@ function MethodBookSection({ methods, instrument }: { methods: typeof PIANO_METH
                     return videoId ? (
                       <YouTubeInline key={level} videoId={videoId} title={`${m.name} — ${level}`} channel={methodChannel(m.name)} />
                     ) : (
-                      <div key={level} className="flex items-center gap-3 rounded-lg border border-border bg-muted/30 p-3">
-                        <Video className="w-4 h-4 text-muted-foreground flex-shrink-0" />
-                        <p className="text-xs text-muted-foreground">
-                          <span className="font-medium text-foreground">{m.name} — {level}</span>
-                          <span className="block">No curated video for this level yet</span>
-                        </p>
-                      </div>
+                      <YouTubeInline key={level} searchQuery={`${m.name} ${level} play along piano`} title={`${m.name} — ${level}`} />
                     );
                   })}
                 </div>
@@ -181,7 +175,7 @@ export default function PlayAlong() {
           )}
           <div className="mt-4 p-3 bg-primary/5 border border-primary/20 rounded-lg">
             <p className="text-[11px] text-muted-foreground">
-              All videos play inline — no redirects to YouTube. Cards use curated video IDs for direct playback.
+              All videos play inline — no redirects to YouTube. Videos are sourced from YouTube search results matching your exam board, instrument, and grade.
             </p>
           </div>
         </div>
@@ -203,12 +197,15 @@ export default function PlayAlong() {
                       {known.map((v) => <YouTubeInline key={v.id} videoId={v.id} title={v.title} channel={examChannel(entry.board)} />)}
                     </div>
                   ) : (
-                    <div className="flex items-center gap-3 rounded-lg border border-border bg-muted/30 p-4">
-                      <Video className="w-5 h-5 text-muted-foreground flex-shrink-0" />
-                      <div>
-                        <p className="text-sm font-medium">{entry.title}</p>
-                        <p className="text-xs text-muted-foreground mt-0.5">No curated video for this combination — check the exam board website for official resources</p>
-                      </div>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                      <YouTubeInline
+                        searchQuery={`${entry.title} backing track play along`}
+                        title={`${entry.title} - Play Along`}
+                      />
+                      <YouTubeInline
+                        searchQuery={`${entry.board} ${entry.grade} ${entry.inst} exam piece`}
+                        title={`${entry.title} - Exam Pieces`}
+                      />
                     </div>
                   )}
                 </div>
