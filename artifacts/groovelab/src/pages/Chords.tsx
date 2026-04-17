@@ -10,7 +10,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Piano, Play, Square, ArrowUp, ArrowDown, Star } from 'lucide-react';
 import { YouTubeInline } from '@/components/YouTubeInline';
 import { CHORD_PROGRESSION_VIDEOS } from '@/data/chord-videos';
-import { GENRE_BACKING_TRACKS } from '@/data/genre-videos';
+import { GENRE_VIDEO_LIBRARY } from '@/data/genre-videos';
 import * as Tone from 'tone';
 
 const CHORD_TABS = ['All', 'ii-V-I', 'I-vi-ii-V', 'Blues', 'Rhythm Changes', 'Modal'];
@@ -232,8 +232,8 @@ export default function Chords() {
             const displayKey = transAmt !== 0 ? transposeChordSymbol(origKey, transAmt) : origKey;
             const genre = prog.genre?.name ?? 'jazz';
             const progName = prog.name;
-            const curatedVideo = CHORD_PROGRESSION_VIDEOS[prog.progressionType ?? ''];
-            const genreVideo = GENRE_BACKING_TRACKS[genre.toLowerCase()];
+            const curatedVideos = CHORD_PROGRESSION_VIDEOS[prog.progressionType ?? ''] || [];
+            const genreVideos = GENRE_VIDEO_LIBRARY[genre.charAt(0).toUpperCase() + genre.slice(1)] || GENRE_VIDEO_LIBRARY[genre] || [];
 
             return (
               <Card key={prog.id} className="overflow-hidden border-border bg-card hover:border-primary/30 transition-colors group">
@@ -298,26 +298,31 @@ export default function Chords() {
                     <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
                       Backing Tracks in {displayKey}
                     </h4>
-                    <div className="grid grid-cols-1 gap-3" onClick={(e) => e.stopPropagation()}>
-                      {curatedVideo ? (
-                        <YouTubeInline
-                          videoId={curatedVideo.id}
-                          title={`${progName} in ${displayKey}`}
-                          channel={curatedVideo.channel}
-                        />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3" onClick={(e) => e.stopPropagation()}>
+                      {curatedVideos.length > 0 ? (
+                        curatedVideos.slice(0, 4).map((v) => (
+                          <YouTubeInline
+                            key={v.id}
+                            videoId={v.id}
+                            title={v.title}
+                            channel={v.channel}
+                          />
+                        ))
+                      ) : genreVideos.length > 0 ? (
+                        genreVideos.slice(0, 2).map((v) => (
+                          <YouTubeInline
+                            key={v.id}
+                            videoId={v.id}
+                            title={v.title}
+                            channel={v.channel}
+                          />
+                        ))
                       ) : (
                         <div className="flex items-center justify-center rounded-lg border border-border bg-muted/30 aspect-video">
                           <p className="text-xs text-muted-foreground text-center px-4">
                             No curated video for <span className="font-medium text-foreground">{progName}</span> yet
                           </p>
                         </div>
-                      )}
-                      {genreVideo && (
-                        <YouTubeInline
-                          videoId={genreVideo.id}
-                          title={`${genre} backing track`}
-                          channel={genreVideo.channel}
-                        />
                       )}
                     </div>
                   </div>

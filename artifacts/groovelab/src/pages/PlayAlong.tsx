@@ -36,41 +36,9 @@ function methodChannel(bookName: string): string {
 }
 
 // Curated video IDs for method book levels: "Book Name|Level" → videoId
-const METHOD_BOOK_VIDEO_IDS: Record<string, string> = {
-  'Alfred Basic Piano Library|Level 1A':            'nOXc9xSdqBY',
-  'Alfred Basic Piano Library|Level 1B':            'wMbOAkzl_3A',
-  'Alfred Basic Piano Library|Level 2':             'Rl-j9-2bqNI',
-  'Faber Piano Adventures|Primer':                  'GicJMpJODVM',
-  'Faber Piano Adventures|Level 1':                 'x_M-wvPb-to',
-  'Faber Piano Adventures|Level 2A':                'QyeQZbRaxjY',
-  'Bastien Piano Basics|Primer':                    '7m3G3mVixTE',
-  'Bastien Piano Basics|Level 1':                   'a4bhEQJVi1M',
-  'Bastien Piano Basics|Level 2':                   'J5Pf2bWM4gE',
-  'John Thompson|Part 1':                           'zD6PDBKJ7bE',
-  'John Thompson|Part 2':                           'S9NbRqRVyaQ',
-  'John Thompson|Part 3':                           'tFpaxRbhJHE',
-  'Suzuki Piano|Volume 1':                          'ZcMGJe_G-JA',
-  'Suzuki Piano|Volume 2':                          'V5VCseMpRgE',
-  'Suzuki Piano|Volume 3':                          'NcGmhDNYV80',
-  'Hanon Exercises|Part 1 (1-20)':                  'H9p-tVN9tBY',
-  'Hanon Exercises|Part 2 (21-43)':                 'VBd0LlNpWzE',
-  'Hanon Exercises|Part 3 (44-60)':                 'Rf5RFLvC35o',
-  'Czerny Studies|Op. 599':                         'KDjVtFcDcNo',
-  'Czerny Studies|Op. 849':                         'OlyZiQrEa9Y',
-  'Czerny Studies|Op. 299':                         'bqBJTHd7gBM',
-  'Burgmüller|Op. 100 (25 Easy)':                   'vC3MjTejWrc',
-  'Mikrokosmos (Bartók)|Volume 1':                  'GkiRKVAo0Qs',
-  'Mikrokosmos (Bartók)|Volume 2':                  'RRnmgnDl0P8',
-  'Bach Inventions|2-Part Inventions':              'Py8qv2_kzJw',
-  'Bach Inventions|3-Part Sinfonias':               'mAMQdOq4scs',
-  'Suzuki Violin|Volume 1':                         'MbcnYBbM_wA',
-  'Suzuki Violin|Volume 2':                         'mTRNEHIy5ik',
-  'Suzuki Violin|Volume 3':                         'nZ6dF2OfS_Q',
-  'Suzuki Cello|Volume 1':                          '6y9A1VdKH4Q',
-  'Suzuki Cello|Volume 2':                          '8sS_fT0LIbw',
-  'Essential Elements Strings|Book 1':              'vFNFqK_DLSE',
-  'Essential Elements Strings|Book 2':              'M8zTSLIGDPk',
-};
+// Method book video IDs — populated from curated data only
+// Empty until verified videos are added to the data pipeline
+const METHOD_BOOK_VIDEO_IDS: Record<string, string> = {};
 
 
 function MethodBookSection({ methods, instrument }: { methods: typeof PIANO_METHODS; instrument: string }) {

@@ -12,9 +12,33 @@ import {
   GraduationCap, Radio, Star,
 } from 'lucide-react';
 import { YouTubeInline } from '@/components/YouTubeInline';
-import { FEATURED_VIDEOS, getFilledKeys } from '@/data/genre-videos';
+import { GENRE_VIDEO_LIBRARY } from '@/data/genre-videos';
+import { KEY_BACKING_TRACKS } from '@/data/chord-videos';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+
+// Build featured videos from the first entry of key genres
+const FEATURED_GENRES = ['Blues', 'Jazz', 'Funk', 'Reggae', 'Rock', 'Soul'] as const;
+const FEATURED_COLORS: Record<string, { color: string; bg: string }> = {
+  Blues: { color: 'text-indigo-400', bg: 'bg-indigo-500/10' },
+  Jazz: { color: 'text-amber-400', bg: 'bg-amber-500/10' },
+  Funk: { color: 'text-orange-400', bg: 'bg-orange-500/10' },
+  Reggae: { color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
+  Rock: { color: 'text-red-400', bg: 'bg-red-500/10' },
+  Soul: { color: 'text-purple-400', bg: 'bg-purple-500/10' },
+};
+const FEATURED_VIDEOS = FEATURED_GENRES
+  .map(genre => {
+    const videos = GENRE_VIDEO_LIBRARY[genre];
+    if (!videos || videos.length === 0) return null;
+    return { label: `${genre} Backing Tracks`, videoId: videos[0].id, channel: videos[0].channel, ...FEATURED_COLORS[genre] };
+  })
+  .filter((v): v is NonNullable<typeof v> => v !== null);
+
+// Build key tracks from the chord-videos KEY_BACKING_TRACKS
+const KEY_TRACKS = Object.entries(KEY_BACKING_TRACKS)
+  .filter(([, videos]) => videos.length > 0)
+  .map(([key, videos]) => ({ key, video: videos[0] }));
 
 const TOOLS = [
   { name: 'Rhythm Circles', desc: 'Beat sequencer with 8 preset grooves', icon: Music, path: '/sequencer', color: 'text-amber-400' },
@@ -25,7 +49,7 @@ const TOOLS = [
   { name: 'Play-Alongs', desc: 'Trinity & ABRSM exam content', icon: GraduationCap, path: '/play-along', color: 'text-cyan-400' },
 ];
 
-const KEY_TRACKS = getFilledKeys();
+// KEY_TRACKS built above from KEY_BACKING_TRACKS
 
 export default function Home() {
   const { data: taxonomy } = useGetTaxonomy();
