@@ -12,6 +12,7 @@ import {
   GraduationCap, Radio, Star,
 } from 'lucide-react';
 import { YouTubeInline } from '@/components/YouTubeInline';
+import { FEATURED_VIDEOS, getFilledKeys } from '@/data/genre-videos';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
@@ -24,14 +25,7 @@ const TOOLS = [
   { name: 'Play-Alongs', desc: 'Trinity & ABRSM exam content', icon: GraduationCap, path: '/play-along', color: 'text-cyan-400' },
 ];
 
-const FEATURED_VIDEOS = [
-  { label: 'Jazz Drum Loops',      videoId: '8gcB1TKhDzA', color: 'text-amber-400',   bg: 'bg-amber-500/10' },
-  { label: 'Blues Backing Tracks', videoId: '5thOm3t5JGU', color: 'text-indigo-400',  bg: 'bg-indigo-500/10' },
-  { label: 'Funk Grooves',         videoId: 'cKBVOxrIMuQ', color: 'text-orange-400',  bg: 'bg-orange-500/10' },
-  { label: 'Bossa Nova',           videoId: 'QL7IZFL1pKo', color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
-  { label: 'Rock Drum Loops',      videoId: 'KnPJqA9fJDc', color: 'text-red-400',     bg: 'bg-red-500/10' },
-  { label: 'Neo Soul',             videoId: '3K3RQyHxXtY', color: 'text-purple-400',  bg: 'bg-purple-500/10' },
-];
+const KEY_TRACKS = getFilledKeys();
 
 export default function Home() {
   const { data: taxonomy } = useGetTaxonomy();
@@ -166,12 +160,32 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {FEATURED_VIDEOS.map((v) => (
             <div key={v.videoId}>
-              <YouTubeInline videoId={v.videoId} title={v.label} />
+              <YouTubeInline videoId={v.videoId} title={v.label} channel={v.channel} />
               <p className={`text-xs font-medium mt-1.5 px-1 truncate ${v.color}`}>{v.label}</p>
             </div>
           ))}
         </div>
       </section>
+
+      {/* Backing Tracks by Key — show only keys with curated videos */}
+      {KEY_TRACKS.length > 0 && (
+        <section>
+          <h2 className="font-serif text-2xl mb-2 flex items-center gap-2">
+            <Music className="w-5 h-5 text-primary" /> Backing Tracks by Key
+          </h2>
+          <p className="text-sm text-muted-foreground mb-4">
+            Practice in any key — {KEY_TRACKS.length} of 24 keys available, more coming soon.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {KEY_TRACKS.map(({ key, video }) => (
+              <div key={key}>
+                <YouTubeInline videoId={video.id} title={video.title} channel={video.channel} />
+                <p className="text-xs font-medium mt-1.5 px-1 truncate text-primary">{key}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Quick Links */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-4 pb-8">

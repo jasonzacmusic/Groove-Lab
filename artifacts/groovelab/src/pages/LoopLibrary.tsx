@@ -13,7 +13,7 @@ import { SongBuilder, type SongSection } from '@/components/SongBuilder';
 
 // These match the ACTUAL values in the Neon database (verified 2026-04-13)
 const GENRES = ['All', 'Rock', 'Pop', 'Funk', 'Blues', 'Jazz', 'R&B', 'Soul', 'Indie Rock', 'Hip Hop', 'Folk', 'World', 'Latin', 'Cinematic', 'Electronic', 'Reggae'];
-const INSTRUMENTS = ['All', 'drums', 'percussion', 'bass', 'guitar'];
+const INSTRUMENTS = ['All', 'drums+percussion', 'drums', 'percussion', 'bass', 'guitar'];
 const KEYS = ['All', 'A', 'B', 'C', 'C#', 'D', 'Db', 'E', 'Eb', 'F#', 'G', 'G#'];
 const SORT_OPTIONS = [
   { value: 'collection', label: 'By Song / Collection' },
@@ -30,6 +30,7 @@ const ITEMS_PER_PAGE = 48;
 // Display label helper for DB values
 function displayLabel(val: string): string {
   if (val === 'All') return 'All';
+  if (val === 'drums+percussion') return 'Drums & Percussion';
   return val.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
 }
 
@@ -47,7 +48,13 @@ async function fetchLoops(filters: LoopFilters): Promise<{ loops: AudioLoopData[
   const params = new URLSearchParams();
   if (filters.search) params.set('search', filters.search);
   if (filters.genre !== 'All') params.set('genre', filters.genre);
-  if (filters.instrument !== 'All') params.set('instrument_category', filters.instrument);
+  if (filters.instrument !== 'All') {
+    if (filters.instrument === 'drums+percussion') {
+      params.set('instrument_category', 'drums,percussion');
+    } else {
+      params.set('instrument_category', filters.instrument);
+    }
+  }
   if (filters.key !== 'All') params.set('key', filters.key);
   // Only send BPM range if user has narrowed it from defaults (so NULL-bpm loops show when unfiltered)
   if (filters.bpmRange[0] > 40) params.set('bpm_min', String(filters.bpmRange[0]));
@@ -94,7 +101,7 @@ export default function LoopLibrary() {
   const [filters, setFilters] = useState<LoopFilters>({
     search: '',
     genre: 'All',
-    instrument: 'All',
+    instrument: 'drums+percussion',
     key: 'All',
     bpmRange: [40, 240],
     sort: 'collection',
@@ -168,7 +175,7 @@ export default function LoopLibrary() {
     setFilters({
       search: '',
       genre: 'All',
-      instrument: 'All',
+      instrument: 'drums+percussion',
       key: 'All',
       bpmRange: [40, 240],
       sort: 'collection',
@@ -177,7 +184,7 @@ export default function LoopLibrary() {
     setSearchInput('');
   }, []);
 
-  const hasActiveFilters = filters.genre !== 'All' || filters.instrument !== 'All' ||
+  const hasActiveFilters = filters.genre !== 'All' || filters.instrument !== 'drums+percussion' ||
     filters.key !== 'All' || filters.bpmRange[0] !== 40 || filters.bpmRange[1] !== 240 || filters.search !== '';
 
   // Group loops by collection when sorted by collection

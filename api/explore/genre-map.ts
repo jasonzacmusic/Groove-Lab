@@ -33,47 +33,52 @@ const GENRE_MAP_POSITIONS: Record<string, { x: number; y: number }> = {
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (cors(req, res)) return;
 
-  const allGenres = await db.select().from(genres).orderBy(genres.sortOrder);
+  try {
+    const allGenres = await db.select().from(genres).orderBy(genres.sortOrder);
 
-  const mapData = await Promise.all(
-    allGenres.map(async (genre) => {
-      const loopIdRows = await db
-        .select({ loopId: loopGenres.loopId })
-        .from(loopGenres)
-        .where(eq(loopGenres.genreId, genre.id));
+    const mapData = await Promise.all(
+      allGenres.map(async (genre) => {
+        const loopIdRows = await db
+          .select({ loopId: loopGenres.loopId })
+          .from(loopGenres)
+          .where(eq(loopGenres.genreId, genre.id));
 
-      const pos = GENRE_MAP_POSITIONS[genre.name] ?? { x: 0.5, y: 0.5 };
+        const pos = GENRE_MAP_POSITIONS[genre.name] ?? { x: 0.5, y: 0.5 };
 
-      let feelName: string | null = null;
-      let feelId: number | null = null;
+        let feelName: string | null = null;
+        let feelId: number | null = null;
 
-      if (loopIdRows.length > 0) {
-        const feelRows = await db
-          .select({ feelId: loopFeels.feelId })
-          .from(loopFeels)
-          .where(
-            sql`${loopFeels.loopId} IN (${sql.join(loopIdRows.map((r) => sql`${r.loopId}`), sql`, `)})`,
-          )
-          .limit(10);
+        if (loopIdRows.length > 0) {
+          const feelRows = await db
+            .select({ feelId: loopFeels.feelId })
+            .from(loopFeels)
+            .where(
+              sql`${loopFeels.loopId} IN (${sql.join(loopIdRows.map((r) => sql`${r.loopId}`), sql`, `)})`,
+            )
+            .limit(10);
 
-        if (feelRows.length > 0) {
-          feelId = feelRows[0].feelId;
-          const [feel] = await db.select().from(feels).where(eq(feels.id, feelId));
-          feelName = feel?.name ?? null;
+          if (feelRows.length > 0) {
+            feelId = feelRows[0].feelId;
+            const [feel] = await db.select().from(feels).where(eq(feels.id, feelId));
+            feelName = feel?.name ?? null;
+          }
         }
-      }
 
-      return {
-        genreId: genre.id,
-        genreName: genre.name,
-        feelId,
-        feelName,
-        x: pos.x,
-        y: pos.y,
-        loopCount: loopIdRows.length,
-      };
-    }),
-  );
+        return {
+          genreId: genre.id,
+          genreName: genre.name,
+          feelId,
+          feelName,
+          x: pos.x,
+          y: pos.y,
+          loopCount: loopIdRows.length,
+        };
+      }),
+    );
 
-  res.json(mapData);
+    res.json(mapData);
+  } catch (err) {
+    console.error("explore/genre-map query failed:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
 }

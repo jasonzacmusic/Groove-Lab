@@ -12,6 +12,7 @@ import {
   Music, Repeat, Minus, Plus,
 } from 'lucide-react';
 import { YouTubeInline } from '@/components/YouTubeInline';
+import { STANDARDS_BACKING_TRACKS } from '@/data/standards-videos';
 import * as Tone from 'tone';
 
 // ── Constants ────────────────────────────────────────────────────────────────────
@@ -320,7 +321,7 @@ export default function Standards() {
 
   // ── Transposed chords ──────────────────────────────────────────────────────────
   const transposedChords = useMemo(() => {
-    if (!selectedStandard) return [];
+    if (!selectedStandard?.chords) return [];
     if (transposition === 0) return selectedStandard.chords;
     return selectedStandard.chords.map(c => ({
       ...c,
@@ -667,55 +668,61 @@ export default function Standards() {
       return;
     }
     stopPlayback();
-    await Tone.start();
+    try {
+      await Tone.start();
 
-    createInstruments();
+      createInstruments();
 
-    const transport = Tone.getTransport();
-    transport.bpm.value = bpm;
-    transport.swing = selectedGroove.swing / 100;
-    transport.swingSubdivision = '8n';
+      const transport = Tone.getTransport();
+      transport.bpm.value = bpm;
+      transport.swing = selectedGroove.swing / 100;
+      transport.swingSubdivision = '8n';
 
-    const { totalBeats } = scheduleChorus(0, transposedChords, groove);
+      const { totalBeats } = scheduleChorus(0, transposedChords, groove);
 
-    // Schedule end or loop
-    transport.schedule((time) => {
-      Tone.getDraw().schedule(() => {
-        if (isLoopingRef.current) {
-          // Stop, re-schedule, and restart
-          transport.stop();
-          transport.cancel();
-          setChorusCount(prev => prev + 1);
-          const { totalBeats: newTotal } = scheduleChorus(0, transposedChords, groove);
-          transport.schedule((time2) => {
-            Tone.getDraw().schedule(() => {
-              if (isLoopingRef.current) {
-                // Keep looping by retriggering play
-                setIsPlaying(false);
-                setTimeout(() => {
-                  // re-enter playChords would be complex, so just loop once more inline
-                  transport.stop();
-                  transport.cancel();
-                  scheduleChorus(0, transposedChords, groove);
-                  transport.start();
-                }, 50);
-                setIsPlaying(true);
-              } else {
-                stopPlayback();
-              }
-            }, time2);
-          }, `0:${newTotal}:0`);
-          transport.start();
-        } else {
-          stopPlayback();
-        }
-      }, time);
-    }, `0:${totalBeats}:0`);
+      // Schedule end or loop
+      transport.schedule((time) => {
+        Tone.getDraw().schedule(() => {
+          if (isLoopingRef.current) {
+            // Stop, re-schedule, and restart
+            transport.stop();
+            transport.cancel();
+            setChorusCount(prev => prev + 1);
+            const { totalBeats: newTotal } = scheduleChorus(0, transposedChords, groove);
+            transport.schedule((time2) => {
+              Tone.getDraw().schedule(() => {
+                if (isLoopingRef.current) {
+                  // Keep looping by retriggering play
+                  setIsPlaying(false);
+                  setTimeout(() => {
+                    // re-enter playChords would be complex, so just loop once more inline
+                    transport.stop();
+                    transport.cancel();
+                    scheduleChorus(0, transposedChords, groove);
+                    transport.start();
+                  }, 50);
+                  setIsPlaying(true);
+                } else {
+                  stopPlayback();
+                }
+              }, time2);
+            }, `0:${newTotal}:0`);
+            transport.start();
+          } else {
+            stopPlayback();
+          }
+        }, time);
+      }, `0:${totalBeats}:0`);
 
-    setIsPlaying(true);
-    setChorusCount(1);
-    transport.start();
-    transportStartedRef.current = true;
+      setIsPlaying(true);
+      setChorusCount(1);
+      transport.start();
+      transportStartedRef.current = true;
+    } catch (err) {
+      console.error('Playback failed:', err);
+      stopPlayback();
+      return;
+    }
   }, [isPlaying, stopPlayback, createInstruments, transposedChords, bpm, groove, selectedGroove, scheduleChorus]);
 
   // Cleanup on unmount
@@ -1157,50 +1164,15 @@ export default function Standards() {
               </p>
 
               {(() => {
-                const KNOWN_BACKING_TRACKS: Record<string, { id: string; title: string }[]> = {
-                  'Autumn Leaves':                   [{ id: 'Xjf2kiDO19Y', title: 'Autumn Leaves (120 bpm) - Backing Track' },
-                                                      { id: 'Ze7YxMeRoFE', title: 'Autumn Leaves - Jazz Backing Track (Gm)' }],
-                  'Blue Bossa':                      [{ id: '7H7Xg6U7P5g', title: 'Blue Bossa (150 bpm) - Backing Track' },
-                                                      { id: 'Y4vG4ZOMWiM', title: 'Blue Bossa - Bossa Nova Backing Track' }],
-                  'All Of Me':                       [{ id: '0HuIRNWgkAg', title: 'All Of Me - Jazz Backing Track' }],
-                  'Fly Me To The Moon':              [{ id: 'USctbnHFLZE', title: 'Fly Me To The Moon - Backing Track' }],
-                  'Summertime':                      [{ id: 'aaRxHmUeQC4', title: 'Summertime - Jazz Backing Track' }],
-                  'So What':                         [{ id: 'vRJfV4pG3Do', title: 'So What - Modal Jazz Backing Track' }],
-                  'Misty':                           [{ id: 'L9PeqG9C5os', title: 'Misty - Ballad Backing Track' }],
-                  'All The Things You Are':          [{ id: 'ylXk1LBvIqU', title: 'All The Things You Are - Jazz Backing Track' }],
-                  'Take Five':                       [{ id: 'vJnv4bHHxq4', title: 'Take Five (5/4) - Backing Track' }],
-                  'Giant Steps':                     [{ id: 'FsijyBivMgg', title: 'Giant Steps - Jazz Backing Track' }],
-                  'Stella By Starlight':             [{ id: '7qvZpIKa5aA', title: 'Stella By Starlight - Jazz Backing Track' }],
-                  'There Will Never Be Another You': [{ id: 'kFLJ3OFbWe8', title: 'There Will Never Be Another You - Backing Track' }],
-                  "'Round Midnight":                 [{ id: 'BkE5P8e8yus', title: "'Round Midnight - Jazz Backing Track" }],
-                  'How High The Moon':               [{ id: 'yxGLRc9y7SE', title: 'How High The Moon - Backing Track' }],
-                  'Body and Soul':                   [{ id: '2YxTXxJqFag', title: 'Body and Soul - Jazz Backing Track' }],
-                  'Cherokee':                        [{ id: 'j5tSIBJ0Bv0', title: 'Cherokee - Jazz Backing Track' }],
-                  'On Green Dolphin Street':         [{ id: 'lkiHf4zRRFw', title: 'On Green Dolphin Street - Backing Track' }],
-                  'Just Friends':                    [{ id: '3L-Vx5zrZkA', title: 'Just Friends - Jazz Backing Track' }],
-                  'My Favorite Things':              [{ id: 'c6EiXeO2HkY', title: 'My Favorite Things - Jazz Backing Track' }],
-                  'Confirmation':                    [{ id: 'eLTc9_oVgrc', title: 'Confirmation - Charlie Parker Backing Track' }],
-                  'Maiden Voyage':                   [{ id: '8jvKMpCtHR8', title: 'Maiden Voyage - Herbie Hancock Backing Track' }],
-                  'Cantaloupe Island':               [{ id: 'l-TJjB0F3E4', title: 'Cantaloupe Island - Backing Track' }],
-                  'Watermelon Man':                  [{ id: 'dYJd5tXb5cE', title: 'Watermelon Man - Backing Track' }],
-                  'The Girl from Ipanema':           [{ id: '4gJU-tP6IYE', title: 'The Girl from Ipanema - Bossa Nova Backing Track' }],
-                  'Night in Tunisia':                [{ id: 'BPHl1F8RQBU', title: 'Night in Tunisia - Jazz Backing Track' }],
-                  'Footprints':                      [{ id: 'wCDyGEhyqHs', title: 'Footprints - Wayne Shorter Backing Track' }],
-                  'Lady Bird':                       [{ id: 'E4Zt2gUvnwg', title: 'Lady Bird - Jazz Backing Track' }],
-                  'Billie\'s Bounce':               [{ id: '4-pheP_USPY', title: "Billie's Bounce - Charlie Parker Backing Track" }],
-                  'Tenor Madness':                   [{ id: 'dX3k_QDnzs0', title: 'Tenor Madness - Sonny Rollins Backing Track' }],
-                  'Recorda Me':                      [{ id: 's6xPgDY9JHo', title: 'Recorda Me - Joe Henderson Backing Track' }],
-                };
-
                 const name = selectedStandard.name;
-                const knownTracks = KNOWN_BACKING_TRACKS[name];
+                const knownTracks = STANDARDS_BACKING_TRACKS[name];
 
                 return (
                   <div className="space-y-3">
                     {knownTracks && knownTracks.length > 0 ? (
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {knownTracks.map((track) => (
-                          <YouTubeInline key={track.id} videoId={track.id} title={track.title} />
+                          <YouTubeInline key={track.id} videoId={track.id} title={track.title} channel={track.channel} />
                         ))}
                       </div>
                     ) : (

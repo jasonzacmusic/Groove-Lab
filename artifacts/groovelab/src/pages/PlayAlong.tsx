@@ -11,6 +11,30 @@ import videoDb from '@/data/exam-video-ids.json';
 
 const VIDEO_DB = videoDb as Record<string, { id: string; title: string }[]>;
 
+/** Channel attribution for exam board play-along videos */
+function examChannel(board: string): string {
+  const channels: Record<string, string> = {
+    'ABRSM': 'ABRSM Play-Alongs',
+    'Trinity': 'Trinity Rock & Pop',
+    'Rockschool': 'RSL Awards',
+    'RCM': 'RCM Practice',
+  };
+  return channels[board] || 'Practice Tracks';
+}
+
+/** Channel attribution for method book videos */
+function methodChannel(bookName: string): string {
+  if (bookName.includes('Suzuki')) return 'Suzuki Method';
+  if (bookName.includes('Alfred')) return 'Alfred Music';
+  if (bookName.includes('Faber')) return 'Faber Piano Adventures';
+  if (bookName.includes('Bastien')) return 'Bastien Piano';
+  if (bookName.includes('Hanon')) return 'Piano Practice';
+  if (bookName.includes('Czerny')) return 'Piano Practice';
+  if (bookName.includes('Bach')) return 'Piano Practice';
+  if (bookName.includes('Essential')) return 'Essential Elements';
+  return 'Practice Tracks';
+}
+
 // Curated video IDs for method book levels: "Book Name|Level" → videoId
 const METHOD_BOOK_VIDEO_IDS: Record<string, string> = {
   'Alfred Basic Piano Library|Level 1A':            'nOXc9xSdqBY',
@@ -80,7 +104,7 @@ function MethodBookSection({ methods, instrument }: { methods: typeof PIANO_METH
                   {m.levels.slice(0, 3).map((level) => {
                     const videoId = METHOD_BOOK_VIDEO_IDS[`${m.name}|${level}`];
                     return videoId ? (
-                      <YouTubeInline key={level} videoId={videoId} title={`${m.name} — ${level}`} />
+                      <YouTubeInline key={level} videoId={videoId} title={`${m.name} — ${level}`} channel={methodChannel(m.name)} />
                     ) : (
                       <div key={level} className="flex items-center gap-3 rounded-lg border border-border bg-muted/30 p-3">
                         <Video className="w-4 h-4 text-muted-foreground flex-shrink-0" />
@@ -216,7 +240,7 @@ export default function PlayAlong() {
                   <h4 className="font-medium text-base flex items-center gap-2"><Music className="w-4 h-4 text-primary" />{entry.title}</h4>
                   {known && known.length > 0 ? (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                      {known.map((v) => <YouTubeInline key={v.id} videoId={v.id} title={v.title} />)}
+                      {known.map((v) => <YouTubeInline key={v.id} videoId={v.id} title={v.title} channel={examChannel(entry.board)} />)}
                     </div>
                   ) : (
                     <div className="flex items-center gap-3 rounded-lg border border-border bg-muted/30 p-4">

@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react'
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 import {
   Play,
   Pause,
@@ -14,6 +15,11 @@ import {
   Music,
   ListMusic,
   Repeat,
+  Shuffle,
+  Wand2,
+  Search,
+  GripVertical,
+  Library,
 } from 'lucide-react';
 
 /* ------------------------------------------------------------------ */
@@ -94,8 +100,28 @@ interface Preset {
 const PRESETS: Preset[] = [
   {
     name: 'Standard Song',
-    description: 'Intro, Verse, Chorus, Verse, Chorus, Outro',
+    description: 'Intro → Verse → Chorus → Verse → Chorus → Outro',
     pattern: ['intro', 'verse', 'chorus', 'verse', 'chorus', 'outro'],
+  },
+  {
+    name: 'Pop Structure',
+    description: 'Intro → Verse → Chorus → Verse → Chorus → Break → Chorus → Outro',
+    pattern: ['intro', 'verse', 'chorus', 'verse', 'chorus', 'break', 'chorus', 'outro'],
+  },
+  {
+    name: 'Blues / Jazz',
+    description: 'Intro → Verse → Verse → Break → Verse → Outro',
+    pattern: ['intro', 'verse', 'verse', 'break', 'verse', 'outro'],
+  },
+  {
+    name: 'Build & Drop',
+    description: 'Intro → Build → Chorus → Break → Build → Chorus → Outro',
+    pattern: ['intro', 'build', 'chorus', 'break', 'build', 'chorus', 'outro'],
+  },
+  {
+    name: 'Extended Song',
+    description: 'Full structure with fills between sections',
+    pattern: ['intro', 'verse', 'fill', 'chorus', 'verse', 'fill', 'chorus', 'break', 'build', 'chorus', 'outro'],
   },
   {
     name: 'Simple Loop',
@@ -140,6 +166,31 @@ function buildPresetArrangement(preset: Preset, sections: SongSection[]): Arrang
 }
 
 /* ------------------------------------------------------------------ */
+/*  Auto-fill: insert fills between arrangement sections               */
+/* ------------------------------------------------------------------ */
+
+function autoInsertFills(arrangement: ArrangementEntry[], allSections: SongSection[]): ArrangementEntry[] {
+  const fills = allSections.filter(s => s.sectionType.toLowerCase().replace(/\s+/g, '_') === 'fill');
+  if (fills.length === 0 || arrangement.length < 2) return arrangement;
+
+  const result: ArrangementEntry[] = [];
+  for (let i = 0; i < arrangement.length; i++) {
+    result.push(arrangement[i]);
+    // Insert fill between sections (not after the last one)
+    if (i < arrangement.length - 1) {
+      const currentType = arrangement[i].section.sectionType.toLowerCase().replace(/\s+/g, '_');
+      const nextType = arrangement[i + 1].section.sectionType.toLowerCase().replace(/\s+/g, '_');
+      // Don't insert fills next to other fills or between identical types
+      if (currentType !== 'fill' && nextType !== 'fill' && currentType !== nextType) {
+        const fill = fills[i % fills.length];
+        result.push({ uid: nextUid(), section: fill });
+      }
+    }
+  }
+  return result;
+}
+
+/* ------------------------------------------------------------------ */
 /*  Component                                                          */
 /* ------------------------------------------------------------------ */
 
@@ -150,6 +201,12 @@ export function SongBuilder({ sections, artist, collection, bpm, onClose }: Song
   const [isLooping, setIsLooping] = useState(true);
   const [currentPlayingIndex, setCurrentPlayingIndex] = useState<number>(-1);
   const [previewingId, setPreviewingId] = useState<string | null>(null);
+  const [showBrowser, setShowBrowser] = useState(false);
+  const [browserSearch, setBrowserSearch] = useState('');
+  const [browserResults, setBrowserResults] = useState<SongSection[]>([]);
+  const [browserLoading, setBrowserLoading] = useState(false);
+  const [dragIndex, setDragIndex] = useState<number | null>(null);
+  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
 
   const audioCtxRef = useRef<AudioContext | null>(null);
   const gainRef = useRef<GainNode | null>(null);
@@ -272,6 +329,148 @@ export function SongBuilder({ sections, artist, collection, bpm, onClose }: Song
     const built = buildPresetArrangement(preset, sections);
     setArrangement(built);
   }, [sections]);
+
+  // Auto-fill: insert fill sections between existing arrangement entries
+  const handleAutoFill = useCallback(() => {
+    setArrangement(prev => autoInsertFills(prev, sections));
+  }, [sections]);
+
+  // Smart arrange: analyze available sections and build intelligent arrangement
+  const handleSmartArrange = useCallback(() => {
+    if (sections.length === 0) return;
+    const byType = new Map<string, SongSection[]>();
+    for (const s of sections) {
+      const key = s.sectionType.toLowerCase().replace(/\s+/g, '_');
+      if (!byType.has(key)) byType.set(key, []);
+      byType.get(key)!.push(s);
+    }
+
+    const result: ArrangementEntry[] = [];
+    const add = (type: string) => {
+      const candidates = byType.get(type);
+      if (!candidates || candidates.length === 0) return false;
+      const usedCount = result.filter(e => e.section.sectionType.toLowerCase().replace(/\s+/g, '_') === type).length;
+      result.push({ uid: nextUid(), section: candidates[usedCount % candidates.length] });
+      return true;
+    };
+
+    // Build the best arrangement from what's available
+    const hasIntro = byType.has('intro');
+    const hasVerse = byType.has('verse');
+    const hasChorus = byType.has('chorus');
+    const hasFill = byType.has('fill');
+    const hasBreak = byType.has('break');
+    const hasBuild = byType.has('build');
+    const hasOutro = byType.has('outro');
+    const hasFullLoop = byType.has('full_loop');
+
+    if (hasVerse || hasChorus) {
+      // Full song structure
+      if (hasIntro) add('intro');
+      if (hasVerse) { add('verse'); if (hasFill) add('fill'); }
+      if (hasChorus) add('chorus');
+      if (hasVerse) { add('verse'); if (hasFill) add('fill'); }
+      if (hasChorus) add('chorus');
+      if (hasBreak) add('break');
+      if (hasBuild) add('build');
+      if (hasChorus) add('chorus');
+      if (hasOutro) add('outro');
+    } else if (hasFullLoop) {
+      // Loop-based: repeat with fills
+      add('full_loop');
+      if (hasFill) add('fill');
+      add('full_loop');
+      add('full_loop');
+      if (hasFill) add('fill');
+      add('full_loop');
+    } else {
+      // Use whatever we have in logical order
+      for (const type of SECTION_ORDER) {
+        const candidates = byType.get(type);
+        if (candidates) {
+          for (const s of candidates) {
+            result.push({ uid: nextUid(), section: s });
+          }
+        }
+      }
+    }
+
+    setArrangement(result);
+  }, [sections]);
+
+  // Drag-and-drop handlers
+  const handleDragStart = useCallback((index: number) => {
+    setDragIndex(index);
+  }, []);
+
+  const handleDragOver = useCallback((e: React.DragEvent, index: number) => {
+    e.preventDefault();
+    setDragOverIndex(index);
+  }, []);
+
+  const handleDrop = useCallback((e: React.DragEvent, dropIndex: number) => {
+    e.preventDefault();
+    if (dragIndex === null || dragIndex === dropIndex) {
+      setDragIndex(null);
+      setDragOverIndex(null);
+      return;
+    }
+    setArrangement(prev => {
+      const next = [...prev];
+      const [moved] = next.splice(dragIndex, 1);
+      next.splice(dropIndex, 0, moved);
+      return next;
+    });
+    setDragIndex(null);
+    setDragOverIndex(null);
+  }, [dragIndex]);
+
+  const handleDragEnd = useCallback(() => {
+    setDragIndex(null);
+    setDragOverIndex(null);
+  }, []);
+
+  // Cross-collection browser search
+  const searchOtherCollections = useCallback(async (query: string) => {
+    if (!query.trim()) { setBrowserResults([]); return; }
+    setBrowserLoading(true);
+    try {
+      const params = new URLSearchParams();
+      params.set('search', query);
+      params.set('limit', '30');
+      params.set('sort', 'collection');
+      const res = await fetch(`/api/audio-loops?${params.toString()}`);
+      const data = await res.json();
+      const results: SongSection[] = (data.loops || []).map((l: any) => ({
+        id: l.id,
+        grooveName: l.grooveName || l.title,
+        sectionType: l.sectionType || 'full_loop',
+        sectionNumber: l.sectionNumber ?? null,
+        bpm: l.bpm ?? null,
+        wavUrl: l.wavUrl,
+        artist: l.artist || '',
+      }));
+      setBrowserResults(results);
+
+      // Load audio buffers for new results
+      const ctx = audioCtxRef.current;
+      if (ctx) {
+        for (const s of results) {
+          if (s.wavUrl && !buffersRef.current.has(s.id)) {
+            fetch(s.wavUrl)
+              .then(r => r.arrayBuffer())
+              .then(ab => ctx.decodeAudioData(ab))
+              .then(buf => { buffersRef.current.set(s.id, buf); })
+              .catch(() => {});
+          }
+        }
+      }
+    } catch (err) {
+      console.error('Browser search failed:', err);
+    } finally {
+      setBrowserLoading(false);
+    }
+  }, []);
 
   // Stop playback
   const stopPlayback = useCallback(() => {
@@ -441,24 +640,58 @@ export function SongBuilder({ sections, artist, collection, bpm, onClose }: Song
           </div>
         )}
 
-        {/* Presets */}
-        <div className="px-6 py-3 border-b border-border flex items-center gap-2 flex-wrap flex-shrink-0">
-          <span className="text-xs font-medium text-muted-foreground mr-1">Presets:</span>
-          {PRESETS.map(preset => (
+        {/* Presets & Actions */}
+        <div className="px-6 py-3 border-b border-border flex-shrink-0">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-xs font-medium text-muted-foreground mr-1">Presets:</span>
+            {PRESETS.map(preset => (
+              <Button
+                key={preset.name}
+                variant="outline"
+                size="sm"
+                className="text-xs h-7"
+                onClick={() => applyPreset(preset)}
+                title={preset.description}
+              >
+                {preset.name}
+              </Button>
+            ))}
+            <div className="w-px h-5 bg-border mx-1" />
             <Button
-              key={preset.name}
               variant="outline"
               size="sm"
-              className="text-xs h-7"
-              onClick={() => applyPreset(preset)}
-              title={preset.description}
+              className="text-xs h-7 gap-1 border-amber-500/40 text-amber-400 hover:bg-amber-500/10"
+              onClick={handleAutoFill}
+              disabled={arrangement.length < 2}
+              title="Insert fill sections between arrangement sections"
             >
-              {preset.name}
+              <Shuffle className="w-3 h-3" />
+              Auto Fill
             </Button>
-          ))}
+            <Button
+              variant="outline"
+              size="sm"
+              className="text-xs h-7 gap-1 border-cyan-500/40 text-cyan-400 hover:bg-cyan-500/10"
+              onClick={handleSmartArrange}
+              title="Intelligently arrange all available sections into a song"
+            >
+              <Wand2 className="w-3 h-3" />
+              Smart Arrange
+            </Button>
+            <Button
+              variant={showBrowser ? 'default' : 'outline'}
+              size="sm"
+              className="text-xs h-7 gap-1"
+              onClick={() => setShowBrowser(!showBrowser)}
+              title="Browse loops from other collections"
+            >
+              <Library className="w-3 h-3" />
+              Mix & Match
+            </Button>
+          </div>
         </div>
 
-        {/* Main 2-panel layout */}
+        {/* Main layout */}
         <div className="flex-1 flex flex-col md:flex-row min-h-0 overflow-hidden">
           {/* Left: Available Sections */}
           <div className="w-full md:w-64 border-b md:border-b-0 md:border-r border-border overflow-y-auto flex-shrink-0 p-4">
@@ -497,18 +730,23 @@ export function SongBuilder({ sections, artist, collection, bpm, onClose }: Song
             </div>
           </div>
 
-          {/* Right: Arrangement */}
+          {/* Center: Arrangement (drag-and-drop) */}
           <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
             <div className="flex-1 overflow-y-auto p-4">
               <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">
                 Your Arrangement
+                {arrangement.length > 0 && (
+                  <span className="font-normal normal-case ml-2 text-muted-foreground/60">
+                    drag to reorder
+                  </span>
+                )}
               </h3>
 
               {arrangement.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-12 text-muted-foreground">
                   <Music className="w-10 h-10 mb-3 opacity-40" />
-                  <p className="text-sm">Add sections from the left panel</p>
-                  <p className="text-xs mt-1">or choose a preset above</p>
+                  <p className="text-sm">Add sections or use Smart Arrange</p>
+                  <p className="text-xs mt-1">Try a preset, or Mix & Match across collections</p>
                 </div>
               ) : (
                 <div className="space-y-1.5">
@@ -516,16 +754,30 @@ export function SongBuilder({ sections, artist, collection, bpm, onClose }: Song
                     const buf = buffersRef.current.get(entry.section.id);
                     const dur = buf ? buf.duration : 0;
                     const isCurrent = isPlaying && currentPlayingIndex === index;
+                    const isDragging = dragIndex === index;
+                    const isDragOver = dragOverIndex === index;
 
                     return (
                       <div
                         key={entry.uid}
+                        draggable
+                        onDragStart={() => handleDragStart(index)}
+                        onDragOver={(e) => handleDragOver(e, index)}
+                        onDrop={(e) => handleDrop(e, index)}
+                        onDragEnd={handleDragEnd}
                         className={`flex items-center gap-2 px-3 py-2 rounded-md border transition-all ${
                           isCurrent
                             ? 'border-primary bg-primary/10 ring-1 ring-primary/40'
+                            : isDragOver
+                            ? 'border-primary/60 bg-primary/5 border-dashed'
+                            : isDragging
+                            ? 'opacity-40 border-border bg-muted/30'
                             : 'border-border bg-muted/30 hover:bg-muted/50'
                         }`}
                       >
+                        {/* Drag handle */}
+                        <GripVertical className="w-3.5 h-3.5 text-muted-foreground/50 cursor-grab active:cursor-grabbing flex-shrink-0" />
+
                         {/* Index */}
                         <span className="font-mono text-xs text-muted-foreground w-5 text-right flex-shrink-0">
                           {index + 1}.
@@ -539,9 +791,12 @@ export function SongBuilder({ sections, artist, collection, bpm, onClose }: Song
                           {sectionLabel(entry.section)}
                         </Badge>
 
-                        {/* Groove name if different */}
+                        {/* Groove name + artist if from different collection */}
                         <span className="text-xs text-muted-foreground truncate flex-1">
                           {entry.section.grooveName}
+                          {entry.section.artist !== artist && (
+                            <span className="text-primary/60 ml-1">({entry.section.artist})</span>
+                          )}
                         </span>
 
                         {/* Duration */}
@@ -567,7 +822,7 @@ export function SongBuilder({ sections, artist, collection, bpm, onClose }: Song
                           )}
                         </Button>
 
-                        {/* Move up/down */}
+                        {/* Move up/down (still available alongside drag) */}
                         <div className="flex flex-col flex-shrink-0">
                           <button
                             className="text-muted-foreground hover:text-foreground disabled:opacity-30 p-0.5"
@@ -662,6 +917,66 @@ export function SongBuilder({ sections, artist, collection, bpm, onClose }: Song
               </div>
             </div>
           </div>
+
+          {/* Right: Cross-Collection Browser (toggled) */}
+          {showBrowser && (
+            <div className="w-full md:w-72 border-t md:border-t-0 md:border-l border-border overflow-y-auto flex-shrink-0 p-4">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                  Mix & Match
+                </h3>
+                <Button variant="ghost" size="icon" className="w-6 h-6" onClick={() => setShowBrowser(false)}>
+                  <X className="w-3.5 h-3.5" />
+                </Button>
+              </div>
+              <p className="text-[10px] text-muted-foreground mb-3">
+                Search across all collections to add loops from other artists and genres.
+              </p>
+              <form
+                onSubmit={(e) => { e.preventDefault(); searchOtherCollections(browserSearch); }}
+                className="flex gap-1.5 mb-3"
+              >
+                <div className="relative flex-1">
+                  <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
+                  <Input
+                    placeholder="Artist, genre, groove..."
+                    value={browserSearch}
+                    onChange={(e) => setBrowserSearch(e.target.value)}
+                    className="pl-8 h-8 text-xs bg-muted/50 border-none"
+                  />
+                </div>
+                <Button type="submit" size="sm" className="h-8 text-xs px-3" disabled={browserLoading}>
+                  {browserLoading ? <Loader2 className="w-3 h-3 animate-spin" /> : 'Go'}
+                </Button>
+              </form>
+
+              {browserResults.length > 0 && (
+                <div className="space-y-1">
+                  {browserResults.map(section => (
+                    <button
+                      key={section.id}
+                      onClick={() => addSection(section)}
+                      className={`w-full flex items-center gap-2 px-2.5 py-2 rounded-md border text-xs transition-colors hover:brightness-125 cursor-pointer ${sectionColor(section.sectionType)}`}
+                    >
+                      <Plus className="w-3 h-3 flex-shrink-0" />
+                      <div className="flex-1 min-w-0 text-left">
+                        <p className="truncate">{section.grooveName}</p>
+                        <p className="text-[10px] opacity-60 truncate">{section.artist}</p>
+                      </div>
+                      <Badge variant="outline" className="text-[8px] capitalize flex-shrink-0">
+                        {section.sectionType.replace(/_/g, ' ')}
+                      </Badge>
+                    </button>
+                  ))}
+                </div>
+              )}
+              {browserResults.length === 0 && !browserLoading && browserSearch && (
+                <p className="text-xs text-muted-foreground text-center py-4">
+                  No results. Try a different search.
+                </p>
+              )}
+            </div>
+          )}
         </div>
       </Card>
     </div>

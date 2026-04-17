@@ -9,39 +9,9 @@ import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Piano, Play, Square, ArrowUp, ArrowDown, Star } from 'lucide-react';
 import { YouTubeInline } from '@/components/YouTubeInline';
+import { CHORD_PROGRESSION_VIDEOS } from '@/data/chord-videos';
+import { GENRE_BACKING_TRACKS } from '@/data/genre-videos';
 import * as Tone from 'tone';
-
-// Curated backing track video IDs keyed by progression type.
-const CURATED_CHORD_VIDEOS: Record<string, string> = {
-  'ii-V-I':          'RnHBi8R0CAw',
-  'Blues':           'yxTOFJVHBiQ',
-  'Rhythm Changes':  'KYM-bDOJPr8',
-  'Modal':           'FsijyBivMgg',
-  'I-vi-ii-V':       '7qvZpIKa5aA',
-  'Funk':            'd7FQLR23dXQ',
-  'Reggae':          'J5GOSdtFMks',
-  'Latin':           'Z2JqZkXiV4Q',
-  'Neo Soul':        'bGLjOEDRKLk',
-  'Afrobeat':        '5L1y5FWPJDI',
-  'Gospel':          'h3ByOYdnhOs',
-  'R&B':             'cKBVOxrIMuQ',
-};
-
-// Curated second-slot video IDs keyed by genre name (lowercase).
-const CURATED_GENRE_VIDEOS: Record<string, string> = {
-  'jazz':     'RnHBi8R0CAw',
-  'blues':    'yxTOFJVHBiQ',
-  'funk':     'd7FQLR23dXQ',
-  'reggae':   'J5GOSdtFMks',
-  'latin':    'Z2JqZkXiV4Q',
-  'neo soul': 'bGLjOEDRKLk',
-  'afrobeat': '5L1y5FWPJDI',
-  'gospel':   'h3ByOYdnhOs',
-  'r&b':      'cKBVOxrIMuQ',
-  'soul':     '3K3RQyHxXtY',
-  'rock':     'KnPJqA9fJDc',
-  'pop':      '8gcB1TKhDzA',
-};
 
 const CHORD_TABS = ['All', 'ii-V-I', 'I-vi-ii-V', 'Blues', 'Rhythm Changes', 'Modal'];
 const KEYS = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
@@ -150,17 +120,25 @@ export default function Chords() {
   const playChord = async (id: string, chords: ChordEntry[]) => {
     if (playingId === id) { stopPlayback(); return; }
     stopPlayback();
-    await Tone.start();
-    setPlayingId(id);
 
-    const transposed = getTransposedChords(id, chords);
-    const synth = new Tone.PolySynth(Tone.Synth, {
-      oscillator: { type: 'triangle' as const },
-      envelope: { attack: 0.02, decay: 0.3, sustain: 0.4, release: 0.8 },
-    }).toDestination();
-    synth.volume.value = -8;
+    let synth: Tone.PolySynth;
+    try {
+      await Tone.start();
+      synth = new Tone.PolySynth(Tone.Synth, {
+        oscillator: { type: 'triangle' as const },
+        envelope: { attack: 0.02, decay: 0.3, sustain: 0.4, release: 0.8 },
+      }).toDestination();
+      synth.volume.value = -8;
+    } catch (err) {
+      console.error('Playback failed:', err);
+      stopPlayback();
+      return;
+    }
+
+    setPlayingId(id);
     synthRef.current = synth;
 
+    const transposed = getTransposedChords(id, chords);
     const now = Tone.now();
     let timeOffset = 0;
     const beatDuration = 0.5;
@@ -243,14 +221,19 @@ export default function Chords() {
               </CardContent>
             </Card>
           ))
+        ) : !progressions ? (
+          <div className="col-span-full text-center py-12 text-muted-foreground">
+            Failed to load chord progressions. Please try again later.
+          </div>
         ) : (
-          progressions?.map((prog) => {
+          progressions.map((prog) => {
             const transAmt = transpositions[prog.id] || 0;
             const origKey = prog.keySignature || 'C';
             const displayKey = transAmt !== 0 ? transposeChordSymbol(origKey, transAmt) : origKey;
             const genre = prog.genre?.name ?? 'jazz';
             const progName = prog.name;
-            const curatedVideoId = CURATED_CHORD_VIDEOS[prog.progressionType ?? ''];
+            const curatedVideo = CHORD_PROGRESSION_VIDEOS[prog.progressionType ?? ''];
+            const genreVideo = GENRE_BACKING_TRACKS[genre.toLowerCase()];
 
             return (
               <Card key={prog.id} className="overflow-hidden border-border bg-card hover:border-primary/30 transition-colors group">
@@ -316,10 +299,11 @@ export default function Chords() {
                       Backing Tracks in {displayKey}
                     </h4>
                     <div className="grid grid-cols-1 gap-3" onClick={(e) => e.stopPropagation()}>
-                      {curatedVideoId ? (
+                      {curatedVideo ? (
                         <YouTubeInline
-                          videoId={curatedVideoId}
+                          videoId={curatedVideo.id}
                           title={`${progName} in ${displayKey}`}
+                          channel={curatedVideo.channel}
                         />
                       ) : (
                         <div className="flex items-center justify-center rounded-lg border border-border bg-muted/30 aspect-video">
@@ -328,10 +312,11 @@ export default function Chords() {
                           </p>
                         </div>
                       )}
-                      {CURATED_GENRE_VIDEOS[genre.toLowerCase()] && (
+                      {genreVideo && (
                         <YouTubeInline
-                          videoId={CURATED_GENRE_VIDEOS[genre.toLowerCase()]}
+                          videoId={genreVideo.id}
                           title={`${genre} backing track`}
+                          channel={genreVideo.channel}
                         />
                       )}
                     </div>

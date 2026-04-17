@@ -17,7 +17,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
   if (artist) conditions.push(sql`${audioLoops.artist} ILIKE ${artist as string}`);
   if (genre) conditions.push(sql`${audioLoops.genre} ILIKE ${genre as string}`);
   if (feel) conditions.push(sql`${audioLoops.feel} ILIKE ${feel as string}`);
-  if (instrument_category) conditions.push(sql`${audioLoops.instrumentCategory} ILIKE ${instrument_category as string}`);
+  if (instrument_category) {
+    const cats = (instrument_category as string).split(",").map(s => s.trim());
+    if (cats.length === 1) {
+      conditions.push(sql`${audioLoops.instrumentCategory} ILIKE ${cats[0]}`);
+    } else {
+      conditions.push(sql`${audioLoops.instrumentCategory} ILIKE ANY(${cats})`);
+    }
+  }
   if (time_signature) conditions.push(eq(audioLoops.timeSignature, time_signature as string));
   if (section_type) conditions.push(sql`${audioLoops.sectionType} ILIKE ${section_type as string}`);
   if (key) conditions.push(sql`${audioLoops.keySignature} ILIKE ${key as string}`);
@@ -42,10 +49,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     : sort === 'genre' ? [asc(audioLoops.genre), asc(audioLoops.artist)]
     : [desc(audioLoops.createdAt)];
 
-  const [rows, countRow] = await Promise.all([
-    db.select().from(audioLoops).where(where).orderBy(...orderBy).limit(limit).offset(offset),
-    db.select({ count: sql<number>`count(*)::int` }).from(audioLoops).where(where),
-  ]);
+  try {
+    const [rows, countRow] = await Promise.all([
+      db.select().from(audioLoops).where(where).orderBy(...orderBy).limit(limit).offset(offset),
+      db.select({ count: sql<number>`count(*)::int` }).from(audioLoops).where(where),
+    ]);
 
-  res.json({ loops: rows, total: Number(countRow[0]?.count ?? 0), page, limit });
+    res.json({ loops: rows, total: Number(countRow[0]?.count ?? 0), page, limit });
+  } catch (err) {
+    console.error("audio-loops query failed:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
 }

@@ -14,11 +14,12 @@ interface YouTubeInlineProps {
   videoId?: string;
   searchQuery?: string;
   title: string;
+  channel?: string;
   className?: string;
   autoplay?: boolean;
 }
 
-export function YouTubeInline({ videoId, searchQuery, title, className = '', autoplay = false }: YouTubeInlineProps) {
+export function YouTubeInline({ videoId, searchQuery, title, channel, className = '', autoplay = false }: YouTubeInlineProps) {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
 
@@ -35,31 +36,38 @@ export function YouTubeInline({ videoId, searchQuery, title, className = '', aut
   }
 
   return (
-    <div className={`relative rounded-lg overflow-hidden border border-border bg-black ${className}`}>
-      {!loaded && !error && (
-        <div className="absolute inset-0 flex items-center justify-center bg-muted/80 z-10">
-          <Loader2 className="w-6 h-6 animate-spin text-primary" />
+    <div className={className}>
+      <div className="relative rounded-lg overflow-hidden border border-border bg-black">
+        {!loaded && !error && (
+          <div className="absolute inset-0 flex items-center justify-center bg-muted/80 z-10">
+            <Loader2 className="w-6 h-6 animate-spin text-primary" />
+          </div>
+        )}
+        {error && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-muted/80 z-10 gap-2">
+            <Play className="w-8 h-8 text-muted-foreground" />
+            <p className="text-xs text-muted-foreground">Video unavailable</p>
+          </div>
+        )}
+        <div className="aspect-video">
+          <iframe
+            src={src}
+            className="w-full h-full"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+            title={title}
+            loading="lazy"
+            onLoad={() => setLoaded(true)}
+            onError={() => setError(true)}
+            referrerPolicy="no-referrer-when-downgrade"
+          />
         </div>
-      )}
-      {error && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-muted/80 z-10 gap-2">
-          <Play className="w-8 h-8 text-muted-foreground" />
-          <p className="text-xs text-muted-foreground">Video unavailable</p>
-        </div>
-      )}
-      <div className="aspect-video">
-        <iframe
-          src={src}
-          className="w-full h-full"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-          title={title}
-          loading="lazy"
-          onLoad={() => setLoaded(true)}
-          onError={() => setError(true)}
-          referrerPolicy="no-referrer-when-downgrade"
-        />
       </div>
+      {channel && (
+        <p className="text-[10px] text-muted-foreground mt-1.5 px-0.5 truncate">
+          via <span className="font-medium text-foreground/70">{channel}</span>
+        </p>
+      )}
     </div>
   );
 }
