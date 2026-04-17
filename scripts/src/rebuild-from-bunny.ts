@@ -1,12 +1,21 @@
 /**
  * Rebuild audio_loops from the REAL Bunny CDN file tree.
- * Reads bunny-wavs.txt, parses every WAV path, extracts metadata, inserts into DB.
+ * Reads bunny-wavs.txt, parses every WAV path, groups multitrack stems,
+ * and inserts properly structured records into DB.
  *
- * Path patterns:
- *   TopProduct/Song/LoopFolder/file.wav           (multitrack products)
- *   TopProduct/Song/file.wav                       (stereo products)
- *   DRUMS/SubProduct/Loops/Song/file.wav           (drums mega-folder)
- *   PERCUSSION/SubProduct/Loops/Song/file.wav      (percussion mega-folder)
+ * Bunny folder hierarchy:
+ *   ProductFolder/                              ← Artist pack (e.g., BonhamologyVol1_MultitrackEdition_WAV)
+ *     Stereo Loops/                             ← skip (organizational)
+ *       SongFolder/                             ← COLLECTION (the "song" or groove set)
+ *         VerseA1_SongName_130bpm.wav           ← one stereo loop = one DB row
+ *     Multitrack Loops/                         ← skip (organizational)
+ *       SongFolder/                             ← COLLECTION (same song)
+ *         Verse A SongName 1/                   ← SECTION folder
+ *           Verse_KICK_SongName_1.wav           ← stem (grouped into one DB row)
+ *           Verse_SNR_SongName_1.wav            ← stem
+ *
+ * Each SECTION (stereo file or multitrack folder) becomes ONE database row.
+ * Multitrack stems are stored as a JSONB array in the stems column.
  *
  * Usage: cd scripts && npx tsx src/rebuild-from-bunny.ts
  */
@@ -92,34 +101,37 @@ const ARTIST_MAP: Record<string, string> = {
   "ShawnZornV1_Drums_WAV": "Shawn Zorn",
   "Smooth80s_AbtoA_82bpm": "Marcus Finnie",
   "ToddSuchermanV2_WAV": "Todd Sucherman",
+  "90sHipHop_EMajor_91bpm": "Marcus Finnie",
+  "BluesGroove_BMajor_177bpm": "Marcus Finnie",
+  "DiscoTimes_Dmin_108bpm": "Marcus Finnie",
+  "HighwayRock_D_85bpm": "Marcus Finnie",
+  "CompleteTakesV1_MIDI_WAV": "Complete Takes",
+  "CompleteTakesV2_MIDI_WAV": "Complete Takes",
+  "CompleteTakesV3_MIDI_WAV": "Complete Takes",
 };
 
-// ── Clean product folder name into a readable artist/product name ────────
+// ── Organizational folders to skip when finding the song folder ──────────
+const SKIP_FOLDERS = /^(loops|stereo\s*loops|multitrack\s*loops|multitrack_loops|stereo_loops|clean\s*loops|vibe\s*loops|audio\s*loops|multitrack|stereo|dry|compressed|mixed|perc\s*loops|drum\s*kit\s*loops|drum\s*kit\s*samples|percussion\s*loops|percussion\s*samples|samples)$/i;
+
+// ── Helpers ──────────────────────────────────────────────────────────────
 function cleanProductName(folderName: string): string {
   return folderName
-    .replace(/_WAV_MIDI$/i, "")
-    .replace(/_MIDI_WAV$/i, "")
-    .replace(/_WAV_ALP$/i, "")
-    .replace(/_WAV$/i, "")
-    .replace(/_MIDI$/i, "")
-    .replace(/_/g, " ")
-    .trim();
+    .replace(/_WAV_MIDI$/i, "").replace(/_MIDI_WAV$/i, "").replace(/_WAV_ALP$/i, "")
+    .replace(/_WAV$/i, "").replace(/_MIDI$/i, "").replace(/_/g, " ").trim();
 }
 
-// ── Instrument detection from product name and file content ─────────────
 function detectInstrument(productName: string, fileName: string): string {
   const pn = productName.toLowerCase();
   const fn = fileName.toLowerCase();
   if (/bass|_bass_/i.test(fn) && !/kick/i.test(fn)) return "bass";
   if (/guitar|_gtr_|baritoneguitar|resonatorguitar/i.test(pn) || /_gtr_/i.test(fn)) return "guitar";
-  if (/saxophone/i.test(pn)) return "guitar"; // sax → guitar category for now
+  if (/saxophone/i.test(pn)) return "guitar";
   if (/percussion|perc_|_perc/i.test(pn)) return "percussion";
   if (/moog|electronic/i.test(pn)) return "electronic";
   if (/bass_wav/i.test(pn)) return "bass";
   return "drums";
 }
 
-// ── Genre detection ─────────────────────────────────────────────────────
 function detectGenre(productName: string, songName: string, fileName: string): string {
   const all = `${productName} ${songName} ${fileName}`.toLowerCase();
   if (/hip\s*hop/i.test(all)) return "Hip Hop";
@@ -142,17 +154,16 @@ function detectGenre(productName: string, songName: string, fileName: string): s
   return "Rock";
 }
 
-// ── BPM extraction ──────────────────────────────────────────────────────
 function extractBpm(text: string): number | null {
   const m = text.match(/(\d{2,3})\s*bpm/i);
-  if (m) return parseInt(m[1]);
-  // BFM pattern
-  const bfm = text.match(/^BFM\s+(\d{2,3})\s/);
-  if (bfm) return parseInt(bfm[1]);
-  return null;
+  return m ? parseInt(m[1]) : null;
 }
 
-// ── Section type from file/folder name ──────────────────────────────────
+function extractKey(text: string): string | null {
+  const m = text.match(/\b([A-G][b#]?)\s*(major|minor|min|maj)?\b/i);
+  return m ? m[1] : null;
+}
+
 function extractSectionType(name: string): string {
   const l = name.toLowerCase();
   if (/^(verse|vrs)/i.test(l)) return "verse";
@@ -160,18 +171,19 @@ function extractSectionType(name: string): string {
   if (/^intro/i.test(l)) return "intro";
   if (/^outro/i.test(l)) return "outro";
   if (/^bridge/i.test(l)) return "bridge";
-  if (/^fill/i.test(l)) return "fill";
+  if (/^(fill|fll)/i.test(l)) return "fill";
   if (/^break/i.test(l)) return "break";
   if (/^end/i.test(l)) return "ending";
+  if (/^8bar/i.test(l)) return "8bar";
   if (/^ride/i.test(l)) return "ride";
-  if (/^hat/i.test(l)) return "hat";
+  if (/^(hat|hihat)/i.test(l)) return "hat";
   if (/^bell/i.test(l)) return "bell";
   if (/^groove/i.test(l)) return "groove";
   if (/^halftime/i.test(l)) return "halftime";
   if (/^xstick/i.test(l)) return "xstick";
   if (/^tom/i.test(l)) return "toms";
   if (/^crash/i.test(l)) return "crash";
-  if (/^snare/i.test(l)) return "snare";
+  if (/^(snare|snr)/i.test(l)) return "snare";
   if (/^kick/i.test(l)) return "kick";
   if (/^loosehat/i.test(l)) return "loosehat";
   if (/^tighthat/i.test(l)) return "tighthat";
@@ -181,202 +193,237 @@ function extractSectionType(name: string): string {
   return "full_loop";
 }
 
-// ── Key extraction ──────────────────────────────────────────────────────
-function extractKey(text: string): string | null {
-  const m = text.match(/\b([A-G][b#]?)\s*(major|minor|min|maj)?\b/i);
-  if (m) return m[1];
-  return null;
+function extractSectionNumber(name: string): number | null {
+  // Match trailing number: "Verse A LightOnLove 1" → 1, "Chorus 90s HipHop 91bpm 3" → 3
+  const m = name.match(/\s(\d+)$/);
+  return m ? parseInt(m[1]) : null;
 }
 
-// ── Parse a single WAV path into a database record ──────────────────────
-interface LoopRecord {
+// ── Parse folder hierarchy ──────────────────────────────────────────────
+interface ParsedPath {
+  product: string;    // top-level artist pack
+  artist: string;     // cleaned artist name
+  collection: string; // the SONG folder
+  sectionFolder: string | null; // multitrack section folder (null for stereo)
+  fileName: string;   // the .wav filename
+  fullPath: string;   // original path
+  fileSize: number;
+  isMultitrack: boolean;
+}
+
+function parsePath(line: string): ParsedPath | null {
+  const [fullPath, sizeStr] = line.split("|");
+  if (!fullPath || !fullPath.toLowerCase().endsWith(".wav")) return null;
+
+  const parts = fullPath.split("/");
+  const fileName = parts[parts.length - 1];
+
+  // Skip MIDI files
+  if (/\.mid$/i.test(fileName)) return null;
+
+  // Determine product folder
+  let product: string;
+  let remainingParts: string[];
+  if (parts[0] === "DRUMS" || parts[0] === "PERCUSSION") {
+    product = parts[1] || parts[0];
+    remainingParts = parts.slice(2);
+  } else {
+    product = parts[0];
+    remainingParts = parts.slice(1);
+  }
+  if (!product) return null;
+
+  const artist = ARTIST_MAP[product] || cleanProductName(product);
+
+  // Skip organizational folders to find the SONG folder
+  // Path after product: [OrgFolder?, SongFolder, SectionFolder?, file.wav]
+  const pathAfterProduct = remainingParts;
+  let idx = 0;
+  while (idx < pathAfterProduct.length - 1 && SKIP_FOLDERS.test(pathAfterProduct[idx])) {
+    idx++;
+  }
+
+  let collection: string;
+  let sectionFolder: string | null = null;
+  let isMultitrack = /multitrack/i.test(fullPath);
+
+  const remaining = pathAfterProduct.length - idx; // how many parts left (including filename)
+
+  if (remaining >= 3) {
+    // Product/.../SongFolder/SectionFolder/file.wav (multitrack with section subfolder)
+    collection = pathAfterProduct[idx];
+    sectionFolder = pathAfterProduct[idx + 1];
+  } else if (remaining === 2) {
+    // Product/.../SongFolder/file.wav (stereo loop, or flat multitrack)
+    collection = pathAfterProduct[idx];
+    sectionFolder = null;
+  } else {
+    // Product/file.wav (no song folder)
+    collection = product;
+    sectionFolder = null;
+  }
+
+  return {
+    product, artist, collection, sectionFolder, fileName, fullPath,
+    fileSize: parseInt(sizeStr) || 0,
+    isMultitrack,
+  };
+}
+
+// ── Main ────────────────────────────────────────────────────────────────
+interface LoopRow {
   title: string;
   artist: string;
-  collection: string;      // the "song" or groove set folder
-  product: string;          // the top-level product folder
+  collection: string;
   grooveName: string;
   instrumentCategory: string;
   genre: string;
   bpm: number | null;
   keySignature: string | null;
   sectionType: string;
-  wavUrl: string;
-  fileSize: number;
+  sectionNumber: number | null;
   isMultitrack: boolean;
+  wavUrl: string; // primary playback URL (stereo file, or first stem)
+  stems: { name: string; filename: string; cdn_url: string }[];
+  fileSize: number;
 }
 
-function parsePath(line: string): LoopRecord | null {
-  const [fullPath, sizeStr] = line.split("|");
-  if (!fullPath || !fullPath.toLowerCase().endsWith(".wav")) return null;
-  const size = parseInt(sizeStr) || 0;
-
-  const parts = fullPath.split("/");
-  const fileName = parts[parts.length - 1];
-
-  // Skip non-audio files
-  if (/\.mid$/i.test(fileName)) return null;
-
-  // Determine product folder (normalize DRUMS/X and PERCUSSION/X)
-  let product: string;
-  let remainingParts: string[];
-
-  if (parts[0] === "DRUMS" || parts[0] === "PERCUSSION") {
-    product = parts[1];
-    remainingParts = parts.slice(2);
-  } else {
-    product = parts[0];
-    remainingParts = parts.slice(1);
-  }
-
-  if (!product) return null;
-
-  // Artist = clean product folder name. Use ARTIST_MAP for known artists, otherwise derive from folder name.
-  const artist = ARTIST_MAP[product] || cleanProductName(product);
-
-  // Collection = the "song" level folder (second level after product)
-  // For paths like Product/SongFolder/file.wav → collection = SongFolder
-  // For paths like Product/Loops/SongFolder/file.wav → collection = SongFolder
-  // For paths like Product/SongFolder/GrooveFolder/file.wav → collection = SongFolder
-  let collection = product; // default to product if no sub-folder
-
-  if (remainingParts.length >= 2) {
-    // Skip known intermediate/organizational folders to find the actual song/groove set folder
-    let songIdx = 0;
-    while (songIdx < remainingParts.length - 1) {
-      if (/^(loops|stereo loops|multitrack loops|multitrack_loops|stereo_loops|clean loops|vibe loops|audio loops|multitrack|stereo|dry|compressed|mixed|perc loops|drum kit loops|drum kit samples|percussion loops|percussion samples|samples)$/i.test(remainingParts[songIdx])
-          || /^multitrack\s/i.test(remainingParts[songIdx])) {
-        songIdx++;
-      } else {
-        break;
-      }
-    }
-    if (songIdx < remainingParts.length - 1) {
-      collection = remainingParts[songIdx];
-    }
-  } else if (remainingParts.length === 1) {
-    // Just product/file.wav — collection is the product itself
-    collection = product;
-  }
-
-  // Build title from filename (remove extension)
-  const title = fileName.replace(/\.wav$/i, "");
-
-  // Build CDN URL
-  const encodedPath = fullPath.split("/").map(s => encodeURIComponent(s)).join("/");
-  const wavUrl = `https://${CDN}/${encodedPath}`;
-
-  const instrument = detectInstrument(product, fileName);
-  const genre = detectGenre(product, collection, fileName);
-  const bpm = extractBpm(collection) || extractBpm(product) || extractBpm(title);
-  const key = extractKey(product) || extractKey(collection);
-  const sectionType = extractSectionType(title) || extractSectionType(collection);
-  const isMultitrack = /multitrack|_mt_/i.test(product) || /multitrack/i.test(fullPath);
-
-  return {
-    title,
-    artist,
-    collection,
-    product,
-    grooveName: title,
-    instrumentCategory: instrument,
-    genre,
-    bpm,
-    keySignature: key,
-    sectionType,
-    wavUrl,
-    fileSize: size,
-    isMultitrack,
-  };
-}
-
-// ── Main ────────────────────────────────────────────────────────────────
 async function main() {
   const wavList = fs.readFileSync("/home/runner/workspace/scripts/bunny-wavs.txt", "utf-8");
   const lines = wavList.trim().split("\n").filter(l => l.trim());
-
   console.log(`Parsing ${lines.length} WAV files...`);
 
-  const records: LoopRecord[] = [];
-  let skipped = 0;
-
+  // Step 1: Parse all paths
+  const parsed: ParsedPath[] = [];
   for (const line of lines) {
-    const rec = parsePath(line);
-    if (rec) {
-      records.push(rec);
+    const p = parsePath(line);
+    if (p) parsed.push(p);
+  }
+  console.log(`Parsed ${parsed.length} WAV paths`);
+
+  // Step 2: Group into loop records
+  // Key: for stereo files, each file = one loop
+  // For multitrack section folders, all stems in the same folder = one loop
+  const loopMap = new Map<string, { parsed: ParsedPath[]; primary: ParsedPath }>();
+
+  for (const p of parsed) {
+    let key: string;
+    if (p.sectionFolder) {
+      // Multitrack: group by product/collection/sectionFolder
+      key = `${p.product}|${p.collection}|${p.sectionFolder}`;
     } else {
-      skipped++;
+      // Stereo: each file is its own loop
+      key = `${p.product}|${p.collection}|${p.fileName}`;
     }
+
+    if (!loopMap.has(key)) {
+      loopMap.set(key, { parsed: [], primary: p });
+    }
+    loopMap.get(key)!.parsed.push(p);
   }
 
-  console.log(`Parsed: ${records.length} records (${skipped} skipped)`);
+  console.log(`Grouped into ${loopMap.size} unique loops`);
 
-  // Summary
-  const artists = new Set(records.map(r => r.artist));
-  const products = new Set(records.map(r => r.product));
-  const collections = new Set(records.map(r => r.collection));
-  const genres = new Set(records.map(r => r.genre));
-  const instruments = new Set(records.map(r => r.instrumentCategory));
+  // Step 3: Build loop rows
+  const rows: LoopRow[] = [];
 
-  console.log(`Artists: ${artists.size}`);
-  console.log(`Products: ${products.size}`);
+  for (const [, group] of loopMap) {
+    const first = group.primary;
+    const isMulti = group.parsed.length > 1;
+
+    // The "name" of this loop:
+    // - For stereo: filename without extension
+    // - For multitrack: the section folder name
+    const loopName = first.sectionFolder || first.fileName.replace(/\.wav$/i, "");
+
+    const sectionType = extractSectionType(loopName);
+    const sectionNumber = extractSectionNumber(loopName);
+    const bpm = extractBpm(first.collection) || extractBpm(first.product) || extractBpm(loopName);
+    const key = extractKey(first.product) || extractKey(first.collection);
+    const genre = detectGenre(first.product, first.collection, loopName);
+    const instrument = detectInstrument(first.product, loopName);
+
+    // For multitrack, pick the primary playback file (prefer OHS, ROOM, or first file)
+    let primaryFile = first;
+    if (isMulti) {
+      const ohs = group.parsed.find(p => /ohs|overhead|room\b/i.test(p.fileName));
+      const stereoMix = group.parsed.find(p => /mix|stereo|full/i.test(p.fileName));
+      primaryFile = stereoMix || ohs || first;
+    }
+
+    const encodedPrimary = primaryFile.fullPath.split("/").map(s => encodeURIComponent(s)).join("/");
+    const primaryUrl = `https://${CDN}/${encodedPrimary}`;
+
+    // Build stems array for multitrack
+    const stems = isMulti ? group.parsed.map(p => {
+      const stemName = p.fileName.replace(/\.wav$/i, "")
+        .replace(/_/g, " ").replace(/\s+\d+$/, "").trim();
+      const encodedPath = p.fullPath.split("/").map(s => encodeURIComponent(s)).join("/");
+      return {
+        name: stemName,
+        filename: p.fileName,
+        cdn_url: `https://${CDN}/${encodedPath}`,
+      };
+    }) : [];
+
+    rows.push({
+      title: loopName,
+      artist: first.artist,
+      collection: first.collection,
+      grooveName: loopName,
+      instrumentCategory: instrument,
+      genre,
+      bpm,
+      keySignature: key,
+      sectionType,
+      sectionNumber,
+      isMultitrack: isMulti,
+      wavUrl: primaryUrl,
+      stems,
+      fileSize: group.parsed.reduce((sum, p) => sum + p.fileSize, 0),
+    });
+  }
+
+  console.log(`Built ${rows.length} loop rows`);
+
+  // Stats
+  const artists = new Set(rows.map(r => r.artist));
+  const collections = new Set(rows.map(r => `${r.artist}::${r.collection}`));
+  const genres = new Set(rows.map(r => r.genre));
+  console.log(`\nArtists: ${artists.size}`);
   console.log(`Collections (songs): ${collections.size}`);
   console.log(`Genres: ${[...genres].join(", ")}`);
-  console.log(`Instruments: ${[...instruments].join(", ")}`);
-  console.log(`With BPM: ${records.filter(r => r.bpm).length}`);
+  console.log(`Multitrack loops: ${rows.filter(r => r.isMultitrack).length}`);
+  console.log(`Stereo loops: ${rows.filter(r => !r.isMultitrack).length}`);
 
-  // Nuke old data and rebuild
+  // Step 4: Wipe and rebuild
   console.log("\nClearing audio_loops table...");
   await pool.query("DELETE FROM audio_loops");
 
-  console.log(`Inserting ${records.length} records...`);
-
+  console.log(`Inserting ${rows.length} records...`);
   let inserted = 0;
   let errors = 0;
 
-  // Batch insert for speed
-  const BATCH = 100;
-  for (let i = 0; i < records.length; i += BATCH) {
-    const batch = records.slice(i, i + BATCH);
-    const values: any[] = [];
-    const placeholders: string[] = [];
-
-    for (let j = 0; j < batch.length; j++) {
-      const r = batch[j];
-      const o = j * 14;
-      placeholders.push(`($${o+1},$${o+2},$${o+3},$${o+4},$${o+5},$${o+6},$${o+7},$${o+8},$${o+9},$${o+10},$${o+11},$${o+12},$${o+13},$${o+14})`);
-      values.push(r.title, r.artist, r.collection, r.grooveName, r.instrumentCategory, r.genre,
-        r.bpm, r.keySignature, r.sectionType, r.isMultitrack, r.wavUrl, r.fileSize, "4/4", []);
-    }
-
+  for (let i = 0; i < rows.length; i++) {
+    const r = rows[i];
     try {
       await pool.query(
         `INSERT INTO audio_loops (title, artist, collection, groove_name, instrument_category, genre,
-          bpm, key_signature, section_type, is_multitrack, wav_url, file_size_bytes, time_signature, tags)
-         VALUES ${placeholders.join(",")}`,
-        values
+          bpm, key_signature, section_type, section_number, is_multitrack, wav_url, stems,
+          file_size_bytes, time_signature, tags)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)`,
+        [r.title, r.artist, r.collection, r.grooveName, r.instrumentCategory, r.genre,
+          r.bpm, r.keySignature, r.sectionType, r.sectionNumber, r.isMultitrack, r.wavUrl,
+          JSON.stringify(r.stems), r.fileSize, "4/4", []]
       );
-      inserted += batch.length;
+      inserted++;
     } catch (e: any) {
-      // Fallback to individual inserts
-      for (const r of batch) {
-        try {
-          await pool.query(
-            `INSERT INTO audio_loops (title, artist, collection, groove_name, instrument_category, genre,
-              bpm, key_signature, section_type, is_multitrack, wav_url, file_size_bytes, time_signature, tags)
-             VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)`,
-            [r.title, r.artist, r.collection, r.grooveName, r.instrumentCategory, r.genre,
-              r.bpm, r.keySignature, r.sectionType, r.isMultitrack, r.wavUrl, r.fileSize, "4/4", []]
-          );
-          inserted++;
-        } catch (e2: any) {
-          errors++;
-          if (errors <= 5) console.error(`  ERR: ${r.title} — ${e2.message}`);
-        }
-      }
+      errors++;
+      if (errors <= 10) console.error(`  ERR: ${r.title} (${r.collection}) — ${e.message}`);
     }
 
-    if ((i + BATCH) % 5000 === 0) {
-      console.log(`  Progress: ${Math.min(i + BATCH, records.length)}/${records.length}`);
+    if ((i + 1) % 1000 === 0) {
+      console.log(`  Progress: ${i + 1}/${rows.length} (${errors} errors)`);
     }
   }
 
@@ -386,25 +433,24 @@ async function main() {
   console.log(`  Errors: ${errors}`);
   console.log(`${"=".repeat(60)}`);
 
-  // Final stats
+  // Final stats from DB
   const stats = await pool.query(`
-    SELECT
-      COUNT(*)::int as total,
-      COUNT(DISTINCT artist)::int as artists,
-      COUNT(DISTINCT collection)::int as collections,
-      COUNT(DISTINCT genre)::int as genres,
-      COUNT(DISTINCT instrument_category)::int as instruments
+    SELECT COUNT(*)::int as total,
+           COUNT(DISTINCT artist)::int as artists,
+           COUNT(DISTINCT collection)::int as collections,
+           COUNT(DISTINCT genre)::int as genres
     FROM audio_loops
   `);
-  console.log(`\nDB Stats: ${JSON.stringify(stats.rows[0])}`);
+  console.log(`\nDB: ${JSON.stringify(stats.rows[0])}`);
 
-  const byInstrument = await pool.query(`SELECT instrument_category, COUNT(*)::int as c FROM audio_loops GROUP BY instrument_category ORDER BY c DESC`);
-  console.log("\nBy instrument:");
-  for (const r of byInstrument.rows) console.log(`  ${r.instrument_category}: ${r.c}`);
-
-  const byGenre = await pool.query(`SELECT genre, COUNT(*)::int as c FROM audio_loops GROUP BY genre ORDER BY c DESC LIMIT 15`);
-  console.log("\nBy genre:");
-  for (const r of byGenre.rows) console.log(`  ${r.genre}: ${r.c}`);
+  const topCollections = await pool.query(`
+    SELECT artist, collection, COUNT(*)::int as sections
+    FROM audio_loops GROUP BY artist, collection ORDER BY sections DESC LIMIT 20
+  `);
+  console.log("\nTop collections (songs with most sections):");
+  for (const r of topCollections.rows) {
+    console.log(`  ${r.artist} — ${r.collection}: ${r.sections} sections`);
+  }
 
   await pool.end();
 }
