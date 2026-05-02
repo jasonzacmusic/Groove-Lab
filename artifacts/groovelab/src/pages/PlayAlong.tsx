@@ -9,10 +9,11 @@ import {
 } from '@/data/exam-videos';
 import videoDb from '@/data/exam-video-ids.json';
 
-const VIDEO_DB = videoDb as Record<string, { id: string; title: string }[]>;
+const VIDEO_DB = videoDb as Record<string, { id: string; title: string; channel?: string }[]>;
 
-/** Channel attribution for exam board play-along videos */
-function examChannel(board: string): string {
+/** Channel attribution fallback for exam board play-along videos.
+ *  Used only when the per-entry `channel` field is missing. */
+function examChannelFallback(board: string): string {
   const channels: Record<string, string> = {
     'ABRSM': 'ABRSM Play-Alongs',
     'Trinity': 'Trinity Rock & Pop',
@@ -66,16 +67,13 @@ function MethodBookSection({ methods, instrument }: { methods: typeof PIANO_METH
                     return videoId ? (
                       <YouTubeInline key={level} videoId={videoId} title={`${m.name} — ${level}`} channel={methodChannel(m.name)} />
                     ) : (
-                      <a
+                      <div
                         key={level}
-                        href={`https://www.youtube.com/results?search_query=${encodeURIComponent(`${m.name} ${level} play along piano`)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block rounded-md border border-border bg-muted/30 hover:bg-muted/50 hover:border-primary/40 transition-colors px-3 py-2 text-xs"
+                        className="block rounded-md border border-dashed border-border bg-muted/20 px-3 py-2 text-xs"
                       >
                         <span className="font-medium">{m.name} — {level}</span>
-                        <span className="block text-[10px] text-muted-foreground mt-0.5">Search on YouTube ↗</span>
-                      </a>
+                        <span className="block text-[10px] text-muted-foreground mt-0.5">Curated video coming soon.</span>
+                      </div>
                     );
                   })}
                 </div>
@@ -203,21 +201,20 @@ export default function PlayAlong() {
                   <h4 className="font-medium text-base flex items-center gap-2"><Music className="w-4 h-4 text-primary" />{entry.title}</h4>
                   {known && known.length > 0 ? (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                      {known.map((v) => <YouTubeInline key={v.id} videoId={v.id} title={v.title} channel={examChannel(entry.board)} />)}
+                      {known.map((v) => (
+                        <YouTubeInline
+                          key={v.id}
+                          videoId={v.id}
+                          title={v.title}
+                          channel={v.channel || examChannelFallback(entry.board)}
+                        />
+                      ))}
                     </div>
                   ) : (
                     <div className="rounded-lg border border-dashed border-border bg-muted/20 p-4 text-center">
                       <p className="text-xs text-muted-foreground">
                         Curated videos coming soon for {entry.title}.
                       </p>
-                      <a
-                        href={`https://www.youtube.com/results?search_query=${encodeURIComponent(`${entry.title} backing track play along`)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-block mt-2 text-xs text-primary hover:underline"
-                      >
-                        Search YouTube for {entry.title} ↗
-                      </a>
                     </div>
                   )}
                 </div>

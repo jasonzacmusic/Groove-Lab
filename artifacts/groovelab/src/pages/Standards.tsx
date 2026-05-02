@@ -148,61 +148,75 @@ function chordRoot(symbol: string): string {
 }
 
 /** Walking bass line generator — musically correct for jazz standards.
- *  Uses chord tones (root, 3rd, 5th, 7th) and chromatic approaches.
- *  CRITICAL: minor chords get minor 3rd, major chords get major 3rd. */
-function walkingBassNotes(chordSymbol: string, nextRoot: string, beats: number): string[] {
+ *  Uses chord tones (root, 3rd, 5th, 7th) and chromatic / dominant approaches.
+ *  CRITICAL: minor chords get minor 3rd, major chords get major 3rd.
+ *  Beat 4 always targets either the 3rd of the NEXT chord (strong voice-leading)
+ *  or a chromatic approach to the next root, alternating bars for musicality. */
+function walkingBassNotes(chordSymbol: string, nextChord: string, beats: number, barIndex: number): string[] {
   const match = chordSymbol.match(/^([A-G][#b]?)(.*)/);
   const currentRoot = match ? match[1] : 'C';
   const quality = match ? match[2].toLowerCase().replace(/\s/g, '') : '';
   const curIdx = rootToIndex(currentRoot);
+
+  const nxtMatch = nextChord.match(/^([A-G][#b]?)(.*)/);
+  const nextRoot = nxtMatch ? nxtMatch[1] : 'C';
+  const nextQuality = nxtMatch ? nxtMatch[2].toLowerCase().replace(/\s/g, '') : '';
   const nxtIdx = rootToIndex(nextRoot);
+  const nextIsMinor = nextQuality.includes('m') && !nextQuality.includes('maj');
 
   // Determine chord intervals based on quality
-  const isMinor = quality.includes('m') || quality.includes('min') || quality.startsWith('-')
-    || quality.includes('dim') || quality.includes('°') || quality.includes('ø');
+  const isMinor = (quality.includes('m') && !quality.includes('maj'))
+    || quality.startsWith('-') || quality.includes('dim') || quality.includes('°') || quality.includes('ø');
   const isDim = quality.includes('dim') || quality.includes('°') || quality.includes('ø');
-  const isHalfDim = quality.includes('m7b5') || quality.includes('ø');
 
   const third = isMinor ? 3 : 4;
   const fifth = isDim ? 6 : 7;
-  const seventh = quality.includes('maj7') ? 11
-    : (quality.includes('7') || isMinor) ? 10
-    : quality.includes('dim7') ? 9
-    : -1; // no 7th
 
-  const note = (interval: number) => {
+  // Octave variation: alternate bars to keep the line moving
+  // even bars stay around octave 2, odd bars push up to octave 3
+  const oct = (barIndex % 2 === 0) ? '2' : '3';
+  const altOct = oct === '2' ? '3' : '2';
+
+  const note = (interval: number, useAltOctave = false) => {
     const idx = (curIdx + interval) % 12;
-    return (SHARP_TO_FLAT[CHROMATIC[idx]] || CHROMATIC[idx]) + '2';
+    return (SHARP_TO_FLAT[CHROMATIC[idx]] || CHROMATIC[idx]) + (useAltOctave ? altOct : oct);
   };
 
-  if (beats <= 1) return [note(0)]; // just root
+  if (beats <= 1) return [note(0)];
 
   if (beats === 2) {
     // Root + chromatic approach to next root
     const approach = ((nxtIdx - 1) + 12) % 12;
-    return [note(0), (SHARP_TO_FLAT[CHROMATIC[approach]] || CHROMATIC[approach]) + '2'];
+    return [note(0), (SHARP_TO_FLAT[CHROMATIC[approach]] || CHROMATIC[approach]) + oct];
   }
-
-  // Standard 4-beat walking bass patterns (varied for musicality)
-  // Pattern 1: Root → 3rd → 5th → approach (most common)
-  // Pattern 2: Root → 5th → 3rd → approach (descending)
-  // Pattern 3: Root → 3rd → 5th → 7th (when 7th available and same chord continues)
-
-  const approach = ((nxtIdx - 1) + 12) % 12;
-  const approachNote = (SHARP_TO_FLAT[CHROMATIC[approach]] || CHROMATIC[approach]) + '2';
 
   if (beats === 3) {
-    return [note(0), note(third), approachNote];
+    // Root → 5th → chromatic approach
+    return [note(0), note(fifth), (SHARP_TO_FLAT[CHROMATIC[((nxtIdx - 1) + 12) % 12]] || CHROMATIC[((nxtIdx - 1) + 12) % 12]) + oct];
   }
 
-  // 4 beats — the classic walking bass bar
-  // Use ascending pattern: Root → 3rd → 5th → chromatic approach
-  return [
-    note(0),       // Beat 1: Root
-    note(third),   // Beat 2: 3rd (MINOR for m7, MAJOR for maj7/dom7)
-    note(fifth),   // Beat 3: 5th (diminished 5th for dim/half-dim)
-    approachNote,  // Beat 4: Chromatic approach to next root
-  ];
+  // 4 beats — the classic walking bass bar.
+  // Beat 4 alternates between TARGETING the 3rd of the next chord (strong
+  // voice-leading downbeat into the next bar) and a CHROMATIC APPROACH to
+  // the next root.
+  const targetThirdOfNext = (nxtIdx + (nextIsMinor ? 3 : 4)) % 12;
+  const chromaticApproach = ((nxtIdx - 1) + 12) % 12;
+
+  // Even bars → land on next chord's 3rd from a 5th-of-3rd a half-step above
+  // Odd bars → traditional chromatic approach to next root
+  const beat4 = barIndex % 2 === 0
+    ? (SHARP_TO_FLAT[CHROMATIC[(targetThirdOfNext + 1) % 12]] || CHROMATIC[(targetThirdOfNext + 1) % 12]) + oct
+    : (SHARP_TO_FLAT[CHROMATIC[chromaticApproach]] || CHROMATIC[chromaticApproach]) + oct;
+
+  // Octave variation on the 5th beat slot to add melodic shape
+  if (barIndex % 4 === 2) {
+    // Descending pattern: Root → 7th → 5th → approach
+    const seventh = quality.includes('maj7') ? 11 : 10;
+    return [note(0), note(seventh, true), note(fifth), beat4];
+  }
+
+  // Ascending pattern: Root → 3rd → 5th → beat4 target
+  return [note(0), note(third), note(fifth), beat4];
 }
 
 /** Bossa bass pattern: authentic surdo-style — dotted quarter + eighth tied,
@@ -558,28 +572,30 @@ export default function Standards() {
       const thisBarIdx = Math.floor(cumBeats / 4);
 
       // ── Piano comping ──
+      // Sustain notes longer than '8n' so chords actually ring under the soloist
+      // instead of poking out as percussive stabs.
       if (isSwing || isFunk) {
-        // Comp on beats 2 and 4
+        // Comp on beats 2 and 4 — let each voicing ring for a half-note ("Freddie Green"-ish sustain)
         for (let b = 0; b < chordBeats; b++) {
           const beatInBar = (cumBeats + b) % 4;
           if (beatInBar === 1 || beatInBar === 3) {
             transport.schedule((time) => {
               if (pianoRef.current) {
                 const voicing = chordToVoicing(chord.chord);
-                pianoRef.current.triggerAttackRelease(voicing, '8n', time, 0.35);
+                pianoRef.current.triggerAttackRelease(voicing, '2n', time, 0.35);
               }
             }, `0:${chordStartBeat + b}:0`);
           }
         }
       } else if (isBossa) {
-        // Bossa: comp on 1 and 3
+        // Bossa: comp on 1 and 3 — sustained dotted-quarter feel
         for (let b = 0; b < chordBeats; b++) {
           const beatInBar = (cumBeats + b) % 4;
           if (beatInBar === 0 || beatInBar === 2) {
             transport.schedule((time) => {
               if (pianoRef.current) {
                 const voicing = chordToVoicing(chord.chord);
-                pianoRef.current.triggerAttackRelease(voicing, '8n', time, 0.3);
+                pianoRef.current.triggerAttackRelease(voicing, '4n.', time, 0.3);
               }
             }, `0:${chordStartBeat + b}:0`);
           }
@@ -605,13 +621,12 @@ export default function Standards() {
       // ── Bass ──
       const nextChord = chords[(chordIdx + 1) % chords.length];
       const root = chordRoot(chord.chord);
-      const nextRoot = chordRoot(nextChord.chord);
 
       if (isBossa) {
         const bassNotes = bossaBassNotes(root, chordBeats);
         bassNotes.forEach((note, b) => {
           transport.schedule((time) => {
-            if (bassRef.current) bassRef.current.triggerAttackRelease(note, '8n', time, 0.7);
+            if (bassRef.current) bassRef.current.triggerAttackRelease(note, '4n', time, 0.7);
           }, `0:${chordStartBeat + b}:0`);
         });
       } else if (isBallad) {
@@ -621,11 +636,12 @@ export default function Standards() {
           if (bassRef.current) bassRef.current.triggerAttackRelease(bassNote, `0:${chordBeats}:0`, time, 0.6);
         }, `0:${chordStartBeat}:0`);
       } else {
-        // Walking bass
-        const bassNotes = walkingBassNotes(chord.chord, nextRoot, chordBeats);
+        // Walking bass — pass bar index so beat-4 voice-leading and octave
+        // variation alternate for a more musical line.
+        const bassNotes = walkingBassNotes(chord.chord, nextChord.chord, chordBeats, thisBarIdx);
         bassNotes.forEach((note, b) => {
           transport.schedule((time) => {
-            if (bassRef.current) bassRef.current.triggerAttackRelease(note, '8n', time, 0.7);
+            if (bassRef.current) bassRef.current.triggerAttackRelease(note, '4n', time, 0.7);
           }, `0:${chordStartBeat + b}:0`);
         });
       }
@@ -660,14 +676,21 @@ export default function Standards() {
           }, beatTime);
         }
       } else if (isBossa) {
-        // Authentic bossa nova drum pattern:
-        // - Cross-stick (rim click) on the bossa clave: 1, 2.5, 4 (2-3 clave)
-        // - Surdo-style kick: deep "boom" on 1 and 3 (the heartbeat)
-        // - Subtle ride on every beat for cymbal pulse
+        // Authentic bossa nova surdo + clave pattern:
+        // - SURDO kick: 1, "&" of 2, 3, "&" of 4 (the iconic dotted heartbeat)
+        // - Cross-stick (rim click) on the 2-3 clave: 1, "&" of 2, "&" of 3, 4
+        // - Soft ride pulse on every beat
+        // Surdo kick: downbeat 1
         if (beatInBar === 0 || beatInBar === 2) {
           transport.schedule((time) => {
-            if (kickRef.current) kickRef.current.triggerAttackRelease('A1', '8n', time, 0.35);
+            if (kickRef.current) kickRef.current.triggerAttackRelease('A1', '4n', time, 0.4);
           }, beatTime);
+        }
+        // Surdo accent on the "&" of 2 and "&" of 4 — the syncopated kick
+        if (beatInBar === 1 || beatInBar === 3) {
+          transport.schedule((time) => {
+            if (kickRef.current) kickRef.current.triggerAttackRelease('A1', '8n', time, 0.28);
+          }, `0:${startBeat + b}:2`);
         }
         // Cross-stick on 2 and 4
         if (beatInBar === 1 || beatInBar === 3) {
@@ -675,7 +698,7 @@ export default function Standards() {
             if (hihatRef.current) hihatRef.current.triggerAttackRelease('E5', '32n', time, 0.18);
           }, beatTime);
         }
-        // Eighth-note "and" of beat 2 — clave accent
+        // Eighth-note "and" of beat 2 — clave accent (cross-stick)
         if (beatInBar === 1) {
           transport.schedule((time) => {
             if (hihatRef.current) hihatRef.current.triggerAttackRelease('D5', '32n', time, 0.1);
@@ -720,11 +743,8 @@ export default function Standards() {
       }
     }
 
-    // ── Melody: schedule notes if melody is enabled ──
-    if (melodyEnabledRef.current) {
-      const melodyData = getMelody(chords.length > 0 ? '' : ''); // placeholder — actual lookup happens in playChords
-      // Melody notes are scheduled from the caller (playChords) since we need the standard name
-    }
+    // Note: melody notes are scheduled directly from playChords because they
+    // require the standard name (which scheduleChorus does not have).
 
     return { totalBeats, endBeat: beatOffset };
   }, []);
@@ -1343,16 +1363,8 @@ export default function Standards() {
                       ) : (
                         <div className="col-span-full rounded-lg border border-dashed border-border bg-muted/20 p-6 text-center">
                           <p className="text-xs text-muted-foreground">
-                            No curated backing tracks yet for "{name}".
+                            No curated backing tracks yet for "{name}". Use the player above to practice with the built-in chord engine.
                           </p>
-                          <a
-                            href={`https://www.youtube.com/results?search_query=${encodeURIComponent(`"${name}" jazz backing track`)}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-block mt-2 text-xs text-primary hover:underline"
-                          >
-                            Search YouTube for backing tracks ↗
-                          </a>
                         </div>
                       )}
                     </div>

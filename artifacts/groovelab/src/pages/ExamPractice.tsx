@@ -367,16 +367,8 @@ export default function ExamPractice() {
                     <div className="rounded-lg border border-dashed border-border bg-muted/20 p-6 text-center">
                       <BookOpen className="w-10 h-10 mx-auto mb-2 opacity-30" />
                       <p className="text-sm text-muted-foreground">
-                        No curated videos yet for {board} {grade} {instrument}.
+                        No curated videos yet for {board} {grade} {instrument}. We're adding more every week.
                       </p>
-                      <a
-                        href={`https://www.youtube.com/results?search_query=${encodeURIComponent(`${board} ${grade} ${instrument} exam`)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-block mt-3 text-xs text-primary hover:underline"
-                      >
-                        Search YouTube ↗
-                      </a>
                     </div>
                   )}
                 </div>
