@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link } from 'wouter';
 import { useGetTaxonomy } from '@workspace/api-client-react';
 import { useQuery } from '@tanstack/react-query';
@@ -6,34 +6,20 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { usePlayer } from '@/context/PlayerContext';
 import {
   Compass, Play, Music, Timer, Cpu, Piano, BookOpen,
   GraduationCap, Radio, Star,
 } from 'lucide-react';
 import { YouTubeInline } from '@/components/YouTubeInline';
-import { GENRE_VIDEO_LIBRARY } from '@/data/genre-videos';
+import {
+  GENRES, TEMPO_BUCKETS, GENRE_VIDEO_LIBRARY_BY_TEMPO,
+  tempoLabel, type TempoBucket,
+} from '@/data/genre-videos';
 import { KEY_BACKING_TRACKS } from '@/data/chord-videos';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-
-// Build featured videos from the first entry of key genres
-const FEATURED_GENRES = ['Blues', 'Jazz', 'Funk', 'Reggae', 'Rock', 'Soul'] as const;
-const FEATURED_COLORS: Record<string, { color: string; bg: string }> = {
-  Blues: { color: 'text-indigo-400', bg: 'bg-indigo-500/10' },
-  Jazz: { color: 'text-amber-400', bg: 'bg-amber-500/10' },
-  Funk: { color: 'text-orange-400', bg: 'bg-orange-500/10' },
-  Reggae: { color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
-  Rock: { color: 'text-red-400', bg: 'bg-red-500/10' },
-  Soul: { color: 'text-purple-400', bg: 'bg-purple-500/10' },
-};
-const FEATURED_VIDEOS = FEATURED_GENRES
-  .map(genre => {
-    const videos = GENRE_VIDEO_LIBRARY[genre];
-    if (!videos || videos.length === 0) return null;
-    return { label: `${genre} Backing Tracks`, videoId: videos[0].id, channel: videos[0].channel, ...FEATURED_COLORS[genre] };
-  })
-  .filter((v): v is NonNullable<typeof v> => v !== null);
 
 // Build key tracks from the chord-videos KEY_BACKING_TRACKS
 const KEY_TRACKS = Object.entries(KEY_BACKING_TRACKS)
@@ -50,6 +36,96 @@ const TOOLS = [
 ];
 
 // KEY_TRACKS built above from KEY_BACKING_TRACKS
+
+// ── Backing-track browser (genre dropdown × tempo tabs) ─────────────────────
+function BackingTrackBrowser() {
+  const [genre, setGenre] = useState<string>(GENRES[0]);
+  const [bucket, setBucket] = useState<TempoBucket>('medium');
+
+  // Counts per bucket for the current genre — used to disable empty tabs.
+  const counts = useMemo(() => {
+    const buckets = GENRE_VIDEO_LIBRARY_BY_TEMPO[genre];
+    if (!buckets) return { slow: 0, medium: 0, fast: 0, veryFast: 0 } as Record<TempoBucket, number>;
+    return {
+      slow: buckets.slow.length,
+      medium: buckets.medium.length,
+      fast: buckets.fast.length,
+      veryFast: buckets.veryFast.length,
+    } as Record<TempoBucket, number>;
+  }, [genre]);
+
+  // Videos to render — first 9 from the active bucket.
+  const videos = useMemo(() => {
+    const buckets = GENRE_VIDEO_LIBRARY_BY_TEMPO[genre];
+    if (!buckets) return [];
+    return buckets[bucket].slice(0, 9);
+  }, [genre, bucket]);
+
+  return (
+    <section>
+      <h2 className="font-serif text-2xl mb-2 flex items-center gap-2">
+        <Star className="w-5 h-5 text-primary" /> Backing Tracks by Genre & Tempo
+      </h2>
+      <p className="text-sm text-muted-foreground mb-4">
+        Curated YouTube backing tracks across {GENRES.length} genres, organized by tempo. Plays inline.
+      </p>
+
+      {/* Genre dropdown */}
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
+        <div className="flex items-center gap-2">
+          <label className="text-xs uppercase font-bold text-muted-foreground tracking-wider">Genre</label>
+          <Select value={genre} onValueChange={setGenre}>
+            <SelectTrigger className="w-[200px] h-9">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {GENRES.map((g) => (
+                <SelectItem key={g} value={g}>{g}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Tempo tabs */}
+        <div className="flex flex-wrap gap-1.5">
+          {TEMPO_BUCKETS.map((b) => {
+            const n = counts[b];
+            const active = bucket === b;
+            return (
+              <button
+                key={b}
+                onClick={() => setBucket(b)}
+                disabled={n === 0}
+                className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors
+                  ${active ? 'bg-primary text-primary-foreground' : 'bg-muted/50 text-muted-foreground hover:bg-muted'}
+                  ${n === 0 ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'}`}
+              >
+                {tempoLabel(b)} <span className="opacity-70">· {n}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {videos.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {videos.map((v) => (
+            <div key={v.id}>
+              <YouTubeInline videoId={v.id} title={v.title} channel={v.channel} />
+              <p className="text-xs font-medium mt-1.5 px-1 truncate text-muted-foreground">{v.title}</p>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="rounded-lg border border-dashed border-border bg-muted/20 p-6 text-center">
+          <p className="text-xs text-muted-foreground">
+            No {tempoLabel(bucket).toLowerCase()} tracks for {genre} yet — try another tempo bucket.
+          </p>
+        </div>
+      )}
+    </section>
+  );
+}
 
 export default function Home() {
   const { data: taxonomy } = useGetTaxonomy();
@@ -173,23 +249,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Practice Content — curated inline YouTube embeds */}
-      <section>
-        <h2 className="font-serif text-2xl mb-2 flex items-center gap-2">
-          <Star className="w-5 h-5 text-primary" /> Featured Practice Content
-        </h2>
-        <p className="text-sm text-muted-foreground mb-4">
-          Curated backing tracks and drum loops for every genre — plays inline.
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {FEATURED_VIDEOS.map((v) => (
-            <div key={v.videoId}>
-              <YouTubeInline videoId={v.videoId} title={v.label} channel={v.channel} />
-              <p className={`text-xs font-medium mt-1.5 px-1 truncate ${v.color}`}>{v.label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* Backing Tracks by Genre & Tempo — curated inline YouTube embeds */}
+      <BackingTrackBrowser />
 
       {/* Backing Tracks by Key — show only keys with curated videos */}
       {KEY_TRACKS.length > 0 && (

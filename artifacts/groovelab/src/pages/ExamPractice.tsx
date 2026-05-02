@@ -451,46 +451,44 @@ function PieceCard({
   board: string;
   grade: string;
 }) {
-  const [showVideo, setShowVideo] = useState(false);
+  // Look up curated videos for this board/instrument/grade slot.
+  const dbKey = `${board}|${instrument}|${grade}`;
+  const slotVideos = VIDEO_DB[dbKey] || [];
+  // Filter to videos that mention this piece by title (case-insensitive).
+  const titleLower = piece.title.toLowerCase();
+  const matched = slotVideos.filter(v => v.title.toLowerCase().includes(titleLower)).slice(0, 2);
+  const [expanded, setExpanded] = useState(false);
 
   return (
     <Card className="overflow-hidden">
       <CardContent className="p-4">
         <div className="flex items-start justify-between gap-3">
-          <div>
-            <h5 className="font-medium text-sm">{piece.title}</h5>
+          <div className="min-w-0">
+            <h5 className="font-medium text-sm truncate">{piece.title}</h5>
             <p className="text-xs text-muted-foreground">{piece.composer}</p>
           </div>
-          <Button
-            variant="outline"
-            size="sm"
-            className="text-xs h-7 gap-1 flex-shrink-0"
-            onClick={() => setShowVideo(!showVideo)}
-          >
-            <Music className="w-3 h-3" />
-            {showVideo ? 'Hide' : 'Find on YouTube'}
-          </Button>
+          {matched.length > 0 && (
+            <Button
+              variant="outline"
+              size="sm"
+              className="text-xs h-7 gap-1 flex-shrink-0"
+              onClick={() => setExpanded(!expanded)}
+            >
+              <Music className="w-3 h-3" />
+              {expanded ? 'Hide' : `${matched.length} video${matched.length === 1 ? '' : 's'}`}
+            </Button>
+          )}
         </div>
-        {showVideo && (
+        {expanded && matched.length > 0 && (
           <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
-            <a
-              href={`https://www.youtube.com/results?search_query=${encodeURIComponent(`"${piece.title}" ${piece.composer} ${instrument} performance`)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-md border border-border bg-muted/30 hover:bg-muted/50 hover:border-primary/40 transition-colors px-3 py-2 text-xs"
-            >
-              <span className="block font-medium">{piece.title} — Performance</span>
-              <span className="block text-[10px] text-muted-foreground mt-0.5">Search on YouTube ↗</span>
-            </a>
-            <a
-              href={`https://www.youtube.com/results?search_query=${encodeURIComponent(`"${piece.title}" ${instrument} tutorial lesson`)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-md border border-border bg-muted/30 hover:bg-muted/50 hover:border-primary/40 transition-colors px-3 py-2 text-xs"
-            >
-              <span className="block font-medium">{piece.title} — Tutorial</span>
-              <span className="block text-[10px] text-muted-foreground mt-0.5">Search on YouTube ↗</span>
-            </a>
+            {matched.map(v => (
+              <YouTubeInline
+                key={v.id}
+                videoId={v.id}
+                title={v.title}
+                channel={v.channel || examChannel(board)}
+              />
+            ))}
           </div>
         )}
       </CardContent>
