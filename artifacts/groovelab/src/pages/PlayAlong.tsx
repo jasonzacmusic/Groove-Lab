@@ -66,7 +66,16 @@ function MethodBookSection({ methods, instrument }: { methods: typeof PIANO_METH
                     return videoId ? (
                       <YouTubeInline key={level} videoId={videoId} title={`${m.name} — ${level}`} channel={methodChannel(m.name)} />
                     ) : (
-                      <YouTubeInline key={level} searchQuery={`${m.name} ${level} play along piano`} title={`${m.name} — ${level}`} />
+                      <a
+                        key={level}
+                        href={`https://www.youtube.com/results?search_query=${encodeURIComponent(`${m.name} ${level} play along piano`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block rounded-md border border-border bg-muted/30 hover:bg-muted/50 hover:border-primary/40 transition-colors px-3 py-2 text-xs"
+                      >
+                        <span className="font-medium">{m.name} — {level}</span>
+                        <span className="block text-[10px] text-muted-foreground mt-0.5">Search on YouTube ↗</span>
+                      </a>
                     );
                   })}
                 </div>
@@ -197,15 +206,18 @@ export default function PlayAlong() {
                       {known.map((v) => <YouTubeInline key={v.id} videoId={v.id} title={v.title} channel={examChannel(entry.board)} />)}
                     </div>
                   ) : (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                      <YouTubeInline
-                        searchQuery={`${entry.title} backing track play along`}
-                        title={`${entry.title} - Play Along`}
-                      />
-                      <YouTubeInline
-                        searchQuery={`${entry.board} ${entry.grade} ${entry.inst} exam piece`}
-                        title={`${entry.title} - Exam Pieces`}
-                      />
+                    <div className="rounded-lg border border-dashed border-border bg-muted/20 p-4 text-center">
+                      <p className="text-xs text-muted-foreground">
+                        Curated videos coming soon for {entry.title}.
+                      </p>
+                      <a
+                        href={`https://www.youtube.com/results?search_query=${encodeURIComponent(`${entry.title} backing track play along`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block mt-2 text-xs text-primary hover:underline"
+                      >
+                        Search YouTube for {entry.title} ↗
+                      </a>
                     </div>
                   )}
                 </div>

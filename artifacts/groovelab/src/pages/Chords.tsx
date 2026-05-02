@@ -318,10 +318,9 @@ export default function Chords() {
                           />
                         ))
                       ) : (
-                        <YouTubeInline
-                          searchQuery={`${progName} ${displayKey} backing track play along`}
-                          title={`${progName} in ${displayKey} - Backing Track`}
-                        />
+                        <p className="text-xs text-muted-foreground italic col-span-full">
+                          No curated backing tracks yet for this progression.
+                        </p>
                       )}
                     </div>
                   </div>

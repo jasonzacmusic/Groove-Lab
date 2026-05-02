@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import { YouTubeInline } from '@/components/YouTubeInline';
 import { MelodyStaff } from '@/components/MelodyStaff';
-import { STANDARDS_BACKING_TRACKS } from '@/data/standards-videos';
+import { STANDARDS_BACKING_TRACKS, STANDARDS_ORIGINAL_RECORDINGS } from '@/data/standards-videos';
 import { getMelody, hasMelody, type MelodyNote } from '@/data/standard-melodies';
 import * as Tone from 'tone';
 
@@ -61,48 +61,81 @@ function transposeChord(chord: string, semitones: number): string {
 }
 
 // ── Jazz Voicings ────────────────────────────────────────────────────────────────
+// Rootless "A/B" piano voicings (Bill Evans / Red Garland style).
+// Bass plays the root, so the comping piano omits the root and stacks
+// 3rds/7ths/9ths/13ths for that classic clustered jazz sound.
 function chordToVoicing(symbol: string): string[] {
   const match = symbol.match(/^([A-G][#b]?)(.*)/);
-  if (!match) return ['C3', 'E3', 'G3', 'B3'];
+  if (!match) return ['E3', 'G3', 'B3', 'D4'];
   const [, root, quality] = match;
   const r = rootToIndex(root);
   const q = quality.toLowerCase().replace(/\s/g, '');
 
+  // Detect extensions for richer voicings
+  const has9 = q.includes('9') || q.includes('add9');
+  const has11 = q.includes('11');
+  const has13 = q.includes('13') || q.includes('6/9');
+  const hasFlat9 = q.includes('b9');
+  const hasSharp9 = q.includes('#9');
+  const hasSharp11 = q.includes('#11');
+  const hasFlat13 = q.includes('b13') || q.includes('alt');
+  const hasFlat5 = q.includes('b5') && !q.includes('m7b5');
+
+  // Pick chord type and rootless intervals (3rd, 5th/7th, 9th, 13th territory)
   let intervals: number[];
+
   if (q.includes('m7b5') || q.includes('half') || q.includes('\u00f8')) {
-    intervals = [0, 3, 6, 10];
+    // Half-diminished: b3, b5, b7, 9 (or 11)
+    intervals = [3, 6, 10, 14];
   } else if (q.includes('dim7') || q.includes('\u00b07')) {
-    intervals = [0, 3, 6, 9];
+    intervals = [3, 6, 9, 14];
   } else if (q.includes('dim') || q.includes('\u00b0')) {
-    intervals = [0, 3, 6];
-  } else if (q.includes('aug') || q === '+') {
-    intervals = [0, 4, 8];
-  } else if (q.includes('maj7') || q.includes('\u0394')) {
-    intervals = [0, 4, 7, 11];
+    intervals = [3, 6, 11]; // dim with maj7 cluster
+  } else if (q.includes('aug') || q === '+' || q === '7+5' || q.includes('+5')) {
+    intervals = [4, 8, 10, 14];
+  } else if (q.includes('maj7') || q.includes('\u0394') || q.includes('M7')) {
+    // Major 7: 3, 7, 9 (Type A: 3-5-7-9 or Type B: 7-9-3-5)
+    intervals = has13 ? [4, 11, 14, 21] : [4, 11, 14, 17];
   } else if (q.includes('m7') || q.includes('min7') || q.includes('-7')) {
-    intervals = [0, 3, 7, 10];
+    // Minor 7: b3, 5, b7, 9
+    intervals = has13 ? [3, 10, 14, 21] : [3, 10, 14, 17];
   } else if (q.includes('7sus4') || q.includes('7sus')) {
-    intervals = [0, 5, 7, 10];
+    // Sus7: 4, 5, b7, 9
+    intervals = [5, 10, 14, 17];
   } else if (q.includes('7')) {
-    intervals = [0, 4, 7, 10];
+    // Dominant 7: 3, b7, 9, 13 (with alterations)
+    let third = 4;
+    let fifth: number | null = null;
+    let seventh = 10;
+    let ninth = hasFlat9 ? 13 : hasSharp9 ? 15 : 14;
+    let thirteenth = hasFlat13 ? 20 : 21;
+    if (hasFlat5) fifth = 6;
+    if (hasSharp11) intervals = [third, seventh, ninth, 18]; // 3-b7-9-#11
+    else if (has13 || hasFlat13) intervals = [third, seventh, ninth, thirteenth];
+    else intervals = fifth !== null ? [third, fifth, seventh, ninth] : [third, seventh, ninth, 17];
   } else if (q.includes('m') || q.includes('min') || q.startsWith('-')) {
-    intervals = [0, 3, 7];
+    // Plain minor: b3, 5, 9
+    intervals = [3, 7, 14];
   } else if (q.includes('sus4')) {
-    intervals = [0, 5, 7];
+    intervals = [5, 7, 14];
   } else if (q.includes('sus2')) {
-    intervals = [0, 2, 7];
+    intervals = [2, 7, 14];
+  } else if (q.includes('6/9')) {
+    intervals = [4, 9, 14, 17];
   } else if (q.includes('6')) {
-    intervals = [0, 4, 7, 9];
+    intervals = [4, 9, 14];
   } else {
-    intervals = [0, 4, 7];
+    // Plain major triad → add 9 for color
+    intervals = [4, 7, 14];
   }
 
-  // Voiced in octave 3-4, spread across the keyboard like a pianist
-  return intervals.map((interval, i) => {
-    const noteIdx = (r + interval) % 12;
+  // Voicing register: cluster around middle C (octave 3-4)
+  // Root virtual position is C3-Bb3 area; intervals up from there
+  return intervals.map((interval) => {
+    const totalSemis = r + interval;
+    const noteIdx = ((totalSemis % 12) + 12) % 12;
     const noteName = CHROMATIC[noteIdx];
-    // Root and lower intervals in octave 3, upper intervals in octave 4
-    const octave = interval >= 10 ? 4 : 3;
+    const octave = 3 + Math.floor(totalSemis / 12);
     const displayNote = SHARP_TO_FLAT[noteName] || noteName;
     return displayNote + octave;
   });
@@ -172,14 +205,21 @@ function walkingBassNotes(chordSymbol: string, nextRoot: string, beats: number):
   ];
 }
 
-/** Bossa bass pattern: root, fifth */
+/** Bossa bass pattern: authentic surdo-style — dotted quarter + eighth tied,
+ *  with the classic root-on-1, octave-up-on-3 pattern that drives bossa nova. */
 function bossaBassNotes(root: string, beats: number): string[] {
   const idx = rootToIndex(root);
   const fifth = (idx + 7) % 12;
-  const rootNote = (SHARP_TO_FLAT[CHROMATIC[idx]] || CHROMATIC[idx]) + '2';
-  const fifthNote = (SHARP_TO_FLAT[CHROMATIC[fifth]] || CHROMATIC[fifth]) + '2';
-  if (beats <= 2) return [rootNote, fifthNote].slice(0, beats);
-  return beats >= 4 ? [rootNote, rootNote, fifthNote, fifthNote] : [rootNote, fifthNote, rootNote];
+  const rootName = SHARP_TO_FLAT[CHROMATIC[idx]] || CHROMATIC[idx];
+  const fifthName = SHARP_TO_FLAT[CHROMATIC[fifth]] || CHROMATIC[fifth];
+  const rLow = rootName + '2';
+  const rMid = rootName + '3';
+  const fLow = fifthName + '2';
+  if (beats <= 2) return [rLow, fLow].slice(0, beats);
+  // Classic bossa: root(low) - rest - fifth(low) - rest pattern (per beat)
+  // For 4 beats: root2 / fifth2 / root2 / fifth2 (driving bossa)
+  if (beats >= 4) return [rLow, fLow, rMid, fLow];
+  return [rLow, fLow, rLow];
 }
 
 // ── Helpers ──────────────────────────────────────────────────────────────────────
@@ -415,7 +455,9 @@ export default function Standards() {
 
     // Salamander Grand Piano sampler (hosted by Tone.js project)
     // Uses multi-sampled real piano with velocity layers
+    // Longer release for natural sustain, gentle reverb for jazz hall feel
     const baseUrl = 'https://tonejs.github.io/audio/salamander/';
+    const pianoReverb = new Tone.Reverb({ decay: 1.8, wet: 0.18 }).toDestination();
     pianoRef.current = new Tone.Sampler({
       urls: {
         A1: 'A1.mp3', A2: 'A2.mp3', A3: 'A3.mp3', A4: 'A4.mp3', A5: 'A5.mp3',
@@ -424,13 +466,13 @@ export default function Standards() {
         'F#2': 'Fs2.mp3', 'F#3': 'Fs3.mp3', 'F#4': 'Fs4.mp3',
       },
       baseUrl,
-      release: 1.2,
-      volume: -8,
+      release: 2.4,
+      volume: -7,
       onload: () => {
         setSamplerLoading(false);
         setSamplerReady(true);
       },
-    }).toDestination();
+    }).connect(pianoReverb);
 
     // Upright jazz bass — warm, round, plucked acoustic character
     // Uses triangle wave (warm fundamental) with gentle low-pass filter
@@ -618,18 +660,31 @@ export default function Standards() {
           }, beatTime);
         }
       } else if (isBossa) {
-        // Cross-stick pattern: beats 2 and 4
-        if (beatInBar === 1 || beatInBar === 3) {
-          transport.schedule((time) => {
-            if (hihatRef.current) hihatRef.current.triggerAttackRelease('E5', '32n', time, 0.12);
-          }, beatTime);
-        }
-        // Soft kick on 1 and 3
+        // Authentic bossa nova drum pattern:
+        // - Cross-stick (rim click) on the bossa clave: 1, 2.5, 4 (2-3 clave)
+        // - Surdo-style kick: deep "boom" on 1 and 3 (the heartbeat)
+        // - Subtle ride on every beat for cymbal pulse
         if (beatInBar === 0 || beatInBar === 2) {
           transport.schedule((time) => {
-            if (kickRef.current) kickRef.current.triggerAttackRelease('C2', '16n', time, 0.15);
+            if (kickRef.current) kickRef.current.triggerAttackRelease('A1', '8n', time, 0.35);
           }, beatTime);
         }
+        // Cross-stick on 2 and 4
+        if (beatInBar === 1 || beatInBar === 3) {
+          transport.schedule((time) => {
+            if (hihatRef.current) hihatRef.current.triggerAttackRelease('E5', '32n', time, 0.18);
+          }, beatTime);
+        }
+        // Eighth-note "and" of beat 2 — clave accent
+        if (beatInBar === 1) {
+          transport.schedule((time) => {
+            if (hihatRef.current) hihatRef.current.triggerAttackRelease('D5', '32n', time, 0.1);
+          }, `0:${startBeat + b}:2`);
+        }
+        // Soft ride pulse on every beat
+        transport.schedule((time) => {
+          if (rideRef.current) rideRef.current.triggerAttackRelease('C6', '16n', time, 0.08);
+        }, beatTime);
       } else if (isBallad) {
         // Very soft brushes feel
         if (beatInBar === 0) {
@@ -1266,8 +1321,8 @@ export default function Standards() {
             {/* ── Practice: Backing Tracks ─────────────────────────────────── */}
             {(() => {
               const name = selectedStandard.name;
-              const composer = selectedStandard.composer || '';
               const knownTracks = STANDARDS_BACKING_TRACKS[name] || [];
+              const greats = STANDARDS_ORIGINAL_RECORDINGS[name] || [];
 
               return (
                 <>
@@ -1282,63 +1337,45 @@ export default function Standards() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {knownTracks.length > 0 ? (
-                        /* Show curated videos only — no search duplicates */
                         knownTracks.slice(0, 6).map((track) => (
                           <YouTubeInline key={track.id} videoId={track.id} title={track.title} channel={track.channel} />
                         ))
                       ) : (
-                        /* No curated videos — show search cards */
-                        <>
-                          <YouTubeInline
-                            searchQuery={`"${name}" jazz backing track play along`}
-                            title={`${name} — Backing Track`}
-                          />
-                          <YouTubeInline
-                            searchQuery={`"${name}" backing track ${displayKey}`}
-                            title={`${name} in ${displayKey}`}
-                          />
-                          <YouTubeInline
-                            searchQuery={`"${name}" slow tempo backing track jazz`}
-                            title={`${name} — Slow Practice Tempo`}
-                          />
-                          <YouTubeInline
-                            searchQuery={`"${name}" medium swing backing track`}
-                            title={`${name} — Medium Swing`}
-                          />
-                        </>
+                        <div className="col-span-full rounded-lg border border-dashed border-border bg-muted/20 p-6 text-center">
+                          <p className="text-xs text-muted-foreground">
+                            No curated backing tracks yet for "{name}".
+                          </p>
+                          <a
+                            href={`https://www.youtube.com/results?search_query=${encodeURIComponent(`"${name}" jazz backing track`)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-block mt-2 text-xs text-primary hover:underline"
+                          >
+                            Search YouTube for backing tracks ↗
+                          </a>
+                        </div>
                       )}
                     </div>
                   </div>
 
                   {/* ── Inspiration: The Greats ──────────────────────────────────── */}
-                  <div className="space-y-4 mt-8">
-                    <h3 className="font-serif text-xl text-foreground flex items-center gap-2">
-                      <Music className="w-5 h-5 text-amber-500" />
-                      The Greats — Original Recordings & Live Performances
-                    </h3>
-                    <p className="text-xs text-muted-foreground">
-                      Study the masters. Listen to how the greats interpreted "{name}."
-                    </p>
+                  {greats.length > 0 && (
+                    <div className="space-y-4 mt-8">
+                      <h3 className="font-serif text-xl text-foreground flex items-center gap-2">
+                        <Music className="w-5 h-5 text-amber-500" />
+                        The Greats — Historic Recordings
+                      </h3>
+                      <p className="text-xs text-muted-foreground">
+                        Study the masters. Listen to how the greats interpreted "{name}."
+                      </p>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <YouTubeInline
-                        searchQuery={`"${name}" ${composer ? composer.split('/')[0].trim() : ''} original recording`}
-                        title={`${name} — Original Recording`}
-                      />
-                      <YouTubeInline
-                        searchQuery={`"${name}" jazz classic live performance`}
-                        title={`${name} — Classic Live Performance`}
-                      />
-                      <YouTubeInline
-                        searchQuery={`"${name}" jazz solo transcription`}
-                        title={`${name} — Solo Transcription / Analysis`}
-                      />
-                      <YouTubeInline
-                        searchQuery={`"${name}" jazz tutorial lesson chords`}
-                        title={`${name} — Tutorial & Lesson`}
-                      />
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {greats.slice(0, 6).map((rec) => (
+                          <YouTubeInline key={rec.id} videoId={rec.id} title={rec.title} channel={rec.channel} />
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </>
               );
             })()}

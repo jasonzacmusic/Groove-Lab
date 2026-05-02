@@ -1,7 +1,59 @@
 // AUTO-GENERATED — GrooveLab Genre Backing Tracks Database
 // Genres with empty arrays = data pending (YouTube quota exhausted)
 
-export const GENRE_VIDEO_LIBRARY: Record<string, { id: string; title: string; channel: string }[]> = {
+export type GenreVideo = { id: string; title: string; channel: string };
+export type TempoBucket = 'slow' | 'medium' | 'fast' | 'veryFast';
+
+/** Parse BPM from a YouTube title. Returns null if not found. */
+export function parseBpm(title: string): number | null {
+  // Match patterns like "120 bpm", "120bpm", "BPM 120", "(140 BPM)", "tempo 90"
+  const patterns = [
+    /(\d{2,3})\s*(?:bpm|BPM)/,
+    /(?:bpm|BPM)\s*[:=]?\s*(\d{2,3})/,
+    /(?:tempo|Tempo)\s*[:=]?\s*(\d{2,3})/,
+    /\((\d{2,3})\s*bpm\)/i,
+  ];
+  for (const p of patterns) {
+    const m = title.match(p);
+    if (m) {
+      const n = parseInt(m[1], 10);
+      if (n >= 40 && n <= 280) return n;
+    }
+  }
+  return null;
+}
+
+/** Bucket a BPM into tempo categories. Slow ≤90, Medium 91-120, Fast 121-150, Very Fast >150. */
+export function bpmToBucket(bpm: number | null): TempoBucket {
+  if (bpm === null) return 'medium'; // default
+  if (bpm <= 90) return 'slow';
+  if (bpm <= 120) return 'medium';
+  if (bpm <= 150) return 'fast';
+  return 'veryFast';
+}
+
+/** Heuristic tempo bucketing from title keywords when BPM not present. */
+export function bucketFromTitle(title: string): TempoBucket {
+  const bpm = parseBpm(title);
+  if (bpm !== null) return bpmToBucket(bpm);
+  const t = title.toLowerCase();
+  if (/\b(slow|ballad|relaxing|chill|mellow|sleepy|ambient)\b/.test(t)) return 'slow';
+  if (/\b(burning|fast|uptempo|up-tempo|driving|intense|hard|energetic)\b/.test(t)) return 'fast';
+  if (/\b(very fast|burning|breakneck|blazing|frenetic)\b/.test(t)) return 'veryFast';
+  return 'medium';
+}
+
+/** Get all videos for a genre grouped by tempo bucket. */
+export function getGenreByTempo(genre: string): Record<TempoBucket, GenreVideo[]> {
+  const all = GENRE_VIDEO_LIBRARY[genre] || [];
+  const buckets: Record<TempoBucket, GenreVideo[]> = {
+    slow: [], medium: [], fast: [], veryFast: [],
+  };
+  for (const v of all) buckets[bucketFromTitle(v.title)].push(v);
+  return buckets;
+}
+
+export const GENRE_VIDEO_LIBRARY: Record<string, GenreVideo[]> = {
   'Blues': [
     { id: 'UcIIXFqTUgs', title: "Chicago Shuffle In A - 12 Bar Blues Backing Track In A", channel: "JJ one EIGHTY" },
     { id: 'XFVw6fPCAkA', title: "12 Bar Blues Backing Track A7", channel: "Guitar Hell:  Music and Guitar Backing Tracks" },

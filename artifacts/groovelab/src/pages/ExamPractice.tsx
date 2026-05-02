@@ -18,6 +18,21 @@ import {
   type ScaleReq,
   type ArpeggioReq,
 } from '@/data/exam-syllabus';
+import videoDb from '@/data/exam-video-ids.json';
+
+const VIDEO_DB = videoDb as Record<string, { id: string; title: string; channel?: string }[]>;
+
+function examChannel(board: string): string {
+  const channels: Record<string, string> = {
+    ABRSM: 'ABRSM Play-Alongs',
+    Trinity: 'Trinity Rock & Pop',
+    Rockschool: 'RSL Awards',
+    RCM: 'RCM Practice',
+    LCM: 'LCM Exams',
+    AMEB: 'AMEB Music',
+  };
+  return channels[board] || 'Practice Tracks';
+}
 
 // ── Tab type ──
 type Tab = 'scales' | 'pieces' | 'videos';
@@ -329,40 +344,45 @@ export default function ExamPractice() {
           )}
 
           {/* ── VIDEOS TAB ── */}
-          {tab === 'videos' && (
-            <div className="space-y-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <YouTubeInline
-                  searchQuery={`${board} ${grade} ${instrument} exam pieces performance`}
-                  title={`${board} ${grade} ${instrument} — Exam Performances`}
-                />
-                <YouTubeInline
-                  searchQuery={`${board} ${grade} ${instrument} scales demonstration`}
-                  title={`${board} ${grade} ${instrument} — Scales Demo`}
-                />
-                <YouTubeInline
-                  searchQuery={`${board} ${grade} ${instrument} exam tips preparation`}
-                  title={`${board} ${grade} ${instrument} — Exam Tips`}
-                />
-                <YouTubeInline
-                  searchQuery={`${board} ${grade} ${instrument} sight reading practice`}
-                  title={`${board} ${grade} ${instrument} — Sight Reading`}
-                />
-                {isDrumsOrVocals && (
-                  <>
-                    <YouTubeInline
-                      searchQuery={`${instrument === 'Drums' ? 'drum rudiments practice ' + grade : 'vocal exercises warm up ' + grade}`}
-                      title={instrument === 'Drums' ? 'Drum Rudiments Practice' : 'Vocal Warm-Up Exercises'}
-                    />
-                    <YouTubeInline
-                      searchQuery={`${board} ${grade} ${instrument} backing track play along`}
-                      title={`${board} ${grade} ${instrument} — Play Along`}
-                    />
-                  </>
-                )}
+          {tab === 'videos' && (() => {
+            const dbKey = `${board}|${instrument}|${grade}`;
+            const known = VIDEO_DB[dbKey] || [];
+            const ch = examChannel(board);
+            return (
+              <div className="space-y-6">
+                <div>
+                  <h3 className="font-medium text-base mb-3">{board} {grade} {instrument} — Curated Videos</h3>
+                  {known.length > 0 ? (
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                      {known.map((v) => (
+                        <YouTubeInline
+                          key={v.id}
+                          videoId={v.id}
+                          title={v.title}
+                          channel={v.channel || ch}
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="rounded-lg border border-dashed border-border bg-muted/20 p-6 text-center">
+                      <BookOpen className="w-10 h-10 mx-auto mb-2 opacity-30" />
+                      <p className="text-sm text-muted-foreground">
+                        No curated videos yet for {board} {grade} {instrument}.
+                      </p>
+                      <a
+                        href={`https://www.youtube.com/results?search_query=${encodeURIComponent(`${board} ${grade} ${instrument} exam`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block mt-3 text-xs text-primary hover:underline"
+                      >
+                        Search YouTube ↗
+                      </a>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          )}
+            );
+          })()}
         </div>
       </div>
     </div>
@@ -461,14 +481,24 @@ function PieceCard({
         </div>
         {showVideo && (
           <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
-            <YouTubeInline
-              searchQuery={`"${piece.title}" ${piece.composer} ${instrument} performance`}
-              title={`${piece.title} — Performance`}
-            />
-            <YouTubeInline
-              searchQuery={`"${piece.title}" ${instrument} tutorial lesson`}
-              title={`${piece.title} — Tutorial`}
-            />
+            <a
+              href={`https://www.youtube.com/results?search_query=${encodeURIComponent(`"${piece.title}" ${piece.composer} ${instrument} performance`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-md border border-border bg-muted/30 hover:bg-muted/50 hover:border-primary/40 transition-colors px-3 py-2 text-xs"
+            >
+              <span className="block font-medium">{piece.title} — Performance</span>
+              <span className="block text-[10px] text-muted-foreground mt-0.5">Search on YouTube ↗</span>
+            </a>
+            <a
+              href={`https://www.youtube.com/results?search_query=${encodeURIComponent(`"${piece.title}" ${instrument} tutorial lesson`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-md border border-border bg-muted/30 hover:bg-muted/50 hover:border-primary/40 transition-colors px-3 py-2 text-xs"
+            >
+              <span className="block font-medium">{piece.title} — Tutorial</span>
+              <span className="block text-[10px] text-muted-foreground mt-0.5">Search on YouTube ↗</span>
+            </a>
           </div>
         )}
       </CardContent>

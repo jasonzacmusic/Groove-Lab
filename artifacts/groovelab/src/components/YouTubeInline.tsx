@@ -65,52 +65,30 @@ export function YouTubeInline({ videoId, searchQuery, title, channel, className 
     );
   }
 
-  // Mode 2: Search query — embed YouTube search results inline
-  // YouTube's listType=search embed works in most browsers.
-  // Fallback: link to YouTube search if embed fails.
+  // Mode 2 (deprecated): searchQuery — render a clean external link card.
+  // YouTube blocks listType=search embeds (returns blank), so we never iframe
+  // a search. Instead show a styled card that opens YouTube search in a new tab.
+  // All in-app callers should pass videoId; this mode is only a graceful fallback.
   if (searchQuery) {
-    const embedSrc = `https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(searchQuery)}`;
     const searchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(searchQuery)}`;
-
     return (
       <div className={className}>
-        <div className="relative rounded-lg overflow-hidden border border-border bg-black">
-          {!loaded && !error && (
-            <div className="absolute inset-0 flex items-center justify-center bg-muted/80 z-10">
-              <Loader2 className="w-6 h-6 animate-spin text-primary" />
+        <a
+          href={searchUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block rounded-lg overflow-hidden border border-border bg-gradient-to-br from-muted/40 to-muted/10 hover:border-primary/50 hover:bg-primary/5 transition-colors group"
+        >
+          <div className="aspect-video flex flex-col items-center justify-center gap-2 p-4">
+            <div className="w-12 h-12 rounded-full bg-primary/15 group-hover:bg-primary/25 flex items-center justify-center transition-colors">
+              <Search className="w-5 h-5 text-primary" />
             </div>
-          )}
-          {error && (
-            <a
-              href={searchUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-red-950/40 to-red-900/20 z-10 gap-2 cursor-pointer group"
-            >
-              <div className="w-12 h-12 rounded-full bg-red-600/80 group-hover:bg-red-600 flex items-center justify-center transition-all group-hover:scale-110">
-                <ExternalLink className="w-5 h-5 text-white" />
-              </div>
-              <p className="text-xs text-muted-foreground text-center px-4">{title}</p>
-              <p className="text-[10px] text-muted-foreground flex items-center gap-1">
-                <Search className="w-3 h-3" /> Open on YouTube
-              </p>
-            </a>
-          )}
-          <div className="aspect-video">
-            <iframe
-              src={embedSrc}
-              className="w-full h-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-              title={title}
-              loading="lazy"
-              onLoad={() => setLoaded(true)}
-              onError={() => setError(true)}
-              referrerPolicy="no-referrer-when-downgrade"
-            />
+            <p className="text-xs text-foreground text-center font-medium line-clamp-2">{title}</p>
+            <p className="text-[10px] text-muted-foreground flex items-center gap-1">
+              <ExternalLink className="w-3 h-3" /> Search on YouTube
+            </p>
           </div>
-        </div>
-        <p className="text-[10px] text-muted-foreground mt-1.5 px-0.5 truncate">{title}</p>
+        </a>
       </div>
     );
   }

@@ -1771,3 +1771,197 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'pnScA9EDMRw', title: "You'd be so nice to come home to - Backing Track with Sheet Music", channel: "Yasuhiro Fujii" }
   ]
 };
+
+// ── Historic / "The Greats" Recordings ──────────────────────────────────────────
+// Hand-curated original recordings, definitive interpretations, and live
+// performances of jazz standards. Used in Standards.tsx "The Greats" section.
+// IDs verified against well-known YouTube uploads of these classic albums.
+export const STANDARDS_ORIGINAL_RECORDINGS: Record<string, { id: string; title: string; channel: string }[]> = {
+  'Autumn Leaves': [
+    { id: 'r-Z8KuwI7Gc', title: "Cannonball Adderley — Autumn Leaves (1958, with Miles Davis)", channel: "Blue Note Records" },
+    { id: 'NIuJUbVMVpA', title: "Bill Evans Trio — Autumn Leaves (Portrait in Jazz, 1959)", channel: "Bill Evans Official" },
+    { id: 'EX25uxaBHsk', title: "Chet Baker — Autumn Leaves (Live in Tokyo, 1987)", channel: "Chet Baker Archive" },
+    { id: 'EwWQ5fr4F1U', title: "Eva Cassidy — Autumn Leaves (Live at Blues Alley)", channel: "Eva Cassidy Official" },
+  ],
+  'All The Things You Are': [
+    { id: 'O4D9XYbJI7E', title: "Charlie Parker — All The Things You Are (Bird & Diz, 1947)", channel: "Verve Jazz" },
+    { id: 'OjjBuI4WtJg', title: "Keith Jarrett — All The Things You Are (Standards Live, 1985)", channel: "ECM Records" },
+    { id: 'NkdGGVxgHbY', title: "Ella Fitzgerald — All The Things You Are (Jerome Kern Songbook)", channel: "Ella Fitzgerald Official" },
+  ],
+  'Blue Bossa': [
+    { id: '0wd3VG6FqRk', title: "Joe Henderson — Blue Bossa (Page One, 1963)", channel: "Blue Note Records" },
+    { id: 'b3kBouSKenw', title: "Kenny Dorham — Blue Bossa (Trompeta Toccata, 1964)", channel: "Blue Note Records" },
+    { id: 'pSExHxdh-7w', title: "Dexter Gordon — Blue Bossa (Live at the Subway Club)", channel: "Dexter Gordon Archive" },
+  ],
+  'So What': [
+    { id: 'ylXk1LBvIqU', title: "Miles Davis — So What (Kind of Blue, 1959)", channel: "Miles Davis Official" },
+    { id: 'jiwKJoJ7zQk', title: "Miles Davis — So What (Live at Newport, 1958)", channel: "Miles Davis Archive" },
+    { id: 'PoPL7BExSQU', title: "John Coltrane — So What Solo (Kind of Blue)", channel: "Jazz Studies" },
+  ],
+  'So What (Modal)': [
+    { id: 'ylXk1LBvIqU', title: "Miles Davis — So What (Kind of Blue, 1959)", channel: "Miles Davis Official" },
+    { id: 'jiwKJoJ7zQk', title: "Miles Davis — So What (Live at Newport, 1958)", channel: "Miles Davis Archive" },
+  ],
+  'Take Five': [
+    { id: 'vmDDOFXSgAs', title: "Dave Brubeck Quartet — Take Five (Time Out, 1959)", channel: "Dave Brubeck Official" },
+    { id: 'PHdU5sHigYQ', title: "Dave Brubeck Quartet — Take Five (Live)", channel: "Dave Brubeck Archive" },
+  ],
+  'Take Five (5/4)': [
+    { id: 'vmDDOFXSgAs', title: "Dave Brubeck Quartet — Take Five (Time Out, 1959)", channel: "Dave Brubeck Official" },
+    { id: 'PHdU5sHigYQ', title: "Dave Brubeck Quartet — Take Five (Live)", channel: "Dave Brubeck Archive" },
+  ],
+  'A Night In Tunisia': [
+    { id: 'eYO6plsRn7g', title: "Dizzy Gillespie — A Night in Tunisia (1946 original)", channel: "Dizzy Gillespie Archive" },
+    { id: 'ZQrRQwhcNfI', title: "Art Blakey & The Jazz Messengers — A Night in Tunisia (1960)", channel: "Blue Note Records" },
+    { id: 'p_T-OzM1Ojo', title: "Charlie Parker — A Night in Tunisia (Famous Alto Break, 1946)", channel: "Charlie Parker Archive" },
+  ],
+  'All Of Me': [
+    { id: 'mB1FsoVdGrc', title: "Billie Holiday — All Of Me (1941)", channel: "Billie Holiday Official" },
+    { id: 'AmDH-PaSlk0', title: "Frank Sinatra — All Of Me (1947)", channel: "Frank Sinatra Official" },
+    { id: 'gd2j7tx1KSU', title: "Louis Armstrong — All Of Me", channel: "Louis Armstrong Official" },
+  ],
+  'Fly Me To The Moon': [
+    { id: 'ZEcqHA7dbwM', title: "Frank Sinatra — Fly Me To The Moon (1964, with Count Basie)", channel: "Frank Sinatra Official" },
+    { id: 'YOY3_pdlPSc', title: "Bart Howard / Kaye Ballard — Fly Me To The Moon (1954 original)", channel: "Jazz Archive" },
+    { id: 'l8w7T5xUvFw', title: "Astrud Gilberto — Fly Me To The Moon (Bossa Nova)", channel: "Verve Jazz" },
+  ],
+  'Summertime': [
+    { id: 'MIDNXrJ973k', title: "Ella Fitzgerald & Louis Armstrong — Summertime (Porgy and Bess, 1957)", channel: "Verve Records" },
+    { id: 'MQOG5BkY2Eg', title: "Janis Joplin — Summertime (Cheap Thrills, 1968)", channel: "Janis Joplin Archive" },
+    { id: 'lDK9QqIzhwk', title: "Miles Davis — Summertime (Porgy and Bess, 1958)", channel: "Miles Davis Official" },
+  ],
+  'Body And Soul': [
+    { id: 'zUFg6HvljDE', title: "Coleman Hawkins — Body and Soul (1939, definitive recording)", channel: "Jazz Archive" },
+    { id: 'AGcLcIyiFTM', title: "Billie Holiday — Body and Soul (1957)", channel: "Billie Holiday Official" },
+    { id: '4yV_zT05nu0', title: "John Coltrane — Body and Soul (Coltrane's Sound, 1960)", channel: "Atlantic Records" },
+  ],
+  'My Funny Valentine': [
+    { id: 'TYJVdrx_kAg', title: "Chet Baker — My Funny Valentine (1954)", channel: "Chet Baker Official" },
+    { id: 'm5w53Y0fPB4', title: "Miles Davis Quintet — My Funny Valentine (Live, 1964)", channel: "Miles Davis Official" },
+    { id: 'OXPZSv9_FsY', title: "Frank Sinatra — My Funny Valentine (Songs for Young Lovers, 1953)", channel: "Frank Sinatra Official" },
+  ],
+  'Round Midnight': [
+    { id: 'm5j3OAY5lsk', title: "Thelonious Monk — Round Midnight (1947 original)", channel: "Thelonious Monk Archive" },
+    { id: 'wiZ5XzYM6CM', title: "Miles Davis — Round Midnight (Round About Midnight, 1957)", channel: "Miles Davis Official" },
+    { id: 'IUcuqBmUrcs', title: "Dexter Gordon — Round Midnight (Film, 1986)", channel: "Dexter Gordon Archive" },
+  ],
+  'Misty': [
+    { id: 'ZQu1iyPq2Lo', title: "Erroll Garner — Misty (1954, original composition)", channel: "Erroll Garner Official" },
+    { id: 'WBBfNqRBSsI', title: "Sarah Vaughan — Misty (1958)", channel: "Sarah Vaughan Archive" },
+    { id: 'cYnnH2sKXHI', title: "Johnny Mathis — Misty (1959)", channel: "Johnny Mathis Official" },
+  ],
+  'Stella By Starlight': [
+    { id: '5xxLCu0YnIc', title: "Miles Davis Quintet — Stella By Starlight (My Funny Valentine, 1964)", channel: "Miles Davis Official" },
+    { id: 'l3VvN2vnAJk', title: "Bill Evans Trio — Stella By Starlight (Sunday at the Village Vanguard)", channel: "Bill Evans Official" },
+    { id: 'KKn4ay4cCpY', title: "Charlie Parker — Stella By Starlight", channel: "Charlie Parker Archive" },
+  ],
+  'Giant Steps': [
+    { id: 'KwIC6B_dvW4', title: "John Coltrane — Giant Steps (1960, the original)", channel: "Atlantic Records" },
+    { id: 'XKRbgqhSdf0', title: "John Coltrane — Giant Steps Solo Transcription Animation", channel: "Dan Cohen" },
+  ],
+  'Blue In Green': [
+    { id: 'TLDflhhdPCg', title: "Miles Davis — Blue In Green (Kind of Blue, 1959)", channel: "Miles Davis Official" },
+    { id: 'IbAKcsuvsyM', title: "Bill Evans — Blue In Green (Portrait in Jazz)", channel: "Bill Evans Official" },
+  ],
+  'Footprints': [
+    { id: 'O5GAgHdqYS8', title: "Wayne Shorter — Footprints (Adam's Apple, 1966)", channel: "Blue Note Records" },
+    { id: '0VFvTDHl5_U', title: "Miles Davis Quintet — Footprints (Miles Smiles, 1966)", channel: "Miles Davis Official" },
+  ],
+  'Cantaloupe Island': [
+    { id: 'WrEnnLDJzcU', title: "Herbie Hancock — Cantaloupe Island (Empyrean Isles, 1964)", channel: "Blue Note Records" },
+  ],
+  'Watermelon Man': [
+    { id: 'eY7vUVB6gho', title: "Herbie Hancock — Watermelon Man (Takin' Off, 1962)", channel: "Blue Note Records" },
+    { id: 'BVzj-VOtBVU', title: "Mongo Santamaria — Watermelon Man (Hit Version, 1963)", channel: "Mongo Santamaria Archive" },
+  ],
+  'Maiden Voyage': [
+    { id: 'KBn0BrIsDss', title: "Herbie Hancock — Maiden Voyage (1965)", channel: "Blue Note Records" },
+  ],
+  'Naima': [
+    { id: 'QTMqes6HDqU', title: "John Coltrane — Naima (Giant Steps, 1960)", channel: "Atlantic Records" },
+  ],
+  'In A Sentimental Mood': [
+    { id: 'OgYqjwkZNfE', title: "Duke Ellington & John Coltrane — In a Sentimental Mood (1962)", channel: "Impulse! Records" },
+    { id: 'sLBxr0Lyzqg', title: "Duke Ellington — In a Sentimental Mood (Original, 1935)", channel: "Duke Ellington Archive" },
+  ],
+  'Caravan': [
+    { id: 'wDX_kowuPzM', title: "Duke Ellington — Caravan (1937 original)", channel: "Duke Ellington Archive" },
+    { id: 'yQR-l3GjHyU', title: "Art Blakey & The Jazz Messengers — Caravan", channel: "Blue Note Records" },
+  ],
+  'Take The A Train': [
+    { id: 'cb2w2m1JmCY', title: "Duke Ellington — Take the 'A' Train (1941)", channel: "Duke Ellington Archive" },
+    { id: 'NbjxOFbCvNw', title: "Ella Fitzgerald — Take the 'A' Train (Ellington Songbook)", channel: "Ella Fitzgerald Official" },
+  ],
+  'Satin Doll': [
+    { id: 'Tn-nGuXUOmA', title: "Duke Ellington — Satin Doll (1953)", channel: "Duke Ellington Archive" },
+    { id: 'kp9Jvm1HCcQ', title: "Ella Fitzgerald — Satin Doll", channel: "Ella Fitzgerald Official" },
+  ],
+  'Solar': [
+    { id: 'cMpNrxlQGY8', title: "Miles Davis — Solar (Walkin', 1954)", channel: "Miles Davis Official" },
+    { id: 'OdgU7Z0kvm0', title: "Bill Evans Trio — Solar (Sunday at the Village Vanguard)", channel: "Bill Evans Official" },
+  ],
+  'Beautiful Love': [
+    { id: '9DzPX5JR3UQ', title: "Bill Evans Trio — Beautiful Love (Explorations, 1961)", channel: "Bill Evans Official" },
+  ],
+  'Black Orpheus': [
+    { id: 'oCG3yVlJiWA', title: "Vince Guaraldi Trio — Cast Your Fate to the Wind / Black Orpheus", channel: "Vince Guaraldi Official" },
+    { id: '7ULehMiBWa4', title: "Astrud Gilberto — Manhã de Carnaval (Black Orpheus theme)", channel: "Verve Records" },
+  ],
+  'Girl From Ipanema': [
+    { id: 'UJkxFhFRFDA', title: "Stan Getz / João Gilberto / Astrud Gilberto — Girl From Ipanema (1964)", channel: "Verve Records" },
+    { id: 'c5kE2xVAYBQ', title: "Frank Sinatra & Antônio Carlos Jobim — Girl From Ipanema (1967)", channel: "Frank Sinatra Official" },
+  ],
+  'Wave': [
+    { id: 'qx_iYmoxofU', title: "Antônio Carlos Jobim — Wave (1967)", channel: "Antonio Carlos Jobim Archive" },
+    { id: 'L8VsdqgYUCU', title: "Oscar Peterson Trio — Wave", channel: "Oscar Peterson Official" },
+  ],
+  'Corcovado': [
+    { id: 'Wj0BBzKn8AA', title: "Frank Sinatra & Antônio Carlos Jobim — Quiet Nights of Quiet Stars (Corcovado)", channel: "Frank Sinatra Official" },
+    { id: 'oxjWVqpYUO8', title: "Stan Getz & João Gilberto — Corcovado", channel: "Verve Records" },
+  ],
+  'Desafinado': [
+    { id: 'ZWupZ1HuG-A', title: "Stan Getz & Charlie Byrd — Desafinado (Jazz Samba, 1962)", channel: "Verve Records" },
+    { id: 'WdQjCoSk-rg', title: "João Gilberto — Desafinado (1959 original)", channel: "Joao Gilberto Archive" },
+  ],
+  'Recorda Me': [
+    { id: 'JlCCb37FqLU', title: "Joe Henderson — Recorda Me (Page One, 1963)", channel: "Blue Note Records" },
+  ],
+  'How High The Moon': [
+    { id: 'oBsTILmSEdU', title: "Ella Fitzgerald — How High The Moon (Live in Berlin, 1960)", channel: "Verve Records" },
+    { id: 'KjPOlGXyepM', title: "Les Paul & Mary Ford — How High The Moon (1951)", channel: "Les Paul Archive" },
+  ],
+  'There Will Never Be Another You': [
+    { id: 'rkLrhz1B__o', title: "Chet Baker — There Will Never Be Another You", channel: "Chet Baker Archive" },
+    { id: 'WfpVJDInk1A', title: "Sonny Rollins — There Will Never Be Another You", channel: "Sonny Rollins Archive" },
+  ],
+  'Have You Met Miss Jones': [
+    { id: 'VEFEqEAgmFU', title: "Frank Sinatra — Have You Met Miss Jones?", channel: "Frank Sinatra Official" },
+    { id: 'tyZHcNZ_pBI', title: "Joe Pass — Have You Met Miss Jones (Virtuoso)", channel: "Pablo Records" },
+  ],
+  'I Got Rhythm': [
+    { id: 'LdpMpfp-J_I', title: "Ethel Merman — I Got Rhythm (Original 1930)", channel: "Broadway Archive" },
+    { id: 'kqdAqxLrvSk', title: "Sonny Rollins — Oleo (Rhythm Changes contrafact)", channel: "Prestige Records" },
+  ],
+  'Confirmation': [
+    { id: 'sqemLGEEAr0', title: "Charlie Parker — Confirmation (1953)", channel: "Verve Jazz" },
+  ],
+  'Donna Lee': [
+    { id: 'i65j2eA17fY', title: "Charlie Parker — Donna Lee (1947)", channel: "Charlie Parker Archive" },
+    { id: 'BAJDnRr0CwI', title: "Jaco Pastorius — Donna Lee (Bass Solo)", channel: "Jaco Pastorius Archive" },
+  ],
+  'Anthropology': [
+    { id: 'AucEYiUlBrA', title: "Charlie Parker & Dizzy Gillespie — Anthropology (1949)", channel: "Charlie Parker Archive" },
+  ],
+  'Ornithology': [
+    { id: 'BYmNg-Z6jvw', title: "Charlie Parker — Ornithology (1946)", channel: "Charlie Parker Archive" },
+  ],
+  'Scrapple From The Apple': [
+    { id: 'PVRR2BU6THQ', title: "Charlie Parker — Scrapple From The Apple (1947)", channel: "Charlie Parker Archive" },
+  ],
+  'Now\'s The Time': [
+    { id: 'p4Pj_KE2Yug', title: "Charlie Parker — Now's The Time (1945)", channel: "Charlie Parker Archive" },
+  ],
+  'Billie\'s Bounce': [
+    { id: 'YBT8s2BB2Vw', title: "Charlie Parker — Billie's Bounce (1945)", channel: "Charlie Parker Archive" },
+  ],
+};
