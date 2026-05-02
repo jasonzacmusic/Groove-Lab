@@ -52,7 +52,28 @@
       "Bash(awk -F/ '{print $2}')",
       "Bash(awk -F/ '{print $NF}')",
       "Bash(awk -F/ '{print $1}' /home/runner/workspace/scripts/bunny-wavs.txt)",
-      "Bash(grep -v \"^DRUMS$\\\\|^PERCUSSION$\")"
+      "Bash(grep -v \"^DRUMS$\\\\|^PERCUSSION$\")",
+      "Bash(grep -o \"id: '[^']*'\" /home/runner/workspace/artifacts/groovelab/src/data/*.ts)",
+      "Bash(grep -o \"videoId: '[^']*'\" /home/runner/workspace/artifacts/groovelab/src/data/*.ts)",
+      "Bash(grep '' *)",
+      "Bash(cat /home/runner/workspace/artifacts/groovelab/src/data/*.ts)",
+      "Bash(ls -1 /home/runner/workspace/artifacts/groovelab/src/pages/*.tsx)",
+      "Bash(xargs -I {} basename {})",
+      "Bash(wc -l /home/runner/workspace/artifacts/groovelab/src/pages/*.tsx)",
+      "Bash(claude --version)",
+      "Bash(npm list *)",
+      "Bash(npm info *)",
+      "Bash(npm run *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5000/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5173/)",
+      "Bash(netstat -tlnp)",
+      "Bash(grep *)",
+      "Bash(python3 -c \"import sys, json; data = json.load\\(sys.stdin\\); print\\(data.get\\('message', {}\\).get\\('content', [{}]\\)[0].get\\('text', ''\\)[:2000]\\)\")",
+      "Bash(export YOUTUBE_API_KEY=$\\(grep YOUTUBE_API_KEY ../.env.production)",
+      "Bash(npx ts-node *)",
+      "Bash(npx --yes tsx -e \"console.log\\('hi'\\)\")",
+      "Bash(tee /tmp/exam-run.log)"
     ]
   }
 }

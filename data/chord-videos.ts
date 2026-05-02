@@ -108,10 +108,7 @@ export const CHORD_PROGRESSION_VIDEOS: Record<string, { id: string; title: strin
     { id: 'fKBqdHHIV64', title: "Neo Soul RnB Guitar Backing Track in Cm", channel: "Samurai Jam Tracks" },
     { id: 'nkiSiGR8XMY', title: "Mellow Neo-Soul Guitar Backing Track in Dm – Smooth Chill R&B Groove", channel: "Samurai Jam Tracks" },
     { id: 'maAoHdgHtvk', title: "R&B Neo Soul Backing Track in C Major / A minor, 84 bpm", channel: "Honey Jam Tracks" }
-  ]
-};
-
-export const KEY_BACKING_TRACKS: Record<string, { id: string; title: string; channel: string }[]> = {
+  ],
   'C Major': [
     { id: 'WSMwjeyzv6o', title: "All Of Me - Backing Track Tempo 120 (C major)", channel: "Aun Chatchai" },
     { id: 'Mss0u20GmBo', title: "Jazz Guitar Backing Track 2-5-1 | C Major", channel: "Etienne de Loriol" },
@@ -196,6 +193,28 @@ export const KEY_BACKING_TRACKS: Record<string, { id: string; title: string; cha
     { id: 'o86XsPtpY5I', title: "Backing Jam track |B Major| Pop Rock Soul", channel: "Musician's Guide" },
     { id: '9oqlEuz9xXg', title: "Slow blues backing track in B major", channel: "Beardly Jam Tracks" }
   ],
+  'A Minor': [
+    { id: 'qHej0AIUmAs', title: "Backing track Am Reggae (AM - F - DM - E)", channel: "Backing Track" },
+    { id: 'CQShlDkv3Pc', title: "Reggae Backing Track A Minor (am)", channel: "Backing Track" },
+    { id: '9yFM0DJTE98', title: "Slow Blues in A Backing Track", channel: "Quist" },
+    { id: 'Eho04GZqAmQ', title: "Smooth Melodic Guitar Backing Track Jam in A Minor", channel: "Tracks N' Jams" },
+    { id: 'einl3CzAp1E', title: "Easy Groove Backing Track in A minor", channel: "Sebastien Zunino" }
+  ],
+  'Bb Minor': [
+    { id: 'CJPiEe9Yrnw', title: "Minor Blues Backing Track in Bbm (Bb Minor)", channel: "Tus Clases De Guitarra" },
+    { id: 'kdgI4EDegf8', title: "Dangerous Blues Rock Guitar Backing Track Jam in Bb Minor", channel: "Elevated Jam Tracks" },
+    { id: 'nu0oYAimY1w', title: "Jazz-Funk Fusion Jam Track in Bb minor 'The Fourth Floor'", channel: "Ben's Jam Tracks" },
+    { id: '-ae_tBkCqeQ', title: "Bb Blues (110bpm) : Backing track", channel: "Guitare Improvisation" },
+    { id: 'rYQgVYRK9LM', title: "Uplifting Mellow Guitar Backing Track in Bb Minor", channel: "Jam'in Backing Tracks" },
+    { id: 'ufM9WsK4oZw', title: "Bb minor blues (Jazz/Swing feel) 150 bpm : Backing Track", channel: "Guitare Improvisation" }
+  ],
+  'B Minor': [
+    { id: 'ZRcth7W8_oM', title: "Reggae Backing Track B minor (Bm)", channel: "Backing Track" },
+    { id: '2VculWlQYXc', title: "Reggae Blues Jam Backing Track (Bm)", channel: "Quist" },
+    { id: 'w4x05O_4myE', title: "Modern Jazz Fusion Guitar Backing Track in Bm", channel: "Jam Along Backing Tracks" },
+    { id: 'QLiLE_u_7QY', title: "Soulful Mellow Groove Guitar Backing Track Jam in B Minor", channel: "Elevated Jam Tracks" },
+    { id: 'jtGIVM3nz8g', title: "Rock Pop BACKING TRACK B Minor | Bm G D A | 70 BPM | Guitar Backing Track", channel: "TGuitar" }
+  ],
   'C Minor': [
     { id: 'v6eArn5IDbc', title: "Reggae Backing Track (Cm) | 75 bpm", channel: "Mega Backing Tracks" },
     { id: 'G_9totCKy6U', title: "Reggae BACKING TRACK JAM - c minor", channel: "Backing Tracks Studio" },
@@ -259,27 +278,5 @@ export const KEY_BACKING_TRACKS: Record<string, { id: string; title: string; cha
     { id: 'nu-ckUdERdc', title: "Smooth Jazz Backing Track in Ab Minor | 90 bpm", channel: "Elite Backing Tracks" },
     { id: 'UQ9giREOyK0', title: "Melodic Hard Rock Backing Track in Abm", channel: "Dopez Tracks" },
     { id: '8PrBTzRvIss', title: "Ab minor blues jam track", channel: "Ten Fingers Of Doom" }
-  ],
-  'A Minor': [
-    { id: 'qHej0AIUmAs', title: "Backing track Am Reggae (AM - F - DM - E)", channel: "Backing Track" },
-    { id: 'CQShlDkv3Pc', title: "Reggae Backing Track A Minor (am)", channel: "Backing Track" },
-    { id: '9yFM0DJTE98', title: "Slow Blues in A Backing Track", channel: "Quist" },
-    { id: 'Eho04GZqAmQ', title: "Smooth Melodic Guitar Backing Track Jam in A Minor", channel: "Tracks N' Jams" },
-    { id: 'einl3CzAp1E', title: "Easy Groove Backing Track in A minor", channel: "Sebastien Zunino" }
-  ],
-  'Bb Minor': [
-    { id: 'CJPiEe9Yrnw', title: "Minor Blues Backing Track in Bbm (Bb Minor)", channel: "Tus Clases De Guitarra" },
-    { id: 'kdgI4EDegf8', title: "Dangerous Blues Rock Guitar Backing Track Jam in Bb Minor", channel: "Elevated Jam Tracks" },
-    { id: 'nu0oYAimY1w', title: "Jazz-Funk Fusion Jam Track in Bb minor 'The Fourth Floor'", channel: "Ben's Jam Tracks" },
-    { id: '-ae_tBkCqeQ', title: "Bb Blues (110bpm) : Backing track", channel: "Guitare Improvisation" },
-    { id: 'rYQgVYRK9LM', title: "Uplifting Mellow Guitar Backing Track in Bb Minor", channel: "Jam'in Backing Tracks" },
-    { id: 'ufM9WsK4oZw', title: "Bb minor blues (Jazz/Swing feel) 150 bpm : Backing Track", channel: "Guitare Improvisation" }
-  ],
-  'B Minor': [
-    { id: 'ZRcth7W8_oM', title: "Reggae Backing Track B minor (Bm)", channel: "Backing Track" },
-    { id: '2VculWlQYXc', title: "Reggae Blues Jam Backing Track (Bm)", channel: "Quist" },
-    { id: 'w4x05O_4myE', title: "Modern Jazz Fusion Guitar Backing Track in Bm", channel: "Jam Along Backing Tracks" },
-    { id: 'QLiLE_u_7QY', title: "Soulful Mellow Groove Guitar Backing Track Jam in B Minor", channel: "Elevated Jam Tracks" },
-    { id: 'jtGIVM3nz8g', title: "Rock Pop BACKING TRACK B Minor | Bm G D A | 70 BPM | Guitar Backing Track", channel: "TGuitar" }
   ]
 };

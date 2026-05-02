@@ -59,3 +59,4 @@ replit.md
 .agents/
 .config/
 .vercel
+.env*.local
