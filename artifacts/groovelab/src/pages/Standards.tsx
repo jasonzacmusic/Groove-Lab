@@ -61,19 +61,23 @@ function transposeChord(chord: string, semitones: number): string {
 }
 
 // ── Jazz Voicings ────────────────────────────────────────────────────────────────
-// Rootless "A/B" piano voicings (Bill Evans / Red Garland style).
-// Bass plays the root, so the comping piano omits the root and stacks
-// 3rds/7ths/9ths/13ths for that classic clustered jazz sound.
-function chordToVoicing(symbol: string): string[] {
+// Rootless A/B piano voicings (Bill Evans / Red Garland style).
+// Bass plays the root, so comping piano omits root and stacks 3rds/7ths/9ths/13ths.
+//
+// A voicing — 3rd (or b3rd) on the bottom:
+//   Cmaj7 A: E-G-B-D   G7 A: B-F-A-E   Dm7 A: F-C-E-G
+// B voicing — 7th (or b7th) on the bottom (shifted up a 4th from A):
+//   Cmaj7 B: B-D-E-G   G7 B: F-A-B-E   Dm7 B: C-E-F-A
+//
+// Alternating A/B on successive chord changes gives the characteristic
+// "cascading" Bill Evans sound and avoids large parallel motion.
+function chordToVoicing(symbol: string, voicingType: 'A' | 'B' = 'A'): string[] {
   const match = symbol.match(/^([A-G][#b]?)(.*)/);
   if (!match) return ['E3', 'G3', 'B3', 'D4'];
   const [, root, quality] = match;
   const r = rootToIndex(root);
   const q = quality.toLowerCase().replace(/\s/g, '');
 
-  // Detect extensions for richer voicings
-  const has9 = q.includes('9') || q.includes('add9');
-  const has11 = q.includes('11');
   const has13 = q.includes('13') || q.includes('6/9');
   const hasFlat9 = q.includes('b9');
   const hasSharp9 = q.includes('#9');
@@ -81,56 +85,65 @@ function chordToVoicing(symbol: string): string[] {
   const hasFlat13 = q.includes('b13') || q.includes('alt');
   const hasFlat5 = q.includes('b5') && !q.includes('m7b5');
 
-  // Pick chord type and rootless intervals (3rd, 5th/7th, 9th, 13th territory)
-  let intervals: number[];
+  let aIntervals: number[];
+  let bIntervals: number[];
 
   if (q.includes('m7b5') || q.includes('half') || q.includes('\u00f8')) {
-    // Half-diminished: b3, b5, b7, 9 (or 11)
-    intervals = [3, 6, 10, 14];
+    // Half-dim A: b3-b5-b7-9   B: b7-9-b3-b5 (all +12 relative to A)
+    aIntervals = [3, 6, 10, 14];
+    bIntervals = [10, 14, 15, 18];
   } else if (q.includes('dim7') || q.includes('\u00b07')) {
-    intervals = [3, 6, 9, 14];
+    // Symmetric chord — same voicing regardless of type
+    aIntervals = bIntervals = [3, 6, 9, 14];
   } else if (q.includes('dim') || q.includes('\u00b0')) {
-    intervals = [3, 6, 11]; // dim with maj7 cluster
+    aIntervals = bIntervals = [3, 6, 11];
   } else if (q.includes('aug') || q === '+' || q === '7+5' || q.includes('+5')) {
-    intervals = [4, 8, 10, 14];
+    aIntervals = bIntervals = [4, 8, 10, 14];
   } else if (q.includes('maj7') || q.includes('\u0394') || q.includes('M7')) {
-    // Major 7: 3, 7, 9 (Type A: 3-5-7-9 or Type B: 7-9-3-5)
-    intervals = has13 ? [4, 11, 14, 21] : [4, 11, 14, 17];
+    // Maj7 A: 3-7-9(-13)   B: 7-9-3-5 (+12 shift)
+    aIntervals = has13 ? [4, 11, 14, 21] : [4, 11, 14, 17];
+    bIntervals = has13 ? [11, 14, 16, 21] : [11, 14, 16, 19];
   } else if (q.includes('m7') || q.includes('min7') || q.includes('-7')) {
-    // Minor 7: b3, 5, b7, 9
-    intervals = has13 ? [3, 10, 14, 21] : [3, 10, 14, 17];
+    // Min7 A: b3-b7-9(-13)   B: b7-9-b3-5 (+12 shift)
+    aIntervals = has13 ? [3, 10, 14, 21] : [3, 10, 14, 17];
+    bIntervals = has13 ? [10, 14, 15, 21] : [10, 14, 15, 19];
   } else if (q.includes('7sus4') || q.includes('7sus')) {
-    // Sus7: 4, 5, b7, 9
-    intervals = [5, 10, 14, 17];
+    aIntervals = [5, 10, 14, 17];
+    bIntervals = [10, 14, 17, 19];
   } else if (q.includes('7')) {
-    // Dominant 7: 3, b7, 9, 13 (with alterations)
-    let third = 4;
-    let fifth: number | null = null;
-    let seventh = 10;
-    let ninth = hasFlat9 ? 13 : hasSharp9 ? 15 : 14;
-    let thirteenth = hasFlat13 ? 20 : 21;
-    if (hasFlat5) fifth = 6;
-    if (hasSharp11) intervals = [third, seventh, ninth, 18]; // 3-b7-9-#11
-    else if (has13 || hasFlat13) intervals = [third, seventh, ninth, thirteenth];
-    else intervals = fifth !== null ? [third, fifth, seventh, ninth] : [third, seventh, ninth, 17];
+    // Dom7 A: 3-b7-9-13 (with alterations)   B: b7-9-3-13 (+12 shift)
+    const ninth = hasFlat9 ? 13 : hasSharp9 ? 15 : 14;
+    const thirteenth = hasFlat13 ? 20 : 21;
+    if (hasSharp11) {
+      aIntervals = [4, 10, ninth, 18];
+      bIntervals = [10, ninth, 16, 18];
+    } else if (has13 || hasFlat13) {
+      aIntervals = [4, 10, ninth, thirteenth];
+      bIntervals = [10, ninth, 16, thirteenth];
+    } else if (hasFlat5) {
+      aIntervals = [4, 6, 10, ninth];
+      bIntervals = [10, ninth, 16, 18];
+    } else {
+      aIntervals = [4, 10, ninth, 17];
+      bIntervals = [10, ninth, 16, 21];
+    }
   } else if (q.includes('m') || q.includes('min') || q.startsWith('-')) {
-    // Plain minor: b3, 5, 9
-    intervals = [3, 7, 14];
+    aIntervals = bIntervals = [3, 7, 14];
   } else if (q.includes('sus4')) {
-    intervals = [5, 7, 14];
+    aIntervals = bIntervals = [5, 7, 14];
   } else if (q.includes('sus2')) {
-    intervals = [2, 7, 14];
+    aIntervals = bIntervals = [2, 7, 14];
   } else if (q.includes('6/9')) {
-    intervals = [4, 9, 14, 17];
+    aIntervals = bIntervals = [4, 9, 14, 17];
   } else if (q.includes('6')) {
-    intervals = [4, 9, 14];
+    aIntervals = bIntervals = [4, 9, 14];
   } else {
-    // Plain major triad → add 9 for color
-    intervals = [4, 7, 14];
+    aIntervals = bIntervals = [4, 7, 14];
   }
 
+  const intervals = voicingType === 'B' ? bIntervals : aIntervals;
+
   // Voicing register: cluster around middle C (octave 3-4)
-  // Root virtual position is C3-Bb3 area; intervals up from there
   return intervals.map((interval) => {
     const totalSemis = r + interval;
     const noteIdx = ((totalSemis % 12) + 12) % 12;
@@ -202,10 +215,10 @@ function walkingBassNotes(chordSymbol: string, nextChord: string, beats: number,
   const targetThirdOfNext = (nxtIdx + (nextIsMinor ? 3 : 4)) % 12;
   const chromaticApproach = ((nxtIdx - 1) + 12) % 12;
 
-  // Even bars → land on next chord's 3rd from a 5th-of-3rd a half-step above
-  // Odd bars → traditional chromatic approach to next root
+  // Even bars → LAND directly on the 3rd of the next chord (strong voice-leading)
+  // Odd bars → chromatic approach (half-step below) to next root
   const beat4 = barIndex % 2 === 0
-    ? (SHARP_TO_FLAT[CHROMATIC[(targetThirdOfNext + 1) % 12]] || CHROMATIC[(targetThirdOfNext + 1) % 12]) + oct
+    ? (SHARP_TO_FLAT[CHROMATIC[targetThirdOfNext]] || CHROMATIC[targetThirdOfNext]) + oct
     : (SHARP_TO_FLAT[CHROMATIC[chromaticApproach]] || CHROMATIC[chromaticApproach]) + oct;
 
   // Octave variation on the 5th beat slot to add melodic shape
@@ -572,6 +585,9 @@ export default function Standards() {
       // ── Piano comping ──
       // Sustain notes longer than '8n' so chords actually ring under the soloist
       // instead of poking out as percussive stabs.
+      // Alternate A/B voicings on successive chord changes — Bill Evans style
+      const vType: 'A' | 'B' = chordIdx % 2 === 0 ? 'A' : 'B';
+
       if (isSwing || isFunk) {
         // Comp on beats 2 and 4 — let each voicing ring for a half-note ("Freddie Green"-ish sustain)
         for (let b = 0; b < chordBeats; b++) {
@@ -579,7 +595,7 @@ export default function Standards() {
           if (beatInBar === 1 || beatInBar === 3) {
             transport.schedule((time) => {
               if (pianoRef.current) {
-                const voicing = chordToVoicing(chord.chord);
+                const voicing = chordToVoicing(chord.chord, vType);
                 pianoRef.current.triggerAttackRelease(voicing, '2n', time, 0.35);
               }
             }, `0:${chordStartBeat + b}:0`);
@@ -592,7 +608,7 @@ export default function Standards() {
           if (beatInBar === 0 || beatInBar === 2) {
             transport.schedule((time) => {
               if (pianoRef.current) {
-                const voicing = chordToVoicing(chord.chord);
+                const voicing = chordToVoicing(chord.chord, vType);
                 pianoRef.current.triggerAttackRelease(voicing, '4n.', time, 0.3);
               }
             }, `0:${chordStartBeat + b}:0`);
@@ -602,7 +618,7 @@ export default function Standards() {
         // Ballad: whole chord at start
         transport.schedule((time) => {
           if (pianoRef.current) {
-            const voicing = chordToVoicing(chord.chord);
+            const voicing = chordToVoicing(chord.chord, vType);
             pianoRef.current.triggerAttackRelease(voicing, `0:${chordBeats}:0`, time, 0.25);
           }
         }, `0:${chordStartBeat}:0`);
@@ -610,7 +626,7 @@ export default function Standards() {
         // Even 8ths: comp on beat 1
         transport.schedule((time) => {
           if (pianoRef.current) {
-            const voicing = chordToVoicing(chord.chord);
+            const voicing = chordToVoicing(chord.chord, vType);
             pianoRef.current.triggerAttackRelease(voicing, '4n', time, 0.3);
           }
         }, `0:${chordStartBeat}:0`);
