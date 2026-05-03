@@ -9,7 +9,7 @@ import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Piano, Play, Square, ArrowUp, ArrowDown, Star } from 'lucide-react';
 import { YouTubeInline } from '@/components/YouTubeInline';
-import { CHORD_PROGRESSION_VIDEOS } from '@/data/chord-videos';
+import { CHORD_PROGRESSION_VIDEOS, PROGRESSION_TYPE_TO_VIDEO_KEY } from '@/data/chord-videos';
 import { GENRE_VIDEO_LIBRARY } from '@/data/genre-videos';
 import * as Tone from 'tone';
 
@@ -232,25 +232,6 @@ export default function Chords() {
             const displayKey = transAmt !== 0 ? transposeChordSymbol(origKey, transAmt) : origKey;
             const genre = prog.genre?.name ?? 'jazz';
             const progName = prog.name;
-            // DB stores progressionType as snake_case codes (jazz_ii_v_i, blues_12bar, …);
-            // CHORD_PROGRESSION_VIDEOS is keyed by display strings. Translate first.
-            const PROGRESSION_TYPE_TO_VIDEO_KEY: Record<string, string> = {
-              jazz_ii_v_i: 'ii-V-I',
-              ii_v_i: 'ii-V-I',
-              blues_12bar: 'Blues Progression',
-              blues: 'Blues Progression',
-              rhythm_changes: 'Rhythm Changes',
-              modal: 'Modal',
-              i_vi_ii_v: 'I-vi-ii-V',
-              pop: 'I-vi-ii-V',
-              funk: 'Funk',
-              reggae: 'Reggae',
-              latin: 'Latin',
-              neo_soul: 'Neo Soul',
-              afrobeat: 'Afrobeat',
-              gospel: 'Gospel',
-              rnb: 'R&B',
-            };
             const ptype = (prog.progressionType ?? '').toLowerCase();
             const videoKey = PROGRESSION_TYPE_TO_VIDEO_KEY[ptype] ?? prog.progressionType ?? '';
             const curatedVideos = CHORD_PROGRESSION_VIDEOS[videoKey] || [];

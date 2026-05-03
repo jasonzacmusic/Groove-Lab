@@ -1,4 +1,5 @@
-import type { Plugin, ViteDevServer } from "vite";
+import type { Plugin, ViteDevServer, Connect } from "vite";
+import type { IncomingMessage, ServerResponse } from "node:http";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -11,10 +12,27 @@ type Route = {
   segmentDepth: number;
 };
 
+type QueryValue = string | string[];
+type Query = Record<string, QueryValue>;
+
+interface VercelLikeRequest extends IncomingMessage {
+  query: Query;
+  body?: unknown;
+}
+
+interface VercelLikeResponse extends ServerResponse {
+  status(code: number): VercelLikeResponse;
+  json(data: unknown): VercelLikeResponse;
+  send(data: unknown): VercelLikeResponse;
+}
+
+type Handler = (req: VercelLikeRequest, res: VercelLikeResponse) => void | Promise<void>;
+type HandlerModule = { default?: Handler };
+
 function collectRoutes(apiDir: string): Route[] {
   const routes: Route[] = [];
 
-  function walk(dir: string, urlPrefix: string) {
+  function walk(dir: string, urlPrefix: string): void {
     if (!fs.existsSync(dir)) return;
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
       if (entry.name.startsWith("_")) continue;
@@ -41,7 +59,7 @@ function collectRoutes(apiDir: string): Route[] {
         pattern = urlPrefix + "/" + baseName;
       }
       const paramNames: string[] = [];
-      const regexStr = pattern.replace(/:([a-zA-Z_]+)/g, (_, n) => {
+      const regexStr = pattern.replace(/:([a-zA-Z_]+)/g, (_, n: string) => {
         paramNames.push(n);
         return "([^/]+)";
       });
@@ -64,78 +82,69 @@ function collectRoutes(apiDir: string): Route[] {
   return routes;
 }
 
-function makeRes(res: any) {
-  let statusCode = 200;
-  const wrapped: any = {
-    status(code: number) {
-      statusCode = code;
-      res.statusCode = code;
-      return wrapped;
-    },
-    json(data: any) {
-      if (res.writableEnded) return wrapped;
-      res.statusCode = statusCode;
-      res.setHeader("Content-Type", "application/json");
-      res.end(JSON.stringify(data));
-      return wrapped;
-    },
-    send(data: any) {
-      if (res.writableEnded) return wrapped;
-      res.statusCode = statusCode;
-      if (data && typeof data === "object" && !Buffer.isBuffer(data)) {
-        res.setHeader("Content-Type", "application/json");
-        res.end(JSON.stringify(data));
-      } else {
-        res.end(data);
-      }
-      return wrapped;
-    },
-    setHeader(name: string, val: string) {
-      res.setHeader(name, val);
-      return wrapped;
-    },
-    getHeader(name: string) {
-      return res.getHeader(name);
-    },
-    end(data?: any) {
-      if (!res.writableEnded) res.end(data);
-      return wrapped;
-    },
-    get statusCode() {
-      return statusCode;
-    },
-    set statusCode(v: number) {
-      statusCode = v;
-      res.statusCode = v;
-    },
-    get writableEnded() {
-      return res.writableEnded;
-    },
+function decorateResponse(res: ServerResponse): VercelLikeResponse {
+  const decorated = res as VercelLikeResponse;
+  decorated.status = function status(this: VercelLikeResponse, code: number): VercelLikeResponse {
+    this.statusCode = code;
+    return this;
   };
-  return wrapped;
+  decorated.json = function json(this: VercelLikeResponse, data: unknown): VercelLikeResponse {
+    if (this.writableEnded) return this;
+    this.setHeader("Content-Type", "application/json");
+    this.end(JSON.stringify(data));
+    return this;
+  };
+  decorated.send = function send(this: VercelLikeResponse, data: unknown): VercelLikeResponse {
+    if (this.writableEnded) return this;
+    if (data && typeof data === "object" && !Buffer.isBuffer(data)) {
+      this.setHeader("Content-Type", "application/json");
+      this.end(JSON.stringify(data));
+    } else if (data === undefined || data === null) {
+      this.end();
+    } else {
+      this.end(String(data));
+    }
+    return this;
+  };
+  return decorated;
 }
 
-async function readBody(req: any): Promise<any> {
+async function readBody(req: IncomingMessage): Promise<unknown> {
   return new Promise((resolve) => {
     const chunks: Buffer[] = [];
     req.on("data", (c: Buffer) => chunks.push(c));
     req.on("end", () => {
       if (!chunks.length) return resolve(undefined);
       const text = Buffer.concat(chunks).toString();
-      const ct = String(req.headers["content-type"] || "");
+      const ct = String(req.headers["content-type"] ?? "");
       if (ct.includes("application/json")) {
         try {
           resolve(JSON.parse(text));
-          return;
         } catch {
           resolve(text);
-          return;
         }
+        return;
       }
       resolve(text);
     });
     req.on("error", () => resolve(undefined));
   });
+}
+
+function buildQuery(qs: string | undefined, pathParams: Record<string, string>): Query {
+  const query: Query = { ...pathParams };
+  const searchParams = new URLSearchParams(qs ?? "");
+  for (const [k, v] of searchParams) {
+    const existing = query[k];
+    if (existing === undefined) {
+      query[k] = v;
+    } else if (Array.isArray(existing)) {
+      existing.push(v);
+    } else {
+      query[k] = [existing, v];
+    }
+  }
+  return query;
 }
 
 export function apiHandlersPlugin(apiDir: string): Plugin {
@@ -144,7 +153,7 @@ export function apiHandlersPlugin(apiDir: string): Plugin {
 
   return {
     name: "vite-api-handlers",
-    configureServer(s) {
+    configureServer(s: ViteDevServer) {
       server = s;
       routes = collectRoutes(apiDir);
       const summary = routes.map((r) => r.pattern).slice(0, 8).join(", ");
@@ -152,13 +161,13 @@ export function apiHandlersPlugin(apiDir: string): Plugin {
         `[api] mounted ${routes.length} routes (${summary}${routes.length > 8 ? ", …" : ""})`,
       );
 
-      s.middlewares.use(async (req: any, res: any, next: any) => {
-        const url: string = req.originalUrl || req.url || "";
+      const middleware: Connect.NextHandleFunction = async (req, res, next) => {
+        const url = req.originalUrl ?? req.url ?? "";
         if (!url.startsWith("/api")) return next();
         const [pathOnly, qs] = url.split("?");
 
         let matched: Route | undefined;
-        let pathParams: Record<string, string> = {};
+        const pathParams: Record<string, string> = {};
         for (const r of routes) {
           const m = r.regex.exec(pathOnly);
           if (m) {
@@ -171,49 +180,36 @@ export function apiHandlersPlugin(apiDir: string): Plugin {
         }
         if (!matched) return next();
 
-        const searchParams = new URLSearchParams(qs || "");
-        const query: Record<string, any> = { ...pathParams };
-        for (const [k, v] of searchParams) {
-          if (k in query) {
-            query[k] = Array.isArray(query[k]) ? [...query[k], v] : [query[k], v];
-          } else {
-            query[k] = v;
-          }
-        }
-
         try {
-          const mod = await server!.ssrLoadModule(matched.filePath);
-          const handler = (mod as any).default;
+          const mod = (await server!.ssrLoadModule(matched.filePath)) as HandlerModule;
+          const handler = mod.default;
           if (typeof handler !== "function") {
             res.statusCode = 500;
             res.end(`No default export in ${matched.filePath}`);
             return;
           }
 
+          const vReq = req as VercelLikeRequest;
+          vReq.query = buildQuery(qs, pathParams);
           if (req.method && req.method !== "GET" && req.method !== "HEAD") {
-            req.body = await readBody(req);
+            vReq.body = await readBody(req);
           }
-          (req as any).query = query;
+          const vRes = decorateResponse(res);
 
-          const wrappedRes = makeRes(res);
-          await handler(req, wrappedRes);
-          if (!res.writableEnded) {
-            res.end();
-          }
-        } catch (err: any) {
+          await handler(vReq, vRes);
+          if (!res.writableEnded) res.end();
+        } catch (err) {
+          const message = err instanceof Error ? err.message : String(err);
           console.error(`[api] ${matched.pattern} failed:`, err);
           if (!res.writableEnded) {
             res.statusCode = 500;
             res.setHeader("Content-Type", "application/json");
-            res.end(
-              JSON.stringify({
-                error: "Internal server error",
-                message: String(err?.message ?? err),
-              }),
-            );
+            res.end(JSON.stringify({ error: "Internal server error", message }));
           }
         }
-      });
+      };
+
+      s.middlewares.use(middleware);
     },
   };
 }

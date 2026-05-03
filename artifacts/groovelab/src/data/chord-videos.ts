@@ -1,6 +1,32 @@
 // AUTO-GENERATED — GrooveLab Chord Progression & Key Backing Tracks Database
 // Last updated: 2026-04-18
 
+/**
+ * Translation map from DB `progression_type` codes (snake_case) to the
+ * display-string keys used by CHORD_PROGRESSION_VIDEOS below. The chord
+ * progressions table stores codes like `jazz_ii_v_i`; the curated video
+ * library is keyed by readable names like `'ii-V-I'`. Without this map
+ * the lookup never matches and Chord Lab cards show no backing tracks.
+ */
+export const PROGRESSION_TYPE_TO_VIDEO_KEY: Record<string, string> = {
+  jazz_ii_v_i: 'ii-V-I',
+  ii_v_i: 'ii-V-I',
+  blues_12bar: 'Blues Progression',
+  jazz_blues: 'Blues Progression',
+  blues: 'Blues Progression',
+  rhythm_changes: 'Rhythm Changes',
+  modal: 'Modal',
+  i_vi_ii_v: 'I-vi-ii-V',
+  pop: 'I-vi-ii-V',
+  funk: 'Funk',
+  reggae: 'Reggae',
+  latin: 'Latin',
+  neo_soul: 'Neo Soul',
+  afrobeat: 'Afrobeat',
+  gospel: 'Gospel',
+  rnb: 'R&B',
+};
+
 export const CHORD_PROGRESSION_VIDEOS: Record<string, { id: string; title: string; channel: string }[]> = {
   'ii-V-I': [
     { id: 'AE99pL-9AtE', title: "II V I in all keys - Backing Track", channel: "Lucciano Pizzichini" },
