@@ -108,10 +108,49 @@ const ARTIST_MAP: Record<string, string> = {
   "CompleteTakesV1_MIDI_WAV": "Complete Takes",
   "CompleteTakesV2_MIDI_WAV": "Complete Takes",
   "CompleteTakesV3_MIDI_WAV": "Complete Takes",
+  "BluesDrumsVol1_MIDI_WAV": "The Loop Loft",
+  "BrushDrumsV1_WAV": "The Loop Loft",
+  "BrushDrumsV2_WAV": "The Loop Loft",
+  "BrushDrumsV3_WAV": "The Loop Loft",
+  "BrushDrumsV4_WAV": "The Loop Loft",
+  "BrushDrumsV5_WAV": "The Loop Loft",
+  "Cinematic DrumsV1_WAV": "The Loop Loft",
+  "Cinematic DrumsV2_WAV": "The Loop Loft",
+  "Cinematic DrumsV3_WAV": "The Loop Loft",
+  "DrumsOfTheWorld_WAV": "The Loop Loft",
+  "DrumsOfTheWorldV2_WAV": "The Loop Loft",
+  "DryDrumsV1_WAV": "The Loop Loft",
+  "DryDrumsV2_WAV": "The Loop Loft",
+  "DryDrumsV3_WAV": "The Loop Loft",
+  "DryDrumsV4_WAV": "The Loop Loft",
+  "DryDrumsV5_WAV": "The Loop Loft",
+  "FunkDrumsVol1_WAV": "The Loop Loft",
+  "FunkDrumsVol2_WAV": "The Loop Loft",
+  "IndieRockDrumsVol1_WAV": "The Loop Loft",
+  "IndieRockDrumsVol2_WAV": "The Loop Loft",
+  "IndieRockDrumsVol3_WAV": "The Loop Loft",
+  "IndieRockDrumsVol4_WAV": "The Loop Loft",
+  "IndieRockDrumsVol5_WAV": "The Loop Loft",
+  "IndieRockDrumsVol6_WAV": "The Loop Loft",
+  "OddMeterDrums_Vol1_WAV": "The Loop Loft",
+  "OddMeterDrums_Vol2_WAV": "The Loop Loft",
+  "OddMeterDrums_Vol3_WAV": "The Loop Loft",
+  "Multitracks_AcousticFolk_BackbeatBrush_83bpm": "The Loop Loft",
+  "Multitracks_AcousticFolk_BluesBrushes_180bpm": "The Loop Loft",
+  "Multitracks_DryDrums_Mulholland_85bpm": "The Loop Loft",
+  "Multitracks_DryDrums_Topanga_110bpm": "The Loop Loft",
+  "Multitracks_IndieRockDrums_FrontPocket_122bpm": "The Loop Loft",
+  "Multitracks_IndieRockDrums_VintagePunch_89bpm": "The Loop Loft",
+  "Multitracks_RockAndRoll_Downtown_80bpm": "The Loop Loft",
+  "Multitracks_RockAndRoll_InTheVan_105bpm": "The Loop Loft",
+  "Multitracks_Songwriter_Brushes_77bpm": "The Loop Loft",
+  "Multitracks_Songwriter_StraightUp_91bpm": "The Loop Loft",
+  "Multitracks_StudioDrums_StudioA_95bpm": "The Loop Loft",
+  "Multitracks_StudioDrums_StudioB_115bpm": "The Loop Loft",
 };
 
 // ── Organizational folders to skip when finding the song folder ──────────
-const SKIP_FOLDERS = /^(loops|stereo\s*loops|multitrack\s*loops|multitrack_loops|stereo_loops|clean\s*loops|vibe\s*loops|audio\s*loops|multitrack|stereo|dry|compressed|mixed|perc\s*loops|drum\s*kit\s*loops|drum\s*kit\s*samples|percussion\s*loops|percussion\s*samples|samples)$/i;
+const SKIP_FOLDERS = /^(loops|stereo\s*loops|multitrack\s*loops|multitrack_loops|stereo_loops|clean\s*loops|vibe\s*loops|audio\s*loops|daw\s*audio\s*loops|loops\s*folder|multitrack|stereo|dry|compressed|mixed|perc\s*loops|drum\s*kit\s*loops|drum\s*kit\s*samples|percussion\s*loops|percussion\s*samples|samples)$/i;
 
 // ── Helpers ──────────────────────────────────────────────────────────────
 function cleanProductName(folderName: string): string {
@@ -221,6 +260,10 @@ function parsePath(line: string): ParsedPath | null {
   // Skip MIDI files
   if (/\.mid$/i.test(fileName)) return null;
 
+  // Skip top-level "bonus" full-arrangement files that begin with underscore
+  // (e.g. "_Multitrack_Mulholland_FullArrangement_85bpm.wav")
+  if (/^_/.test(fileName)) return null;
+
   // Determine product folder
   let product: string;
   let remainingParts: string[];
@@ -249,7 +292,16 @@ function parsePath(line: string): ParsedPath | null {
 
   const remaining = pathAfterProduct.length - idx; // how many parts left (including filename)
 
-  if (remaining >= 3) {
+  // Special case: Multitracks_* packs are a single song with section subfolders
+  // containing stems. Structure: Multitracks_X_85bpm/Bridge1/01_Kick_Bridge1.wav
+  // Treat the whole pack as the song and the subfolder as a multitrack section.
+  const isMultitracksPack = /^Multitracks_/i.test(product);
+
+  if (isMultitracksPack && remaining === 2) {
+    collection = cleanProductName(product);
+    sectionFolder = pathAfterProduct[idx];
+    isMultitrack = true;
+  } else if (remaining >= 3) {
     // Product/.../SongFolder/SectionFolder/file.wav (multitrack with section subfolder)
     collection = pathAfterProduct[idx];
     sectionFolder = pathAfterProduct[idx + 1];
@@ -258,9 +310,9 @@ function parsePath(line: string): ParsedPath | null {
     collection = pathAfterProduct[idx];
     sectionFolder = null;
   } else {
-    // Product/file.wav (no song folder)
-    collection = product;
-    sectionFolder = null;
+    // Product/file.wav (no song folder) — skip these stragglers, they're not part
+    // of any song and would create ghost 1-loop "collections" named after the product.
+    return null;
   }
 
   return {

@@ -41,13 +41,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     WHEN 'fill' THEN 4 WHEN 'break' THEN 5 WHEN 'build' THEN 6
     WHEN 'outro' THEN 7 WHEN 'full_loop' THEN 8 ELSE 9 END`;
 
-  const orderBy = sort === 'bpm_asc' ? [asc(audioLoops.bpm)]
-    : sort === 'bpm_desc' ? [desc(audioLoops.bpm)]
-    : sort === 'artist' ? [asc(audioLoops.artist)]
-    : sort === 'most_played' ? [desc(audioLoops.playCount)]
-    : sort === 'collection' ? [asc(audioLoops.artist), asc(audioLoops.collection), sectionOrder, asc(audioLoops.sectionNumber)]
-    : sort === 'genre' ? [asc(audioLoops.genre), asc(audioLoops.artist)]
-    : [desc(audioLoops.createdAt)];
+  // Instrument priority: drums first, then percussion, then everything else
+  const instrumentPriority = sql`CASE LOWER(${audioLoops.instrumentCategory})
+    WHEN 'drums' THEN 1 WHEN 'percussion' THEN 2 WHEN 'bass' THEN 3
+    WHEN 'guitar' THEN 4 WHEN 'keys' THEN 5 WHEN 'electronic' THEN 6 ELSE 9 END`;
+
+  const orderBy = sort === 'bpm_asc' ? [instrumentPriority, asc(audioLoops.bpm)]
+    : sort === 'bpm_desc' ? [instrumentPriority, desc(audioLoops.bpm)]
+    : sort === 'artist' ? [instrumentPriority, asc(audioLoops.artist)]
+    : sort === 'most_played' ? [instrumentPriority, desc(audioLoops.playCount)]
+    : sort === 'collection' ? [instrumentPriority, asc(audioLoops.artist), asc(audioLoops.collection), sectionOrder, asc(audioLoops.sectionNumber)]
+    : sort === 'genre' ? [asc(audioLoops.genre), instrumentPriority, asc(audioLoops.artist)]
+    : [instrumentPriority, desc(audioLoops.createdAt)];
 
   try {
     const [rows, countRow] = await Promise.all([
