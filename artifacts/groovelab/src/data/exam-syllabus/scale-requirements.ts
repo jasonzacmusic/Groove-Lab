@@ -22,6 +22,7 @@ export interface ArpeggioReq {
   keys: string[];
   type: 'major' | 'minor' | 'dominant7' | 'diminished7' | 'augmented';
   octaves: number;
+  label?: string;
 }
 
 export interface GradeRequirements {

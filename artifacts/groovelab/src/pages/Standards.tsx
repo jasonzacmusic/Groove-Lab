@@ -322,8 +322,8 @@ export default function Standards() {
   // Refs for instruments
   const pianoRef = useRef<Tone.Sampler | null>(null);
   const bassRef = useRef<Tone.MonoSynth | null>(null);
-  const rideRef = useRef<Tone.MetalSynth | null>(null);
-  const hihatRef = useRef<Tone.MetalSynth | null>(null);
+  const rideRef = useRef<Tone.NoiseSynth | null>(null);
+  const hihatRef = useRef<Tone.NoiseSynth | null>(null);
   const kickRef = useRef<Tone.MembraneSynth | null>(null);
   const melodyRef = useRef<Tone.Synth | null>(null);
   const transportStartedRef = useRef(false);
@@ -499,25 +499,23 @@ export default function Standards() {
       volume: -4,
     }).toDestination();
 
-    // Jazz ride cymbal - metallic noise burst with long ring
-    rideRef.current = new Tone.MetalSynth({
-      harmonicity: 5.1,
-      modulationIndex: 16,
-      resonance: 3000,
-      octaves: 1.5,
-      envelope: { attack: 0.001, decay: 1.4, sustain: 0, release: 0.6 },
-      volume: -20,
-    }).toDestination();
+    // Jazz ride cymbal — white noise with long shimmer decay through a
+    // high-pass filter chain (avoids harsh MetalSynth FM artifacts).
+    // NoiseSynth triggerAttackRelease(duration, time, vel) — no pitch arg.
+    const rideHpf = new Tone.Filter({ type: 'highpass', frequency: 7000, Q: 0.6 }).toDestination();
+    rideRef.current = new Tone.NoiseSynth({
+      noise: { type: 'white' },
+      envelope: { attack: 0.001, decay: 1.2, sustain: 0, release: 0.4 },
+      volume: -22,
+    }).connect(rideHpf);
 
-    // Jazz hihat / cross-stick - short metallic
-    hihatRef.current = new Tone.MetalSynth({
-      harmonicity: 5.1,
-      modulationIndex: 32,
-      resonance: 4000,
-      octaves: 1.5,
-      envelope: { attack: 0.001, decay: 0.08, sustain: 0, release: 0.05 },
-      volume: -24,
-    }).toDestination();
+    // Jazz hihat / cross-stick — very short white-noise burst through tight HPF
+    const hihatHpf = new Tone.Filter({ type: 'highpass', frequency: 9000, Q: 1 }).toDestination();
+    hihatRef.current = new Tone.NoiseSynth({
+      noise: { type: 'white' },
+      envelope: { attack: 0.001, decay: 0.05, sustain: 0, release: 0.02 },
+      volume: -28,
+    }).connect(hihatHpf);
 
     // Jazz kick - warm thump with MembraneSynth
     kickRef.current = new Tone.MembraneSynth({
@@ -667,12 +665,12 @@ export default function Standards() {
       if (isSwing || grooveName === 'Medium Up' || grooveName === 'Fast Swing') {
         // Ride on every beat
         transport.schedule((time) => {
-          if (rideRef.current) rideRef.current.triggerAttackRelease('C6', '16n', time, 0.3);
+          if (rideRef.current) rideRef.current.triggerAttackRelease('16n', time, 0.3);
         }, beatTime);
         // Hihat on 2 and 4
         if (beatInBar === 1 || beatInBar === 3) {
           transport.schedule((time) => {
-            if (hihatRef.current) hihatRef.current.triggerAttackRelease('G5', '32n', time, 0.15);
+            if (hihatRef.current) hihatRef.current.triggerAttackRelease('32n', time, 0.15);
           }, beatTime);
         }
       } else if (isBossa) {
@@ -695,35 +693,35 @@ export default function Standards() {
         // Cross-stick on 2 and 4
         if (beatInBar === 1 || beatInBar === 3) {
           transport.schedule((time) => {
-            if (hihatRef.current) hihatRef.current.triggerAttackRelease('E5', '32n', time, 0.18);
+            if (hihatRef.current) hihatRef.current.triggerAttackRelease('32n', time, 0.18);
           }, beatTime);
         }
         // Eighth-note "and" of beat 2 — clave accent (cross-stick)
         if (beatInBar === 1) {
           transport.schedule((time) => {
-            if (hihatRef.current) hihatRef.current.triggerAttackRelease('D5', '32n', time, 0.1);
+            if (hihatRef.current) hihatRef.current.triggerAttackRelease('32n', time, 0.1);
           }, `0:${startBeat + b}:2`);
         }
         // Soft ride pulse on every beat
         transport.schedule((time) => {
-          if (rideRef.current) rideRef.current.triggerAttackRelease('C6', '16n', time, 0.08);
+          if (rideRef.current) rideRef.current.triggerAttackRelease('16n', time, 0.08);
         }, beatTime);
       } else if (isBallad) {
         // Very soft brushes feel
         if (beatInBar === 0) {
           transport.schedule((time) => {
-            if (rideRef.current) rideRef.current.triggerAttackRelease('C6', '8n', time, 0.1);
+            if (rideRef.current) rideRef.current.triggerAttackRelease('8n', time, 0.1);
           }, beatTime);
         }
         if (beatInBar === 2) {
           transport.schedule((time) => {
-            if (hihatRef.current) hihatRef.current.triggerAttackRelease('G5', '32n', time, 0.08);
+            if (hihatRef.current) hihatRef.current.triggerAttackRelease('32n', time, 0.08);
           }, beatTime);
         }
       } else if (isFunk) {
         // Funk: hihat every beat, kick on 1 and the "and" of 2
         transport.schedule((time) => {
-          if (hihatRef.current) hihatRef.current.triggerAttackRelease('G5', '32n', time, 0.2);
+          if (hihatRef.current) hihatRef.current.triggerAttackRelease('32n', time, 0.2);
         }, beatTime);
         if (beatInBar === 0) {
           transport.schedule((time) => {
@@ -733,7 +731,7 @@ export default function Standards() {
       } else {
         // Even 8ths: simple pattern
         transport.schedule((time) => {
-          if (hihatRef.current) hihatRef.current.triggerAttackRelease('G5', '32n', time, 0.15);
+          if (hihatRef.current) hihatRef.current.triggerAttackRelease('32n', time, 0.15);
         }, beatTime);
         if (beatInBar === 0 || beatInBar === 2) {
           transport.schedule((time) => {

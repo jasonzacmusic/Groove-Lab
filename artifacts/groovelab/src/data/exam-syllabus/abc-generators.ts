@@ -133,12 +133,12 @@ function toTonePitch(name: string, octave: number): string {
 /** Get the chromatic index of a root note */
 function chromaticIndex(root: string): number {
   // Try direct lookup
-  let idx = CHROMATIC.indexOf(root);
+  let idx = CHROMATIC.indexOf(root as typeof CHROMATIC[number]);
   if (idx >= 0) return idx;
   // Try flat name
   for (const [sharp, flat] of Object.entries(FLAT_NAMES)) {
     if (root === flat) {
-      idx = CHROMATIC.indexOf(sharp);
+      idx = CHROMATIC.indexOf(sharp as typeof CHROMATIC[number]);
       if (idx >= 0) return idx;
     }
   }

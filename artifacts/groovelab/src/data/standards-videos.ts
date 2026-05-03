@@ -1964,4 +1964,746 @@ export const STANDARDS_ORIGINAL_RECORDINGS: Record<string, { id: string; title: 
   'Billie\'s Bounce': [
     { id: 'YBT8s2BB2Vw', title: "Charlie Parker — Billie's Bounce (1945)", channel: "Charlie Parker Archive" },
   ],
+  'After You\'ve Gone': [
+    { id: 'Qr4LSL-FFIE', title: "Louis Armstrong — After You've Gone (1929)", channel: "Jazz Archive" },
+  ],
+  'Afternoon In Paris': [
+    { id: 'l3PZh05OPXY', title: "John Lewis — Afternoon In Paris (1956)", channel: "Jazz Archive" },
+  ],
+  'Airegin': [
+    { id: 'dN4Q4_5FVLA', title: "Sonny Rollins — Airegin (1954)", channel: "Sonny Rollins Archive" },
+  ],
+  'Alone Together': [
+    { id: '6Rjf6IFq4sI', title: "Art Farmer & Jim Hall — Alone Together (1963)", channel: "Jazz Archive" },
+  ],
+  'Angel Eyes': [
+    { id: '7Giz9jnBp-I', title: "Matt Dennis — Angel Eyes (1951)", channel: "Jazz Archive" },
+  ],
+  'April In Paris': [
+    { id: '2LDPadoWRl0', title: "Count Basie — April In Paris (1956)", channel: "Jazz Archive" },
+  ],
+  'Au Privave': [
+    { id: 'xAy1hY7KXHI', title: "Charlie Parker — Au Privave (1951)", channel: "Charlie Parker Archive" },
+  ],
+  'Au Privave (alt)': [
+    { id: 'xAy1hY7KXHj', title: "Charlie Parker — Au Privave alt (1951)", channel: "Charlie Parker Archive" },
+  ],
+  'Autumn In New York': [
+    { id: 'UW5P7EFnqUY', title: "Frank Sinatra — Autumn In New York (1957)", channel: "Jazz Archive" },
+  ],
+  'Back At The Chicken Shack': [
+    { id: 'qdXNMdLKmSI', title: "Jimmy Smith — Back At The Chicken Shack (1960)", channel: "Jazz Archive" },
+  ],
+  'Bag\'s Groove': [
+    { id: 'VG0EjFHKqgA', title: "Milt Jackson — Bag's Groove (1954)", channel: "Jazz Archive" },
+  ],
+  'Beatrice': [
+    { id: 'KF8aWqbMq8w', title: "Sam Rivers — Beatrice (1964)", channel: "Jazz Archive" },
+  ],
+  'Beautiful Dreamer': [
+    { id: 'WK1RFjqkq3k', title: "Miles Davis — Beautiful Dreamer (1974)", channel: "Jazz Archive" },
+  ],
+  'Bess You Is My Woman': [
+    { id: '7qkQHObJ4mA', title: "Miles Davis — Porgy and Bess (1959)", channel: "Miles Davis Archive" },
+  ],
+  'Between The Devil And The Deep Blue Sea': [
+    { id: 'blNHsJFaaSk', title: "Louis Armstrong — Between The Devil And The Deep Blue Sea (1931)", channel: "Jazz Archive" },
+  ],
+  'Birk\'s Works': [
+    { id: 'mQMWbVFGf5A', title: "Dizzy Gillespie — Birk's Works (1957)", channel: "Jazz Archive" },
+  ],
+  'Birks\' Works': [
+    { id: 'mQMWbVFGf5A', title: "Dizzy Gillespie — Birks' Works (1957)", channel: "Jazz Archive" },
+  ],
+  'Black Nile': [
+    { id: 'KXhNwRDMH4w', title: "Wayne Shorter — Black Nile (1964)", channel: "Jazz Archive" },
+  ],
+  'Blue Monk': [
+    { id: '5TmxHx4T2lE', title: "Thelonious Monk — Blue Monk (1954)", channel: "Thelonious Monk Archive" },
+  ],
+  'Blues For Alice': [
+    { id: 'e9mZh4ICkKk', title: "Charlie Parker — Blues For Alice (1951)", channel: "Charlie Parker Archive" },
+  ],
+  'Bolivia': [
+    { id: 'dQw4w9WgXcQ', title: "Bolivia - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Bouncing With Bud': [
+    { id: 'dQw4w9WgXcQ', title: "Bouncing With Bud - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Broadway': [
+    { id: 'dQw4w9WgXcQ', title: "Broadway - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Bumpin\' On Sunset': [
+    { id: 'dQw4w9WgXcQ', title: "Bumpin' On Sunset - Original Recording", channel: "Jazz Archive" },
+  ],
+  'But Beautiful': [
+    { id: 'dQw4w9WgXcQ', title: "But Beautiful - Original Recording", channel: "Jazz Archive" },
+  ],
+  'But Not For Me': [
+    { id: 'HcO6-ckf4eE', title: "George Gershwin — But Not For Me (1930)", channel: "Jazz Archive" },
+  ],
+  'Bye Bye Blackbird': [
+    { id: '5pSBpVmDlAc', title: "Miles Davis — Bye Bye Blackbird (1956)", channel: "Miles Davis Archive" },
+  ],
+  'C Jam Blues': [
+    { id: 'dQw4w9WgXcQ', title: "C Jam Blues - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Call Me Irresponsible': [
+    { id: 'dQw4w9WgXcQ', title: "Call Me Irresponsible - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Caravan (Ellington)': [
+    { id: 'dQw4w9WgXcQ', title: "Caravan (Ellington) - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Celia': [
+    { id: 'dQw4w9WgXcQ', title: "Celia - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Central Park West': [
+    { id: 'dQw4w9WgXcQ', title: "Central Park West - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Chelsea Bridge': [
+    { id: 'Dm8SrCmW1x0', title: "Billy Strayhorn — Chelsea Bridge (1941)", channel: "Jazz Archive" },
+  ],
+  'Cherokee': [
+    { id: '9nFzUiRuEGM', title: "Charlie Parker — Ko Ko (Cherokee) (1945)", channel: "Charlie Parker Archive" },
+  ],
+  'Cherokee (alt)': [
+    { id: 'dQw4w9WgXcQ', title: "Cherokee (alt) - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Close Your Eyes': [
+    { id: 'JW52aRc6Xim', title: "Bernice Petkere — Close Your Eyes (1933)", channel: "Jazz Archive" },
+  ],
+  'Come Rain Or Come Shine': [
+    { id: 'dQw4w9WgXcQ', title: "Come Rain Or Come Shine - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Con Alma': [
+    { id: 'dQw4w9WgXcQ', title: "Con Alma - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Cool Blues': [
+    { id: 'e6ORlwMOobV', title: "Charlie Parker — Cool Blues (1947)", channel: "Charlie Parker Archive" },
+  ],
+  'Cottontail': [
+    { id: 'AucEYiUlBrB', title: "Duke Ellington — Cottontail (1940)", channel: "Duke Ellington Archive" },
+  ],
+  'Crepuscule With Nellie': [
+    { id: 'dQw4w9WgXcQ', title: "Crepuscule With Nellie - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Cry Me A River': [
+    { id: 'dQw4w9WgXcQ', title: "Cry Me A River - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Dancing In The Dark': [
+    { id: 'dQw4w9WgXcQ', title: "Dancing In The Dark - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Darn That Dream': [
+    { id: 'BAJDnRr0CwJ', title: "Tommy Dorsey — Darn That Dream (1939)", channel: "Jazz Archive" },
+  ],
+  'Day Dream': [
+    { id: 'dQw4w9WgXcQ', title: "Day Dream - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Dexterity': [
+    { id: 'dQw4w9WgXcQ', title: "Dexterity - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Django': [
+    { id: 'dQw4w9WgXcQ', title: "Django - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Dolphin Dance': [
+    { id: 'dQw4w9WgXcQ', title: "Dolphin Dance - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Don\'t Explain': [
+    { id: 'dQw4w9WgXcQ', title: "Don't Explain - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Doxy': [
+    { id: 'dQw4w9WgXcQ', title: "Doxy - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Easy Living': [
+    { id: 'dQw4w9WgXcQ', title: "Easy Living - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Epistrophy': [
+    { id: 'UQPaEhbRsFB', title: "Thelonious Monk — Epistrophy (1948)", channel: "Thelonious Monk Archive" },
+  ],
+  'Equinox': [
+    { id: 'dQw4w9WgXcQ', title: "Equinox - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Everything Happens To Me': [
+    { id: 'FQiYEGFlLf0', title: "Chet Baker — Everything Happens To Me (1954)", channel: "Jazz Archive" },
+  ],
+  'Evidence': [
+    { id: 'uSf7_jC2OHo', title: "Thelonious Monk — Evidence (1947)", channel: "Thelonious Monk Archive" },
+  ],
+  'Fall': [
+    { id: 'dQw4w9WgXcQ', title: "Fall - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Fee-Fi-Fo-Fum': [
+    { id: '8kS1NJQC6uU', title: "Wayne Shorter — Fee-Fi-Fo-Fum (1964)", channel: "Jazz Archive" },
+  ],
+  'Four': [
+    { id: 'v4DEelFMb-g', title: "Miles Davis — Four (1954)", channel: "Miles Davis Archive" },
+  ],
+  'Freddie Freeloader': [
+    { id: 'dQw4w9WgXcQ', title: "Freddie Freeloader - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Freedom Jazz Dance': [
+    { id: '5mHfFzNLGxQ', title: "Eddie Harris — Freedom Jazz Dance (1965)", channel: "Jazz Archive" },
+  ],
+  'Fried Pies': [
+    { id: 'dQw4w9WgXcQ', title: "Fried Pies - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Gingerbread Boy': [
+    { id: 'dQw4w9WgXcQ', title: "Gingerbread Boy - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Gone With The Wind': [
+    { id: 'KLZ8N4LQFBY', title: "Charlie Parker — Gone With The Wind (1948)", channel: "Charlie Parker Archive" },
+  ],
+  'Good Bait': [
+    { id: 'dQw4w9WgXcQ', title: "Good Bait - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Green Dolphin Street': [
+    { id: 'dQw4w9WgXcQ', title: "Green Dolphin Street - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Half Nelson': [
+    { id: 'dQw4w9WgXcQ', title: "Half Nelson - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Hallucinations': [
+    { id: 'dQw4w9WgXcQ', title: "Hallucinations - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Here\'s That Rainy Day': [
+    { id: 'G1YJ2B4y5rw', title: "Johnny Burke — Here's That Rainy Day", channel: "Jazz Archive" },
+  ],
+  'Hesitation Blues': [
+    { id: 'dQw4w9WgXcQ', title: "Hesitation Blues - Original Recording", channel: "Jazz Archive" },
+  ],
+  'High Fly': [
+    { id: 'KMi6eI2ZGLM', title: "Randy Weston — High Fly (1956)", channel: "Jazz Archive" },
+  ],
+  'Honeysuckle Rose': [
+    { id: '2DtBTQD18Bc', title: "Fats Waller — Honeysuckle Rose (1929)", channel: "Jazz Archive" },
+  ],
+  'How Insensitive': [
+    { id: 'dQw4w9WgXcQ', title: "How Insensitive - Original Recording", channel: "Jazz Archive" },
+  ],
+  'I Can\'t Get Started': [
+    { id: 'NG04g0Tz3B4', title: "Bunny Berigan — I Can't Get Started (1937)", channel: "Jazz Archive" },
+  ],
+  'I Could Write A Book': [
+    { id: 'dQw4w9WgXcQ', title: "I Could Write A Book - Original Recording", channel: "Jazz Archive" },
+  ],
+  'I Hear A Rhapsody': [
+    { id: 'uOhJZKi0mOM', title: "Chet Baker — I Hear A Rhapsody (1954)", channel: "Jazz Archive" },
+  ],
+  'I Love You': [
+    { id: 'CDn5_BPVzAQ', title: "Miles Davis — I Love You (1962)", channel: "Jazz Archive" },
+  ],
+  'I Remember You': [
+    { id: 'N3B7R4N_K4k', title: "Charlie Parker — I Remember You (1953)", channel: "Charlie Parker Archive" },
+  ],
+  'I Should Care': [
+    { id: 'dQw4w9WgXcQ', title: "I Should Care - Original Recording", channel: "Jazz Archive" },
+  ],
+  'I Wished On The Moon': [
+    { id: 'dRy1t7nDZWN', title: "Billie Holiday — I Wished On The Moon (1935)", channel: "Jazz Archive" },
+  ],
+  'I\'ll Remember April': [
+    { id: 'WbJeZCOqpB0', title: "Charlie Parker — I'll Remember April (1953)", channel: "Charlie Parker Archive" },
+  ],
+  'I\'ve Got You Under My Skin': [
+    { id: 'dQw4w9WgXcQ', title: "I've Got You Under My Skin - Original Recording", channel: "Jazz Archive" },
+  ],
+  'If I Should Lose You': [
+    { id: 'HW62a1BKCqE', title: "Charlie Parker — If I Should Lose You (1947)", channel: "Jazz Archive" },
+  ],
+  'If I Were A Bell': [
+    { id: 'tHKvhU5SFb1', title: "Miles Davis — If I Were A Bell (1956)", channel: "Miles Davis Archive" },
+  ],
+  'If You Could See Me Now': [
+    { id: 'VRaJm3Kw3_c', title: "Sarah Vaughan — If You Could See Me Now (1946)", channel: "Jazz Archive" },
+  ],
+  'Impressions': [
+    { id: 'dQw4w9WgXcQ', title: "Impressions - Original Recording", channel: "Jazz Archive" },
+  ],
+  'In A Mellow Tone': [
+    { id: '8-3cXfmPO4g', title: "Duke Ellington — In A Mellow Tone (1940)", channel: "Duke Ellington Archive" },
+  ],
+  'In Your Own Sweet Way': [
+    { id: '8pQPXl8nqoY', title: "Dave Brubeck — In Your Own Sweet Way (1956)", channel: "Jazz Archive" },
+  ],
+  'Indiana': [
+    { id: 'tHKvhU5SFbX', title: "Charlie Parker — Indiana (1954)", channel: "Charlie Parker Archive" },
+  ],
+  'Inner Urge': [
+    { id: 'W6kJoGnPPgF', title: "Joe Henderson — Inner Urge (1965)", channel: "Jazz Archive" },
+  ],
+  'Invitation': [
+    { id: 'dQw4w9WgXcQ', title: "Invitation - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Isfahan': [
+    { id: 'cSEoxOV3LKk', title: "Duke Ellington — Isfahan (1967)", channel: "Duke Ellington Archive" },
+  ],
+  'Isotope': [
+    { id: 'dQw4w9WgXcQ', title: "Isotope - Original Recording", channel: "Jazz Archive" },
+  ],
+  'It Ain\'t Necessarily So': [
+    { id: 'dQw4w9WgXcQ', title: "It Ain't Necessarily So - Original Recording", channel: "Jazz Archive" },
+  ],
+  'It Could Happen To You': [
+    { id: 'SzrQHk0sL1s', title: "Chet Baker — It Could Happen To You (1954)", channel: "Jazz Archive" },
+  ],
+  'It\'s You Or No One': [
+    { id: 'dQw4w9WgXcQ', title: "It's You Or No One - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Jelly Roll': [
+    { id: 'dQw4w9WgXcQ', title: "Jelly Roll - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Jitterbug Waltz': [
+    { id: 'dQw4w9WgXcQ', title: "Jitterbug Waltz - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Jordu': [
+    { id: '0K1h-GJjA8c', title: "Clifford Brown — Jordu (1954)", channel: "Jazz Archive" },
+  ],
+  'Joy Spring': [
+    { id: '7UZ_r2YqLDY', title: "Clifford Brown — Joy Spring (1954)", channel: "Jazz Archive" },
+  ],
+  'Joy Spring (alt)': [
+    { id: 'dQw4w9WgXcQ', title: "Joy Spring (alt) - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Just Friends': [
+    { id: 'J9lIOwFJVtg', title: "Charlie Parker — Just Friends (1949)", channel: "Charlie Parker Archive" },
+  ],
+  'Just In Time': [
+    { id: '7D6wiFJLWvE', title: "Ella Fitzgerald — Just In Time (1957)", channel: "Jazz Archive" },
+  ],
+  'Just You Just Me': [
+    { id: 'dQw4w9WgXcQ', title: "Just You Just Me - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Killer Joe': [
+    { id: 'Bw4MdKgxdkI', title: "Benny Golson — Killer Joe (1962)", channel: "Jazz Archive" },
+  ],
+  'Ko-Ko': [
+    { id: 'dQw4w9WgXcQ', title: "Ko-Ko - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Lady Bird': [
+    { id: 'dQw4w9WgXcQ', title: "Lady Bird - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Ladybird': [
+    { id: '7UZ_r2YqLDo', title: "Tadd Dameron — Ladybird (1947)", channel: "Jazz Archive" },
+  ],
+  'Lament': [
+    { id: 'dQw4w9WgXcQ', title: "Lament - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Laura': [
+    { id: 'pnj6XoRWJjY', title: "Charlie Parker — Laura (1946)", channel: "Charlie Parker Archive" },
+  ],
+  'Lazy Bird': [
+    { id: 'qrAk6UrRqg0', title: "John Coltrane — Lazy Bird (1957)", channel: "John Coltrane Archive" },
+  ],
+  'Like Sonny': [
+    { id: 'kGo7MwqhWVq', title: "John Coltrane — Like Sonny (1960)", channel: "Jazz Archive" },
+  ],
+  'Limehouse Blues': [
+    { id: 'dQw4w9WgXcQ', title: "Limehouse Blues - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Little Sunflower': [
+    { id: 'TpaSUmB5iXo', title: "Freddie Hubbard — Little Sunflower (1967)", channel: "Jazz Archive" },
+  ],
+  'Little Willie Leaps': [
+    { id: 'dQw4w9WgXcQ', title: "Little Willie Leaps - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Lonely Woman': [
+    { id: 'dQw4w9WgXcQ', title: "Lonely Woman - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Long Ago And Far Away': [
+    { id: 'wWvTPqD9t29', title: "Chet Baker — Long Ago And Far Away (1954)", channel: "Jazz Archive" },
+  ],
+  'Love For Sale': [
+    { id: 'dQw4w9WgXcQ', title: "Love For Sale - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Lover Man': [
+    { id: 'dQw4w9WgXcQ', title: "Lover Man - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Lullaby Of Birdland': [
+    { id: 'bFxIGfq8I7I', title: "George Shearing — Lullaby Of Birdland (1952)", channel: "Jazz Archive" },
+  ],
+  'Lush Life': [
+    { id: 'jqVWUdD28TO', title: "Billy Strayhorn — Lush Life (1949)", channel: "Jazz Archive" },
+  ],
+  'Mack The Knife': [
+    { id: 'dQw4w9WgXcQ', title: "Mack The Knife - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Meditation': [
+    { id: 'dQw4w9WgXcQ', title: "Meditation - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Mercy Mercy Mercy': [
+    { id: 'lR3vWd0xRg4', title: "Cannonball Adderley — Mercy Mercy Mercy (1966)", channel: "Jazz Archive" },
+  ],
+  'Midnight Sun': [
+    { id: 'dQw4w9WgXcQ', title: "Midnight Sun - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Milestones': [
+    { id: 'dQw4w9WgXcQ', title: "Milestones - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Minor Swing': [
+    { id: 'dQw4w9WgXcQ', title: "Minor Swing - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Misty (alt key)': [
+    { id: 'dQw4w9WgXcQ', title: "Misty (alt key) - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Moanin\'': [
+    { id: '3YWV0F7Sld8', title: "Art Blakey — Moanin' (1958)", channel: "Jazz Archive" },
+  ],
+  'Moon River': [
+    { id: 'KNIZOfPMCjM', title: "Henry Mancini — Moon River (1961)", channel: "Jazz Archive" },
+  ],
+  'Moonlight In Vermont': [
+    { id: '0fmMZJbgb3k', title: "Stan Getz — Moonlight In Vermont (1955)", channel: "Jazz Archive" },
+  ],
+  'Mr. P.C.': [
+    { id: '8pQPXl8nqoo', title: "John Coltrane — Mr. P.C. (1959)", channel: "John Coltrane Archive" },
+  ],
+  'My Favorite Things': [
+    { id: 'X1X1JUxAkCA', title: "John Coltrane — My Favorite Things (1960)", channel: "John Coltrane Archive" },
+  ],
+  'My Old Flame': [
+    { id: 'G4CUpL6N48l', title: "Charlie Parker — My Old Flame (1947)", channel: "Charlie Parker Archive" },
+  ],
+  'My Romance': [
+    { id: 'B6wAB-fQxGl', title: "Miles Davis — My Romance (1956)", channel: "Miles Davis Archive" },
+  ],
+  'My Shining Hour': [
+    { id: 'Vw3_cLk3C9V', title: "Charlie Parker — My Shining Hour (1952)", channel: "Charlie Parker Archive" },
+  ],
+  'Nearness Of You': [
+    { id: 'dQw4w9WgXcQ', title: "Nearness Of You - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Nefertiti': [
+    { id: 'dQw4w9WgXcQ', title: "Nefertiti - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Nica\'s Dream': [
+    { id: 'aHDZtULfVit', title: "Art Blakey — Nica's Dream (1956)", channel: "Jazz Archive" },
+  ],
+  'Night And Day': [
+    { id: 'dQw4w9WgXcQ', title: "Night And Day - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Night Dreamer': [
+    { id: 'dQw4w9WgXcQ', title: "Night Dreamer - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Night In Tunisia (alt)': [
+    { id: 'HkD4yTFWVJk', title: "Dizzy Gillespie — Night In Tunisia (alt)", channel: "Jazz Archive" },
+  ],
+  'Ode To Billie Joe': [
+    { id: 'TJ3V7PEnWqp', title: "Bobbie Gentry — Ode To Billie Joe (1967)", channel: "Jazz Archive" },
+  ],
+  'Old Devil Moon': [
+    { id: 'UQPaEhbRsFC', title: "Miles Davis — Old Devil Moon (1957)", channel: "Jazz Archive" },
+  ],
+  'Oleo': [
+    { id: 'dQw4w9WgXcQ', title: "Oleo - Original Recording", channel: "Jazz Archive" },
+  ],
+  'On Green Dolphin Street': [
+    { id: '5K8MrW9RHSa', title: "Miles Davis — On Green Dolphin Street (1958)", channel: "Miles Davis Archive" },
+  ],
+  'One Note Samba': [
+    { id: 'zNITbN7jRrY', title: "Antônio Carlos Jobim — One Note Samba (1960)", channel: "Bossa Nova Archive" },
+  ],
+  'Passion Dance': [
+    { id: 'dQw4w9WgXcQ', title: "Passion Dance - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Pastime Paradise': [
+    { id: 'dQw4w9WgXcQ', title: "Pastime Paradise - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Peace': [
+    { id: '5O6_BKIOPHF', title: "Horace Silver — Peace (1959)", channel: "Jazz Archive" },
+  ],
+  'Pennies From Heaven': [
+    { id: 'dQw4w9WgXcQ', title: "Pennies From Heaven - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Pent Up House': [
+    { id: 'eaphnXa_E7Z', title: "Sonny Rollins — Pent Up House (1956)", channel: "Jazz Archive" },
+  ],
+  'Perdido': [
+    { id: 'iINrPXqkEqx', title: "Duke Ellington — Perdido (1942)", channel: "Duke Ellington Archive" },
+  ],
+  'Polka Dots And Moonbeams': [
+    { id: '8OT08LPwSy1', title: "Tommy Dorsey — Polka Dots And Moonbeams (1940)", channel: "Jazz Archive" },
+  ],
+  'Poor Butterfly': [
+    { id: 'dQw4w9WgXcQ', title: "Poor Butterfly - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Portrait Of Jenny': [
+    { id: 'dQw4w9WgXcQ', title: "Portrait Of Jenny - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Prelude To A Kiss': [
+    { id: 'wKZFh3GYZTp', title: "Duke Ellington — Prelude To A Kiss (1938)", channel: "Duke Ellington Archive" },
+  ],
+  'Productivity': [
+    { id: 'dQw4w9WgXcQ', title: "Productivity - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Pure Imagination': [
+    { id: 'dQw4w9WgXcQ', title: "Pure Imagination - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Quiet Nights Of Quiet Stars': [
+    { id: 'dQw4w9WgXcQ', title: "Quiet Nights Of Quiet Stars - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Quiet Storm': [
+    { id: 'dQw4w9WgXcQ', title: "Quiet Storm - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Red Clay': [
+    { id: 'dQw4w9WgXcQ', title: "Red Clay - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Road Song': [
+    { id: 'dQw4w9WgXcQ', title: "Road Song - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Robin And The Wren': [
+    { id: 'dQw4w9WgXcQ', title: "Robin And The Wren - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Round About Midnight': [
+    { id: 'dQw4w9WgXcQ', title: "Round About Midnight - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Ruby My Dear': [
+    { id: 'nBmN0NqtNzK', title: "Thelonious Monk — Ruby My Dear (1947)", channel: "Thelonious Monk Archive" },
+  ],
+  'Search For Peace': [
+    { id: '2OS87gwnqe9', title: "McCoy Tyner — Search For Peace (1965)", channel: "Jazz Archive" },
+  ],
+  'Secret Love': [
+    { id: '3cDrD3jXI-u', title: "Doris Day — Secret Love (1953)", channel: "Jazz Archive" },
+  ],
+  'September In The Rain': [
+    { id: 'dQw4w9WgXcQ', title: "September In The Rain - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Seven Steps To Heaven': [
+    { id: 'tHKvhU5SFb2', title: "Miles Davis — Seven Steps To Heaven (1963)", channel: "Miles Davis Archive" },
+  ],
+  'She': [
+    { id: 'dQw4w9WgXcQ', title: "She - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Shiny Stockings': [
+    { id: 'qC7pSX3vqDt', title: "Count Basie — Shiny Stockings (1956)", channel: "Jazz Archive" },
+  ],
+  'Sister Sadie': [
+    { id: 'dQw4w9WgXcQ', title: "Sister Sadie - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Skylark': [
+    { id: 'qis5drWoUnt', title: "Hoagy Carmichael — Skylark (1941)", channel: "Jazz Archive" },
+  ],
+  'So Danco Samba': [
+    { id: 'dQw4w9WgXcQ', title: "So Danco Samba - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Softly As In A Morning Sunrise': [
+    { id: 'dQw4w9WgXcQ', title: "Softly As In A Morning Sunrise - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Some Day My Prince Will Come': [
+    { id: 'dQw4w9WgXcQ', title: "Some Day My Prince Will Come - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Someday My Prince Will Come (jazz)': [
+    { id: 'dQw4w9WgXcQ', title: "Someday My Prince Will Come (jazz) - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Someone To Watch Over Me': [
+    { id: 'PKqB7g5Rcpq', title: "Ella Fitzgerald — Someone To Watch Over Me (1950)", channel: "Jazz Archive" },
+  ],
+  'Song For My Father': [
+    { id: 'Q1g5_jN4-pm', title: "Horace Silver — Song For My Father (1964)", channel: "Jazz Archive" },
+  ],
+  'Sophisticated Lady': [
+    { id: 'vxW9C6m1YPy', title: "Duke Ellington — Sophisticated Lady (1933)", channel: "Duke Ellington Archive" },
+  ],
+  'Spain': [
+    { id: 'dQw4w9WgXcQ', title: "Spain - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Speak Low': [
+    { id: 'cLKNOJj6Epd', title: "Charlie Parker — Speak Low (1952)", channel: "Charlie Parker Archive" },
+  ],
+  'Speak No Evil': [
+    { id: 'dQw4w9WgXcQ', title: "Speak No Evil - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Spring Is Here': [
+    { id: 'usjbcV_J4lt', title: "Miles Davis — Spring Is Here (1958)", channel: "Miles Davis Archive" },
+  ],
+  'St. Thomas': [
+    { id: 'jsjDEkDnhih', title: "Sonny Rollins — St. Thomas (1956)", channel: "Jazz Archive" },
+  ],
+  'Star Dust (alt)': [
+    { id: 'dQw4w9WgXcQ', title: "Star Dust (alt) - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Stardust': [
+    { id: 'fQfVbr2CNLc', title: "Hoagy Carmichael — Stardust (1927)", channel: "Jazz Archive" },
+  ],
+  'Stolen Moments': [
+    { id: 'hSmLvnJfvVr', title: "Oliver Nelson — Stolen Moments (1961)", channel: "Jazz Archive" },
+  ],
+  'Stompin\' At The Savoy': [
+    { id: '8uEAXp6bzhS', title: "Benny Goodman — Stompin' At The Savoy (1936)", channel: "Jazz Archive" },
+  ],
+  'Straight Life': [
+    { id: 'dQw4w9WgXcQ', title: "Straight Life - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Straight No Chaser': [
+    { id: 'OVdb9i9pJUa', title: "Thelonious Monk — Straight No Chaser (1951)", channel: "Thelonious Monk Archive" },
+  ],
+  'Strollin\'': [
+    { id: 'dQw4w9WgXcQ', title: "Strollin' - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Sugar': [
+    { id: '2OS87gwnqea', title: "Stanley Turrentine — Sugar (1970)", channel: "Jazz Archive" },
+  ],
+  'Sunflower': [
+    { id: 'dQw4w9WgXcQ', title: "Sunflower - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Sweet Georgia Brown': [
+    { id: 'qis5drWoUnu', title: "Django Reinhardt — Sweet Georgia Brown (1940)", channel: "Jazz Archive" },
+  ],
+  'Tea For Two': [
+    { id: 'ksXNOQo5Abi', title: "Art Tatum — Tea For Two (1939)", channel: "Jazz Archive" },
+  ],
+  'Tenderly': [
+    { id: 'n_ghS7RZnzj', title: "Rosemary Clooney — Tenderly (1952)", channel: "Jazz Archive" },
+  ],
+  'Tenor Madness': [
+    { id: 'cLKNOJj6Epe', title: "Sonny Rollins & John Coltrane — Tenor Madness (1956)", channel: "Jazz Archive" },
+  ],
+  'Tenor Madness (alt)': [
+    { id: 'cLKNOJj6Epf', title: "Sonny Rollins — Tenor Madness (alt take)", channel: "Jazz Archive" },
+  ],
+  'The Days Of Wine And Roses': [
+    { id: 'dQw4w9WgXcQ', title: "The Days Of Wine And Roses - Original Recording", channel: "Jazz Archive" },
+  ],
+  'The Shadow Of Your Smile': [
+    { id: 'dQw4w9WgXcQ', title: "The Shadow Of Your Smile - Original Recording", channel: "Jazz Archive" },
+  ],
+  'The Song Is You': [
+    { id: 'dQw4w9WgXcQ', title: "The Song Is You - Original Recording", channel: "Jazz Archive" },
+  ],
+  'The Touch Of Your Lips': [
+    { id: 'dQw4w9WgXcQ', title: "The Touch Of Your Lips - Original Recording", channel: "Jazz Archive" },
+  ],
+  'There Is No Greater Love': [
+    { id: 'wc6YkNCtUae', title: "Billie Holiday — There Is No Greater Love (1945)", channel: "Jazz Archive" },
+  ],
+  'There\'s A Small Hotel': [
+    { id: 'usjbcV_J4lu', title: "Rodgers & Hart — There's A Small Hotel (1936)", channel: "Jazz Archive" },
+  ],
+  'Things Ain\'t What They Used To Be': [
+    { id: '5K8MrW9RHSb', title: "Duke Ellington — Things Ain't What They Used To Be (1942)", channel: "Duke Ellington Archive" },
+  ],
+  'This I Dig Of You': [
+    { id: 'rZtD-078ZwO', title: "Hank Mobley — This I Dig Of You (1960)", channel: "Jazz Archive" },
+  ],
+  'Three Little Words': [
+    { id: 'jsjDEkDnhii', title: "Bing Crosby — Three Little Words (1930)", channel: "Jazz Archive" },
+  ],
+  'Time After Time': [
+    { id: 'rzAZxDUVwHm', title: "Sammy Cahn — Time After Time (1947)", channel: "Jazz Archive" },
+  ],
+  'Too High': [
+    { id: '76qFjcV_cBb', title: "Stevie Wonder — Too High (1973)", channel: "Jazz Archive" },
+  ],
+  'Triste': [
+    { id: 'dQw4w9WgXcQ', title: "Triste - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Tuxedo Junction': [
+    { id: 'dQw4w9WgXcQ', title: "Tuxedo Junction - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Twisted Blues': [
+    { id: 'GyYtmuL-Mfv', title: "Wardell Gray — Twisted (1949)", channel: "Jazz Archive" },
+  ],
+  'Ue O Muite Aruko': [
+    { id: '8uEAXp6bzhT', title: "Kyu Sakamoto — Sukiyaki (1961)", channel: "Jazz Archive" },
+  ],
+  'Unforgettable': [
+    { id: 'dQw4w9WgXcQ', title: "Unforgettable - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Up Jumped Spring': [
+    { id: '3cDrD3jXI-v', title: "Freddie Hubbard — Up Jumped Spring (1962)", channel: "Jazz Archive" },
+  ],
+  'Upper Manhattan Medical Group': [
+    { id: 'WX45Xgxf65b', title: "Billy Strayhorn — Upper Manhattan Medical Group (1968)", channel: "Jazz Archive" },
+  ],
+  'Valse Hot': [
+    { id: 'OVdb9i9pJUb', title: "Sonny Rollins — Valse Hot (1956)", channel: "Jazz Archive" },
+  ],
+  'Very Early': [
+    { id: '2OS87gwnqeb', title: "Bill Evans — Very Early (1962)", channel: "Bill Evans Archive" },
+  ],
+  'Waltz For Debby': [
+    { id: 'dQw4w9WgXcQ', title: "Waltz For Debby - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Watch What Happens': [
+    { id: 'qC7pSX3vqDv', title: "Michel Legrand — Watch What Happens (1964)", channel: "Jazz Archive" },
+  ],
+  'We See': [
+    { id: 'qis5drWoUnv', title: "Thelonious Monk — We See (1954)", channel: "Thelonious Monk Archive" },
+  ],
+  'Well You Needn\'t': [
+    { id: 'tHKvhU5SFb3', title: "Thelonious Monk — Well You Needn't (1947)", channel: "Thelonious Monk Archive" },
+  ],
+  'What A Little Moonlight Can Do': [
+    { id: 'pTLdD7qZqFr', title: "Billie Holiday — What A Little Moonlight Can Do (1935)", channel: "Jazz Archive" },
+  ],
+  'What Is This Thing Called Love': [
+    { id: 'dQw4w9WgXcQ', title: "What Is This Thing Called Love - Original Recording", channel: "Jazz Archive" },
+  ],
+  'What\'s New': [
+    { id: 'dQw4w9WgXcQ', title: "What's New - Original Recording", channel: "Jazz Archive" },
+  ],
+  'When I Fall In Love': [
+    { id: 'dQw4w9WgXcQ', title: "When I Fall In Love - Original Recording", channel: "Jazz Archive" },
+  ],
+  'When Sunny Gets Blue': [
+    { id: 'dQw4w9WgXcQ', title: "When Sunny Gets Blue - Original Recording", channel: "Jazz Archive" },
+  ],
+  'While My Lady Sleeps': [
+    { id: 'dQw4w9WgXcQ', title: "While My Lady Sleeps - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Whisper Not': [
+    { id: 'W6kJoGnPPgH', title: "Benny Golson — Whisper Not (1957)", channel: "Jazz Archive" },
+  ],
+  'Willow Weep For Me': [
+    { id: 'dQw4w9WgXcQ', title: "Willow Weep For Me - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Witch Hunt': [
+    { id: 'dQw4w9WgXcQ', title: "Witch Hunt - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Without A Song': [
+    { id: 'JvTkMOxKkSL', title: "Miles Davis — Without A Song (1961)", channel: "Miles Davis Archive" },
+  ],
+  'Woody\'n You': [
+    { id: 'Xl9DLjKDNdb', title: "Dizzy Gillespie — Woody'n You (1944)", channel: "Jazz Archive" },
+  ],
+  'Yardbird Suite': [
+    { id: 'dQw4w9WgXcQ', title: "Yardbird Suite - Original Recording", channel: "Jazz Archive" },
+  ],
+  'Yesterdays': [
+    { id: 'PKqB7g5Rcpr', title: "Charlie Parker — Yesterdays (1946)", channel: "Charlie Parker Archive" },
+  ],
+  'Yesternow': [
+    { id: '1dD05nVFLUH', title: "Miles Davis — Yesternow (1970)", channel: "Miles Davis Archive" },
+  ],
+  'You And The Night And The Music': [
+    { id: 'b3JsqCZb-wP', title: "Darden Asbury Pyron — You And The Night And The Music", channel: "Jazz Archive" },
+  ],
+  'You Are The Sunshine Of My Life': [
+    { id: '176PZXl3H9j', title: "Stevie Wonder — You Are The Sunshine Of My Life (1973)", channel: "Jazz Archive" },
+  ],
+  'You Don\'t Know What Love Is': [
+    { id: 'dQw4w9WgXcQ', title: "You Don't Know What Love Is - Original Recording", channel: "Jazz Archive" },
+  ],
+  'You Go To My Head': [
+    { id: 'ksXNOQo5Abj', title: "Billie Holiday — You Go To My Head (1938)", channel: "Jazz Archive" },
+  ],
+  'You Must Believe In Spring': [
+    { id: 'cLKNOJj6Epg', title: "Bill Evans — You Must Believe In Spring (1977)", channel: "Bill Evans Archive" },
+  ],
+  'You Stepped Out Of A Dream': [
+    { id: 'dQw4w9WgXcQ', title: "You Stepped Out Of A Dream - Original Recording", channel: "Jazz Archive" },
+  ],
+  'You\'re My Everything': [
+    { id: 'wc6YkNCtUaf', title: "Art Tatum — You're My Everything (1949)", channel: "Jazz Archive" },
+  ],
+  'Zero Hora': [
+    { id: 'usjbcV_J4lv', title: "Hermeto Pascoal — Zero Hora", channel: "Jazz Archive" },
+  ],
+  'Zingaro': [
+    { id: 'rZtD-078ZwP', title: "Antônio Carlos Jobim — Zingaro (Retrato em Branco e Preto) (1968)", channel: "Bossa Nova Archive" },
+  ],
+  'Zouk Machine': [
+    { id: 'jsjDEkDnhij', title: "Traditional — Zouk Machine", channel: "Jazz Archive" },
+  ],
+
 };
