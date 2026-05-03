@@ -71,10 +71,10 @@ function BackingTrackBrowser() {
   return (
     <section>
       <h2 className="font-serif text-2xl mb-2 flex items-center gap-2">
-        <Star className="w-5 h-5 text-primary" /> Find Your Loop — by Genre & Tempo
+        <Star className="w-5 h-5 text-primary" /> Backing Tracks — by Genre & Tempo
       </h2>
       <p className="text-sm text-muted-foreground mb-4">
-        Browse {GENRES.length} genres, all with 100+ curated YouTube backing tracks. Pick a vibe, pick a tempo, hit play. Only one plays at a time.
+        Browse {GENRES.length} genres of curated YouTube backing tracks. Pick a vibe, pick a tempo, hit play. Only one plays at a time.
       </p>
 
       {/* Genre pills (always visible, easier than a dropdown) */}
@@ -186,8 +186,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Backing Tracks by Genre & Tempo — curated inline YouTube embeds.
-         Audio WAV loops live on their own page (/loop-library), not here. */}
+      {/* Backing Tracks by Genre & Tempo — curated inline YouTube embeds. */}
       <BackingTrackBrowser />
 
       {/* Backing Tracks by Key — show only keys with curated videos */}
