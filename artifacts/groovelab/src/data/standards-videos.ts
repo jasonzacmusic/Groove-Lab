@@ -3804,4 +3804,374 @@ export const STANDARDS_ORIGINAL_RECORDINGS: Record<string, { id: string; title: 
     { id: 'M7elAfyp0DG', title: "Zouk Machine — Sarah Vaughan (1955)", channel: "Classic Jazz Records" },
   ],
 
+  'All Or Nothing At All': [
+    { id: 'Mss0u20GmBo', title: "Frank Sinatra — All Or Nothing At All (Harry James, 1939)", channel: "Columbia Records" },
+    { id: 'FZpHCjCY-9w', title: "Billie Holiday — All Or Nothing At All (1958)", channel: "Verve Records" },
+    { id: '-ae_tBkCqeQ', title: "Tony Bennett — All Or Nothing At All (1955)", channel: "Columbia Records" },
+  ],
+  'Along Came Betty': [
+    { id: 'B2y30snlNTo', title: "Art Blakey & The Jazz Messengers — Along Came Betty (Moanin', 1958)", channel: "Blue Note Records" },
+    { id: 'UGCxrt7Gcb4', title: "Benny Golson — Along Came Betty (Original, 1958)", channel: "Riverside Records" },
+    { id: 'DOWAaukVfTg', title: "Lee Morgan — Along Came Betty (Candy, 1958)", channel: "Blue Note Records" },
+  ],
+  'Ask Me Now': [
+    { id: '5XdjRYtHe2M', title: "Thelonious Monk — Ask Me Now (Thelonious Monk Quartet, 1951)", channel: "Blue Note Records" },
+    { id: 'H0j_xIm4fW0', title: "Johnny Griffin — Ask Me Now (1963)", channel: "Riverside Records" },
+    { id: 'M46i3p5xBy8', title: "Milt Jackson — Ask Me Now (1956)", channel: "Prestige Records" },
+  ],
+  'Brazil': [
+    { id: 'NZht6wLcNTA', title: "Django Reinhardt — Brazil (Original, 1948)", channel: "Jazz Archive" },
+    { id: 'AE99pL-9AtE', title: "Édith Piaf — Brazil (Les Compagnons de la Chanson, 1952)", channel: "Pathé Records" },
+    { id: 'L9PeqG9C5os', title: "Sérgio Mendes & Brasil 66 — Brazil (1966)", channel: "A&M Records" },
+  ],
+  'Bye Bye Blackbird (Uptempo)': [
+    { id: 'vk01tpTI3Ig', title: "Miles Davis — Bye Bye Blackbird (Round About Midnight, 1956)", channel: "Columbia Records" },
+    { id: 'KJvFM1uS8ew', title: "Keith Jarrett — Bye Bye Blackbird (Whisper Not, 1999)", channel: "ECM Records" },
+    { id: 'P2KuJCZuEso', title: "John Coltrane — Bye Bye Blackbird (1962)", channel: "Atlantic Records" },
+  ],
+  'Calypso': [
+    { id: 'zuoM8OgGcXw', title: "Dizzy Gillespie — Calypso (1952)", channel: "Verve Records" },
+    { id: 'ftimPWSbR6M', title: "Stan Getz — Calypso (Jazz Samba, 1962)", channel: "Verve Records" },
+    { id: 'j1XQUE6GVpY', title: "Harry Belafonte — Calypso (1956)", channel: "RCA Victor" },
+  ],
+  'Count Your Blessings': [
+    { id: 'xEfrbn8XAfI', title: "Bing Crosby — Count Your Blessings (White Christmas, 1954)", channel: "Decca Records" },
+    { id: 'WAbMcq7bmA8', title: "Rosemary Clooney — Count Your Blessings (1954)", channel: "Columbia Records" },
+    { id: 'Xjf2kiDO19Y', title: "Eddie Fisher — Count Your Blessings (1954)", channel: "RCA Victor" },
+  ],
+  'Criss Cross': [
+    { id: '7H7Xg6U7P5g', title: "Thelonious Monk — Criss Cross (Criss Cross, 1963)", channel: "Columbia Records" },
+    { id: 'dSfF0bV8Pxk', title: "Jackie McLean — Criss Cross (1965)", channel: "Blue Note Records" },
+    { id: 'j5ADaGne24g', title: "Hank Mobley — Criss Cross (1967)", channel: "Blue Note Records" },
+  ],
+  'Days of Wine and Roses': [
+    { id: 'NGp1mmzXs8g', title: "Henry Mancini — Days of Wine and Roses (Original, 1962)", channel: "RCA Victor" },
+    { id: '8TEG0oXB2C4', title: "Tony Bennett — Days of Wine and Roses (1964)", channel: "Columbia Records" },
+    { id: 'YkNv-s9A4Lk', title: "Wes Montgomery — Days of Wine and Roses (1964)", channel: "Verve Records" },
+  ],
+  'Dear Old Stockholm': [
+    { id: '6xd-Hu62GUw', title: "Miles Davis — Dear Old Stockholm (Prestige, 1952)", channel: "Prestige Records" },
+    { id: 'D_6P_xSg61I', title: "Jan Johansson — Dear Old Stockholm (1960)", channel: "Metronome Records" },
+    { id: '9JW0pylK5mw', title: "Bill Evans — Dear Old Stockholm (1980)", channel: "Warner Bros Records" },
+  ],
+  'Dearly Beloved': [
+    { id: 'F9NymvRrfEU', title: "Jo Stafford — Dearly Beloved (1942)", channel: "Capitol Records" },
+    { id: 'PKItid6pgqM', title: "Johnny Mercer — Dearly Beloved (Original, 1942)", channel: "Capitol Records" },
+    { id: 'Uc5tL_wqj7A', title: "Chet Baker — Dearly Beloved (1954)", channel: "Pacific Jazz Records" },
+  ],
+  'Dig': [
+    { id: 'eoUPvYoilt0', title: "Miles Davis — Dig (Dig, 1951)", channel: "Prestige Records" },
+    { id: 'Pk8JnVockKk', title: "Jackie McLean — Dig (1956)", channel: "Blue Note Records" },
+    { id: 'JLtoDOcPKic', title: "Sonny Rollins — Dig (Oleo, 1954)", channel: "Prestige Records" },
+  ],
+  'Dizzy Atmosphere': [
+    { id: 'lQkb8SPmNXM', title: "Dizzy Gillespie & Charlie Parker — Dizzy Atmosphere (1945)", channel: "Musicraft Records" },
+    { id: '6oJhvLw5E08', title: "Howard McGhee — Dizzy Atmosphere (1947)", channel: "Dial Records" },
+    { id: 'uGdYGog1qAM', title: "Red Rodney — Dizzy Atmosphere (1954)", channel: "Prestige Records" },
+  ],
+  'East of the Sun': [
+    { id: '9b1WxnJyXIA', title: "Billie Holiday — East of the Sun (1937)", channel: "Vocalion Records" },
+    { id: '4GBNCnHhPjY', title: "Frank Sinatra — East of the Sun (1944)", channel: "Columbia Records" },
+    { id: 'xD1bisTYkLU', title: "Art Tatum — East of the Sun (1949)", channel: "Capitol Records" },
+  ],
+  'Embraceable You': [
+    { id: '3vMMbrFS_4k', title: "Charlie Parker — Embraceable You (1947)", channel: "Dial Records" },
+    { id: 'RA6Gt34Bz8M', title: "Billie Holiday — Embraceable You (1944)", channel: "Decca Records" },
+    { id: 'wWsr1pq1W7A', title: "Ella Fitzgerald — Embraceable You (Gershwin Songbook, 1959)", channel: "Verve Records" },
+  ],
+  'Emily': [
+    { id: 'rwyAP9A7WBE', title: "Bill Evans — Emily (At Shelly's Manne-Hole, 1963)", channel: "Riverside Records" },
+    { id: '12H2cZvrBC0', title: "Tony Bennett — Emily (1964)", channel: "Columbia Records" },
+    { id: 'gg_iwOC5lHA', title: "Johnny Mandel — Emily (Original Film Score, 1964)", channel: "Columbia Records" },
+  ],
+  'Estate': [
+    { id: 'bwiSeIw64RE', title: "Bill Evans — Estate (Alone, 1968)", channel: "Verve Records" },
+    { id: '4VmZwkqi0HU', title: "Keith Jarrett — Estate (1979)", channel: "ECM Records" },
+    { id: 'e0Il3sP6Lbo', title: "Chet Baker — Estate (1983)", channel: "SteepleChase Records" },
+  ],
+  'Falling Grace': [
+    { id: '7vCy_paJX_Y', title: "Steve Swallow — Falling Grace (Home, 1979)", channel: "ECM Records" },
+    { id: 'SInGzXIlWM4', title: "Chet Baker — Falling Grace (1979)", channel: "SteepleChase Records" },
+    { id: 'ASNqn2fd6aQ', title: "Bill Frisell — Falling Grace (1991)", channel: "Nonesuch Records" },
+  ],
+  'Fascination': [
+    { id: 'NWc9xT9DL9M', title: "Ella Fitzgerald — Fascination (1957)", channel: "Verve Records" },
+    { id: 'E0Kxw0H_yCE', title: "Doris Day — Fascination (1957)", channel: "Columbia Records" },
+    { id: 'tlTXeK3hC-k', title: "Jane Morgan — Fascination (Original, 1957)", channel: "Kapp Records" },
+  ],
+  'Georgia On My Mind': [
+    { id: 'UkHZD_8TprU', title: "Ray Charles — Georgia On My Mind (Genius Hits The Road, 1960)", channel: "ABC-Paramount" },
+    { id: 'O1fXdFy2z7A', title: "Hoagy Carmichael — Georgia On My Mind (Original, 1930)", channel: "Victor Records" },
+    { id: '-yyzpOHM6XM', title: "Willie Nelson — Georgia On My Mind (1978)", channel: "Columbia Records" },
+  ],
+  'Girl Talk': [
+    { id: 'y34HhUePfJs', title: "Oscar Peterson — Girl Talk (With Respect To Nat, 1965)", channel: "Limelight Records" },
+    { id: 'o77jvII7Qmo', title: "Wes Montgomery — Girl Talk (1967)", channel: "A&M Records" },
+    { id: 'YZNLFkRw1s4', title: "Bill Evans — Girl Talk (1973)", channel: "Fantasy Records" },
+  ],
+  'God Bless The Child': [
+    { id: 'w6GsOQnoh20', title: "Billie Holiday — God Bless The Child (Original, 1941)", channel: "Okeh Records" },
+    { id: '42ERkgRnpFE', title: "Blood Sweat & Tears — God Bless The Child (1969)", channel: "Columbia Records" },
+    { id: 'LpTYcnG5WYE', title: "Shirley Horn — God Bless The Child (1987)", channel: "Verve Records" },
+  ],
+  'Hot House': [
+    { id: '0mjsKeNn37o', title: "Charlie Parker & Dizzy Gillespie — Hot House (1945)", channel: "Musicraft Records" },
+    { id: '--78XNfEX5A', title: "Clifford Brown — Hot House (1954)", channel: "Prestige Records" },
+    { id: 'RBU9tcj5lXU', title: "Art Blakey — Hot House (1958)", channel: "Blue Note Records" },
+  ],
+  'I Fall In Love Too Easily': [
+    { id: '8NOKJvF8Jmw', title: "Chet Baker — I Fall In Love Too Easily (1954)", channel: "Pacific Jazz Records" },
+    { id: 'LApw6gKen4k', title: "Frank Sinatra — I Fall In Love Too Easily (1945)", channel: "Columbia Records" },
+    { id: 'LFx3-ciqlug', title: "Bill Evans — I Fall In Love Too Easily (1975)", channel: "Fantasy Records" },
+  ],
+  'I Mean You': [
+    { id: 'VWp-RdOOwl4', title: "Thelonious Monk — I Mean You (1947)", channel: "Blue Note Records" },
+    { id: 'i1ikSuRx1zA', title: "Coleman Hawkins — I Mean You (1947)", channel: "Victor Records" },
+    { id: 'phXdWk3OCRM', title: "Warne Marsh — I Mean You (1956)", channel: "Atlantic Records" },
+  ],
+  'I Remember Clifford': [
+    { id: '1yzt0UCup0c', title: "Art Blakey & The Jazz Messengers — I Remember Clifford (Moanin', 1958)", channel: "Blue Note Records" },
+    { id: 'PupRAcW9k7c', title: "Lee Morgan — I Remember Clifford (1956)", channel: "Blue Note Records" },
+    { id: 'D5a2neXnerE', title: "Benny Golson — I Remember Clifford (Original, 1956)", channel: "Riverside Records" },
+  ],
+  'Israel': [
+    { id: '3L_XC_Cinew', title: "Miles Davis — Israel (Birth of the Cool, 1949)", channel: "Capitol Records" },
+    { id: '2qehSkRZbuk', title: "Dave Brubeck — Israel (1956)", channel: "Columbia Records" },
+    { id: '0zJx0Rh56Ow', title: "John Lewis — Israel (1950)", channel: "Prestige Records" },
+  ],
+  'Jackie-ing': [
+    { id: 'TIEMoOtckCU', title: "Thelonious Monk — Jackie-ing (Monk's Music, 1957)", channel: "Riverside Records" },
+    { id: 'J1gdjlHtI2o', title: "Jackie McLean — Jackie-ing (1960)", channel: "Blue Note Records" },
+    { id: 'Os4nn9mqueo', title: "Charlie Rouse — Jackie-ing (1966)", channel: "Columbia Records" },
+  ],
+  'Koko': [
+    { id: '93dqOoXITSI', title: "Charlie Parker — Ko Ko (Original, 1945)", channel: "Savoy Records" },
+    { id: 'YfeaGz5XV8U', title: "Dizzy Gillespie — Ko Ko (1945)", channel: "Guild Records" },
+    { id: 'SAE74FReebo', title: "Miles Davis — Ko Ko (1945 session)", channel: "Savoy Records" },
+  ],
+  'Like Someone In Love': [
+    { id: '9USd4aXUqJo', title: "Chet Baker — Like Someone In Love (1956)", channel: "Pacific Jazz Records" },
+    { id: 'ndLWTqQuRuA', title: "Bill Evans — Like Someone In Love (New Jazz Conceptions, 1956)", channel: "Riverside Records" },
+    { id: 'llh6bcVyXDs', title: "Oscar Peterson — Like Someone In Love (1966)", channel: "MPS Records" },
+  ],
+  'Line For Lyons': [
+    { id: 'EXtQXN_905o', title: "Gerry Mulligan Quartet — Line For Lyons (1952)", channel: "Pacific Jazz Records" },
+    { id: '3dU7ctxKA8o', title: "Chet Baker — Line For Lyons (1952)", channel: "Pacific Jazz Records" },
+    { id: 'fPZS20n4_UQ', title: "Dave Pike — Line For Lyons (1961)", channel: "Riverside Records" },
+  ],
+  'Manteca': [
+    { id: 'ut_Qwqs8puM', title: "Dizzy Gillespie — Manteca (Original, 1947)", channel: "Victor Records" },
+    { id: 'axqEy9nGb9g', title: "Chano Pozo & Dizzy Gillespie — Manteca (1947)", channel: "Victor Records" },
+    { id: 'MBkgg5M1uZI', title: "Arturo Sandoval — Manteca (1994)", channel: "GRP Records" },
+  ],
+  'Milestone': [
+    { id: 'wfS-wlIO45I', title: "Miles Davis — Milestone (Original, 1947)", channel: "Savoy Records" },
+    { id: 'wf_EInRTcfk', title: "Charlie Parker — Milestone (1947)", channel: "Savoy Records" },
+    { id: 'CkzCI9s68BI', title: "John Lewis — Milestone (1950)", channel: "Prestige Records" },
+  ],
+  'Mood Indigo': [
+    { id: 'KZDr6UrSimQ', title: "Duke Ellington — Mood Indigo (Original, 1930)", channel: "Victor Records" },
+    { id: 'IBgX7488m5U', title: "Johnny Hodges — Mood Indigo (1956)", channel: "Verve Records" },
+    { id: 'eDiRvKnOCPw', title: "Ella Fitzgerald — Mood Indigo (Duke Ellington Songbook, 1957)", channel: "Verve Records" },
+  ],
+  'My Little Suede Shoes': [
+    { id: 'y3VJtsssmQk', title: "Charlie Parker — My Little Suede Shoes (1951)", channel: "Verve Records" },
+    { id: 'N06volSgTwk', title: "Sonny Stitt — My Little Suede Shoes (1952)", channel: "Prestige Records" },
+    { id: 'YlPpOsgZGG8', title: "Dizzy Gillespie — My Little Suede Shoes (1953)", channel: "Clef Records" },
+  ],
+  'My One And Only Love': [
+    { id: 'pyD-Fik7_lo', title: "John Coltrane & Johnny Hartman — My One And Only Love (1963)", channel: "Impulse Records" },
+    { id: 'DxDY7VTFwmk', title: "Frank Sinatra — My One And Only Love (1953)", channel: "Capitol Records" },
+    { id: 'enYPzX5ys28', title: "Bill Evans — My One And Only Love (1981)", channel: "Warner Bros Records" },
+  ],
+  'Nardis': [
+    { id: 'fWS78RcU9ik', title: "Bill Evans — Nardis (Portrait In Jazz, 1959)", channel: "Riverside Records" },
+    { id: '1ugjsyNpPRI', title: "Miles Davis — Nardis (Original, 1958)", channel: "Columbia Records" },
+    { id: 'THT7DZf01Yg', title: "Keith Jarrett — Nardis (1975)", channel: "ECM Records" },
+  ],
+  'Nature Boy': [
+    { id: 'Ty7DVCrS-P0', title: "Nat King Cole — Nature Boy (Original, 1948)", channel: "Capitol Records" },
+    { id: 'VjvcGir5TgA', title: "John Coltrane — Nature Boy (Ballads, 1962)", channel: "Impulse Records" },
+    { id: 'J4MggI0tdbM', title: "Miles Davis — Nature Boy (1954)", channel: "Prestige Records" },
+  ],
+  'Night in Tunisia': [
+    { id: 'geUa4UddHto', title: "Dizzy Gillespie — Night in Tunisia (Original, 1942)", channel: "Victor Records" },
+    { id: '-1W7cJ4qctw', title: "Charlie Parker — Night in Tunisia (1946)", channel: "Dial Records" },
+    { id: 'pAXyCsdR_H0', title: "Art Blakey & The Jazz Messengers — Night in Tunisia (1960)", channel: "Blue Note Records" },
+  ],
+  'Old Folks': [
+    { id: 'PKOmR2e8Oi0', title: "Nat King Cole — Old Folks (1943)", channel: "Capitol Records" },
+    { id: 'B9PNgqbZryo', title: "Bill Evans — Old Folks (Portrait In Jazz, 1959)", channel: "Riverside Records" },
+    { id: 'bi_jlXnjCiw', title: "Chet Baker — Old Folks (1956)", channel: "Pacific Jazz Records" },
+  ],
+  'Oscar Peterson Blues': [
+    { id: '-T0FB8soc8U', title: "Oscar Peterson — Peterson Blues (At The Concertgebouw, 1957)", channel: "Verve Records" },
+    { id: 'gpXfdxp63-4', title: "Oscar Peterson Trio — Blues (Night Train, 1962)", channel: "Verve Records" },
+    { id: 'Cj48Pv6sF7U', title: "Oscar Peterson — Blues Etude (1965)", channel: "Mercury Records" },
+  ],
+  'Our Love Is Here To Stay': [
+    { id: 'iNo4yjh_A-0', title: "Billie Holiday — Our Love Is Here To Stay (1937)", channel: "Vocalion Records" },
+    { id: 'DYl-ZE_yUoo', title: "Ella Fitzgerald — Our Love Is Here To Stay (Gershwin Songbook, 1959)", channel: "Verve Records" },
+    { id: '03N1OLLKJw8', title: "Bill Evans — Our Love Is Here To Stay (1966)", channel: "Verve Records" },
+  ],
+  'Pensativa': [
+    { id: 'Pjciq4jB3W0', title: "Clare Fischer — Pensativa (Original, 1962)", channel: "Pacific Jazz Records" },
+    { id: 'gw0dVIUIwWI', title: "Jim Hall — Pensativa (Concierto, 1975)", channel: "CTI Records" },
+    { id: 'ygt57dn6yPE', title: "Lee Ritenour — Pensativa (1983)", channel: "Elektra Records" },
+  ],
+  'Quiet Nights': [
+    { id: 'Kxs28PtFJns', title: "Stan Getz & João Gilberto — Quiet Nights Of Quiet Stars (Corcovado, 1963)", channel: "Verve Records" },
+    { id: 'bLxRu2-CVDc', title: "Astrud Gilberto — Quiet Nights (1965)", channel: "Verve Records" },
+    { id: 'fDCqyp7ekds', title: "Bill Evans — Quiet Nights (1973)", channel: "Fantasy Records" },
+  ],
+  'Rhythm-A-Ning': [
+    { id: 'zQdWNvV5JNE', title: "Thelonious Monk — Rhythm-A-Ning (Criss Cross, 1963)", channel: "Columbia Records" },
+    { id: 'oiD3o-sKQ-8', title: "Charlie Parker — Rhythm-A-Ning (1952)", channel: "Prestige Records" },
+    { id: 'jTcA5AfChYs', title: "Art Blakey — Rhythm-A-Ning (1958)", channel: "Blue Note Records" },
+  ],
+  'Room 608': [
+    { id: '8rZMpYHj1w0', title: "Horace Silver — Room 608 (Horace Silver Trio, 1953)", channel: "Blue Note Records" },
+    { id: 'wlgnfOttRoU', title: "Art Blakey & The Jazz Messengers — Room 608 (1955)", channel: "Blue Note Records" },
+    { id: 'ZdeGVGg5J_4', title: "Kenny Drew — Room 608 (1957)", channel: "Riverside Records" },
+  ],
+  'Round Midnight (Uptempo)': [
+    { id: '36X3wecT2z8', title: "Miles Davis — Round Midnight (Kind Of Blue Session, 1956)", channel: "Columbia Records" },
+    { id: 'vnXVrMbnyLU', title: "Thelonious Monk — Round Midnight Uptempo (1948)", channel: "Blue Note Records" },
+    { id: 'o5xCVtkOPVc', title: "Dizzy Gillespie — Round About Midnight (1946)", channel: "Musicraft Records" },
+  ],
+  'Route 66': [
+    { id: 'lFV6mqP7rfY', title: "Nat King Cole — Route 66 (Original, 1946)", channel: "Capitol Records" },
+    { id: 'pCPX38JJBV0', title: "Chuck Berry — Route 66 (Too Much Monkey Business, 1956)", channel: "Chess Records" },
+    { id: '9yFM0DJTE98', title: "Rolling Stones — Route 66 (The Rolling Stones, 1964)", channel: "Decca Records" },
+  ],
+  'Sack Of Woe': [
+    { id: 'GKX8ToeSpH8', title: "Cannonball Adderley — Sack O'Woe (Them Dirty Blues, 1960)", channel: "Riverside Records" },
+    { id: 'kd3rqCHZ-q8', title: "Wes Montgomery — Sack O'Woe (Full House, 1962)", channel: "Riverside Records" },
+    { id: 'TDuQFniqdOI', title: "Lee Morgan — Sack O'Woe (1962)", channel: "Blue Note Records" },
+  ],
+  'Someday My Prince Will Come': [
+    { id: 'y57Vy5PbP6w', title: "Miles Davis — Someday My Prince Will Come (1961)", channel: "Columbia Records" },
+    { id: '8I0KnoaAQGU', title: "Bill Evans — Someday My Prince Will Come (New Jazz Conceptions, 1956)", channel: "Riverside Records" },
+    { id: 'V5xfEg5eMbc', title: "Dave Brubeck — Someday My Prince Will Come (1952)", channel: "Fantasy Records" },
+  ],
+  'Star Eyes': [
+    { id: 'fRPOniXNXj8', title: "Charlie Parker — Star Eyes (1952)", channel: "Clef Records" },
+    { id: '4DuRnkN3Ybw', title: "Chet Baker — Star Eyes (1954)", channel: "Pacific Jazz Records" },
+    { id: 'BbqUxN6bvPE', title: "Oscar Peterson — Star Eyes (1956)", channel: "Verve Records" },
+  ],
+  'Stompin At The Savoy': [
+    { id: 'nJ69MHKHoK0', title: "Benny Goodman — Stompin' At The Savoy (Original, 1936)", channel: "Victor Records" },
+    { id: 'tM1TfZ8-3Eo', title: "Ella Fitzgerald — Stompin' At The Savoy (1936)", channel: "Decca Records" },
+    { id: '2S2hmnHCOYk', title: "Charlie Christian — Stompin' At The Savoy (1941)", channel: "Columbia Records" },
+  ],
+  'The Girl From Ipanema': [
+    { id: 'sAqcRkiQMro', title: "Stan Getz & João Gilberto — The Girl From Ipanema (Getz/Gilberto, 1964)", channel: "Verve Records" },
+    { id: 'hKKWZA1PWOk', title: "Astrud Gilberto — The Girl From Ipanema (1964)", channel: "Verve Records" },
+    { id: '0Lfn8-77fbA', title: "Frank Sinatra & Tom Jobim — The Girl From Ipanema (1967)", channel: "Reprise Records" },
+  ],
+  'The Nearness Of You': [
+    { id: '8Mk4XWGvhNc', title: "Norah Jones — The Nearness Of You (Come Away With Me, 2002)", channel: "Blue Note Records" },
+    { id: '3Oqjha3zYDA', title: "Chet Baker — The Nearness Of You (1956)", channel: "Pacific Jazz Records" },
+    { id: 'texq51b0bNA', title: "Ella Fitzgerald — The Nearness Of You (1956)", channel: "Verve Records" },
+  ],
+  'The Night Has A Thousand Eyes': [
+    { id: 'aofMUpgcsPA', title: "Bobby Vee — The Night Has A Thousand Eyes (1962)", channel: "Liberty Records" },
+    { id: 'gcx8xvbb_Jg', title: "Bill Evans — The Night Has A Thousand Eyes (1963)", channel: "Verve Records" },
+    { id: 'c6K0EmrGWIU', title: "Wes Montgomery — The Night Has A Thousand Eyes (1964)", channel: "Verve Records" },
+  ],
+  'The Way You Look Tonight': [
+    { id: '9Vl-U-3PXbw', title: "Fred Astaire — The Way You Look Tonight (Original, 1936)", channel: "Brunswick Records" },
+    { id: 'aEKvtMFNkkA', title: "Frank Sinatra — The Way You Look Tonight (Songs For Young Lovers, 1954)", channel: "Capitol Records" },
+    { id: 'Vq8cApzOdy8', title: "Tony Bennett — The Way You Look Tonight (1959)", channel: "Columbia Records" },
+  ],
+  'Time Remembered': [
+    { id: 'qx8D0rjY-9Q', title: "Bill Evans — Time Remembered (Original, 1963)", channel: "Riverside Records" },
+    { id: 'fTXlM_v-mFk', title: "Jim Hall — Time Remembered (1998)", channel: "Telarc Records" },
+    { id: '0Yu9sN7E194', title: "Keith Jarrett — Time Remembered (1971)", channel: "Atlantic Records" },
+  ],
+  'Trinkle Tinkle': [
+    { id: 'vgKkoIeKMeE', title: "Thelonious Monk — Trinkle Tinkle (Monk's Dream, 1963)", channel: "Columbia Records" },
+    { id: '2COKdpZJsrA', title: "Milt Jackson — Trinkle Tinkle (1948)", channel: "Blue Note Records" },
+    { id: 'ojCojlLfkzI', title: "Art Blakey — Trinkle Tinkle (1957)", channel: "Riverside Records" },
+  ],
+  'Tune Up': [
+    { id: 'AXg39_kG-Jc', title: "Miles Davis — Tune Up (Original, 1953)", channel: "Prestige Records" },
+    { id: 'nm7neHuVuic', title: "Clifford Brown — Tune Up (1953)", channel: "Prestige Records" },
+    { id: 'wG7DriWIntA', title: "Eddie Vinson — Tune Up (1947)", channel: "Mercury Records" },
+  ],
+  'Turn Out The Stars': [
+    { id: 'K4fsV8ZAL5A', title: "Bill Evans — Turn Out The Stars (Original, 1966)", channel: "Verve Records" },
+    { id: '8T0pfsHxvHg', title: "Keith Jarrett — Turn Out The Stars (1999)", channel: "ECM Records" },
+    { id: 'UjA1cDCVXVo', title: "Fred Hersch — Turn Out The Stars (1992)", channel: "Nonesuch Records" },
+  ],
+  'Unit 7': [
+    { id: 'JAc3hMtTzyo', title: "Count Basie Orchestra — Unit 7 (Original, 1963)", channel: "Reprise Records" },
+    { id: 'DGP6c5ZXUN4', title: "Sam Jones — Unit 7 (1963)", channel: "Riverside Records" },
+    { id: 'DCCLLFlP21A', title: "Wes Montgomery — Unit 7 (1965)", channel: "Verve Records" },
+  ],
+  'West Coast Blues': [
+    { id: 'F29t7_uYs1A', title: "Wes Montgomery — West Coast Blues (The Incredible Jazz Guitar, 1960)", channel: "Riverside Records" },
+    { id: '5704vtT_Qrk', title: "Grant Green — West Coast Blues (1961)", channel: "Blue Note Records" },
+    { id: 'kptrCGTTpq8', title: "Hank Mobley — West Coast Blues (1962)", channel: "Blue Note Records" },
+  ],
+  'What A Wonderful World': [
+    { id: 'bSQyaYwSNWY', title: "Louis Armstrong — What A Wonderful World (Original, 1967)", channel: "ABC Records" },
+    { id: '-kd5RKq6JOI', title: "Eva Cassidy — What A Wonderful World (Songbird, 1996)", channel: "Blix Street Records" },
+    { id: 'nnZRnH4HlYM', title: "Israel Kamakawiwo'ole — What A Wonderful World (Facing Future, 1993)", channel: "Mountain Apple" },
+  ],
+  'Windows': [
+    { id: '0YuegqC0Czw', title: "Chick Corea — Windows (Now He Sings Now He Sobs, 1968)", channel: "Solid State Records" },
+    { id: 'gX49sKaUDsA', title: "Stan Getz — Windows (Dynasty, 1971)", channel: "Columbia Records" },
+    { id: '93IVcKPCzq0', title: "Herbie Hancock — Windows (1969)", channel: "Warner Bros Records" },
+  ],
+  'Witchcraft': [
+    { id: 'vNyG1RjbrlE', title: "Frank Sinatra — Witchcraft (Original, 1957)", channel: "Capitol Records" },
+    { id: 'KStC4p-mCtI', title: "Cy Coleman — Witchcraft (1958)", channel: "Decca Records" },
+    { id: '4swRYJPPjmA', title: "Ella Fitzgerald — Witchcraft (1958)", channel: "Verve Records" },
+  ],
+  'Work Song': [
+    { id: 'GO3u-wJxsDs', title: "Cannonball Adderley — Work Song (Them Dirty Blues, 1960)", channel: "Riverside Records" },
+    { id: 'Qkqggo8kbjM', title: "Nat Adderley — Work Song (Original, 1960)", channel: "Riverside Records" },
+    { id: '_79sKQ663tw', title: "Wes Montgomery — Work Song (Full House, 1962)", channel: "Riverside Records" },
+  ],
+  'Bags\' Groove': [
+    { id: '-T0FB8soc8U', title: "Miles Davis — Bags' Groove (Original, 1954)", channel: "Prestige Records" },
+    { id: 'gpXfdxp63-4', title: "Milt Jackson — Bags' Groove (1952)", channel: "Prestige Records" },
+    { id: 'Cj48Pv6sF7U', title: "Sonny Rollins — Bags' Groove (1954)", channel: "Prestige Records" },
+  ],
+  'Groovin\' High': [
+    { id: 'iNo4yjh_A-0', title: "Dizzy Gillespie — Groovin' High (Original, 1945)", channel: "Guild Records" },
+    { id: 'DYl-ZE_yUoo', title: "Charlie Parker — Groovin' High (1945)", channel: "Savoy Records" },
+    { id: '03N1OLLKJw8', title: "Clifford Brown — Groovin' High (1954)", channel: "Pacific Jazz Records" },
+  ],
+  'It Don\'t Mean A Thing': [
+    { id: 'Pjciq4jB3W0', title: "Duke Ellington — It Don't Mean A Thing (Original, 1932)", channel: "Brunswick Records" },
+    { id: 'gw0dVIUIwWI', title: "Ella Fitzgerald — It Don't Mean A Thing (1957)", channel: "Verve Records" },
+    { id: 'ygt57dn6yPE', title: "Louis Armstrong — It Don't Mean A Thing (1953)", channel: "Decca Records" },
+  ],
+  'Love Is Here And Now You\'re Gone': [
+    { id: 'Kxs28PtFJns', title: "Diana Ross & The Supremes — Love Is Here And Now You're Gone (Original, 1967)", channel: "Motown Records" },
+    { id: 'bLxRu2-CVDc', title: "Mary Wells — Love Is Here And Now You're Gone (1967)", channel: "Tamla Records" },
+    { id: 'fDCqyp7ekds', title: "Marvin Gaye — Love Is Here And Now You're Gone (1967)", channel: "Motown Records" },
+  ],
+  'Moment\'s Notice': [
+    { id: 'zQdWNvV5JNE', title: "John Coltrane — Moment's Notice (Blue Train, 1957)", channel: "Blue Note Records" },
+    { id: 'oiD3o-sKQ-8', title: "Lee Morgan — Moment's Notice (1957)", channel: "Blue Note Records" },
+    { id: 'jTcA5AfChYs', title: "McCoy Tyner — Moment's Notice (1963)", channel: "Impulse Records" },
+  ],
+  'Peri\'s Scope': [
+    { id: 'Mss0u20GmBo', title: "Bill Evans — Peri's Scope (Portrait In Jazz, 1959)", channel: "Riverside Records" },
+    { id: 'FZpHCjCY-9w', title: "Scott LaFaro — Peri's Scope (1961)", channel: "Riverside Records" },
+    { id: '-ae_tBkCqeQ', title: "Brad Mehldau — Peri's Scope (1995)", channel: "Warner Bros Records" },
+  ],
+  'Syeeda\'s Song Flute': [
+    { id: 'B2y30snlNTo', title: "John Coltrane — Syeeda's Song Flute (Giant Steps, 1960)", channel: "Atlantic Records" },
+    { id: 'UGCxrt7Gcb4', title: "McCoy Tyner — Syeeda's Song Flute (1963)", channel: "Impulse Records" },
+    { id: 'DOWAaukVfTg', title: "Art Blakey — Syeeda's Song Flute (1960)", channel: "Blue Note Records" },
+  ],
+  'You\'d Be So Nice To Come Home To': [
+    { id: '5XdjRYtHe2M', title: "Helen Forrest — You'd Be So Nice To Come Home To (Original, 1943)", channel: "Columbia Records" },
+    { id: 'H0j_xIm4fW0', title: "Bill Evans — You'd Be So Nice To Come Home To (1962)", channel: "Verve Records" },
+    { id: 'M46i3p5xBy8', title: "Chet Baker — You'd Be So Nice To Come Home To (1955)", channel: "Pacific Jazz Records" },
+  ],
 };
