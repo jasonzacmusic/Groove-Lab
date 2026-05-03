@@ -23,6 +23,28 @@ interface VideoResult {
   channel: string;
 }
 
+interface InnertubeTextRun { text: string }
+interface InnertubeOwnerRun { text: string }
+interface InnertubeVideoRenderer {
+  videoId?: string;
+  title?: { runs?: InnertubeTextRun[]; simpleText?: string };
+  ownerText?: { runs?: InnertubeOwnerRun[] };
+  longBylineText?: { runs?: InnertubeOwnerRun[] };
+}
+interface InnertubeItemContent { videoRenderer?: InnertubeVideoRenderer }
+interface InnertubeSection {
+  itemSectionRenderer?: { contents?: InnertubeItemContent[] };
+}
+interface InnertubeSearchResponse {
+  contents?: {
+    twoColumnSearchResultsRenderer?: {
+      primaryContents?: {
+        sectionListRenderer?: { contents?: InnertubeSection[] };
+      };
+    };
+  };
+}
+
 const INNERTUBE_KEY = "AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8";
 const CTX = { client: { clientName: "WEB", clientVersion: "2.20240304.00.00", hl: "en", gl: "US" } };
 
@@ -44,7 +66,7 @@ async function search(query: string, max = 10): Promise<VideoResult[]> {
         }
       );
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json() as any;
+      const data = await res.json() as InnertubeSearchResponse;
       const out: VideoResult[] = [];
       const sections =
         data?.contents?.twoColumnSearchResultsRenderer?.primaryContents
@@ -54,7 +76,7 @@ async function search(query: string, max = 10): Promise<VideoResult[]> {
           const v = it?.videoRenderer;
           if (!v?.videoId) continue;
           const title =
-            v.title?.runs?.map((r: any) => r.text).join("") ||
+            v.title?.runs?.map((r: InnertubeTextRun) => r.text).join("") ||
             v.title?.simpleText ||
             "";
           const channel =
@@ -66,7 +88,7 @@ async function search(query: string, max = 10): Promise<VideoResult[]> {
         }
       }
       return out;
-    } catch (err: any) {
+    } catch (err: unknown) {
       attempt++;
       if (attempt >= 3) return [];
       await new Promise(r => setTimeout(r, 500 * attempt));

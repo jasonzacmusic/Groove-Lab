@@ -42,6 +42,17 @@ interface VideoResult {
   channel: string;
 }
 
+interface YouTubeApiError {
+  error?: { errors?: Array<{ reason: string }>; message?: string };
+}
+
+interface YouTubeApiSearchResponse {
+  items?: Array<{
+    id: { videoId: string };
+    snippet: { title: string; channelTitle: string };
+  }>;
+}
+
 // ── YouTube API Search ──────────────────────────────────────────────────
 async function searchYouTube(query: string, maxResults: number = 5): Promise<VideoResult[]> {
   const params = new URLSearchParams({
@@ -58,17 +69,17 @@ async function searchYouTube(query: string, maxResults: number = 5): Promise<Vid
   try {
     const res = await fetch(url);
     if (!res.ok) {
-      const err = await res.json() as any;
+      const err = await res.json() as YouTubeApiError;
       if (err.error?.errors?.[0]?.reason === 'quotaExceeded' || err.error?.errors?.[0]?.reason === 'rateLimitExceeded') {
         console.error('\n*** YOUTUBE QUOTA EXCEEDED ***');
         throw new Error('QUOTA_EXCEEDED');
       }
-      console.error(`  API error: ${res.status} ${JSON.stringify(err.error?.message || err)}`);
+      console.error(`  API error: ${res.status} ${JSON.stringify(err.error?.message ?? err)}`);
       return [];
     }
 
-    const data = await res.json() as any;
-    return (data.items || []).map((item: any) => ({
+    const data = await res.json() as YouTubeApiSearchResponse;
+    return (data.items ?? []).map((item) => ({
       id: item.id.videoId,
       title: item.snippet.title
         .replace(/&amp;/g, '&')
@@ -78,8 +89,9 @@ async function searchYouTube(query: string, maxResults: number = 5): Promise<Vid
         .replace(/&gt;/g, '>'),
       channel: item.snippet.channelTitle,
     }));
-  } catch (err: any) {
-    console.error(`  Fetch error: ${err.message}`);
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error(`  Fetch error: ${msg}`);
     return [];
   }
 }
@@ -238,12 +250,13 @@ async function runStandards() {
 
     console.log(`    Found ${unique.length} new videos, total now: ${newVideos.length}`);
 
-    } catch (err: any) {
-      if (err.message === 'QUOTA_EXCEEDED') {
+    } catch (err: unknown) {
+      const errMsg = err instanceof Error ? err.message : String(err);
+      if (errMsg === 'QUOTA_EXCEEDED') {
         console.log('\n  Quota exceeded — saving what we have so far...');
         break;
       }
-      console.error(`  Error processing ${name}: ${err.message}`);
+      console.error(`  Error processing ${name}: ${errMsg}`);
     }
 
     // Rate limit: 100ms between requests

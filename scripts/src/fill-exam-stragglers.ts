@@ -13,6 +13,25 @@ const EXAM_FILE = path.resolve(__dirname, "../../data/exam-video-ids.json");
 const INNERTUBE_KEY = "AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8";
 const CTX = { client: { clientName: "WEB", clientVersion: "2.20240304.00.00", hl: "en", gl: "US" } };
 
+interface InnertubeTextRun { text: string }
+interface InnertubeVideoRenderer {
+  videoId?: string;
+  title?: { runs?: InnertubeTextRun[]; simpleText?: string };
+}
+interface InnertubeItemContent { videoRenderer?: InnertubeVideoRenderer }
+interface InnertubeSection {
+  itemSectionRenderer?: { contents?: InnertubeItemContent[] };
+}
+interface InnertubeSearchResponse {
+  contents?: {
+    twoColumnSearchResultsRenderer?: {
+      primaryContents?: {
+        sectionListRenderer?: { contents?: InnertubeSection[] };
+      };
+    };
+  };
+}
+
 async function search(query: string, max = 10): Promise<{ id: string; title: string }[]> {
   const url = `https://www.youtube.com/youtubei/v1/search?key=${INNERTUBE_KEY}&prettyPrint=false`;
   const res = await fetch(url, {
@@ -25,14 +44,14 @@ async function search(query: string, max = 10): Promise<{ id: string; title: str
     body: JSON.stringify({ context: CTX, query, params: "EgIQAQ%3D%3D" }),
   });
   if (!res.ok) return [];
-  const data = await res.json() as any;
+  const data = await res.json() as InnertubeSearchResponse;
   const out: { id: string; title: string }[] = [];
   const sections = data?.contents?.twoColumnSearchResultsRenderer?.primaryContents?.sectionListRenderer?.contents || [];
   for (const s of sections) {
     for (const it of s?.itemSectionRenderer?.contents || []) {
       const v = it?.videoRenderer;
       if (!v?.videoId) continue;
-      const title = v.title?.runs?.map((r: any) => r.text).join("") || v.title?.simpleText || "";
+      const title = v.title?.runs?.map((r: InnertubeTextRun) => r.text).join("") || v.title?.simpleText || "";
       out.push({ id: v.videoId, title });
       if (out.length >= max) return out;
     }
