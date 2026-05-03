@@ -25,7 +25,7 @@ async function search(query: string, max = 10): Promise<{ id: string; title: str
     body: JSON.stringify({ context: CTX, query, params: "EgIQAQ%3D%3D" }),
   });
   if (!res.ok) return [];
-  const data = await res.json();
+  const data = await res.json() as any;
   const out: { id: string; title: string }[] = [];
   const sections = data?.contents?.twoColumnSearchResultsRenderer?.primaryContents?.sectionListRenderer?.contents || [];
   for (const s of sections) {

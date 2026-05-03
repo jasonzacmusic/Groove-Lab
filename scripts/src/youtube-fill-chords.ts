@@ -44,7 +44,7 @@ async function search(query: string, max = 10): Promise<VideoResult[]> {
         }
       );
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
+      const data = await res.json() as any;
       const out: VideoResult[] = [];
       const sections =
         data?.contents?.twoColumnSearchResultsRenderer?.primaryContents

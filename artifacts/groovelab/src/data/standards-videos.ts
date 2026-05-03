@@ -1294,6 +1294,12 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: '5M6dzbYRTSA', title: "So What [No Piano] - Medium Slow Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
     { id: 'dRUSNM7-ukE', title: "So What (bassless backing track)", channel: "Bassless Backing Tracks" }
   ],
+
+  'So What (Modal)': [
+    { id: 'vk01tpTI3Ig', title: "Miles Davis - So What (Backing Track)", channel: "Miles Guitar Archives (Backing Tracks)" },
+    { id: 'aQjbs02TKAc', title: "So What (130bpm) : Backing track", channel: "Guitare Improvisation" },
+    { id: 'mxfnennYk_8', title: "So What (140 bpm) : Jazz Backing Track", channel: "Jazz Backing Tracks" },
+  ],
   'Softly As In A Morning Sunrise': [
     { id: 'bBr-Tpf10DU', title: "Softly as in a morning sunrise (190 bpm) : Jazz Backing Track", channel: "Guitare Improvisation" },
     { id: 'QqQbPY72rFA', title: "Softly As In A Morning Sunrise (Jazz/Swing feel) - 130 bpm : Backing Track", channel: "Guitare Improvisation" },
@@ -1456,6 +1462,12 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'HgmijE7Pdoo', title: "Dave Brubeck - Take Five (170BPM Ebm) // MFLY BACKING TRACKS", channel: "Mfly Music" },
     { id: 'pm1oeUqzsog', title: "Take Five - Backing track tempo 160 Swing", channel: "Aun Chatchai" },
     { id: 'uP9f3Rx3PgY', title: "\"Take Five\" - Backing Track for Jazz Singers 5/4 (in c minor) with lyrics and Scat solo", channel: "Scat Kitchen" }
+  ],
+
+  'Take Five (5/4)': [
+    { id: 'asd487AczcA', title: "Dave Brubeck - Take Five (5/4 Backing Track)", channel: "Jazz Backing Tracks" },
+    { id: 'Kv249Vmu4BA', title: "Take Five (5/4) backing track - 170 bpm", channel: "Backing Track Studio" },
+    { id: 'LkrehCp8-lI', title: "Take Five (Bb) : Backing track", channel: "Guitare Improvisation" },
   ],
   'Take The A Train': [
     { id: 'msjD-ZivCEM', title: "Take the A train (140 bpm) : Backing track", channel: "Guitare Improvisation" },

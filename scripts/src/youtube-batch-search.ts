@@ -58,7 +58,7 @@ async function searchYouTube(query: string, maxResults: number = 5): Promise<Vid
   try {
     const res = await fetch(url);
     if (!res.ok) {
-      const err = await res.json();
+      const err = await res.json() as any;
       if (err.error?.errors?.[0]?.reason === 'quotaExceeded' || err.error?.errors?.[0]?.reason === 'rateLimitExceeded') {
         console.error('\n*** YOUTUBE QUOTA EXCEEDED ***');
         throw new Error('QUOTA_EXCEEDED');
@@ -67,7 +67,7 @@ async function searchYouTube(query: string, maxResults: number = 5): Promise<Vid
       return [];
     }
 
-    const data = await res.json();
+    const data = await res.json() as any;
     return (data.items || []).map((item: any) => ({
       id: item.id.videoId,
       title: item.snippet.title
