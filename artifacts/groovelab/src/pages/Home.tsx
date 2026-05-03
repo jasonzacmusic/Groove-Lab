@@ -15,7 +15,7 @@ import {
 import { YouTubeInline } from '@/components/YouTubeInline';
 import {
   GENRES, TEMPO_BUCKETS, GENRE_VIDEO_LIBRARY_BY_TEMPO,
-  tempoLabel, type TempoBucket,
+  tempoLabel, getGenreByTempo, type TempoBucket,
 } from '@/data/genre-videos';
 import { KEY_BACKING_TRACKS } from '@/data/chord-videos';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -44,22 +44,14 @@ function BackingTrackBrowser() {
 
   // Counts per bucket for the current genre — used to disable empty tabs.
   const counts = useMemo(() => {
-    const buckets = GENRE_VIDEO_LIBRARY_BY_TEMPO[genre];
-    if (!buckets) return { slow: 0, medium: 0, fast: 0, veryFast: 0 } as Record<TempoBucket, number>;
-    return {
-      slow: buckets.slow.length,
-      medium: buckets.medium.length,
-      fast: buckets.fast.length,
-      veryFast: buckets.veryFast.length,
-    } as Record<TempoBucket, number>;
+    return TEMPO_BUCKETS.reduce((acc, b) => {
+      acc[b] = getGenreByTempo(genre, b).length;
+      return acc;
+    }, {} as Record<TempoBucket, number>);
   }, [genre]);
 
-  // Videos to render — first 9 from the active bucket.
-  const videos = useMemo(() => {
-    const buckets = GENRE_VIDEO_LIBRARY_BY_TEMPO[genre];
-    if (!buckets) return [];
-    return buckets[bucket].slice(0, 9);
-  }, [genre, bucket]);
+  // Videos to render — first 9 from the active bucket via getGenreByTempo().
+  const videos = useMemo(() => getGenreByTempo(genre, bucket).slice(0, 9), [genre, bucket]);
 
   return (
     <section>

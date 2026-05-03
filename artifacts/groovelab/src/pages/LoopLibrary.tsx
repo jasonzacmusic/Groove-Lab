@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -7,9 +7,17 @@ import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Slider } from '@/components/ui/slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Search, Play, Pause, Headphones, SlidersHorizontal, X, ChevronLeft, ChevronRight, ListMusic, FolderOpen } from 'lucide-react';
+import { Search, Play, Pause, Headphones, SlidersHorizontal, X, ChevronLeft, ChevronRight, ListMusic, FolderOpen, Youtube } from 'lucide-react';
 import { LoopPlayer, type AudioLoopData } from '@/components/LoopPlayer';
 import { SongBuilder, type SongSection } from '@/components/SongBuilder';
+import { YouTubeInline } from '@/components/YouTubeInline';
+import {
+  GENRES as YT_GENRES,
+  TEMPO_BUCKETS,
+  getGenreByTempo,
+  tempoLabel,
+  type TempoBucket,
+} from '@/data/genre-videos';
 
 // These match the ACTUAL values in the Neon database (verified 2026-04-13)
 const GENRES = ['All', 'Rock', 'Pop', 'Funk', 'Blues', 'Jazz', 'R&B', 'Soul', 'Indie Rock', 'Hip Hop', 'Folk', 'World', 'Latin', 'Cinematic', 'Electronic', 'Reggae'];
@@ -97,7 +105,79 @@ function MiniWaveform({ loop, isActive }: { loop: AudioLoopData; isActive: boole
   return <canvas ref={canvasRef} width={240} height={40} className="w-full h-10" />;
 }
 
+// ── YouTube Backing Track Browser (tempo-filtered) ──────────────────────────
+function BackingTrackTab() {
+  const [genre, setGenre] = useState<string>(YT_GENRES[0]);
+  const [bucket, setBucket] = useState<TempoBucket>('medium');
+
+  const counts = useMemo(
+    () => TEMPO_BUCKETS.reduce((acc, b) => { acc[b] = getGenreByTempo(genre, b).length; return acc; }, {} as Record<TempoBucket, number>),
+    [genre],
+  );
+
+  const videos = useMemo(() => getGenreByTempo(genre, bucket).slice(0, 12), [genre, bucket]);
+
+  return (
+    <div className="p-4 md:p-6">
+      <p className="text-sm text-muted-foreground mb-4">
+        {YT_GENRES.length} genres · 100+ curated YouTube tracks each · filter by tempo
+      </p>
+
+      {/* Controls row */}
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-5">
+        <div className="flex items-center gap-2">
+          <label className="text-xs uppercase font-bold text-muted-foreground tracking-wider shrink-0">Genre</label>
+          <Select value={genre} onValueChange={setGenre}>
+            <SelectTrigger className="w-[180px] h-9"><SelectValue /></SelectTrigger>
+            <SelectContent>
+              {YT_GENRES.map((g) => <SelectItem key={g} value={g}>{g}</SelectItem>)}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Tempo tabs */}
+        <div className="flex flex-wrap gap-1.5">
+          {TEMPO_BUCKETS.map((b) => {
+            const n = counts[b];
+            const active = bucket === b;
+            return (
+              <button
+                key={b}
+                onClick={() => setBucket(b)}
+                disabled={n === 0}
+                className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors
+                  ${active ? 'bg-primary text-primary-foreground' : 'bg-muted/50 text-muted-foreground hover:bg-muted'}
+                  ${n === 0 ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'}`}
+              >
+                {tempoLabel(b)} <span className="opacity-70">· {n}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {videos.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          {videos.map((v) => (
+            <div key={v.id}>
+              <YouTubeInline videoId={v.id} title={v.title} channel={v.channel} />
+              <p className="text-xs font-medium mt-1.5 px-1 truncate text-muted-foreground">{v.title}</p>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="rounded-lg border border-dashed border-border bg-muted/20 p-8 text-center">
+          <p className="text-sm text-muted-foreground">
+            No {tempoLabel(bucket).toLowerCase()} tracks for {genre} — try another tempo.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function LoopLibrary() {
+  const [activeTab, setActiveTab] = useState<'loops' | 'backing'>('loops');
   const [filters, setFilters] = useState<LoopFilters>({
     search: '',
     genre: 'All',
@@ -297,44 +377,70 @@ export default function LoopLibrary() {
               <Headphones className="w-7 h-7 text-primary" />
               <div>
                 <h1 className="font-serif text-2xl md:text-3xl">Loop Library</h1>
-                <p className="text-sm text-muted-foreground">Browse and preview native audio loops</p>
+                <p className="text-sm text-muted-foreground">Native audio loops & YouTube backing tracks</p>
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              <Select value={filters.sort} onValueChange={(v) => updateFilter('sort', v)}>
-                <SelectTrigger className="w-[160px]">
-                  <SelectValue placeholder="Sort by" />
-                </SelectTrigger>
-                <SelectContent>
-                  {SORT_OPTIONS.map(opt => (
-                    <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <Button variant="outline" size="icon" onClick={() => setShowFilters(!showFilters)}
-                className={showFilters ? 'bg-primary/10 text-primary' : ''}>
-                <SlidersHorizontal className="w-4 h-4" />
-              </Button>
-            </div>
+            {activeTab === 'loops' && (
+              <div className="flex items-center gap-2">
+                <Select value={filters.sort} onValueChange={(v) => updateFilter('sort', v)}>
+                  <SelectTrigger className="w-[160px]">
+                    <SelectValue placeholder="Sort by" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {SORT_OPTIONS.map(opt => (
+                      <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Button variant="outline" size="icon" onClick={() => setShowFilters(!showFilters)}
+                  className={showFilters ? 'bg-primary/10 text-primary' : ''}>
+                  <SlidersHorizontal className="w-4 h-4" />
+                </Button>
+              </div>
+            )}
           </div>
 
-          {/* Search Bar */}
-          <form onSubmit={handleSearch} className="flex gap-2">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-              <Input
-                placeholder="Search by artist, groove name, genre..."
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-                className="pl-9 bg-muted/50 border-none focus-visible:ring-1 focus-visible:ring-primary"
-              />
-            </div>
-            <Button type="submit" variant="default">Search</Button>
-          </form>
+          {/* Tab Switcher */}
+          <div className="flex gap-1 mb-3">
+            <button
+              onClick={() => setActiveTab('loops')}
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-md text-sm font-medium transition-colors
+                ${activeTab === 'loops' ? 'bg-primary text-primary-foreground' : 'bg-muted/50 text-muted-foreground hover:bg-muted'}`}
+            >
+              <Headphones className="w-4 h-4" /> Drum Loops
+            </button>
+            <button
+              onClick={() => setActiveTab('backing')}
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-md text-sm font-medium transition-colors
+                ${activeTab === 'backing' ? 'bg-primary text-primary-foreground' : 'bg-muted/50 text-muted-foreground hover:bg-muted'}`}
+            >
+              <Youtube className="w-4 h-4" /> Backing Tracks
+            </button>
+          </div>
+
+          {/* Search Bar — only shown on Drum Loops tab */}
+          {activeTab === 'loops' && (
+            <form onSubmit={handleSearch} className="flex gap-2">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search by artist, groove name, genre..."
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
+                  className="pl-9 bg-muted/50 border-none focus-visible:ring-1 focus-visible:ring-primary"
+                />
+              </div>
+              <Button type="submit" variant="default">Search</Button>
+            </form>
+          )}
         </div>
       </div>
 
-      <div className="flex">
+      {/* Backing Tracks tab content */}
+      {activeTab === 'backing' && <BackingTrackTab />}
+
+      {/* Drum Loops tab content */}
+      {activeTab === 'loops' && <div className="flex">
         {/* Filter Sidebar */}
         {showFilters && (
           <aside className="hidden md:block w-64 border-r border-border p-4 space-y-5 flex-shrink-0 sticky top-[140px] h-[calc(100vh-200px)] overflow-y-auto">
@@ -568,7 +674,7 @@ export default function LoopLibrary() {
             </div>
           )}
         </div>
-      </div>
+      </div>}
 
       {/* Song Builder Modal */}
       {songBuilderData && (

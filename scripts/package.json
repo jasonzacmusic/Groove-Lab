@@ -6,6 +6,7 @@
   "scripts": {
     "hello": "tsx ./src/hello.ts",
     "migrate:fix-chord-duplicates": "tsx ./src/migrate-fix-chord-duplicates.ts",
+    "validate-genre-library": "tsx ./src/validate-genre-library.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "devDependencies": {
