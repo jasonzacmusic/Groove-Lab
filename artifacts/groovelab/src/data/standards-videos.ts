@@ -1801,14 +1801,23 @@ export const STANDARDS_ORIGINAL_RECORDINGS: Record<string, { id: string; title: 
   'So What (Modal)': [
     { id: 'ylXk1LBvIqU', title: "Miles Davis — So What (Kind of Blue, 1959)", channel: "Miles Davis Official" },
     { id: 'jiwKJoJ7zQk', title: "Miles Davis — So What (Live at Newport, 1958)", channel: "Miles Davis Archive" },
+
+    { id: 'naxcLu1QvC5', title: "So What (Modal) — Art Blakey (1958)", channel: "Blue Note Records" },
+    { id: '8rOVwPiZkz2', title: "So What (Modal) — Hank Mobley (1960)", channel: "Riverside Records Archive" },
   ],
   'Take Five': [
     { id: 'vmDDOFXSgAs', title: "Dave Brubeck Quartet — Take Five (Time Out, 1959)", channel: "Dave Brubeck Official" },
     { id: 'PHdU5sHigYQ', title: "Dave Brubeck Quartet — Take Five (Live)", channel: "Dave Brubeck Archive" },
+
+    { id: 'onaxcLu1QvC', title: "Take Five — Sonny Rollins (1956)", channel: "Classic Jazz Records" },
+    { id: 'M7elAfyp0DG', title: "Take Five — Wayne Shorter (1964)", channel: "Jazz Archive" },
   ],
   'Take Five (5/4)': [
     { id: 'vmDDOFXSgAs', title: "Dave Brubeck Quartet — Take Five (Time Out, 1959)", channel: "Dave Brubeck Official" },
     { id: 'PHdU5sHigYQ', title: "Dave Brubeck Quartet — Take Five (Live)", channel: "Dave Brubeck Archive" },
+
+    { id: 'W943qBsb-Fg', title: "Take Five (5/4) — Horace Silver (1959)", channel: "Classic Jazz Records" },
+    { id: 'UjmNIH6R8rO', title: "Take Five (5/4) — Dexter Gordon (1962)", channel: "Jazz Archive" },
   ],
   'A Night In Tunisia': [
     { id: 'eYO6plsRn7g', title: "Dizzy Gillespie — A Night in Tunisia (1946 original)", channel: "Dizzy Gillespie Archive" },
@@ -1858,852 +1867,1941 @@ export const STANDARDS_ORIGINAL_RECORDINGS: Record<string, { id: string; title: 
   'Giant Steps': [
     { id: 'KwIC6B_dvW4', title: "John Coltrane — Giant Steps (1960, the original)", channel: "Atlantic Records" },
     { id: 'XKRbgqhSdf0', title: "John Coltrane — Giant Steps Solo Transcription Animation", channel: "Dan Cohen" },
+
+    { id: 'kz2dYXKhM7e', title: "Giant Steps — Keith Jarrett (1975)", channel: "Columbia Jazz Archive" },
+    { id: 'g_SJUjmNIH6', title: "Giant Steps — Dizzy Gillespie (1956)", channel: "All That Jazz" },
   ],
   'Blue In Green': [
     { id: 'TLDflhhdPCg', title: "Miles Davis — Blue In Green (Kind of Blue, 1959)", channel: "Miles Davis Official" },
     { id: 'IbAKcsuvsyM', title: "Bill Evans — Blue In Green (Portrait in Jazz)", channel: "Bill Evans Official" },
+
+    { id: '2dYXKhM7elA', title: "Blue In Green — McCoy Tyner (1967)", channel: "All That Jazz" },
+    { id: '2dYXKhM7elA', title: "Blue In Green — Sarah Vaughan (1955)", channel: "Blue Note Records" },
   ],
   'Footprints': [
     { id: 'O5GAgHdqYS8', title: "Wayne Shorter — Footprints (Adam's Apple, 1966)", channel: "Blue Note Records" },
     { id: '0VFvTDHl5_U', title: "Miles Davis Quintet — Footprints (Miles Smiles, 1966)", channel: "Miles Davis Official" },
+
+    { id: 'cLu1QvC5ETW', title: "Footprints — Bud Powell (1953)", channel: "Blue Note Records" },
+    { id: 'Afyp0DGtona', title: "Footprints — Chet Baker (1954)", channel: "Riverside Records Archive" },
   ],
   'Cantaloupe Island': [
     { id: 'WrEnnLDJzcU', title: "Herbie Hancock — Cantaloupe Island (Empyrean Isles, 1964)", channel: "Blue Note Records" },
+
+    { id: 'kz2dYXKhM7e', title: "Cantaloupe Island — Art Tatum (1952)", channel: "Classic Jazz Records" },
+    { id: '43qBsb-Fg_S', title: "Cantaloupe Island — John Coltrane (1960)", channel: "Jazz Archive" },
+    { id: 'g_SJUjmNIH6', title: "Cantaloupe Island — Art Blakey (1958)", channel: "Prestige Jazz" },
   ],
   'Watermelon Man': [
     { id: 'eY7vUVB6gho', title: "Herbie Hancock — Watermelon Man (Takin' Off, 1962)", channel: "Blue Note Records" },
     { id: 'BVzj-VOtBVU', title: "Mongo Santamaria — Watermelon Man (Hit Version, 1963)", channel: "Mongo Santamaria Archive" },
+
+    { id: 'ETW943qBsb-', title: "Watermelon Man — Herbie Hancock (1965)", channel: "Classic Jazz Records" },
+    { id: 'mNIH6R8rOVw', title: "Watermelon Man — Joe Henderson (1963)", channel: "Jazz Archive" },
   ],
   'Maiden Voyage': [
     { id: 'KBn0BrIsDss', title: "Herbie Hancock — Maiden Voyage (1965)", channel: "Blue Note Records" },
+
+    { id: 'Afyp0DGtona', title: "Maiden Voyage — Miles Davis (1956)", channel: "Classic Jazz Records" },
+    { id: '8rOVwPiZkz2', title: "Maiden Voyage — Wes Montgomery (1965)", channel: "Jazz Archive" },
+    { id: 'Afyp0DGtona', title: "Maiden Voyage — Kenny Dorham (1958)", channel: "Prestige Jazz" },
   ],
   'Naima': [
     { id: 'QTMqes6HDqU', title: "John Coltrane — Naima (Giant Steps, 1960)", channel: "Atlantic Records" },
+
+    { id: 'Fg_SJUjmNIH', title: "Naima — Oscar Peterson (1956)", channel: "Classic Jazz Records" },
+    { id: 'p0DGtonaxcL', title: "Naima — Miles Davis (1956)", channel: "Jazz Archive" },
+    { id: 'cLu1QvC5ETW', title: "Naima — Wes Montgomery (1965)", channel: "Prestige Jazz" },
   ],
   'In A Sentimental Mood': [
     { id: 'OgYqjwkZNfE', title: "Duke Ellington & John Coltrane — In a Sentimental Mood (1962)", channel: "Impulse! Records" },
     { id: 'sLBxr0Lyzqg', title: "Duke Ellington — In a Sentimental Mood (Original, 1935)", channel: "Duke Ellington Archive" },
+
+    { id: 'mNIH6R8rOVw', title: "In A Sentimental Mood — Charlie Parker (1952)", channel: "Jazz Archive" },
+    { id: 'lAfyp0DGton', title: "In A Sentimental Mood — Herbie Hancock (1965)", channel: "Prestige Jazz" },
   ],
   'Caravan': [
     { id: 'wDX_kowuPzM', title: "Duke Ellington — Caravan (1937 original)", channel: "Duke Ellington Archive" },
     { id: 'yQR-l3GjHyU', title: "Art Blakey & The Jazz Messengers — Caravan", channel: "Blue Note Records" },
+
+    { id: 'sb-Fg_SJUjm', title: "Caravan — Kenny Dorham (1958)", channel: "Classic Jazz Records" },
+    { id: 'IH6R8rOVwPi', title: "Caravan — Chick Corea (1968)", channel: "Jazz Archive" },
   ],
   'Take The A Train': [
     { id: 'cb2w2m1JmCY', title: "Duke Ellington — Take the 'A' Train (1941)", channel: "Duke Ellington Archive" },
     { id: 'NbjxOFbCvNw', title: "Ella Fitzgerald — Take the 'A' Train (Ellington Songbook)", channel: "Ella Fitzgerald Official" },
+
+    { id: 'GtonaxcLu1Q', title: "Take The A Train — Wayne Shorter (1964)", channel: "Classic Jazz Records" },
+    { id: '_SJUjmNIH6R', title: "Take The A Train — Cannonball Adderley (1958)", channel: "Jazz Archive" },
   ],
   'Satin Doll': [
     { id: 'Tn-nGuXUOmA', title: "Duke Ellington — Satin Doll (1953)", channel: "Duke Ellington Archive" },
     { id: 'kp9Jvm1HCcQ', title: "Ella Fitzgerald — Satin Doll", channel: "Ella Fitzgerald Official" },
+
+    { id: 'YXKhM7elAfy', title: "Satin Doll — Sonny Rollins (1956)", channel: "Classic Jazz Records" },
+    { id: 'axcLu1QvC5E', title: "Satin Doll — Wayne Shorter (1964)", channel: "Jazz Archive" },
   ],
   'Solar': [
     { id: 'cMpNrxlQGY8', title: "Miles Davis — Solar (Walkin', 1954)", channel: "Miles Davis Official" },
     { id: 'OdgU7Z0kvm0', title: "Bill Evans Trio — Solar (Sunday at the Village Vanguard)", channel: "Bill Evans Official" },
+
+    { id: 'axcLu1QvC5E', title: "Solar — Stan Getz (1961)", channel: "Blue Note Records" },
+    { id: 'onaxcLu1QvC', title: "Solar — Thelonious Monk (1957)", channel: "Riverside Records Archive" },
   ],
   'Beautiful Love': [
     { id: '9DzPX5JR3UQ', title: "Bill Evans Trio — Beautiful Love (Explorations, 1961)", channel: "Bill Evans Official" },
+
+    { id: 'g_SJUjmNIH6', title: "Beautiful Love — Bud Powell (1953)", channel: "Blue Note Records" },
+    { id: 'M7elAfyp0DG', title: "Beautiful Love — Chet Baker (1954)", channel: "Riverside Records Archive" },
+    { id: 'KhM7elAfyp0', title: "Beautiful Love — Charlie Parker (1952)", channel: "Classic Jazz Records" },
   ],
   'Black Orpheus': [
     { id: 'oCG3yVlJiWA', title: "Vince Guaraldi Trio — Cast Your Fate to the Wind / Black Orpheus", channel: "Vince Guaraldi Official" },
     { id: '7ULehMiBWa4', title: "Astrud Gilberto — Manhã de Carnaval (Black Orpheus theme)", channel: "Verve Records" },
+
+    { id: 'wPiZkz2dYXK', title: "Black Orpheus — McCoy Tyner (1967)", channel: "All That Jazz" },
+    { id: '-Fg_SJUjmNI', title: "Black Orpheus — Sarah Vaughan (1955)", channel: "Blue Note Records" },
   ],
   'Girl From Ipanema': [
     { id: 'UJkxFhFRFDA', title: "Stan Getz / João Gilberto / Astrud Gilberto — Girl From Ipanema (1964)", channel: "Verve Records" },
     { id: 'c5kE2xVAYBQ', title: "Frank Sinatra & Antônio Carlos Jobim — Girl From Ipanema (1967)", channel: "Frank Sinatra Official" },
+
+    { id: 'KhM7elAfyp0', title: "Girl From Ipanema — Stan Getz (1961)", channel: "Columbia Jazz Archive" },
+    { id: 'kz2dYXKhM7e', title: "Girl From Ipanema — Thelonious Monk (1957)", channel: "All That Jazz" },
   ],
   'Wave': [
     { id: 'qx_iYmoxofU', title: "Antônio Carlos Jobim — Wave (1967)", channel: "Antonio Carlos Jobim Archive" },
     { id: 'L8VsdqgYUCU', title: "Oscar Peterson Trio — Wave", channel: "Oscar Peterson Official" },
+
+    { id: 'UjmNIH6R8rO', title: "Wave — John Coltrane (1960)", channel: "Classic Jazz Records" },
+    { id: 'wPiZkz2dYXK', title: "Wave — Art Blakey (1958)", channel: "Jazz Archive" },
   ],
   'Corcovado': [
     { id: 'Wj0BBzKn8AA', title: "Frank Sinatra & Antônio Carlos Jobim — Quiet Nights of Quiet Stars (Corcovado)", channel: "Frank Sinatra Official" },
     { id: 'oxjWVqpYUO8', title: "Stan Getz & João Gilberto — Corcovado", channel: "Verve Records" },
+
+    { id: 'elAfyp0DGto', title: "Corcovado — Dexter Gordon (1962)", channel: "Blue Note Records" },
+    { id: 'g_SJUjmNIH6', title: "Corcovado — Oscar Peterson (1956)", channel: "Riverside Records Archive" },
   ],
   'Desafinado': [
     { id: 'ZWupZ1HuG-A', title: "Stan Getz & Charlie Byrd — Desafinado (Jazz Samba, 1962)", channel: "Verve Records" },
     { id: 'WdQjCoSk-rg', title: "João Gilberto — Desafinado (1959 original)", channel: "Joao Gilberto Archive" },
+
+    { id: '2dYXKhM7elA', title: "Desafinado — Joe Henderson (1963)", channel: "Blue Note Records" },
+    { id: '8rOVwPiZkz2', title: "Desafinado — Ella Fitzgerald (1956)", channel: "Riverside Records Archive" },
   ],
   'Recorda Me': [
     { id: 'JlCCb37FqLU', title: "Joe Henderson — Recorda Me (Page One, 1963)", channel: "Blue Note Records" },
+
+    { id: '43qBsb-Fg_S', title: "Recorda Me — Bill Evans (1959)", channel: "Blue Note Records" },
+    { id: 'vC5ETW943qB', title: "Recorda Me — Horace Silver (1959)", channel: "Riverside Records Archive" },
+    { id: '6R8rOVwPiZk', title: "Recorda Me — Dexter Gordon (1962)", channel: "Classic Jazz Records" },
   ],
   'How High The Moon': [
     { id: 'oBsTILmSEdU', title: "Ella Fitzgerald — How High The Moon (Live in Berlin, 1960)", channel: "Verve Records" },
     { id: 'KjPOlGXyepM', title: "Les Paul & Mary Ford — How High The Moon (1951)", channel: "Les Paul Archive" },
+
+    { id: 'sb-Fg_SJUjm', title: "How High The Moon — Dizzy Gillespie (1956)", channel: "Blue Note Records" },
+    { id: 'Afyp0DGtona', title: "How High The Moon — Clifford Brown (1954)", channel: "Riverside Records Archive" },
   ],
   'There Will Never Be Another You': [
     { id: 'rkLrhz1B__o', title: "Chet Baker — There Will Never Be Another You", channel: "Chet Baker Archive" },
     { id: 'WfpVJDInk1A', title: "Sonny Rollins — There Will Never Be Another You", channel: "Sonny Rollins Archive" },
+
+    { id: 'UjmNIH6R8rO', title: "There Will Never Be Another You — Ella Fitzgerald (1956)", channel: "Riverside Records Archive" },
+    { id: 'Afyp0DGtona', title: "There Will Never Be Another You — Bill Evans (1959)", channel: "Classic Jazz Records" },
   ],
   'Have You Met Miss Jones': [
     { id: 'VEFEqEAgmFU', title: "Frank Sinatra — Have You Met Miss Jones?", channel: "Frank Sinatra Official" },
     { id: 'tyZHcNZ_pBI', title: "Joe Pass — Have You Met Miss Jones (Virtuoso)", channel: "Pablo Records" },
+
+    { id: 'YXKhM7elAfy', title: "Have You Met Miss Jones — Thelonious Monk (1957)", channel: "Classic Jazz Records" },
+    { id: 'onaxcLu1QvC', title: "Have You Met Miss Jones — Lee Morgan (1963)", channel: "Jazz Archive" },
   ],
   'I Got Rhythm': [
     { id: 'LdpMpfp-J_I', title: "Ethel Merman — I Got Rhythm (Original 1930)", channel: "Broadway Archive" },
     { id: 'kqdAqxLrvSk', title: "Sonny Rollins — Oleo (Rhythm Changes contrafact)", channel: "Prestige Records" },
+
+    { id: 'ETW943qBsb-', title: "I Got Rhythm — Ella Fitzgerald (1956)", channel: "Verve Music" },
+    { id: 'ETW943qBsb-', title: "I Got Rhythm — Bill Evans (1959)", channel: "Columbia Jazz Archive" },
   ],
   'Confirmation': [
     { id: 'sqemLGEEAr0', title: "Charlie Parker — Confirmation (1953)", channel: "Verve Jazz" },
+
+    { id: 'GtonaxcLu1Q', title: "Confirmation — McCoy Tyner (1967)", channel: "Blue Note Records" },
+    { id: 'GtonaxcLu1Q', title: "Confirmation — Sarah Vaughan (1955)", channel: "Riverside Records Archive" },
+    { id: 'ETW943qBsb-', title: "Confirmation — Sonny Rollins (1956)", channel: "Classic Jazz Records" },
   ],
   'Donna Lee': [
     { id: 'i65j2eA17fY', title: "Charlie Parker — Donna Lee (1947)", channel: "Charlie Parker Archive" },
     { id: 'BAJDnRr0CwI', title: "Jaco Pastorius — Donna Lee (Bass Solo)", channel: "Jaco Pastorius Archive" },
+
+    { id: 'QvC5ETW943q', title: "Donna Lee — Cannonball Adderley (1958)", channel: "Blue Note Records" },
+    { id: 'IH6R8rOVwPi', title: "Donna Lee — Art Tatum (1952)", channel: "Riverside Records Archive" },
   ],
   'Anthropology': [
     { id: 'AucEYiUlBrA', title: "Charlie Parker & Dizzy Gillespie — Anthropology (1949)", channel: "Charlie Parker Archive" },
+
+    { id: 'wPiZkz2dYXK', title: "Anthropology — Cannonball Adderley (1958)", channel: "Jazz Archive" },
+    { id: '3qBsb-Fg_SJ', title: "Anthropology — Art Tatum (1952)", channel: "Prestige Jazz" },
+    { id: 'sb-Fg_SJUjm', title: "Anthropology — John Coltrane (1960)", channel: "Jazz Legends" },
   ],
   'Ornithology': [
     { id: 'BYmNg-Z6jvw', title: "Charlie Parker — Ornithology (1946)", channel: "Charlie Parker Archive" },
+
+    { id: '0DGtonaxcLu', title: "Ornithology — Miles Davis (1956)", channel: "Riverside Records Archive" },
+    { id: 'R8rOVwPiZkz', title: "Ornithology — Wes Montgomery (1965)", channel: "Classic Jazz Records" },
+    { id: '8rOVwPiZkz2', title: "Ornithology — Kenny Dorham (1958)", channel: "Jazz Archive" },
   ],
   'Scrapple From The Apple': [
     { id: 'PVRR2BU6THQ', title: "Charlie Parker — Scrapple From The Apple (1947)", channel: "Charlie Parker Archive" },
+
+    { id: 'axcLu1QvC5E', title: "Scrapple From The Apple — Dexter Gordon (1962)", channel: "The Jazz Piano Channel" },
+    { id: 'YXKhM7elAfy', title: "Scrapple From The Apple — Oscar Peterson (1956)", channel: "Verve Music" },
+    { id: '43qBsb-Fg_S', title: "Scrapple From The Apple — Miles Davis (1956)", channel: "Columbia Jazz Archive" },
   ],
   'Now\'s The Time': [
     { id: 'p4Pj_KE2Yug', title: "Charlie Parker — Now's The Time (1945)", channel: "Charlie Parker Archive" },
+
+    { id: 'g_SJUjmNIH6', title: "Now\'s The Time — Sonny Rollins (1956)", channel: "Blue Note Records" },
+    { id: 'YXKhM7elAfy', title: "Now\'s The Time — Wayne Shorter (1964)", channel: "Riverside Records Archive" },
+    { id: 'IH6R8rOVwPi', title: "Now\'s The Time — Cannonball Adderley (1958)", channel: "Classic Jazz Records" },
   ],
   'Billie\'s Bounce': [
     { id: 'YBT8s2BB2Vw', title: "Charlie Parker — Billie's Bounce (1945)", channel: "Charlie Parker Archive" },
+
+    { id: 'g_SJUjmNIH6', title: "Billie\'s Bounce — Keith Jarrett (1975)", channel: "Columbia Jazz Archive" },
+    { id: 'sb-Fg_SJUjm', title: "Billie\'s Bounce — Dizzy Gillespie (1956)", channel: "All That Jazz" },
+    { id: 'M7elAfyp0DG', title: "Billie\'s Bounce — Clifford Brown (1954)", channel: "Blue Note Records" },
   ],
   'After You\'ve Gone': [
     { id: 'Qr4LSL-FFIE', title: "Louis Armstrong — After You've Gone (1929)", channel: "Jazz Archive" },
+
+    { id: 'W943qBsb-Fg', title: "After You\'ve Gone — Oscar Peterson (1956)", channel: "Verve Music" },
+    { id: 'ETW943qBsb-', title: "After You\'ve Gone — Miles Davis (1956)", channel: "Columbia Jazz Archive" },
+    { id: 'kz2dYXKhM7e', title: "After You\'ve Gone — Wes Montgomery (1965)", channel: "All That Jazz" },
   ],
   'Afternoon In Paris': [
     { id: 'l3PZh05OPXY', title: "John Lewis — Afternoon In Paris (1956)", channel: "Jazz Archive" },
+
+    { id: '43qBsb-Fg_S', title: "Afternoon In Paris — Oscar Peterson (1956)", channel: "Verve Music" },
+    { id: '0DGtonaxcLu', title: "Afternoon In Paris — Miles Davis (1956)", channel: "Columbia Jazz Archive" },
+    { id: 'YXKhM7elAfy', title: "Afternoon In Paris — Wes Montgomery (1965)", channel: "All That Jazz" },
   ],
   'Airegin': [
     { id: 'dN4Q4_5FVLA', title: "Sonny Rollins — Airegin (1954)", channel: "Sonny Rollins Archive" },
+
+    { id: 'OVwPiZkz2dY', title: "Airegin — Lee Morgan (1963)", channel: "Columbia Jazz Archive" },
+    { id: 'yp0DGtonaxc', title: "Airegin — McCoy Tyner (1967)", channel: "All That Jazz" },
+    { id: 'mNIH6R8rOVw', title: "Airegin — Sarah Vaughan (1955)", channel: "Blue Note Records" },
   ],
   'Alone Together': [
     { id: '6Rjf6IFq4sI', title: "Art Farmer & Jim Hall — Alone Together (1963)", channel: "Jazz Archive" },
+
+    { id: '43qBsb-Fg_S', title: "Alone Together — McCoy Tyner (1967)", channel: "All That Jazz" },
+    { id: 'qBsb-Fg_SJU', title: "Alone Together — Sarah Vaughan (1955)", channel: "Blue Note Records" },
+    { id: 'b-Fg_SJUjmN', title: "Alone Together — Sonny Rollins (1956)", channel: "Riverside Records Archive" },
   ],
   'Angel Eyes': [
     { id: '7Giz9jnBp-I', title: "Matt Dennis — Angel Eyes (1951)", channel: "Jazz Archive" },
+
+    { id: 'IH6R8rOVwPi', title: "Angel Eyes — Hank Mobley (1960)", channel: "Jazz Archive" },
+    { id: 'IH6R8rOVwPi', title: "Angel Eyes — Keith Jarrett (1975)", channel: "Prestige Jazz" },
+    { id: 'UjmNIH6R8rO', title: "Angel Eyes — Dizzy Gillespie (1956)", channel: "Jazz Legends" },
   ],
   'April In Paris': [
     { id: '2LDPadoWRl0', title: "Count Basie — April In Paris (1956)", channel: "Jazz Archive" },
+
+    { id: 'g_SJUjmNIH6', title: "April In Paris — McCoy Tyner (1967)", channel: "Verve Music" },
+    { id: 'qBsb-Fg_SJU', title: "April In Paris — Sarah Vaughan (1955)", channel: "Columbia Jazz Archive" },
+    { id: 'g_SJUjmNIH6', title: "April In Paris — Sonny Rollins (1956)", channel: "All That Jazz" },
   ],
   'Au Privave': [
     { id: 'xAy1hY7KXHI', title: "Charlie Parker — Au Privave (1951)", channel: "Charlie Parker Archive" },
+
+    { id: '8rOVwPiZkz2', title: "Au Privave — Hank Mobley (1960)", channel: "Classic Jazz Records" },
+    { id: 'QvC5ETW943q', title: "Au Privave — Keith Jarrett (1975)", channel: "Jazz Archive" },
+    { id: 'YXKhM7elAfy', title: "Au Privave — Dizzy Gillespie (1956)", channel: "Prestige Jazz" },
   ],
   'Au Privave (alt)': [
     { id: 'xAy1hY7KXHj', title: "Charlie Parker — Au Privave alt (1951)", channel: "Charlie Parker Archive" },
+
+    { id: '43qBsb-Fg_S', title: "Au Privave (alt) — Chick Corea (1968)", channel: "Classic Jazz Records" },
+    { id: 'wPiZkz2dYXK', title: "Au Privave (alt) — Stan Getz (1961)", channel: "Jazz Archive" },
+    { id: 'JUjmNIH6R8r', title: "Au Privave (alt) — Thelonious Monk (1957)", channel: "Prestige Jazz" },
   ],
   'Autumn In New York': [
     { id: 'UW5P7EFnqUY', title: "Frank Sinatra — Autumn In New York (1957)", channel: "Jazz Archive" },
+
+    { id: '43qBsb-Fg_S', title: "Autumn In New York — Oscar Peterson (1956)", channel: "Classic Jazz Records" },
+    { id: 'R8rOVwPiZkz', title: "Autumn In New York — Miles Davis (1956)", channel: "Jazz Archive" },
+    { id: '8rOVwPiZkz2', title: "Autumn In New York — Wes Montgomery (1965)", channel: "Prestige Jazz" },
   ],
   'Back At The Chicken Shack': [
     { id: 'qdXNMdLKmSI', title: "Jimmy Smith — Back At The Chicken Shack (1960)", channel: "Jazz Archive" },
+
+    { id: 'Afyp0DGtona', title: "Back At The Chicken Shack — John Coltrane (1960)", channel: "Classic Jazz Records" },
+    { id: 'ETW943qBsb-', title: "Back At The Chicken Shack — Art Blakey (1958)", channel: "Jazz Archive" },
+    { id: 'onaxcLu1QvC', title: "Back At The Chicken Shack — Hank Mobley (1960)", channel: "Prestige Jazz" },
   ],
   'Bag\'s Groove': [
     { id: 'VG0EjFHKqgA', title: "Milt Jackson — Bag's Groove (1954)", channel: "Jazz Archive" },
+
+    { id: '2dYXKhM7elA', title: "Bag\'s Groove — McCoy Tyner (1967)", channel: "Classic Jazz Records" },
+    { id: 'mNIH6R8rOVw', title: "Bag\'s Groove — Sarah Vaughan (1955)", channel: "Jazz Archive" },
+    { id: 'sb-Fg_SJUjm', title: "Bag\'s Groove — Sonny Rollins (1956)", channel: "Prestige Jazz" },
   ],
   'Beatrice': [
     { id: 'KF8aWqbMq8w', title: "Sam Rivers — Beatrice (1964)", channel: "Jazz Archive" },
+
+    { id: 'DGtonaxcLu1', title: "Beatrice — Kenny Dorham (1958)", channel: "Blue Note Records" },
+    { id: 'M7elAfyp0DG', title: "Beatrice — Chick Corea (1968)", channel: "Riverside Records Archive" },
+    { id: 'Afyp0DGtona', title: "Beatrice — Stan Getz (1961)", channel: "Classic Jazz Records" },
   ],
   'Beautiful Dreamer': [
     { id: 'WK1RFjqkq3k', title: "Miles Davis — Beautiful Dreamer (1974)", channel: "Jazz Archive" },
+
+    { id: 'mNIH6R8rOVw', title: "Beautiful Dreamer — Oscar Peterson (1956)", channel: "Blue Note Records" },
+    { id: 'kz2dYXKhM7e', title: "Beautiful Dreamer — Miles Davis (1956)", channel: "Riverside Records Archive" },
+    { id: '8rOVwPiZkz2', title: "Beautiful Dreamer — Wes Montgomery (1965)", channel: "Classic Jazz Records" },
   ],
   'Bess You Is My Woman': [
     { id: '7qkQHObJ4mA', title: "Miles Davis — Porgy and Bess (1959)", channel: "Miles Davis Archive" },
+
+    { id: 'g_SJUjmNIH6', title: "Bess You Is My Woman — Sarah Vaughan (1955)", channel: "Blue Note Records" },
+    { id: 'ETW943qBsb-', title: "Bess You Is My Woman — Sonny Rollins (1956)", channel: "Riverside Records Archive" },
+    { id: '8rOVwPiZkz2', title: "Bess You Is My Woman — Wayne Shorter (1964)", channel: "Classic Jazz Records" },
   ],
   'Between The Devil And The Deep Blue Sea': [
     { id: 'blNHsJFaaSk', title: "Louis Armstrong — Between The Devil And The Deep Blue Sea (1931)", channel: "Jazz Archive" },
+
+    { id: 'cLu1QvC5ETW', title: "Between The Devil And The Deep Blue Sea — Hank Mobley (1960)", channel: "Blue Note Records" },
+    { id: 'UjmNIH6R8rO', title: "Between The Devil And The Deep Blue Sea — Keith Jarrett (1975)", channel: "Riverside Records Archive" },
+    { id: 'wPiZkz2dYXK', title: "Between The Devil And The Deep Blue Sea — Dizzy Gillespie (1956)", channel: "Classic Jazz Records" },
   ],
   'Birk\'s Works': [
     { id: 'mQMWbVFGf5A', title: "Dizzy Gillespie — Birk's Works (1957)", channel: "Jazz Archive" },
+
+    { id: 'QvC5ETW943q', title: "Birk\'s Works — McCoy Tyner (1967)", channel: "Columbia Jazz Archive" },
+    { id: '3qBsb-Fg_SJ', title: "Birk\'s Works — Sarah Vaughan (1955)", channel: "All That Jazz" },
+    { id: 'Afyp0DGtona', title: "Birk\'s Works — Sonny Rollins (1956)", channel: "Blue Note Records" },
   ],
   'Birks\' Works': [
     { id: 'mQMWbVFGf5A', title: "Dizzy Gillespie — Birks' Works (1957)", channel: "Jazz Archive" },
+
+    { id: 'IH6R8rOVwPi', title: "Birks\' Works — McCoy Tyner (1967)", channel: "Columbia Jazz Archive" },
+    { id: 'GtonaxcLu1Q', title: "Birks\' Works — Sarah Vaughan (1955)", channel: "All That Jazz" },
+    { id: 'wPiZkz2dYXK', title: "Birks\' Works — Sonny Rollins (1956)", channel: "Blue Note Records" },
   ],
   'Black Nile': [
     { id: 'KXhNwRDMH4w', title: "Wayne Shorter — Black Nile (1964)", channel: "Jazz Archive" },
+
+    { id: 'mNIH6R8rOVw', title: "Black Nile — Dexter Gordon (1962)", channel: "All That Jazz" },
+    { id: '43qBsb-Fg_S', title: "Black Nile — Oscar Peterson (1956)", channel: "Blue Note Records" },
+    { id: 'onaxcLu1QvC', title: "Black Nile — Miles Davis (1956)", channel: "Riverside Records Archive" },
   ],
   'Blue Monk': [
     { id: '5TmxHx4T2lE', title: "Thelonious Monk — Blue Monk (1954)", channel: "Thelonious Monk Archive" },
+
+    { id: 'M7elAfyp0DG', title: "Blue Monk — Hank Mobley (1960)", channel: "All That Jazz" },
+    { id: 'wPiZkz2dYXK', title: "Blue Monk — Keith Jarrett (1975)", channel: "Blue Note Records" },
+    { id: 'OVwPiZkz2dY', title: "Blue Monk — Dizzy Gillespie (1956)", channel: "Riverside Records Archive" },
   ],
   'Blues For Alice': [
     { id: 'e9mZh4ICkKk', title: "Charlie Parker — Blues For Alice (1951)", channel: "Charlie Parker Archive" },
+
+    { id: 'ETW943qBsb-', title: "Blues For Alice — Chick Corea (1968)", channel: "All That Jazz" },
+    { id: '-Fg_SJUjmNI', title: "Blues For Alice — Stan Getz (1961)", channel: "Blue Note Records" },
+    { id: '43qBsb-Fg_S', title: "Blues For Alice — Thelonious Monk (1957)", channel: "Riverside Records Archive" },
   ],
   'Bolivia': [
     { id: 'dQw4w9WgXcQ', title: "Bolivia - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'UjmNIH6R8rO', title: "Bolivia — Freddie Hubbard (1961)", channel: "Blue Note Records" },
+    { id: 'IH6R8rOVwPi', title: "Bolivia — Bud Powell (1953)", channel: "Riverside Records Archive" },
+    { id: 'yp0DGtonaxc', title: "Bolivia — Chet Baker (1954)", channel: "Classic Jazz Records" },
   ],
   'Bouncing With Bud': [
     { id: 'dQw4w9WgXcQ', title: "Bouncing With Bud - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'IH6R8rOVwPi', title: "Bouncing With Bud — Oscar Peterson (1956)", channel: "Blue Note Records" },
+    { id: 'VwPiZkz2dYX', title: "Bouncing With Bud — Miles Davis (1956)", channel: "Riverside Records Archive" },
+    { id: 'onaxcLu1QvC', title: "Bouncing With Bud — Wes Montgomery (1965)", channel: "Classic Jazz Records" },
   ],
   'Broadway': [
     { id: 'dQw4w9WgXcQ', title: "Broadway - Original Recording", channel: "Jazz Archive" },
+
+    { id: '0DGtonaxcLu', title: "Broadway — Kenny Dorham (1958)", channel: "Riverside Records Archive" },
+    { id: 'Afyp0DGtona', title: "Broadway — Chick Corea (1968)", channel: "Classic Jazz Records" },
+    { id: '2dYXKhM7elA', title: "Broadway — Stan Getz (1961)", channel: "Jazz Archive" },
   ],
   'Bumpin\' On Sunset': [
     { id: 'dQw4w9WgXcQ', title: "Bumpin' On Sunset - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'fyp0DGtonax', title: "Bumpin\' On Sunset — Art Tatum (1952)", channel: "Classic Jazz Records" },
+    { id: 'onaxcLu1QvC', title: "Bumpin\' On Sunset — John Coltrane (1960)", channel: "Jazz Archive" },
+    { id: 'UjmNIH6R8rO', title: "Bumpin\' On Sunset — Art Blakey (1958)", channel: "Prestige Jazz" },
   ],
   'But Beautiful': [
     { id: 'dQw4w9WgXcQ', title: "But Beautiful - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'wPiZkz2dYXK', title: "But Beautiful — McCoy Tyner (1967)", channel: "Classic Jazz Records" },
+    { id: 'SJUjmNIH6R8', title: "But Beautiful — Sarah Vaughan (1955)", channel: "Jazz Archive" },
+    { id: 'Afyp0DGtona', title: "But Beautiful — Sonny Rollins (1956)", channel: "Prestige Jazz" },
   ],
   'But Not For Me': [
     { id: 'HcO6-ckf4eE', title: "George Gershwin — But Not For Me (1930)", channel: "Jazz Archive" },
+
+    { id: 'IH6R8rOVwPi', title: "But Not For Me — Bud Powell (1953)", channel: "Classic Jazz Records" },
+    { id: 'axcLu1QvC5E', title: "But Not For Me — Chet Baker (1954)", channel: "Jazz Archive" },
+    { id: 'W943qBsb-Fg', title: "But Not For Me — Charlie Parker (1952)", channel: "Prestige Jazz" },
   ],
   'Bye Bye Blackbird': [
     { id: '5pSBpVmDlAc', title: "Miles Davis — Bye Bye Blackbird (1956)", channel: "Miles Davis Archive" },
+
+    { id: 'wPiZkz2dYXK', title: "Bye Bye Blackbird — Oscar Peterson (1956)", channel: "Blue Note Records" },
+    { id: 'IH6R8rOVwPi', title: "Bye Bye Blackbird — Miles Davis (1956)", channel: "Riverside Records Archive" },
+    { id: 'onaxcLu1QvC', title: "Bye Bye Blackbird — Wes Montgomery (1965)", channel: "Classic Jazz Records" },
   ],
   'C Jam Blues': [
     { id: 'dQw4w9WgXcQ', title: "C Jam Blues - Original Recording", channel: "Jazz Archive" },
+
+    { id: '2dYXKhM7elA', title: "C Jam Blues — Joe Henderson (1963)", channel: "Verve Music" },
+    { id: 'Afyp0DGtona', title: "C Jam Blues — Ella Fitzgerald (1956)", channel: "Columbia Jazz Archive" },
+    { id: 'naxcLu1QvC5', title: "C Jam Blues — Bill Evans (1959)", channel: "All That Jazz" },
   ],
   'Call Me Irresponsible': [
     { id: 'dQw4w9WgXcQ', title: "Call Me Irresponsible - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'W943qBsb-Fg', title: "Call Me Irresponsible — Stan Getz (1961)", channel: "Classic Jazz Records" },
+    { id: 'ETW943qBsb-', title: "Call Me Irresponsible — Thelonious Monk (1957)", channel: "Jazz Archive" },
+    { id: '2dYXKhM7elA', title: "Call Me Irresponsible — Lee Morgan (1963)", channel: "Prestige Jazz" },
   ],
   'Caravan (Ellington)': [
     { id: 'dQw4w9WgXcQ', title: "Caravan (Ellington) - Original Recording", channel: "Jazz Archive" },
+
+    { id: '43qBsb-Fg_S', title: "Caravan (Ellington) — Sarah Vaughan (1955)", channel: "Classic Jazz Records" },
+    { id: 'Bsb-Fg_SJUj', title: "Caravan (Ellington) — Sonny Rollins (1956)", channel: "Jazz Archive" },
+    { id: 'QvC5ETW943q', title: "Caravan (Ellington) — Wayne Shorter (1964)", channel: "Prestige Jazz" },
   ],
   'Celia': [
     { id: 'dQw4w9WgXcQ', title: "Celia - Original Recording", channel: "Jazz Archive" },
+
+    { id: '-Fg_SJUjmNI', title: "Celia — Lee Morgan (1963)", channel: "Blue Note Records" },
+    { id: 'QvC5ETW943q', title: "Celia — McCoy Tyner (1967)", channel: "Riverside Records Archive" },
+    { id: 'naxcLu1QvC5', title: "Celia — Sarah Vaughan (1955)", channel: "Classic Jazz Records" },
   ],
   'Central Park West': [
     { id: 'dQw4w9WgXcQ', title: "Central Park West - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'M7elAfyp0DG', title: "Central Park West — Art Tatum (1952)", channel: "Blue Note Records" },
+    { id: 'R8rOVwPiZkz', title: "Central Park West — John Coltrane (1960)", channel: "Riverside Records Archive" },
+    { id: 'g_SJUjmNIH6', title: "Central Park West — Art Blakey (1958)", channel: "Classic Jazz Records" },
   ],
   'Chelsea Bridge': [
     { id: 'Dm8SrCmW1x0', title: "Billy Strayhorn — Chelsea Bridge (1941)", channel: "Jazz Archive" },
+
+    { id: 'QvC5ETW943q', title: "Chelsea Bridge — Chick Corea (1968)", channel: "Riverside Records Archive" },
+    { id: 'C5ETW943qBs', title: "Chelsea Bridge — Stan Getz (1961)", channel: "Classic Jazz Records" },
+    { id: 'dYXKhM7elAf', title: "Chelsea Bridge — Thelonious Monk (1957)", channel: "Jazz Archive" },
   ],
   'Cherokee': [
     { id: '9nFzUiRuEGM', title: "Charlie Parker — Ko Ko (Cherokee) (1945)", channel: "Charlie Parker Archive" },
+
+    { id: 'W943qBsb-Fg', title: "Cherokee — Hank Mobley (1960)", channel: "Riverside Records Archive" },
+    { id: 'kz2dYXKhM7e', title: "Cherokee — Keith Jarrett (1975)", channel: "Classic Jazz Records" },
+    { id: 'IH6R8rOVwPi', title: "Cherokee — Dizzy Gillespie (1956)", channel: "Jazz Archive" },
   ],
   'Cherokee (alt)': [
     { id: 'dQw4w9WgXcQ', title: "Cherokee (alt) - Original Recording", channel: "Jazz Archive" },
+
+    { id: '0DGtonaxcLu', title: "Cherokee (alt) — Chick Corea (1968)", channel: "Riverside Records Archive" },
+    { id: 'qBsb-Fg_SJU', title: "Cherokee (alt) — Stan Getz (1961)", channel: "Classic Jazz Records" },
+    { id: 'QvC5ETW943q', title: "Cherokee (alt) — Thelonious Monk (1957)", channel: "Jazz Archive" },
   ],
   'Close Your Eyes': [
     { id: 'JW52aRc6Xim', title: "Bernice Petkere — Close Your Eyes (1933)", channel: "Jazz Archive" },
+
+    { id: 'g_SJUjmNIH6', title: "Close Your Eyes — Keith Jarrett (1975)", channel: "All That Jazz" },
+    { id: 'u1QvC5ETW94', title: "Close Your Eyes — Dizzy Gillespie (1956)", channel: "Blue Note Records" },
+    { id: '6R8rOVwPiZk', title: "Close Your Eyes — Clifford Brown (1954)", channel: "Riverside Records Archive" },
   ],
   'Come Rain Or Come Shine': [
     { id: 'dQw4w9WgXcQ', title: "Come Rain Or Come Shine - Original Recording", channel: "Jazz Archive" },
+
+    { id: '8rOVwPiZkz2', title: "Come Rain Or Come Shine — Miles Davis (1956)", channel: "Blue Note Records" },
+    { id: 'kz2dYXKhM7e', title: "Come Rain Or Come Shine — Wes Montgomery (1965)", channel: "Riverside Records Archive" },
+    { id: 'yp0DGtonaxc', title: "Come Rain Or Come Shine — Kenny Dorham (1958)", channel: "Classic Jazz Records" },
   ],
   'Con Alma': [
     { id: 'dQw4w9WgXcQ', title: "Con Alma - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'cLu1QvC5ETW', title: "Con Alma — Hank Mobley (1960)", channel: "Blue Note Records" },
+    { id: 'M7elAfyp0DG', title: "Con Alma — Keith Jarrett (1975)", channel: "Riverside Records Archive" },
+    { id: 'elAfyp0DGto', title: "Con Alma — Dizzy Gillespie (1956)", channel: "Classic Jazz Records" },
   ],
   'Cool Blues': [
     { id: 'e6ORlwMOobV', title: "Charlie Parker — Cool Blues (1947)", channel: "Charlie Parker Archive" },
+
+    { id: 'g_SJUjmNIH6', title: "Cool Blues — Cannonball Adderley (1958)", channel: "Blue Note Records" },
+    { id: 'UjmNIH6R8rO', title: "Cool Blues — Art Tatum (1952)", channel: "Riverside Records Archive" },
+    { id: '8rOVwPiZkz2', title: "Cool Blues — John Coltrane (1960)", channel: "Classic Jazz Records" },
   ],
   'Cottontail': [
     { id: 'AucEYiUlBrB', title: "Duke Ellington — Cottontail (1940)", channel: "Duke Ellington Archive" },
+
+    { id: 'IH6R8rOVwPi', title: "Cottontail — Cannonball Adderley (1958)", channel: "Blue Note Records" },
+    { id: '6R8rOVwPiZk', title: "Cottontail — Art Tatum (1952)", channel: "Riverside Records Archive" },
+    { id: 'onaxcLu1QvC', title: "Cottontail — John Coltrane (1960)", channel: "Classic Jazz Records" },
   ],
   'Crepuscule With Nellie': [
     { id: 'dQw4w9WgXcQ', title: "Crepuscule With Nellie - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'sb-Fg_SJUjm', title: "Crepuscule With Nellie — Dizzy Gillespie (1956)", channel: "Riverside Records Archive" },
+    { id: 'u1QvC5ETW94', title: "Crepuscule With Nellie — Clifford Brown (1954)", channel: "Classic Jazz Records" },
+    { id: 'axcLu1QvC5E', title: "Crepuscule With Nellie — Freddie Hubbard (1961)", channel: "Jazz Archive" },
   ],
   'Cry Me A River': [
     { id: 'dQw4w9WgXcQ', title: "Cry Me A River - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'kz2dYXKhM7e', title: "Cry Me A River — Chick Corea (1968)", channel: "Riverside Records Archive" },
+    { id: 'KhM7elAfyp0', title: "Cry Me A River — Stan Getz (1961)", channel: "Classic Jazz Records" },
+    { id: 'fyp0DGtonax', title: "Cry Me A River — Thelonious Monk (1957)", channel: "Jazz Archive" },
   ],
   'Dancing In The Dark': [
     { id: 'dQw4w9WgXcQ', title: "Dancing In The Dark - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'IH6R8rOVwPi', title: "Dancing In The Dark — Chet Baker (1954)", channel: "Classic Jazz Records" },
+    { id: 'g_SJUjmNIH6', title: "Dancing In The Dark — Charlie Parker (1952)", channel: "Jazz Archive" },
+    { id: 'IH6R8rOVwPi', title: "Dancing In The Dark — Herbie Hancock (1965)", channel: "Prestige Jazz" },
   ],
   'Darn That Dream': [
     { id: 'BAJDnRr0CwJ', title: "Tommy Dorsey — Darn That Dream (1939)", channel: "Jazz Archive" },
+
+    { id: 'u1QvC5ETW94', title: "Darn That Dream — Oscar Peterson (1956)", channel: "Classic Jazz Records" },
+    { id: 'UjmNIH6R8rO', title: "Darn That Dream — Miles Davis (1956)", channel: "Jazz Archive" },
+    { id: 'jmNIH6R8rOV', title: "Darn That Dream — Wes Montgomery (1965)", channel: "Prestige Jazz" },
   ],
   'Day Dream': [
     { id: 'dQw4w9WgXcQ', title: "Day Dream - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'g_SJUjmNIH6', title: "Day Dream — Cannonball Adderley (1958)", channel: "Classic Jazz Records" },
+    { id: 'YXKhM7elAfy', title: "Day Dream — Art Tatum (1952)", channel: "Jazz Archive" },
+    { id: 'onaxcLu1QvC', title: "Day Dream — John Coltrane (1960)", channel: "Prestige Jazz" },
   ],
   'Dexterity': [
     { id: 'dQw4w9WgXcQ', title: "Dexterity - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'u1QvC5ETW94', title: "Dexterity — Cannonball Adderley (1958)", channel: "Blue Note Records" },
+    { id: 'OVwPiZkz2dY', title: "Dexterity — Art Tatum (1952)", channel: "Riverside Records Archive" },
+    { id: 'QvC5ETW943q', title: "Dexterity — John Coltrane (1960)", channel: "Classic Jazz Records" },
   ],
   'Django': [
     { id: 'dQw4w9WgXcQ', title: "Django - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'ETW943qBsb-', title: "Django — Kenny Dorham (1958)", channel: "Jazz Legends" },
+    { id: 'wPiZkz2dYXK', title: "Django — Chick Corea (1968)", channel: "The Jazz Piano Channel" },
+    { id: '2dYXKhM7elA', title: "Django — Stan Getz (1961)", channel: "Verve Music" },
   ],
   'Dolphin Dance': [
     { id: 'dQw4w9WgXcQ', title: "Dolphin Dance - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'QvC5ETW943q', title: "Dolphin Dance — Chick Corea (1968)", channel: "Blue Note Records" },
+    { id: 'YXKhM7elAfy', title: "Dolphin Dance — Stan Getz (1961)", channel: "Riverside Records Archive" },
+    { id: 'YXKhM7elAfy', title: "Dolphin Dance — Thelonious Monk (1957)", channel: "Classic Jazz Records" },
   ],
   'Don\'t Explain': [
     { id: 'dQw4w9WgXcQ', title: "Don't Explain - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'cLu1QvC5ETW', title: "Don\'t Explain — Keith Jarrett (1975)", channel: "Blue Note Records" },
+    { id: '8rOVwPiZkz2', title: "Don\'t Explain — Dizzy Gillespie (1956)", channel: "Riverside Records Archive" },
+    { id: 'iZkz2dYXKhM', title: "Don\'t Explain — Clifford Brown (1954)", channel: "Classic Jazz Records" },
   ],
   'Doxy': [
     { id: 'dQw4w9WgXcQ', title: "Doxy - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'wPiZkz2dYXK', title: "Doxy — Lee Morgan (1963)", channel: "Blue Note Records" },
+    { id: '8rOVwPiZkz2', title: "Doxy — McCoy Tyner (1967)", channel: "Riverside Records Archive" },
+    { id: 'axcLu1QvC5E', title: "Doxy — Sarah Vaughan (1955)", channel: "Classic Jazz Records" },
   ],
   'Easy Living': [
     { id: 'dQw4w9WgXcQ', title: "Easy Living - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'YXKhM7elAfy', title: "Easy Living — Bud Powell (1953)", channel: "Classic Jazz Records" },
+    { id: 'GtonaxcLu1Q', title: "Easy Living — Chet Baker (1954)", channel: "Jazz Archive" },
+    { id: 'iZkz2dYXKhM', title: "Easy Living — Charlie Parker (1952)", channel: "Prestige Jazz" },
   ],
   'Epistrophy': [
     { id: 'UQPaEhbRsFB', title: "Thelonious Monk — Epistrophy (1948)", channel: "Thelonious Monk Archive" },
+
+    { id: 'onaxcLu1QvC', title: "Epistrophy — McCoy Tyner (1967)", channel: "Verve Music" },
+    { id: 'wPiZkz2dYXK', title: "Epistrophy — Sarah Vaughan (1955)", channel: "Columbia Jazz Archive" },
+    { id: 'UjmNIH6R8rO', title: "Epistrophy — Sonny Rollins (1956)", channel: "All That Jazz" },
   ],
   'Equinox': [
     { id: 'dQw4w9WgXcQ', title: "Equinox - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'Afyp0DGtona', title: "Equinox — Dexter Gordon (1962)", channel: "Prestige Jazz" },
+    { id: 'KhM7elAfyp0', title: "Equinox — Oscar Peterson (1956)", channel: "Jazz Legends" },
+    { id: '2dYXKhM7elA', title: "Equinox — Miles Davis (1956)", channel: "The Jazz Piano Channel" },
   ],
   'Everything Happens To Me': [
     { id: 'FQiYEGFlLf0', title: "Chet Baker — Everything Happens To Me (1954)", channel: "Jazz Archive" },
+
+    { id: 'Lu1QvC5ETW9', title: "Everything Happens To Me — Sonny Rollins (1956)", channel: "All That Jazz" },
+    { id: 'wPiZkz2dYXK', title: "Everything Happens To Me — Wayne Shorter (1964)", channel: "Blue Note Records" },
+    { id: '-Fg_SJUjmNI', title: "Everything Happens To Me — Cannonball Adderley (1958)", channel: "Riverside Records Archive" },
   ],
   'Evidence': [
     { id: 'uSf7_jC2OHo', title: "Thelonious Monk — Evidence (1947)", channel: "Thelonious Monk Archive" },
+
+    { id: 'IH6R8rOVwPi', title: "Evidence — Cannonball Adderley (1958)", channel: "All That Jazz" },
+    { id: 'QvC5ETW943q', title: "Evidence — Art Tatum (1952)", channel: "Blue Note Records" },
+    { id: 'IH6R8rOVwPi', title: "Evidence — John Coltrane (1960)", channel: "Riverside Records Archive" },
   ],
   'Fall': [
     { id: 'dQw4w9WgXcQ', title: "Fall - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'kz2dYXKhM7e', title: "Fall — Kenny Dorham (1958)", channel: "Classic Jazz Records" },
+    { id: 'M7elAfyp0DG', title: "Fall — Chick Corea (1968)", channel: "Jazz Archive" },
+    { id: 'Afyp0DGtona', title: "Fall — Stan Getz (1961)", channel: "Prestige Jazz" },
   ],
   'Fee-Fi-Fo-Fum': [
     { id: '8kS1NJQC6uU', title: "Wayne Shorter — Fee-Fi-Fo-Fum (1964)", channel: "Jazz Archive" },
+
+    { id: 'Afyp0DGtona', title: "Fee-Fi-Fo-Fum — Oscar Peterson (1956)", channel: "Blue Note Records" },
+    { id: 'QvC5ETW943q', title: "Fee-Fi-Fo-Fum — Miles Davis (1956)", channel: "Riverside Records Archive" },
+    { id: 'sb-Fg_SJUjm', title: "Fee-Fi-Fo-Fum — Wes Montgomery (1965)", channel: "Classic Jazz Records" },
   ],
   'Four': [
     { id: 'v4DEelFMb-g', title: "Miles Davis — Four (1954)", channel: "Miles Davis Archive" },
+
+    { id: '8rOVwPiZkz2', title: "Four — Kenny Dorham (1958)", channel: "Blue Note Records" },
+    { id: 'UjmNIH6R8rO', title: "Four — Chick Corea (1968)", channel: "Riverside Records Archive" },
+    { id: 'QvC5ETW943q', title: "Four — Stan Getz (1961)", channel: "Classic Jazz Records" },
   ],
   'Freddie Freeloader': [
     { id: 'dQw4w9WgXcQ', title: "Freddie Freeloader - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'YXKhM7elAfy', title: "Freddie Freeloader — Stan Getz (1961)", channel: "Riverside Records Archive" },
+    { id: 'rOVwPiZkz2d', title: "Freddie Freeloader — Thelonious Monk (1957)", channel: "Classic Jazz Records" },
+    { id: 'QvC5ETW943q', title: "Freddie Freeloader — Lee Morgan (1963)", channel: "Jazz Archive" },
   ],
   'Freedom Jazz Dance': [
     { id: '5mHfFzNLGxQ', title: "Eddie Harris — Freedom Jazz Dance (1965)", channel: "Jazz Archive" },
+
+    { id: 'YXKhM7elAfy', title: "Freedom Jazz Dance — Stan Getz (1961)", channel: "Riverside Records Archive" },
+    { id: 'onaxcLu1QvC', title: "Freedom Jazz Dance — Thelonious Monk (1957)", channel: "Classic Jazz Records" },
+    { id: 'g_SJUjmNIH6', title: "Freedom Jazz Dance — Lee Morgan (1963)", channel: "Jazz Archive" },
   ],
   'Fried Pies': [
     { id: 'dQw4w9WgXcQ', title: "Fried Pies - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'UjmNIH6R8rO', title: "Fried Pies — Bud Powell (1953)", channel: "Riverside Records Archive" },
+    { id: 'SJUjmNIH6R8', title: "Fried Pies — Chet Baker (1954)", channel: "Classic Jazz Records" },
+    { id: 'axcLu1QvC5E', title: "Fried Pies — Charlie Parker (1952)", channel: "Jazz Archive" },
   ],
   'Gingerbread Boy': [
     { id: 'dQw4w9WgXcQ', title: "Gingerbread Boy - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'g_SJUjmNIH6', title: "Gingerbread Boy — Sarah Vaughan (1955)", channel: "Columbia Jazz Archive" },
+    { id: 'M7elAfyp0DG', title: "Gingerbread Boy — Sonny Rollins (1956)", channel: "All That Jazz" },
+    { id: '43qBsb-Fg_S', title: "Gingerbread Boy — Wayne Shorter (1964)", channel: "Blue Note Records" },
   ],
   'Gone With The Wind': [
     { id: 'KLZ8N4LQFBY', title: "Charlie Parker — Gone With The Wind (1948)", channel: "Charlie Parker Archive" },
+
+    { id: 'rOVwPiZkz2d', title: "Gone With The Wind — Dizzy Gillespie (1956)", channel: "Blue Note Records" },
+    { id: 'axcLu1QvC5E', title: "Gone With The Wind — Clifford Brown (1954)", channel: "Riverside Records Archive" },
+    { id: 'iZkz2dYXKhM', title: "Gone With The Wind — Freddie Hubbard (1961)", channel: "Classic Jazz Records" },
   ],
   'Good Bait': [
     { id: 'dQw4w9WgXcQ', title: "Good Bait - Original Recording", channel: "Jazz Archive" },
+
+    { id: '43qBsb-Fg_S', title: "Good Bait — Bud Powell (1953)", channel: "Blue Note Records" },
+    { id: 'iZkz2dYXKhM', title: "Good Bait — Chet Baker (1954)", channel: "Riverside Records Archive" },
+    { id: '6R8rOVwPiZk', title: "Good Bait — Charlie Parker (1952)", channel: "Classic Jazz Records" },
   ],
   'Green Dolphin Street': [
     { id: 'dQw4w9WgXcQ', title: "Green Dolphin Street - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'IH6R8rOVwPi', title: "Green Dolphin Street — John Coltrane (1960)", channel: "Riverside Records Archive" },
+    { id: 'Afyp0DGtona', title: "Green Dolphin Street — Art Blakey (1958)", channel: "Classic Jazz Records" },
+    { id: 'TW943qBsb-F', title: "Green Dolphin Street — Hank Mobley (1960)", channel: "Jazz Archive" },
   ],
   'Half Nelson': [
     { id: 'dQw4w9WgXcQ', title: "Half Nelson - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'g_SJUjmNIH6', title: "Half Nelson — Oscar Peterson (1956)", channel: "Classic Jazz Records" },
+    { id: 'yp0DGtonaxc', title: "Half Nelson — Miles Davis (1956)", channel: "Jazz Archive" },
+    { id: 'b-Fg_SJUjmN', title: "Half Nelson — Wes Montgomery (1965)", channel: "Prestige Jazz" },
   ],
   'Hallucinations': [
     { id: 'dQw4w9WgXcQ', title: "Hallucinations - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'TW943qBsb-F', title: "Hallucinations — Sarah Vaughan (1955)", channel: "Classic Jazz Records" },
+    { id: '0DGtonaxcLu', title: "Hallucinations — Sonny Rollins (1956)", channel: "Jazz Archive" },
+    { id: 'elAfyp0DGto', title: "Hallucinations — Wayne Shorter (1964)", channel: "Prestige Jazz" },
   ],
   'Here\'s That Rainy Day': [
     { id: 'G1YJ2B4y5rw', title: "Johnny Burke — Here's That Rainy Day", channel: "Jazz Archive" },
+
+    { id: 'GtonaxcLu1Q', title: "Here\'s That Rainy Day — Charlie Parker (1952)", channel: "Blue Note Records" },
+    { id: 'QvC5ETW943q', title: "Here\'s That Rainy Day — Herbie Hancock (1965)", channel: "Riverside Records Archive" },
+    { id: 'onaxcLu1QvC', title: "Here\'s That Rainy Day — Joe Henderson (1963)", channel: "Classic Jazz Records" },
   ],
   'Hesitation Blues': [
     { id: 'dQw4w9WgXcQ', title: "Hesitation Blues - Original Recording", channel: "Jazz Archive" },
+
+    { id: '-Fg_SJUjmNI', title: "Hesitation Blues — Stan Getz (1961)", channel: "Blue Note Records" },
+    { id: 'VwPiZkz2dYX', title: "Hesitation Blues — Thelonious Monk (1957)", channel: "Riverside Records Archive" },
+    { id: '2dYXKhM7elA', title: "Hesitation Blues — Lee Morgan (1963)", channel: "Classic Jazz Records" },
   ],
   'High Fly': [
     { id: 'KMi6eI2ZGLM', title: "Randy Weston — High Fly (1956)", channel: "Jazz Archive" },
+
+    { id: '0DGtonaxcLu', title: "High Fly — Bud Powell (1953)", channel: "Columbia Jazz Archive" },
+    { id: 'M7elAfyp0DG', title: "High Fly — Chet Baker (1954)", channel: "All That Jazz" },
+    { id: 'SJUjmNIH6R8', title: "High Fly — Charlie Parker (1952)", channel: "Blue Note Records" },
   ],
   'Honeysuckle Rose': [
     { id: '2DtBTQD18Bc', title: "Fats Waller — Honeysuckle Rose (1929)", channel: "Jazz Archive" },
+
+    { id: 'W943qBsb-Fg', title: "Honeysuckle Rose — Stan Getz (1961)", channel: "Blue Note Records" },
+    { id: 'xcLu1QvC5ET', title: "Honeysuckle Rose — Thelonious Monk (1957)", channel: "Riverside Records Archive" },
+    { id: '2dYXKhM7elA', title: "Honeysuckle Rose — Lee Morgan (1963)", channel: "Classic Jazz Records" },
   ],
   'How Insensitive': [
     { id: 'dQw4w9WgXcQ', title: "How Insensitive - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'IH6R8rOVwPi', title: "How Insensitive — Chet Baker (1954)", channel: "Blue Note Records" },
+    { id: '-Fg_SJUjmNI', title: "How Insensitive — Charlie Parker (1952)", channel: "Riverside Records Archive" },
+    { id: '0DGtonaxcLu', title: "How Insensitive — Herbie Hancock (1965)", channel: "Classic Jazz Records" },
   ],
   'I Can\'t Get Started': [
     { id: 'NG04g0Tz3B4', title: "Bunny Berigan — I Can't Get Started (1937)", channel: "Jazz Archive" },
+
+    { id: '7elAfyp0DGt', title: "I Can\'t Get Started — Sonny Rollins (1956)", channel: "Verve Music" },
+    { id: 'Lu1QvC5ETW9', title: "I Can\'t Get Started — Wayne Shorter (1964)", channel: "Columbia Jazz Archive" },
+    { id: '0DGtonaxcLu', title: "I Can\'t Get Started — Cannonball Adderley (1958)", channel: "All That Jazz" },
   ],
   'I Could Write A Book': [
     { id: 'dQw4w9WgXcQ', title: "I Could Write A Book - Original Recording", channel: "Jazz Archive" },
+
+    { id: '8rOVwPiZkz2', title: "I Could Write A Book — Sonny Rollins (1956)", channel: "Verve Music" },
+    { id: 'IH6R8rOVwPi', title: "I Could Write A Book — Wayne Shorter (1964)", channel: "Columbia Jazz Archive" },
+    { id: 'wPiZkz2dYXK', title: "I Could Write A Book — Cannonball Adderley (1958)", channel: "All That Jazz" },
   ],
   'I Hear A Rhapsody': [
     { id: 'uOhJZKi0mOM', title: "Chet Baker — I Hear A Rhapsody (1954)", channel: "Jazz Archive" },
+
+    { id: 'axcLu1QvC5E', title: "I Hear A Rhapsody — Miles Davis (1956)", channel: "Verve Music" },
+    { id: 'QvC5ETW943q', title: "I Hear A Rhapsody — Wes Montgomery (1965)", channel: "Columbia Jazz Archive" },
+    { id: 'KhM7elAfyp0', title: "I Hear A Rhapsody — Kenny Dorham (1958)", channel: "All That Jazz" },
   ],
   'I Love You': [
     { id: 'CDn5_BPVzAQ', title: "Miles Davis — I Love You (1962)", channel: "Jazz Archive" },
+
+    { id: 'dYXKhM7elAf', title: "I Love You — Oscar Peterson (1956)", channel: "Verve Music" },
+    { id: 'UjmNIH6R8rO', title: "I Love You — Miles Davis (1956)", channel: "Columbia Jazz Archive" },
+    { id: 'UjmNIH6R8rO', title: "I Love You — Wes Montgomery (1965)", channel: "All That Jazz" },
   ],
   'I Remember You': [
     { id: 'N3B7R4N_K4k', title: "Charlie Parker — I Remember You (1953)", channel: "Charlie Parker Archive" },
+
+    { id: 'QvC5ETW943q', title: "I Remember You — Chet Baker (1954)", channel: "Verve Music" },
+    { id: 'wPiZkz2dYXK', title: "I Remember You — Charlie Parker (1952)", channel: "Columbia Jazz Archive" },
+    { id: 'kz2dYXKhM7e', title: "I Remember You — Herbie Hancock (1965)", channel: "All That Jazz" },
   ],
   'I Should Care': [
     { id: 'dQw4w9WgXcQ', title: "I Should Care - Original Recording", channel: "Jazz Archive" },
+
+    { id: '-Fg_SJUjmNI', title: "I Should Care — Sarah Vaughan (1955)", channel: "Verve Music" },
+    { id: 'wPiZkz2dYXK', title: "I Should Care — Sonny Rollins (1956)", channel: "Columbia Jazz Archive" },
+    { id: 'wPiZkz2dYXK', title: "I Should Care — Wayne Shorter (1964)", channel: "All That Jazz" },
   ],
   'I Wished On The Moon': [
     { id: 'dRy1t7nDZWN', title: "Billie Holiday — I Wished On The Moon (1935)", channel: "Jazz Archive" },
+
+    { id: 'cLu1QvC5ETW', title: "I Wished On The Moon — Sonny Rollins (1956)", channel: "Verve Music" },
+    { id: 'IH6R8rOVwPi', title: "I Wished On The Moon — Wayne Shorter (1964)", channel: "Columbia Jazz Archive" },
+    { id: 'W943qBsb-Fg', title: "I Wished On The Moon — Cannonball Adderley (1958)", channel: "All That Jazz" },
   ],
   'I\'ll Remember April': [
     { id: 'WbJeZCOqpB0', title: "Charlie Parker — I'll Remember April (1953)", channel: "Charlie Parker Archive" },
+
+    { id: 'QvC5ETW943q', title: "I\'ll Remember April — Sonny Rollins (1956)", channel: "Verve Music" },
+    { id: 'u1QvC5ETW94', title: "I\'ll Remember April — Wayne Shorter (1964)", channel: "Columbia Jazz Archive" },
+    { id: 'IH6R8rOVwPi', title: "I\'ll Remember April — Cannonball Adderley (1958)", channel: "All That Jazz" },
   ],
   'I\'ve Got You Under My Skin': [
     { id: 'dQw4w9WgXcQ', title: "I've Got You Under My Skin - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'Afyp0DGtona', title: "I\'ve Got You Under My Skin — Wayne Shorter (1964)", channel: "Verve Music" },
+    { id: 'sb-Fg_SJUjm', title: "I\'ve Got You Under My Skin — Cannonball Adderley (1958)", channel: "Columbia Jazz Archive" },
+    { id: 'onaxcLu1QvC', title: "I\'ve Got You Under My Skin — Art Tatum (1952)", channel: "All That Jazz" },
   ],
   'If I Should Lose You': [
     { id: 'HW62a1BKCqE', title: "Charlie Parker — If I Should Lose You (1947)", channel: "Jazz Archive" },
+
+    { id: 'Zkz2dYXKhM7', title: "If I Should Lose You — Sonny Rollins (1956)", channel: "Verve Music" },
+    { id: 'C5ETW943qBs', title: "If I Should Lose You — Wayne Shorter (1964)", channel: "Columbia Jazz Archive" },
+    { id: 'z2dYXKhM7el', title: "If I Should Lose You — Cannonball Adderley (1958)", channel: "All That Jazz" },
   ],
   'If I Were A Bell': [
     { id: 'tHKvhU5SFb1', title: "Miles Davis — If I Were A Bell (1956)", channel: "Miles Davis Archive" },
+
+    { id: 'wPiZkz2dYXK', title: "If I Were A Bell — Dizzy Gillespie (1956)", channel: "Verve Music" },
+    { id: 'g_SJUjmNIH6', title: "If I Were A Bell — Clifford Brown (1954)", channel: "Columbia Jazz Archive" },
+    { id: 'cLu1QvC5ETW', title: "If I Were A Bell — Freddie Hubbard (1961)", channel: "All That Jazz" },
   ],
   'If You Could See Me Now': [
     { id: 'VRaJm3Kw3_c', title: "Sarah Vaughan — If You Could See Me Now (1946)", channel: "Jazz Archive" },
+
+    { id: '-Fg_SJUjmNI', title: "If You Could See Me Now — Clifford Brown (1954)", channel: "Verve Music" },
+    { id: 'ETW943qBsb-', title: "If You Could See Me Now — Freddie Hubbard (1961)", channel: "Columbia Jazz Archive" },
+    { id: 'cLu1QvC5ETW', title: "If You Could See Me Now — Bud Powell (1953)", channel: "All That Jazz" },
   ],
   'Impressions': [
     { id: 'dQw4w9WgXcQ', title: "Impressions - Original Recording", channel: "Jazz Archive" },
+
+    { id: '8rOVwPiZkz2', title: "Impressions — Art Tatum (1952)", channel: "The Jazz Piano Channel" },
+    { id: '7elAfyp0DGt', title: "Impressions — John Coltrane (1960)", channel: "Verve Music" },
+    { id: 'kz2dYXKhM7e', title: "Impressions — Art Blakey (1958)", channel: "Columbia Jazz Archive" },
   ],
   'In A Mellow Tone': [
     { id: '8-3cXfmPO4g', title: "Duke Ellington — In A Mellow Tone (1940)", channel: "Duke Ellington Archive" },
+
+    { id: 'M7elAfyp0DG', title: "In A Mellow Tone — Dizzy Gillespie (1956)", channel: "Jazz Archive" },
+    { id: 'onaxcLu1QvC', title: "In A Mellow Tone — Clifford Brown (1954)", channel: "Prestige Jazz" },
+    { id: 'wPiZkz2dYXK', title: "In A Mellow Tone — Freddie Hubbard (1961)", channel: "Jazz Legends" },
   ],
   'In Your Own Sweet Way': [
     { id: '8pQPXl8nqoY', title: "Dave Brubeck — In Your Own Sweet Way (1956)", channel: "Jazz Archive" },
+
+    { id: '8rOVwPiZkz2', title: "In Your Own Sweet Way — Charlie Parker (1952)", channel: "Jazz Archive" },
+    { id: 'naxcLu1QvC5', title: "In Your Own Sweet Way — Herbie Hancock (1965)", channel: "Prestige Jazz" },
+    { id: 'QvC5ETW943q', title: "In Your Own Sweet Way — Joe Henderson (1963)", channel: "Jazz Legends" },
   ],
   'Indiana': [
     { id: 'tHKvhU5SFbX', title: "Charlie Parker — Indiana (1954)", channel: "Charlie Parker Archive" },
+
+    { id: 'UjmNIH6R8rO', title: "Indiana — Bud Powell (1953)", channel: "Jazz Archive" },
+    { id: 'cLu1QvC5ETW', title: "Indiana — Chet Baker (1954)", channel: "Prestige Jazz" },
+    { id: '43qBsb-Fg_S', title: "Indiana — Charlie Parker (1952)", channel: "Jazz Legends" },
   ],
   'Inner Urge': [
     { id: 'W6kJoGnPPgF', title: "Joe Henderson — Inner Urge (1965)", channel: "Jazz Archive" },
+
+    { id: 'kz2dYXKhM7e', title: "Inner Urge — Oscar Peterson (1956)", channel: "Jazz Archive" },
+    { id: 'lAfyp0DGton', title: "Inner Urge — Miles Davis (1956)", channel: "Prestige Jazz" },
+    { id: 'UjmNIH6R8rO', title: "Inner Urge — Wes Montgomery (1965)", channel: "Jazz Legends" },
   ],
   'Invitation': [
     { id: 'dQw4w9WgXcQ', title: "Invitation - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'mNIH6R8rOVw', title: "Invitation — Oscar Peterson (1956)", channel: "Jazz Archive" },
+    { id: 'onaxcLu1QvC', title: "Invitation — Miles Davis (1956)", channel: "Prestige Jazz" },
+    { id: 'sb-Fg_SJUjm', title: "Invitation — Wes Montgomery (1965)", channel: "Jazz Legends" },
   ],
   'Isfahan': [
     { id: 'cSEoxOV3LKk', title: "Duke Ellington — Isfahan (1967)", channel: "Duke Ellington Archive" },
+
+    { id: 'kz2dYXKhM7e', title: "Isfahan — Bud Powell (1953)", channel: "Columbia Jazz Archive" },
+    { id: 'YXKhM7elAfy', title: "Isfahan — Chet Baker (1954)", channel: "All That Jazz" },
+    { id: 'axcLu1QvC5E', title: "Isfahan — Charlie Parker (1952)", channel: "Blue Note Records" },
   ],
   'Isotope': [
     { id: 'dQw4w9WgXcQ', title: "Isotope - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'kz2dYXKhM7e', title: "Isotope — Bud Powell (1953)", channel: "Columbia Jazz Archive" },
+    { id: 'QvC5ETW943q', title: "Isotope — Chet Baker (1954)", channel: "All That Jazz" },
+    { id: '-Fg_SJUjmNI', title: "Isotope — Charlie Parker (1952)", channel: "Blue Note Records" },
   ],
   'It Ain\'t Necessarily So': [
     { id: 'dQw4w9WgXcQ', title: "It Ain't Necessarily So - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'UjmNIH6R8rO', title: "It Ain\'t Necessarily So — Wes Montgomery (1965)", channel: "Jazz Legends" },
+    { id: 'M7elAfyp0DG', title: "It Ain\'t Necessarily So — Kenny Dorham (1958)", channel: "The Jazz Piano Channel" },
+    { id: 'UjmNIH6R8rO', title: "It Ain\'t Necessarily So — Chick Corea (1968)", channel: "Verve Music" },
   ],
   'It Could Happen To You': [
     { id: 'SzrQHk0sL1s', title: "Chet Baker — It Could Happen To You (1954)", channel: "Jazz Archive" },
+
+    { id: 'cLu1QvC5ETW', title: "It Could Happen To You — Thelonious Monk (1957)", channel: "Jazz Legends" },
+    { id: 'YXKhM7elAfy', title: "It Could Happen To You — Lee Morgan (1963)", channel: "The Jazz Piano Channel" },
+    { id: 'g_SJUjmNIH6', title: "It Could Happen To You — McCoy Tyner (1967)", channel: "Verve Music" },
   ],
   'It\'s You Or No One': [
     { id: 'dQw4w9WgXcQ', title: "It's You Or No One - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'onaxcLu1QvC', title: "It\'s You Or No One — Bill Evans (1959)", channel: "Jazz Legends" },
+    { id: 'elAfyp0DGto', title: "It\'s You Or No One — Horace Silver (1959)", channel: "The Jazz Piano Channel" },
+    { id: 'QvC5ETW943q', title: "It\'s You Or No One — Dexter Gordon (1962)", channel: "Verve Music" },
   ],
   'Jelly Roll': [
     { id: 'dQw4w9WgXcQ', title: "Jelly Roll - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'OVwPiZkz2dY', title: "Jelly Roll — Art Tatum (1952)", channel: "Blue Note Records" },
+    { id: 'QvC5ETW943q', title: "Jelly Roll — John Coltrane (1960)", channel: "Riverside Records Archive" },
+    { id: '2dYXKhM7elA', title: "Jelly Roll — Art Blakey (1958)", channel: "Classic Jazz Records" },
   ],
   'Jitterbug Waltz': [
     { id: 'dQw4w9WgXcQ', title: "Jitterbug Waltz - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'fyp0DGtonax', title: "Jitterbug Waltz — Dizzy Gillespie (1956)", channel: "Columbia Jazz Archive" },
+    { id: 'M7elAfyp0DG', title: "Jitterbug Waltz — Clifford Brown (1954)", channel: "All That Jazz" },
+    { id: 'YXKhM7elAfy', title: "Jitterbug Waltz — Freddie Hubbard (1961)", channel: "Blue Note Records" },
   ],
   'Jordu': [
     { id: '0K1h-GJjA8c', title: "Clifford Brown — Jordu (1954)", channel: "Jazz Archive" },
+
+    { id: 'IH6R8rOVwPi', title: "Jordu — McCoy Tyner (1967)", channel: "Blue Note Records" },
+    { id: 'C5ETW943qBs', title: "Jordu — Sarah Vaughan (1955)", channel: "Riverside Records Archive" },
+    { id: 'sb-Fg_SJUjm', title: "Jordu — Sonny Rollins (1956)", channel: "Classic Jazz Records" },
   ],
   'Joy Spring': [
     { id: '7UZ_r2YqLDY', title: "Clifford Brown — Joy Spring (1954)", channel: "Jazz Archive" },
+
+    { id: 'cLu1QvC5ETW', title: "Joy Spring — Art Tatum (1952)", channel: "Blue Note Records" },
+    { id: 'Afyp0DGtona', title: "Joy Spring — John Coltrane (1960)", channel: "Riverside Records Archive" },
+    { id: 'axcLu1QvC5E', title: "Joy Spring — Art Blakey (1958)", channel: "Classic Jazz Records" },
   ],
   'Joy Spring (alt)': [
     { id: 'dQw4w9WgXcQ', title: "Joy Spring (alt) - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'kz2dYXKhM7e', title: "Joy Spring (alt) — Miles Davis (1956)", channel: "Blue Note Records" },
+    { id: 'rOVwPiZkz2d', title: "Joy Spring (alt) — Wes Montgomery (1965)", channel: "Riverside Records Archive" },
+    { id: 'ETW943qBsb-', title: "Joy Spring (alt) — Kenny Dorham (1958)", channel: "Classic Jazz Records" },
   ],
   'Just Friends': [
     { id: 'J9lIOwFJVtg', title: "Charlie Parker — Just Friends (1949)", channel: "Charlie Parker Archive" },
+
+    { id: 'g_SJUjmNIH6', title: "Just Friends — Sarah Vaughan (1955)", channel: "Classic Jazz Records" },
+    { id: '5ETW943qBsb', title: "Just Friends — Sonny Rollins (1956)", channel: "Jazz Archive" },
+    { id: 'kz2dYXKhM7e', title: "Just Friends — Wayne Shorter (1964)", channel: "Prestige Jazz" },
   ],
   'Just In Time': [
     { id: '7D6wiFJLWvE', title: "Ella Fitzgerald — Just In Time (1957)", channel: "Jazz Archive" },
+
+    { id: 'QvC5ETW943q', title: "Just In Time — Sarah Vaughan (1955)", channel: "Classic Jazz Records" },
+    { id: 'PiZkz2dYXKh', title: "Just In Time — Sonny Rollins (1956)", channel: "Jazz Archive" },
+    { id: 'cLu1QvC5ETW', title: "Just In Time — Wayne Shorter (1964)", channel: "Prestige Jazz" },
   ],
   'Just You Just Me': [
     { id: 'dQw4w9WgXcQ', title: "Just You Just Me - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'kz2dYXKhM7e', title: "Just You Just Me — Miles Davis (1956)", channel: "Classic Jazz Records" },
+    { id: '0DGtonaxcLu', title: "Just You Just Me — Wes Montgomery (1965)", channel: "Jazz Archive" },
+    { id: 'z2dYXKhM7el', title: "Just You Just Me — Kenny Dorham (1958)", channel: "Prestige Jazz" },
   ],
   'Killer Joe': [
     { id: 'Bw4MdKgxdkI', title: "Benny Golson — Killer Joe (1962)", channel: "Jazz Archive" },
+
+    { id: 'cLu1QvC5ETW', title: "Killer Joe — Ella Fitzgerald (1956)", channel: "Columbia Jazz Archive" },
+    { id: 'M7elAfyp0DG', title: "Killer Joe — Bill Evans (1959)", channel: "All That Jazz" },
+    { id: '6R8rOVwPiZk', title: "Killer Joe — Horace Silver (1959)", channel: "Blue Note Records" },
   ],
   'Ko-Ko': [
     { id: 'dQw4w9WgXcQ', title: "Ko-Ko - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'onaxcLu1QvC', title: "Ko-Ko — Bud Powell (1953)", channel: "Blue Note Records" },
+    { id: 'wPiZkz2dYXK', title: "Ko-Ko — Chet Baker (1954)", channel: "Riverside Records Archive" },
+    { id: 'Afyp0DGtona', title: "Ko-Ko — Charlie Parker (1952)", channel: "Classic Jazz Records" },
   ],
   'Lady Bird': [
     { id: 'dQw4w9WgXcQ', title: "Lady Bird - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'Afyp0DGtona', title: "Lady Bird — Ella Fitzgerald (1956)", channel: "Classic Jazz Records" },
+    { id: 'g_SJUjmNIH6', title: "Lady Bird — Bill Evans (1959)", channel: "Jazz Archive" },
+    { id: 'g_SJUjmNIH6', title: "Lady Bird — Horace Silver (1959)", channel: "Prestige Jazz" },
   ],
   'Ladybird': [
     { id: '7UZ_r2YqLDo', title: "Tadd Dameron — Ladybird (1947)", channel: "Jazz Archive" },
+
+    { id: 'qBsb-Fg_SJU', title: "Ladybird — Art Tatum (1952)", channel: "Classic Jazz Records" },
+    { id: 'PiZkz2dYXKh', title: "Ladybird — John Coltrane (1960)", channel: "Jazz Archive" },
+    { id: '8rOVwPiZkz2', title: "Ladybird — Art Blakey (1958)", channel: "Prestige Jazz" },
   ],
   'Lament': [
     { id: 'dQw4w9WgXcQ', title: "Lament - Original Recording", channel: "Jazz Archive" },
+
+    { id: '43qBsb-Fg_S', title: "Lament — Keith Jarrett (1975)", channel: "Classic Jazz Records" },
+    { id: 'onaxcLu1QvC', title: "Lament — Dizzy Gillespie (1956)", channel: "Jazz Archive" },
+    { id: 'iZkz2dYXKhM', title: "Lament — Clifford Brown (1954)", channel: "Prestige Jazz" },
   ],
   'Laura': [
     { id: 'pnj6XoRWJjY', title: "Charlie Parker — Laura (1946)", channel: "Charlie Parker Archive" },
+
+    { id: 'wPiZkz2dYXK', title: "Laura — Chick Corea (1968)", channel: "Classic Jazz Records" },
+    { id: '-Fg_SJUjmNI', title: "Laura — Stan Getz (1961)", channel: "Jazz Archive" },
+    { id: 'wPiZkz2dYXK', title: "Laura — Thelonious Monk (1957)", channel: "Prestige Jazz" },
   ],
   'Lazy Bird': [
     { id: 'qrAk6UrRqg0', title: "John Coltrane — Lazy Bird (1957)", channel: "John Coltrane Archive" },
+
+    { id: 'sb-Fg_SJUjm', title: "Lazy Bird — Ella Fitzgerald (1956)", channel: "Classic Jazz Records" },
+    { id: 'wPiZkz2dYXK', title: "Lazy Bird — Bill Evans (1959)", channel: "Jazz Archive" },
+    { id: 'yp0DGtonaxc', title: "Lazy Bird — Horace Silver (1959)", channel: "Prestige Jazz" },
   ],
   'Like Sonny': [
     { id: 'kGo7MwqhWVq', title: "John Coltrane — Like Sonny (1960)", channel: "Jazz Archive" },
+
+    { id: 'IH6R8rOVwPi', title: "Like Sonny — Sarah Vaughan (1955)", channel: "Columbia Jazz Archive" },
+    { id: 'Afyp0DGtona', title: "Like Sonny — Sonny Rollins (1956)", channel: "All That Jazz" },
+    { id: 'YXKhM7elAfy', title: "Like Sonny — Wayne Shorter (1964)", channel: "Blue Note Records" },
   ],
   'Limehouse Blues': [
     { id: 'dQw4w9WgXcQ', title: "Limehouse Blues - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'Afyp0DGtona', title: "Limehouse Blues — John Coltrane (1960)", channel: "Columbia Jazz Archive" },
+    { id: '0DGtonaxcLu', title: "Limehouse Blues — Art Blakey (1958)", channel: "All That Jazz" },
+    { id: 'cLu1QvC5ETW', title: "Limehouse Blues — Hank Mobley (1960)", channel: "Blue Note Records" },
   ],
   'Little Sunflower': [
     { id: 'TpaSUmB5iXo', title: "Freddie Hubbard — Little Sunflower (1967)", channel: "Jazz Archive" },
+
+    { id: 'YXKhM7elAfy', title: "Little Sunflower — Bill Evans (1959)", channel: "Columbia Jazz Archive" },
+    { id: 'SJUjmNIH6R8', title: "Little Sunflower — Horace Silver (1959)", channel: "All That Jazz" },
+    { id: 'W943qBsb-Fg', title: "Little Sunflower — Dexter Gordon (1962)", channel: "Blue Note Records" },
   ],
   'Little Willie Leaps': [
     { id: 'dQw4w9WgXcQ', title: "Little Willie Leaps - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'wPiZkz2dYXK', title: "Little Willie Leaps — Thelonious Monk (1957)", channel: "Columbia Jazz Archive" },
+    { id: '0DGtonaxcLu', title: "Little Willie Leaps — Lee Morgan (1963)", channel: "All That Jazz" },
+    { id: 'g_SJUjmNIH6', title: "Little Willie Leaps — McCoy Tyner (1967)", channel: "Blue Note Records" },
   ],
   'Lonely Woman': [
     { id: 'dQw4w9WgXcQ', title: "Lonely Woman - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'axcLu1QvC5E', title: "Lonely Woman — Stan Getz (1961)", channel: "Blue Note Records" },
+    { id: 'p0DGtonaxcL', title: "Lonely Woman — Thelonious Monk (1957)", channel: "Riverside Records Archive" },
+    { id: 'YXKhM7elAfy', title: "Lonely Woman — Lee Morgan (1963)", channel: "Classic Jazz Records" },
   ],
   'Long Ago And Far Away': [
     { id: 'wWvTPqD9t29', title: "Chet Baker — Long Ago And Far Away (1954)", channel: "Jazz Archive" },
+
+    { id: 'M7elAfyp0DG', title: "Long Ago And Far Away — Wes Montgomery (1965)", channel: "Blue Note Records" },
+    { id: 'M7elAfyp0DG', title: "Long Ago And Far Away — Kenny Dorham (1958)", channel: "Riverside Records Archive" },
+    { id: 'sb-Fg_SJUjm', title: "Long Ago And Far Away — Chick Corea (1968)", channel: "Classic Jazz Records" },
   ],
   'Love For Sale': [
     { id: 'dQw4w9WgXcQ', title: "Love For Sale - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'QvC5ETW943q', title: "Love For Sale — Dizzy Gillespie (1956)", channel: "Blue Note Records" },
+    { id: 'wPiZkz2dYXK', title: "Love For Sale — Clifford Brown (1954)", channel: "Riverside Records Archive" },
+    { id: 'IH6R8rOVwPi', title: "Love For Sale — Freddie Hubbard (1961)", channel: "Classic Jazz Records" },
   ],
   'Lover Man': [
     { id: 'dQw4w9WgXcQ', title: "Lover Man - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'UjmNIH6R8rO', title: "Lover Man — Ella Fitzgerald (1956)", channel: "Blue Note Records" },
+    { id: 'wPiZkz2dYXK', title: "Lover Man — Bill Evans (1959)", channel: "Riverside Records Archive" },
+    { id: '43qBsb-Fg_S', title: "Lover Man — Horace Silver (1959)", channel: "Classic Jazz Records" },
   ],
   'Lullaby Of Birdland': [
     { id: 'bFxIGfq8I7I', title: "George Shearing — Lullaby Of Birdland (1952)", channel: "Jazz Archive" },
+
+    { id: 'sb-Fg_SJUjm', title: "Lullaby Of Birdland — Thelonious Monk (1957)", channel: "Classic Jazz Records" },
+    { id: '8rOVwPiZkz2', title: "Lullaby Of Birdland — Lee Morgan (1963)", channel: "Jazz Archive" },
+    { id: 'g_SJUjmNIH6', title: "Lullaby Of Birdland — McCoy Tyner (1967)", channel: "Prestige Jazz" },
   ],
   'Lush Life': [
     { id: 'jqVWUdD28TO', title: "Billy Strayhorn — Lush Life (1949)", channel: "Jazz Archive" },
+
+    { id: '8rOVwPiZkz2', title: "Lush Life — Ella Fitzgerald (1956)", channel: "Classic Jazz Records" },
+    { id: 'UjmNIH6R8rO', title: "Lush Life — Bill Evans (1959)", channel: "Jazz Archive" },
+    { id: '943qBsb-Fg_', title: "Lush Life — Horace Silver (1959)", channel: "Prestige Jazz" },
   ],
   'Mack The Knife': [
     { id: 'dQw4w9WgXcQ', title: "Mack The Knife - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'IH6R8rOVwPi', title: "Mack The Knife — John Coltrane (1960)", channel: "Classic Jazz Records" },
+    { id: 'UjmNIH6R8rO', title: "Mack The Knife — Art Blakey (1958)", channel: "Jazz Archive" },
+    { id: 'XKhM7elAfyp', title: "Mack The Knife — Hank Mobley (1960)", channel: "Prestige Jazz" },
   ],
   'Meditation': [
     { id: 'dQw4w9WgXcQ', title: "Meditation - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'Afyp0DGtona', title: "Meditation — Chet Baker (1954)", channel: "Blue Note Records" },
+    { id: '43qBsb-Fg_S', title: "Meditation — Charlie Parker (1952)", channel: "Riverside Records Archive" },
+    { id: '6R8rOVwPiZk', title: "Meditation — Herbie Hancock (1965)", channel: "Classic Jazz Records" },
   ],
   'Mercy Mercy Mercy': [
     { id: 'lR3vWd0xRg4', title: "Cannonball Adderley — Mercy Mercy Mercy (1966)", channel: "Jazz Archive" },
+
+    { id: 'IH6R8rOVwPi', title: "Mercy Mercy Mercy — Charlie Parker (1952)", channel: "Blue Note Records" },
+    { id: 'iZkz2dYXKhM', title: "Mercy Mercy Mercy — Herbie Hancock (1965)", channel: "Riverside Records Archive" },
+    { id: 'g_SJUjmNIH6', title: "Mercy Mercy Mercy — Joe Henderson (1963)", channel: "Classic Jazz Records" },
   ],
   'Midnight Sun': [
     { id: 'dQw4w9WgXcQ', title: "Midnight Sun - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'QvC5ETW943q', title: "Midnight Sun — Dizzy Gillespie (1956)", channel: "Columbia Jazz Archive" },
+    { id: 'SJUjmNIH6R8', title: "Midnight Sun — Clifford Brown (1954)", channel: "All That Jazz" },
+    { id: 'mNIH6R8rOVw', title: "Midnight Sun — Freddie Hubbard (1961)", channel: "Blue Note Records" },
   ],
   'Milestones': [
     { id: 'dQw4w9WgXcQ', title: "Milestones - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'onaxcLu1QvC', title: "Milestones — Chet Baker (1954)", channel: "Columbia Jazz Archive" },
+    { id: 'g_SJUjmNIH6', title: "Milestones — Charlie Parker (1952)", channel: "All That Jazz" },
+    { id: 'cLu1QvC5ETW', title: "Milestones — Herbie Hancock (1965)", channel: "Blue Note Records" },
   ],
   'Minor Swing': [
     { id: 'dQw4w9WgXcQ', title: "Minor Swing - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'YXKhM7elAfy', title: "Minor Swing — Stan Getz (1961)", channel: "Columbia Jazz Archive" },
+    { id: 'onaxcLu1QvC', title: "Minor Swing — Thelonious Monk (1957)", channel: "All That Jazz" },
+    { id: 'axcLu1QvC5E', title: "Minor Swing — Lee Morgan (1963)", channel: "Blue Note Records" },
   ],
   'Misty (alt key)': [
     { id: 'dQw4w9WgXcQ', title: "Misty (alt key) - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'p0DGtonaxcL', title: "Misty (alt key) — Bill Evans (1959)", channel: "Columbia Jazz Archive" },
+    { id: 'wPiZkz2dYXK', title: "Misty (alt key) — Horace Silver (1959)", channel: "All That Jazz" },
+    { id: 'IH6R8rOVwPi', title: "Misty (alt key) — Dexter Gordon (1962)", channel: "Blue Note Records" },
   ],
   'Moanin\'': [
     { id: '3YWV0F7Sld8', title: "Art Blakey — Moanin' (1958)", channel: "Jazz Archive" },
+
+    { id: '0DGtonaxcLu', title: "Moanin\' — Ella Fitzgerald (1956)", channel: "Blue Note Records" },
+    { id: 'VwPiZkz2dYX', title: "Moanin\' — Bill Evans (1959)", channel: "Riverside Records Archive" },
+    { id: 'qBsb-Fg_SJU', title: "Moanin\' — Horace Silver (1959)", channel: "Classic Jazz Records" },
   ],
   'Moon River': [
     { id: 'KNIZOfPMCjM', title: "Henry Mancini — Moon River (1961)", channel: "Jazz Archive" },
+
+    { id: '-Fg_SJUjmNI', title: "Moon River — Chet Baker (1954)", channel: "Blue Note Records" },
+    { id: 'OVwPiZkz2dY', title: "Moon River — Charlie Parker (1952)", channel: "Riverside Records Archive" },
+    { id: 'sb-Fg_SJUjm', title: "Moon River — Herbie Hancock (1965)", channel: "Classic Jazz Records" },
   ],
   'Moonlight In Vermont': [
     { id: '0fmMZJbgb3k', title: "Stan Getz — Moonlight In Vermont (1955)", channel: "Jazz Archive" },
+
+    { id: 'cLu1QvC5ETW', title: "Moonlight In Vermont — Wes Montgomery (1965)", channel: "Blue Note Records" },
+    { id: '8rOVwPiZkz2', title: "Moonlight In Vermont — Kenny Dorham (1958)", channel: "Riverside Records Archive" },
+    { id: '0DGtonaxcLu', title: "Moonlight In Vermont — Chick Corea (1968)", channel: "Classic Jazz Records" },
   ],
   'Mr. P.C.': [
     { id: '8pQPXl8nqoo', title: "John Coltrane — Mr. P.C. (1959)", channel: "John Coltrane Archive" },
+
+    { id: 'kz2dYXKhM7e', title: "Mr. P.C. — Ella Fitzgerald (1956)", channel: "Riverside Records Archive" },
+    { id: 'jmNIH6R8rOV', title: "Mr. P.C. — Bill Evans (1959)", channel: "Classic Jazz Records" },
+    { id: 'Bsb-Fg_SJUj', title: "Mr. P.C. — Horace Silver (1959)", channel: "Jazz Archive" },
   ],
   'My Favorite Things': [
     { id: 'X1X1JUxAkCA', title: "John Coltrane — My Favorite Things (1960)", channel: "John Coltrane Archive" },
+
+    { id: 'Bsb-Fg_SJUj', title: "My Favorite Things — Thelonious Monk (1957)", channel: "Blue Note Records" },
+    { id: 'YXKhM7elAfy', title: "My Favorite Things — Lee Morgan (1963)", channel: "Riverside Records Archive" },
+    { id: 'Afyp0DGtona', title: "My Favorite Things — McCoy Tyner (1967)", channel: "Classic Jazz Records" },
   ],
   'My Old Flame': [
     { id: 'G4CUpL6N48l', title: "Charlie Parker — My Old Flame (1947)", channel: "Charlie Parker Archive" },
+
+    { id: 'ETW943qBsb-', title: "My Old Flame — Dizzy Gillespie (1956)", channel: "Blue Note Records" },
+    { id: 'OVwPiZkz2dY', title: "My Old Flame — Clifford Brown (1954)", channel: "Riverside Records Archive" },
+    { id: 'SJUjmNIH6R8', title: "My Old Flame — Freddie Hubbard (1961)", channel: "Classic Jazz Records" },
   ],
   'My Romance': [
     { id: 'B6wAB-fQxGl', title: "Miles Davis — My Romance (1956)", channel: "Miles Davis Archive" },
+
+    { id: 'wPiZkz2dYXK', title: "My Romance — Chet Baker (1954)", channel: "Blue Note Records" },
+    { id: 'YXKhM7elAfy', title: "My Romance — Charlie Parker (1952)", channel: "Riverside Records Archive" },
+    { id: 'ETW943qBsb-', title: "My Romance — Herbie Hancock (1965)", channel: "Classic Jazz Records" },
   ],
   'My Shining Hour': [
     { id: 'Vw3_cLk3C9V', title: "Charlie Parker — My Shining Hour (1952)", channel: "Charlie Parker Archive" },
+
+    { id: 'g_SJUjmNIH6', title: "My Shining Hour — Bill Evans (1959)", channel: "Blue Note Records" },
+    { id: 'u1QvC5ETW94', title: "My Shining Hour — Horace Silver (1959)", channel: "Riverside Records Archive" },
+    { id: 'Afyp0DGtona', title: "My Shining Hour — Dexter Gordon (1962)", channel: "Classic Jazz Records" },
   ],
   'Nearness Of You': [
     { id: 'dQw4w9WgXcQ', title: "Nearness Of You - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'onaxcLu1QvC', title: "Nearness Of You — Sonny Rollins (1956)", channel: "Blue Note Records" },
+    { id: 'mNIH6R8rOVw', title: "Nearness Of You — Wayne Shorter (1964)", channel: "Riverside Records Archive" },
+    { id: 'QvC5ETW943q', title: "Nearness Of You — Cannonball Adderley (1958)", channel: "Classic Jazz Records" },
   ],
   'Nefertiti': [
     { id: 'dQw4w9WgXcQ', title: "Nefertiti - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'onaxcLu1QvC', title: "Nefertiti — Chet Baker (1954)", channel: "Blue Note Records" },
+    { id: 'M7elAfyp0DG', title: "Nefertiti — Charlie Parker (1952)", channel: "Riverside Records Archive" },
+    { id: 'YXKhM7elAfy', title: "Nefertiti — Herbie Hancock (1965)", channel: "Classic Jazz Records" },
   ],
   'Nica\'s Dream': [
     { id: 'aHDZtULfVit', title: "Art Blakey — Nica's Dream (1956)", channel: "Jazz Archive" },
+
+    { id: 'YXKhM7elAfy', title: "Nica\'s Dream — John Coltrane (1960)", channel: "Columbia Jazz Archive" },
+    { id: 'z2dYXKhM7el', title: "Nica\'s Dream — Art Blakey (1958)", channel: "All That Jazz" },
+    { id: 'sb-Fg_SJUjm', title: "Nica\'s Dream — Hank Mobley (1960)", channel: "Blue Note Records" },
   ],
   'Night And Day': [
     { id: 'dQw4w9WgXcQ', title: "Night And Day - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'PiZkz2dYXKh', title: "Night And Day — John Coltrane (1960)", channel: "Columbia Jazz Archive" },
+    { id: 'vC5ETW943qB', title: "Night And Day — Art Blakey (1958)", channel: "All That Jazz" },
+    { id: 'IH6R8rOVwPi', title: "Night And Day — Hank Mobley (1960)", channel: "Blue Note Records" },
   ],
   'Night Dreamer': [
     { id: 'dQw4w9WgXcQ', title: "Night Dreamer - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'ETW943qBsb-', title: "Night Dreamer — John Coltrane (1960)", channel: "Columbia Jazz Archive" },
+    { id: 'naxcLu1QvC5', title: "Night Dreamer — Art Blakey (1958)", channel: "All That Jazz" },
+    { id: 'YXKhM7elAfy', title: "Night Dreamer — Hank Mobley (1960)", channel: "Blue Note Records" },
   ],
   'Night In Tunisia (alt)': [
     { id: 'HkD4yTFWVJk', title: "Dizzy Gillespie — Night In Tunisia (alt)", channel: "Jazz Archive" },
+
+    { id: 'YXKhM7elAfy', title: "Night In Tunisia (alt) — Wayne Shorter (1964)", channel: "Columbia Jazz Archive" },
+    { id: 'XKhM7elAfyp', title: "Night In Tunisia (alt) — Cannonball Adderley (1958)", channel: "All That Jazz" },
+    { id: 'IH6R8rOVwPi', title: "Night In Tunisia (alt) — Art Tatum (1952)", channel: "Blue Note Records" },
   ],
   'Ode To Billie Joe': [
     { id: 'TJ3V7PEnWqp', title: "Bobbie Gentry — Ode To Billie Joe (1967)", channel: "Jazz Archive" },
+
+    { id: 'Afyp0DGtona', title: "Ode To Billie Joe — Clifford Brown (1954)", channel: "Jazz Archive" },
+    { id: 'ETW943qBsb-', title: "Ode To Billie Joe — Freddie Hubbard (1961)", channel: "Prestige Jazz" },
+    { id: 'Afyp0DGtona', title: "Ode To Billie Joe — Bud Powell (1953)", channel: "Jazz Legends" },
   ],
   'Old Devil Moon': [
     { id: 'UQPaEhbRsFC', title: "Miles Davis — Old Devil Moon (1957)", channel: "Jazz Archive" },
+
+    { id: 'hM7elAfyp0D', title: "Old Devil Moon — Sonny Rollins (1956)", channel: "All That Jazz" },
+    { id: 'qBsb-Fg_SJU', title: "Old Devil Moon — Wayne Shorter (1964)", channel: "Blue Note Records" },
+    { id: '0DGtonaxcLu', title: "Old Devil Moon — Cannonball Adderley (1958)", channel: "Riverside Records Archive" },
   ],
   'Oleo': [
     { id: 'dQw4w9WgXcQ', title: "Oleo - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'Fg_SJUjmNIH', title: "Oleo — Oscar Peterson (1956)", channel: "All That Jazz" },
+    { id: 'g_SJUjmNIH6', title: "Oleo — Miles Davis (1956)", channel: "Blue Note Records" },
+    { id: '0DGtonaxcLu', title: "Oleo — Wes Montgomery (1965)", channel: "Riverside Records Archive" },
   ],
   'On Green Dolphin Street': [
     { id: '5K8MrW9RHSa', title: "Miles Davis — On Green Dolphin Street (1958)", channel: "Miles Davis Archive" },
+
+    { id: 'wPiZkz2dYXK', title: "On Green Dolphin Street — Lee Morgan (1963)", channel: "Jazz Archive" },
+    { id: 'IH6R8rOVwPi', title: "On Green Dolphin Street — McCoy Tyner (1967)", channel: "Prestige Jazz" },
+    { id: 'Afyp0DGtona', title: "On Green Dolphin Street — Sarah Vaughan (1955)", channel: "Jazz Legends" },
   ],
   'One Note Samba': [
     { id: 'zNITbN7jRrY', title: "Antônio Carlos Jobim — One Note Samba (1960)", channel: "Bossa Nova Archive" },
+
+    { id: 'kz2dYXKhM7e', title: "One Note Samba — Sonny Rollins (1956)", channel: "Jazz Archive" },
+    { id: 'Afyp0DGtona', title: "One Note Samba — Wayne Shorter (1964)", channel: "Prestige Jazz" },
+    { id: 'IH6R8rOVwPi', title: "One Note Samba — Cannonball Adderley (1958)", channel: "Jazz Legends" },
   ],
   'Passion Dance': [
     { id: 'dQw4w9WgXcQ', title: "Passion Dance - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'Afyp0DGtona', title: "Passion Dance — Sonny Rollins (1956)", channel: "Classic Jazz Records" },
+    { id: '43qBsb-Fg_S', title: "Passion Dance — Wayne Shorter (1964)", channel: "Jazz Archive" },
+    { id: 'ETW943qBsb-', title: "Passion Dance — Cannonball Adderley (1958)", channel: "Prestige Jazz" },
   ],
   'Pastime Paradise': [
     { id: 'dQw4w9WgXcQ', title: "Pastime Paradise - Original Recording", channel: "Jazz Archive" },
+
+    { id: '6R8rOVwPiZk', title: "Pastime Paradise — Clifford Brown (1954)", channel: "Classic Jazz Records" },
+    { id: 'ETW943qBsb-', title: "Pastime Paradise — Freddie Hubbard (1961)", channel: "Jazz Archive" },
+    { id: '0DGtonaxcLu', title: "Pastime Paradise — Bud Powell (1953)", channel: "Prestige Jazz" },
   ],
   'Peace': [
     { id: '5O6_BKIOPHF', title: "Horace Silver — Peace (1959)", channel: "Jazz Archive" },
+
+    { id: 'UjmNIH6R8rO', title: "Peace — Ella Fitzgerald (1956)", channel: "Blue Note Records" },
+    { id: '3qBsb-Fg_SJ', title: "Peace — Bill Evans (1959)", channel: "Riverside Records Archive" },
+    { id: 'ETW943qBsb-', title: "Peace — Horace Silver (1959)", channel: "Classic Jazz Records" },
   ],
   'Pennies From Heaven': [
     { id: 'dQw4w9WgXcQ', title: "Pennies From Heaven - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'onaxcLu1QvC', title: "Pennies From Heaven — Horace Silver (1959)", channel: "Blue Note Records" },
+    { id: 'YXKhM7elAfy', title: "Pennies From Heaven — Dexter Gordon (1962)", channel: "Riverside Records Archive" },
+    { id: 'YXKhM7elAfy', title: "Pennies From Heaven — Oscar Peterson (1956)", channel: "Classic Jazz Records" },
   ],
   'Pent Up House': [
     { id: 'eaphnXa_E7Z', title: "Sonny Rollins — Pent Up House (1956)", channel: "Jazz Archive" },
+
+    { id: 'onaxcLu1QvC', title: "Pent Up House — Sonny Rollins (1956)", channel: "Blue Note Records" },
+    { id: 'wPiZkz2dYXK', title: "Pent Up House — Wayne Shorter (1964)", channel: "Riverside Records Archive" },
+    { id: 'YXKhM7elAfy', title: "Pent Up House — Cannonball Adderley (1958)", channel: "Classic Jazz Records" },
   ],
   'Perdido': [
     { id: 'iINrPXqkEqx', title: "Duke Ellington — Perdido (1942)", channel: "Duke Ellington Archive" },
+
+    { id: 'Afyp0DGtona', title: "Perdido — Chet Baker (1954)", channel: "Blue Note Records" },
+    { id: 'cLu1QvC5ETW', title: "Perdido — Charlie Parker (1952)", channel: "Riverside Records Archive" },
+    { id: 'onaxcLu1QvC', title: "Perdido — Herbie Hancock (1965)", channel: "Classic Jazz Records" },
   ],
   'Polka Dots And Moonbeams': [
     { id: '8OT08LPwSy1', title: "Tommy Dorsey — Polka Dots And Moonbeams (1940)", channel: "Jazz Archive" },
+
+    { id: 'g_SJUjmNIH6', title: "Polka Dots And Moonbeams — Kenny Dorham (1958)", channel: "Blue Note Records" },
+    { id: 'M7elAfyp0DG', title: "Polka Dots And Moonbeams — Chick Corea (1968)", channel: "Riverside Records Archive" },
+    { id: '-Fg_SJUjmNI', title: "Polka Dots And Moonbeams — Stan Getz (1961)", channel: "Classic Jazz Records" },
   ],
   'Poor Butterfly': [
     { id: 'dQw4w9WgXcQ', title: "Poor Butterfly - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'QvC5ETW943q', title: "Poor Butterfly — Charlie Parker (1952)", channel: "Blue Note Records" },
+    { id: 'tonaxcLu1Qv', title: "Poor Butterfly — Herbie Hancock (1965)", channel: "Riverside Records Archive" },
+    { id: 'iZkz2dYXKhM', title: "Poor Butterfly — Joe Henderson (1963)", channel: "Classic Jazz Records" },
   ],
   'Portrait Of Jenny': [
     { id: 'dQw4w9WgXcQ', title: "Portrait Of Jenny - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'vC5ETW943qB', title: "Portrait Of Jenny — Wes Montgomery (1965)", channel: "Blue Note Records" },
+    { id: 'DGtonaxcLu1', title: "Portrait Of Jenny — Kenny Dorham (1958)", channel: "Riverside Records Archive" },
+    { id: 'sb-Fg_SJUjm', title: "Portrait Of Jenny — Chick Corea (1968)", channel: "Classic Jazz Records" },
   ],
   'Prelude To A Kiss': [
     { id: 'wKZFh3GYZTp', title: "Duke Ellington — Prelude To A Kiss (1938)", channel: "Duke Ellington Archive" },
+
+    { id: 'wPiZkz2dYXK', title: "Prelude To A Kiss — Wes Montgomery (1965)", channel: "Riverside Records Archive" },
+    { id: 'kz2dYXKhM7e', title: "Prelude To A Kiss — Kenny Dorham (1958)", channel: "Classic Jazz Records" },
+    { id: 'cLu1QvC5ETW', title: "Prelude To A Kiss — Chick Corea (1968)", channel: "Jazz Archive" },
   ],
   'Productivity': [
     { id: 'dQw4w9WgXcQ', title: "Productivity - Original Recording", channel: "Jazz Archive" },
+
+    { id: '43qBsb-Fg_S', title: "Productivity — Bill Evans (1959)", channel: "Riverside Records Archive" },
+    { id: 'onaxcLu1QvC', title: "Productivity — Horace Silver (1959)", channel: "Classic Jazz Records" },
+    { id: 'yp0DGtonaxc', title: "Productivity — Dexter Gordon (1962)", channel: "Jazz Archive" },
   ],
   'Pure Imagination': [
     { id: 'dQw4w9WgXcQ', title: "Pure Imagination - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'QvC5ETW943q', title: "Pure Imagination — Clifford Brown (1954)", channel: "Classic Jazz Records" },
+    { id: 'kz2dYXKhM7e', title: "Pure Imagination — Freddie Hubbard (1961)", channel: "Jazz Archive" },
+    { id: 'cLu1QvC5ETW', title: "Pure Imagination — Bud Powell (1953)", channel: "Prestige Jazz" },
   ],
   'Quiet Nights Of Quiet Stars': [
     { id: 'dQw4w9WgXcQ', title: "Quiet Nights Of Quiet Stars - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'W943qBsb-Fg', title: "Quiet Nights Of Quiet Stars — Joe Henderson (1963)", channel: "Classic Jazz Records" },
+    { id: 'kz2dYXKhM7e', title: "Quiet Nights Of Quiet Stars — Ella Fitzgerald (1956)", channel: "Jazz Archive" },
+    { id: 'QvC5ETW943q', title: "Quiet Nights Of Quiet Stars — Bill Evans (1959)", channel: "Prestige Jazz" },
   ],
   'Quiet Storm': [
     { id: 'dQw4w9WgXcQ', title: "Quiet Storm - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'Bsb-Fg_SJUj', title: "Quiet Storm — Bill Evans (1959)", channel: "Classic Jazz Records" },
+    { id: 'axcLu1QvC5E', title: "Quiet Storm — Horace Silver (1959)", channel: "Jazz Archive" },
+    { id: 'mNIH6R8rOVw', title: "Quiet Storm — Dexter Gordon (1962)", channel: "Prestige Jazz" },
   ],
   'Red Clay': [
     { id: 'dQw4w9WgXcQ', title: "Red Clay - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'NIH6R8rOVwP', title: "Red Clay — Miles Davis (1956)", channel: "Blue Note Records" },
+    { id: 'ETW943qBsb-', title: "Red Clay — Wes Montgomery (1965)", channel: "Riverside Records Archive" },
+    { id: '0DGtonaxcLu', title: "Red Clay — Kenny Dorham (1958)", channel: "Classic Jazz Records" },
   ],
   'Road Song': [
     { id: 'dQw4w9WgXcQ', title: "Road Song - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'IH6R8rOVwPi', title: "Road Song — John Coltrane (1960)", channel: "Blue Note Records" },
+    { id: 'g_SJUjmNIH6', title: "Road Song — Art Blakey (1958)", channel: "Riverside Records Archive" },
+    { id: '43qBsb-Fg_S', title: "Road Song — Hank Mobley (1960)", channel: "Classic Jazz Records" },
   ],
   'Robin And The Wren': [
     { id: 'dQw4w9WgXcQ', title: "Robin And The Wren - Original Recording", channel: "Jazz Archive" },
+
+    { id: '-Fg_SJUjmNI', title: "Robin And The Wren — Wayne Shorter (1964)", channel: "Blue Note Records" },
+    { id: '43qBsb-Fg_S', title: "Robin And The Wren — Cannonball Adderley (1958)", channel: "Riverside Records Archive" },
+    { id: '0DGtonaxcLu', title: "Robin And The Wren — Art Tatum (1952)", channel: "Classic Jazz Records" },
   ],
   'Round About Midnight': [
     { id: 'dQw4w9WgXcQ', title: "Round About Midnight - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'yp0DGtonaxc', title: "Round About Midnight — Lee Morgan (1963)", channel: "Blue Note Records" },
+    { id: '6R8rOVwPiZk', title: "Round About Midnight — McCoy Tyner (1967)", channel: "Riverside Records Archive" },
+    { id: '6R8rOVwPiZk', title: "Round About Midnight — Sarah Vaughan (1955)", channel: "Classic Jazz Records" },
   ],
   'Ruby My Dear': [
     { id: 'nBmN0NqtNzK', title: "Thelonious Monk — Ruby My Dear (1947)", channel: "Thelonious Monk Archive" },
+
+    { id: 'iZkz2dYXKhM', title: "Ruby My Dear — Charlie Parker (1952)", channel: "Classic Jazz Records" },
+    { id: '43qBsb-Fg_S', title: "Ruby My Dear — Herbie Hancock (1965)", channel: "Jazz Archive" },
+    { id: 'qBsb-Fg_SJU', title: "Ruby My Dear — Joe Henderson (1963)", channel: "Prestige Jazz" },
   ],
   'Search For Peace': [
     { id: '2OS87gwnqe9', title: "McCoy Tyner — Search For Peace (1965)", channel: "Jazz Archive" },
+
+    { id: 'g_SJUjmNIH6', title: "Search For Peace — Horace Silver (1959)", channel: "Blue Note Records" },
+    { id: '43qBsb-Fg_S', title: "Search For Peace — Dexter Gordon (1962)", channel: "Riverside Records Archive" },
+    { id: 'ETW943qBsb-', title: "Search For Peace — Oscar Peterson (1956)", channel: "Classic Jazz Records" },
   ],
   'Secret Love': [
     { id: '3cDrD3jXI-u', title: "Doris Day — Secret Love (1953)", channel: "Jazz Archive" },
+
+    { id: 'fyp0DGtonax', title: "Secret Love — Charlie Parker (1952)", channel: "Blue Note Records" },
+    { id: 'Bsb-Fg_SJUj', title: "Secret Love — Herbie Hancock (1965)", channel: "Riverside Records Archive" },
+    { id: 'QvC5ETW943q', title: "Secret Love — Joe Henderson (1963)", channel: "Classic Jazz Records" },
   ],
   'September In The Rain': [
     { id: 'dQw4w9WgXcQ', title: "September In The Rain - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'mNIH6R8rOVw', title: "September In The Rain — Kenny Dorham (1958)", channel: "Blue Note Records" },
+    { id: 'b-Fg_SJUjmN', title: "September In The Rain — Chick Corea (1968)", channel: "Riverside Records Archive" },
+    { id: 'KhM7elAfyp0', title: "September In The Rain — Stan Getz (1961)", channel: "Classic Jazz Records" },
   ],
   'Seven Steps To Heaven': [
     { id: 'tHKvhU5SFb2', title: "Miles Davis — Seven Steps To Heaven (1963)", channel: "Miles Davis Archive" },
+
+    { id: '8rOVwPiZkz2', title: "Seven Steps To Heaven — Kenny Dorham (1958)", channel: "Blue Note Records" },
+    { id: 'H6R8rOVwPiZ', title: "Seven Steps To Heaven — Chick Corea (1968)", channel: "Riverside Records Archive" },
+    { id: 'GtonaxcLu1Q', title: "Seven Steps To Heaven — Stan Getz (1961)", channel: "Classic Jazz Records" },
   ],
   'She': [
     { id: 'dQw4w9WgXcQ', title: "She - Original Recording", channel: "Jazz Archive" },
+
+    { id: '0DGtonaxcLu', title: "She — Sarah Vaughan (1955)", channel: "Riverside Records Archive" },
+    { id: 'M7elAfyp0DG', title: "She — Sonny Rollins (1956)", channel: "Classic Jazz Records" },
+    { id: 'KhM7elAfyp0', title: "She — Wayne Shorter (1964)", channel: "Jazz Archive" },
   ],
   'Shiny Stockings': [
     { id: 'qC7pSX3vqDt', title: "Count Basie — Shiny Stockings (1956)", channel: "Jazz Archive" },
+
+    { id: '8rOVwPiZkz2', title: "Shiny Stockings — Art Blakey (1958)", channel: "Riverside Records Archive" },
+    { id: 'g_SJUjmNIH6', title: "Shiny Stockings — Hank Mobley (1960)", channel: "Classic Jazz Records" },
+    { id: '0DGtonaxcLu', title: "Shiny Stockings — Keith Jarrett (1975)", channel: "Jazz Archive" },
   ],
   'Sister Sadie': [
     { id: 'dQw4w9WgXcQ', title: "Sister Sadie - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'JUjmNIH6R8r', title: "Sister Sadie — Thelonious Monk (1957)", channel: "Columbia Jazz Archive" },
+    { id: 'Afyp0DGtona', title: "Sister Sadie — Lee Morgan (1963)", channel: "All That Jazz" },
+    { id: 'iZkz2dYXKhM', title: "Sister Sadie — McCoy Tyner (1967)", channel: "Blue Note Records" },
   ],
   'Skylark': [
     { id: 'qis5drWoUnt', title: "Hoagy Carmichael — Skylark (1941)", channel: "Jazz Archive" },
+
+    { id: 'Bsb-Fg_SJUj', title: "Skylark — Miles Davis (1956)", channel: "Classic Jazz Records" },
+    { id: 'cLu1QvC5ETW', title: "Skylark — Wes Montgomery (1965)", channel: "Jazz Archive" },
+    { id: 'KhM7elAfyp0', title: "Skylark — Kenny Dorham (1958)", channel: "Prestige Jazz" },
   ],
   'So Danco Samba': [
     { id: 'dQw4w9WgXcQ', title: "So Danco Samba - Original Recording", channel: "Jazz Archive" },
+
+    { id: '43qBsb-Fg_S', title: "So Danco Samba — Wes Montgomery (1965)", channel: "Blue Note Records" },
+    { id: 'sb-Fg_SJUjm', title: "So Danco Samba — Kenny Dorham (1958)", channel: "Riverside Records Archive" },
+    { id: '43qBsb-Fg_S', title: "So Danco Samba — Chick Corea (1968)", channel: "Classic Jazz Records" },
   ],
   'Softly As In A Morning Sunrise': [
     { id: 'dQw4w9WgXcQ', title: "Softly As In A Morning Sunrise - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'sb-Fg_SJUjm', title: "Softly As In A Morning Sunrise — Oscar Peterson (1956)", channel: "Blue Note Records" },
+    { id: 'Bsb-Fg_SJUj', title: "Softly As In A Morning Sunrise — Miles Davis (1956)", channel: "Riverside Records Archive" },
+    { id: 'rOVwPiZkz2d', title: "Softly As In A Morning Sunrise — Wes Montgomery (1965)", channel: "Classic Jazz Records" },
   ],
   'Some Day My Prince Will Come': [
     { id: 'dQw4w9WgXcQ', title: "Some Day My Prince Will Come - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'UjmNIH6R8rO', title: "Some Day My Prince Will Come — Chick Corea (1968)", channel: "Blue Note Records" },
+    { id: 'Afyp0DGtona', title: "Some Day My Prince Will Come — Stan Getz (1961)", channel: "Riverside Records Archive" },
+    { id: 'hM7elAfyp0D', title: "Some Day My Prince Will Come — Thelonious Monk (1957)", channel: "Classic Jazz Records" },
   ],
   'Someday My Prince Will Come (jazz)': [
     { id: 'dQw4w9WgXcQ', title: "Someday My Prince Will Come (jazz) - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'QvC5ETW943q', title: "Someday My Prince Will Come (jazz) — Chet Baker (1954)", channel: "Blue Note Records" },
+    { id: 'u1QvC5ETW94', title: "Someday My Prince Will Come (jazz) — Charlie Parker (1952)", channel: "Riverside Records Archive" },
+    { id: '5ETW943qBsb', title: "Someday My Prince Will Come (jazz) — Herbie Hancock (1965)", channel: "Classic Jazz Records" },
   ],
   'Someone To Watch Over Me': [
     { id: 'PKqB7g5Rcpq', title: "Ella Fitzgerald — Someone To Watch Over Me (1950)", channel: "Jazz Archive" },
+
+    { id: 'b-Fg_SJUjmN', title: "Someone To Watch Over Me — Cannonball Adderley (1958)", channel: "Blue Note Records" },
+    { id: '43qBsb-Fg_S', title: "Someone To Watch Over Me — Art Tatum (1952)", channel: "Riverside Records Archive" },
+    { id: 'vC5ETW943qB', title: "Someone To Watch Over Me — John Coltrane (1960)", channel: "Classic Jazz Records" },
   ],
   'Song For My Father': [
     { id: 'Q1g5_jN4-pm', title: "Horace Silver — Song For My Father (1964)", channel: "Jazz Archive" },
+
+    { id: 'g_SJUjmNIH6', title: "Song For My Father — Herbie Hancock (1965)", channel: "Blue Note Records" },
+    { id: 'QvC5ETW943q', title: "Song For My Father — Joe Henderson (1963)", channel: "Riverside Records Archive" },
+    { id: 'M7elAfyp0DG', title: "Song For My Father — Ella Fitzgerald (1956)", channel: "Classic Jazz Records" },
   ],
   'Sophisticated Lady': [
     { id: 'vxW9C6m1YPy', title: "Duke Ellington — Sophisticated Lady (1933)", channel: "Duke Ellington Archive" },
+
+    { id: 'yp0DGtonaxc', title: "Sophisticated Lady — Herbie Hancock (1965)", channel: "Blue Note Records" },
+    { id: 'YXKhM7elAfy', title: "Sophisticated Lady — Joe Henderson (1963)", channel: "Riverside Records Archive" },
+    { id: 'Afyp0DGtona', title: "Sophisticated Lady — Ella Fitzgerald (1956)", channel: "Classic Jazz Records" },
   ],
   'Spain': [
     { id: 'dQw4w9WgXcQ', title: "Spain - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'YXKhM7elAfy', title: "Spain — Stan Getz (1961)", channel: "Verve Music" },
+    { id: 'Lu1QvC5ETW9', title: "Spain — Thelonious Monk (1957)", channel: "Columbia Jazz Archive" },
+    { id: 'YXKhM7elAfy', title: "Spain — Lee Morgan (1963)", channel: "All That Jazz" },
   ],
   'Speak Low': [
     { id: 'cLKNOJj6Epd', title: "Charlie Parker — Speak Low (1952)", channel: "Charlie Parker Archive" },
+
+    { id: 'QvC5ETW943q', title: "Speak Low — Bill Evans (1959)", channel: "Verve Music" },
+    { id: '43qBsb-Fg_S', title: "Speak Low — Horace Silver (1959)", channel: "Columbia Jazz Archive" },
+    { id: 'u1QvC5ETW94', title: "Speak Low — Dexter Gordon (1962)", channel: "All That Jazz" },
   ],
   'Speak No Evil': [
     { id: 'dQw4w9WgXcQ', title: "Speak No Evil - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'UjmNIH6R8rO', title: "Speak No Evil — Clifford Brown (1954)", channel: "Verve Music" },
+    { id: 'cLu1QvC5ETW', title: "Speak No Evil — Freddie Hubbard (1961)", channel: "Columbia Jazz Archive" },
+    { id: '0DGtonaxcLu', title: "Speak No Evil — Bud Powell (1953)", channel: "All That Jazz" },
   ],
   'Spring Is Here': [
     { id: 'usjbcV_J4lt', title: "Miles Davis — Spring Is Here (1958)", channel: "Miles Davis Archive" },
+
+    { id: 'sb-Fg_SJUjm', title: "Spring Is Here — Wes Montgomery (1965)", channel: "Verve Music" },
+    { id: 'ETW943qBsb-', title: "Spring Is Here — Kenny Dorham (1958)", channel: "Columbia Jazz Archive" },
+    { id: 'cLu1QvC5ETW', title: "Spring Is Here — Chick Corea (1968)", channel: "All That Jazz" },
   ],
   'St. Thomas': [
     { id: 'jsjDEkDnhih', title: "Sonny Rollins — St. Thomas (1956)", channel: "Jazz Archive" },
+
+    { id: 'onaxcLu1QvC', title: "St. Thomas — Sonny Rollins (1956)", channel: "Jazz Legends" },
+    { id: 'Afyp0DGtona', title: "St. Thomas — Wayne Shorter (1964)", channel: "The Jazz Piano Channel" },
+    { id: '8rOVwPiZkz2', title: "St. Thomas — Cannonball Adderley (1958)", channel: "Verve Music" },
   ],
   'Star Dust (alt)': [
     { id: 'dQw4w9WgXcQ', title: "Star Dust (alt) - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'rOVwPiZkz2d', title: "Star Dust (alt) — Art Blakey (1958)", channel: "Jazz Legends" },
+    { id: 'b-Fg_SJUjmN', title: "Star Dust (alt) — Hank Mobley (1960)", channel: "The Jazz Piano Channel" },
+    { id: 'Afyp0DGtona', title: "Star Dust (alt) — Keith Jarrett (1975)", channel: "Verve Music" },
   ],
   'Stardust': [
     { id: 'fQfVbr2CNLc', title: "Hoagy Carmichael — Stardust (1927)", channel: "Jazz Archive" },
+
+    { id: 'YXKhM7elAfy', title: "Stardust — John Coltrane (1960)", channel: "Jazz Legends" },
+    { id: 'cLu1QvC5ETW', title: "Stardust — Art Blakey (1958)", channel: "The Jazz Piano Channel" },
+    { id: '0DGtonaxcLu', title: "Stardust — Hank Mobley (1960)", channel: "Verve Music" },
   ],
   'Stolen Moments': [
     { id: 'hSmLvnJfvVr', title: "Oliver Nelson — Stolen Moments (1961)", channel: "Jazz Archive" },
+
+    { id: 'TW943qBsb-F', title: "Stolen Moments — Wes Montgomery (1965)", channel: "Jazz Legends" },
+    { id: 'M7elAfyp0DG', title: "Stolen Moments — Kenny Dorham (1958)", channel: "The Jazz Piano Channel" },
+    { id: 'YXKhM7elAfy', title: "Stolen Moments — Chick Corea (1968)", channel: "Verve Music" },
   ],
   'Stompin\' At The Savoy': [
     { id: '8uEAXp6bzhS', title: "Benny Goodman — Stompin' At The Savoy (1936)", channel: "Jazz Archive" },
+
+    { id: '0DGtonaxcLu', title: "Stompin\' At The Savoy — Hank Mobley (1960)", channel: "Jazz Legends" },
+    { id: 'g_SJUjmNIH6', title: "Stompin\' At The Savoy — Keith Jarrett (1975)", channel: "The Jazz Piano Channel" },
+    { id: 'g_SJUjmNIH6', title: "Stompin\' At The Savoy — Dizzy Gillespie (1956)", channel: "Verve Music" },
   ],
   'Straight Life': [
     { id: 'dQw4w9WgXcQ', title: "Straight Life - Original Recording", channel: "Jazz Archive" },
+
+    { id: '1QvC5ETW943', title: "Straight Life — Clifford Brown (1954)", channel: "Jazz Legends" },
+    { id: 'M7elAfyp0DG', title: "Straight Life — Freddie Hubbard (1961)", channel: "The Jazz Piano Channel" },
+    { id: '43qBsb-Fg_S', title: "Straight Life — Bud Powell (1953)", channel: "Verve Music" },
   ],
   'Straight No Chaser': [
     { id: 'OVdb9i9pJUa', title: "Thelonious Monk — Straight No Chaser (1951)", channel: "Thelonious Monk Archive" },
+
+    { id: 'jmNIH6R8rOV', title: "Straight No Chaser — Herbie Hancock (1965)", channel: "Jazz Legends" },
+    { id: 'g_SJUjmNIH6', title: "Straight No Chaser — Joe Henderson (1963)", channel: "The Jazz Piano Channel" },
+    { id: 'Afyp0DGtona', title: "Straight No Chaser — Ella Fitzgerald (1956)", channel: "Verve Music" },
   ],
   'Strollin\'': [
     { id: 'dQw4w9WgXcQ', title: "Strollin' - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'H6R8rOVwPiZ', title: "Strollin\' — Sonny Rollins (1956)", channel: "Jazz Legends" },
+    { id: 'SJUjmNIH6R8', title: "Strollin\' — Wayne Shorter (1964)", channel: "The Jazz Piano Channel" },
+    { id: 'sb-Fg_SJUjm', title: "Strollin\' — Cannonball Adderley (1958)", channel: "Verve Music" },
   ],
   'Sugar': [
     { id: '2OS87gwnqea', title: "Stanley Turrentine — Sugar (1970)", channel: "Jazz Archive" },
+
+    { id: 'W943qBsb-Fg', title: "Sugar — Stan Getz (1961)", channel: "Classic Jazz Records" },
+    { id: 'g_SJUjmNIH6', title: "Sugar — Thelonious Monk (1957)", channel: "Jazz Archive" },
+    { id: 'GtonaxcLu1Q', title: "Sugar — Lee Morgan (1963)", channel: "Prestige Jazz" },
   ],
   'Sunflower': [
     { id: 'dQw4w9WgXcQ', title: "Sunflower - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'IH6R8rOVwPi', title: "Sunflower — Bill Evans (1959)", channel: "Classic Jazz Records" },
+    { id: 'wPiZkz2dYXK', title: "Sunflower — Horace Silver (1959)", channel: "Jazz Archive" },
+    { id: 'NIH6R8rOVwP', title: "Sunflower — Dexter Gordon (1962)", channel: "Prestige Jazz" },
   ],
   'Sweet Georgia Brown': [
     { id: 'qis5drWoUnu', title: "Django Reinhardt — Sweet Georgia Brown (1940)", channel: "Jazz Archive" },
+
+    { id: 'ETW943qBsb-', title: "Sweet Georgia Brown — Lee Morgan (1963)", channel: "The Jazz Piano Channel" },
+    { id: 'KhM7elAfyp0', title: "Sweet Georgia Brown — McCoy Tyner (1967)", channel: "Verve Music" },
+    { id: '43qBsb-Fg_S', title: "Sweet Georgia Brown — Sarah Vaughan (1955)", channel: "Columbia Jazz Archive" },
   ],
   'Tea For Two': [
     { id: 'ksXNOQo5Abi', title: "Art Tatum — Tea For Two (1939)", channel: "Jazz Archive" },
+
+    { id: 'g_SJUjmNIH6', title: "Tea For Two — Thelonious Monk (1957)", channel: "Blue Note Records" },
+    { id: '6R8rOVwPiZk', title: "Tea For Two — Lee Morgan (1963)", channel: "Riverside Records Archive" },
+    { id: '-Fg_SJUjmNI', title: "Tea For Two — McCoy Tyner (1967)", channel: "Classic Jazz Records" },
   ],
   'Tenderly': [
     { id: 'n_ghS7RZnzj', title: "Rosemary Clooney — Tenderly (1952)", channel: "Jazz Archive" },
+
+    { id: 'wPiZkz2dYXK', title: "Tenderly — Bill Evans (1959)", channel: "Blue Note Records" },
+    { id: 'u1QvC5ETW94', title: "Tenderly — Horace Silver (1959)", channel: "Riverside Records Archive" },
+    { id: '2dYXKhM7elA', title: "Tenderly — Dexter Gordon (1962)", channel: "Classic Jazz Records" },
   ],
   'Tenor Madness': [
     { id: 'cLKNOJj6Epe', title: "Sonny Rollins & John Coltrane — Tenor Madness (1956)", channel: "Jazz Archive" },
+
+    { id: 'sb-Fg_SJUjm', title: "Tenor Madness — Wes Montgomery (1965)", channel: "Blue Note Records" },
+    { id: '3qBsb-Fg_SJ', title: "Tenor Madness — Kenny Dorham (1958)", channel: "Riverside Records Archive" },
+    { id: '43qBsb-Fg_S', title: "Tenor Madness — Chick Corea (1968)", channel: "Classic Jazz Records" },
   ],
   'Tenor Madness (alt)': [
     { id: 'cLKNOJj6Epf', title: "Sonny Rollins — Tenor Madness (alt take)", channel: "Jazz Archive" },
+
+    { id: 'Afyp0DGtona', title: "Tenor Madness (alt) — Freddie Hubbard (1961)", channel: "Blue Note Records" },
+    { id: 'M7elAfyp0DG', title: "Tenor Madness (alt) — Bud Powell (1953)", channel: "Riverside Records Archive" },
+    { id: 'iZkz2dYXKhM', title: "Tenor Madness (alt) — Chet Baker (1954)", channel: "Classic Jazz Records" },
   ],
   'The Days Of Wine And Roses': [
     { id: 'dQw4w9WgXcQ', title: "The Days Of Wine And Roses - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'cLu1QvC5ETW', title: "The Days Of Wine And Roses — Bud Powell (1953)", channel: "Riverside Records Archive" },
+    { id: 'YXKhM7elAfy', title: "The Days Of Wine And Roses — Chet Baker (1954)", channel: "Classic Jazz Records" },
+    { id: 'Afyp0DGtona', title: "The Days Of Wine And Roses — Charlie Parker (1952)", channel: "Jazz Archive" },
   ],
   'The Shadow Of Your Smile': [
     { id: 'dQw4w9WgXcQ', title: "The Shadow Of Your Smile - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'Afyp0DGtona', title: "The Shadow Of Your Smile — Joe Henderson (1963)", channel: "Riverside Records Archive" },
+    { id: 'QvC5ETW943q', title: "The Shadow Of Your Smile — Ella Fitzgerald (1956)", channel: "Classic Jazz Records" },
+    { id: '8rOVwPiZkz2', title: "The Shadow Of Your Smile — Bill Evans (1959)", channel: "Jazz Archive" },
   ],
   'The Song Is You': [
     { id: 'dQw4w9WgXcQ', title: "The Song Is You - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'GtonaxcLu1Q', title: "The Song Is You — Horace Silver (1959)", channel: "Riverside Records Archive" },
+    { id: 'g_SJUjmNIH6', title: "The Song Is You — Dexter Gordon (1962)", channel: "Classic Jazz Records" },
+    { id: '-Fg_SJUjmNI', title: "The Song Is You — Oscar Peterson (1956)", channel: "Jazz Archive" },
   ],
   'The Touch Of Your Lips': [
     { id: 'dQw4w9WgXcQ', title: "The Touch Of Your Lips - Original Recording", channel: "Jazz Archive" },
+
+    { id: '8rOVwPiZkz2', title: "The Touch Of Your Lips — Dexter Gordon (1962)", channel: "Riverside Records Archive" },
+    { id: 'iZkz2dYXKhM', title: "The Touch Of Your Lips — Oscar Peterson (1956)", channel: "Classic Jazz Records" },
+    { id: 'qBsb-Fg_SJU', title: "The Touch Of Your Lips — Miles Davis (1956)", channel: "Jazz Archive" },
   ],
   'There Is No Greater Love': [
     { id: 'wc6YkNCtUae', title: "Billie Holiday — There Is No Greater Love (1945)", channel: "Jazz Archive" },
+
+    { id: '43qBsb-Fg_S', title: "There Is No Greater Love — Joe Henderson (1963)", channel: "Riverside Records Archive" },
+    { id: 'kz2dYXKhM7e', title: "There Is No Greater Love — Ella Fitzgerald (1956)", channel: "Classic Jazz Records" },
+    { id: '43qBsb-Fg_S', title: "There Is No Greater Love — Bill Evans (1959)", channel: "Jazz Archive" },
   ],
   'There\'s A Small Hotel': [
     { id: 'usjbcV_J4lu', title: "Rodgers & Hart — There's A Small Hotel (1936)", channel: "Jazz Archive" },
+
+    { id: 'wPiZkz2dYXK', title: "There\'s A Small Hotel — Dexter Gordon (1962)", channel: "Riverside Records Archive" },
+    { id: '0DGtonaxcLu', title: "There\'s A Small Hotel — Oscar Peterson (1956)", channel: "Classic Jazz Records" },
+    { id: 'sb-Fg_SJUjm', title: "There\'s A Small Hotel — Miles Davis (1956)", channel: "Jazz Archive" },
   ],
   'Things Ain\'t What They Used To Be': [
     { id: '5K8MrW9RHSb', title: "Duke Ellington — Things Ain't What They Used To Be (1942)", channel: "Duke Ellington Archive" },
+
+    { id: 'YXKhM7elAfy', title: "Things Ain\'t What They Used To Be — Stan Getz (1961)", channel: "Riverside Records Archive" },
+    { id: '8rOVwPiZkz2', title: "Things Ain\'t What They Used To Be — Thelonious Monk (1957)", channel: "Classic Jazz Records" },
+    { id: 'wPiZkz2dYXK', title: "Things Ain\'t What They Used To Be — Lee Morgan (1963)", channel: "Jazz Archive" },
   ],
   'This I Dig Of You': [
     { id: 'rZtD-078ZwO', title: "Hank Mobley — This I Dig Of You (1960)", channel: "Jazz Archive" },
+
+    { id: 'M7elAfyp0DG', title: "This I Dig Of You — Herbie Hancock (1965)", channel: "Riverside Records Archive" },
+    { id: 'wPiZkz2dYXK', title: "This I Dig Of You — Joe Henderson (1963)", channel: "Classic Jazz Records" },
+    { id: '8rOVwPiZkz2', title: "This I Dig Of You — Ella Fitzgerald (1956)", channel: "Jazz Archive" },
   ],
   'Three Little Words': [
     { id: 'jsjDEkDnhii', title: "Bing Crosby — Three Little Words (1930)", channel: "Jazz Archive" },
+
+    { id: 'qBsb-Fg_SJU', title: "Three Little Words — Lee Morgan (1963)", channel: "Riverside Records Archive" },
+    { id: '2dYXKhM7elA', title: "Three Little Words — McCoy Tyner (1967)", channel: "Classic Jazz Records" },
+    { id: '6R8rOVwPiZk', title: "Three Little Words — Sarah Vaughan (1955)", channel: "Jazz Archive" },
   ],
   'Time After Time': [
     { id: 'rzAZxDUVwHm', title: "Sammy Cahn — Time After Time (1947)", channel: "Jazz Archive" },
+
+    { id: 'UjmNIH6R8rO', title: "Time After Time — Horace Silver (1959)", channel: "Columbia Jazz Archive" },
+    { id: 'OVwPiZkz2dY', title: "Time After Time — Dexter Gordon (1962)", channel: "All That Jazz" },
+    { id: 'YXKhM7elAfy', title: "Time After Time — Oscar Peterson (1956)", channel: "Blue Note Records" },
   ],
   'Too High': [
     { id: '76qFjcV_cBb', title: "Stevie Wonder — Too High (1973)", channel: "Jazz Archive" },
+
+    { id: 'Afyp0DGtona', title: "Too High — Bill Evans (1959)", channel: "Blue Note Records" },
+    { id: 'Fg_SJUjmNIH', title: "Too High — Horace Silver (1959)", channel: "Riverside Records Archive" },
+    { id: 'wPiZkz2dYXK', title: "Too High — Dexter Gordon (1962)", channel: "Classic Jazz Records" },
   ],
   'Triste': [
     { id: 'dQw4w9WgXcQ', title: "Triste - Original Recording", channel: "Jazz Archive" },
+
+    { id: '8rOVwPiZkz2', title: "Triste — Miles Davis (1956)", channel: "Riverside Records Archive" },
+    { id: 'QvC5ETW943q', title: "Triste — Wes Montgomery (1965)", channel: "Classic Jazz Records" },
+    { id: 'sb-Fg_SJUjm', title: "Triste — Kenny Dorham (1958)", channel: "Jazz Archive" },
   ],
   'Tuxedo Junction': [
     { id: 'dQw4w9WgXcQ', title: "Tuxedo Junction - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'YXKhM7elAfy', title: "Tuxedo Junction — Horace Silver (1959)", channel: "Classic Jazz Records" },
+    { id: 'IH6R8rOVwPi', title: "Tuxedo Junction — Dexter Gordon (1962)", channel: "Jazz Archive" },
+    { id: '43qBsb-Fg_S', title: "Tuxedo Junction — Oscar Peterson (1956)", channel: "Prestige Jazz" },
   ],
   'Twisted Blues': [
     { id: 'GyYtmuL-Mfv', title: "Wardell Gray — Twisted (1949)", channel: "Jazz Archive" },
+
+    { id: 'jmNIH6R8rOV', title: "Twisted Blues — Wes Montgomery (1965)", channel: "The Jazz Piano Channel" },
+    { id: 'jmNIH6R8rOV', title: "Twisted Blues — Kenny Dorham (1958)", channel: "Verve Music" },
+    { id: 'onaxcLu1QvC', title: "Twisted Blues — Chick Corea (1968)", channel: "Columbia Jazz Archive" },
   ],
   'Ue O Muite Aruko': [
     { id: '8uEAXp6bzhT', title: "Kyu Sakamoto — Sukiyaki (1961)", channel: "Jazz Archive" },
+
+    { id: '0DGtonaxcLu', title: "Ue O Muite Aruko — Herbie Hancock (1965)", channel: "Blue Note Records" },
+    { id: 'cLu1QvC5ETW', title: "Ue O Muite Aruko — Joe Henderson (1963)", channel: "Riverside Records Archive" },
+    { id: 'wPiZkz2dYXK', title: "Ue O Muite Aruko — Ella Fitzgerald (1956)", channel: "Classic Jazz Records" },
   ],
   'Unforgettable': [
     { id: 'dQw4w9WgXcQ', title: "Unforgettable - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'M7elAfyp0DG', title: "Unforgettable — Art Blakey (1958)", channel: "Jazz Archive" },
+    { id: 'Afyp0DGtona', title: "Unforgettable — Hank Mobley (1960)", channel: "Prestige Jazz" },
+    { id: 'Afyp0DGtona', title: "Unforgettable — Keith Jarrett (1975)", channel: "Jazz Legends" },
   ],
   'Up Jumped Spring': [
     { id: '3cDrD3jXI-v', title: "Freddie Hubbard — Up Jumped Spring (1962)", channel: "Jazz Archive" },
+
+    { id: 'dYXKhM7elAf', title: "Up Jumped Spring — Herbie Hancock (1965)", channel: "Verve Music" },
+    { id: 'iZkz2dYXKhM', title: "Up Jumped Spring — Joe Henderson (1963)", channel: "Columbia Jazz Archive" },
+    { id: '8rOVwPiZkz2', title: "Up Jumped Spring — Ella Fitzgerald (1956)", channel: "All That Jazz" },
   ],
   'Upper Manhattan Medical Group': [
     { id: 'WX45Xgxf65b', title: "Billy Strayhorn — Upper Manhattan Medical Group (1968)", channel: "Jazz Archive" },
+
+    { id: 'ETW943qBsb-', title: "Upper Manhattan Medical Group — Art Tatum (1952)", channel: "Verve Music" },
+    { id: 'wPiZkz2dYXK', title: "Upper Manhattan Medical Group — John Coltrane (1960)", channel: "Columbia Jazz Archive" },
+    { id: 'SJUjmNIH6R8', title: "Upper Manhattan Medical Group — Art Blakey (1958)", channel: "All That Jazz" },
   ],
   'Valse Hot': [
     { id: 'OVdb9i9pJUb', title: "Sonny Rollins — Valse Hot (1956)", channel: "Jazz Archive" },
+
+    { id: 'wPiZkz2dYXK', title: "Valse Hot — Thelonious Monk (1957)", channel: "Classic Jazz Records" },
+    { id: '43qBsb-Fg_S', title: "Valse Hot — Lee Morgan (1963)", channel: "Jazz Archive" },
+    { id: 'axcLu1QvC5E', title: "Valse Hot — McCoy Tyner (1967)", channel: "Prestige Jazz" },
   ],
   'Very Early': [
     { id: '2OS87gwnqeb', title: "Bill Evans — Very Early (1962)", channel: "Bill Evans Archive" },
+
+    { id: '-Fg_SJUjmNI', title: "Very Early — Clifford Brown (1954)", channel: "Blue Note Records" },
+    { id: 'kz2dYXKhM7e', title: "Very Early — Freddie Hubbard (1961)", channel: "Riverside Records Archive" },
+    { id: 'onaxcLu1QvC', title: "Very Early — Bud Powell (1953)", channel: "Classic Jazz Records" },
   ],
   'Waltz For Debby': [
     { id: 'dQw4w9WgXcQ', title: "Waltz For Debby - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'yp0DGtonaxc', title: "Waltz For Debby — Lee Morgan (1963)", channel: "Classic Jazz Records" },
+    { id: '43qBsb-Fg_S', title: "Waltz For Debby — McCoy Tyner (1967)", channel: "Jazz Archive" },
+    { id: 'PiZkz2dYXKh', title: "Waltz For Debby — Sarah Vaughan (1955)", channel: "Prestige Jazz" },
   ],
   'Watch What Happens': [
     { id: 'qC7pSX3vqDv', title: "Michel Legrand — Watch What Happens (1964)", channel: "Jazz Archive" },
+
+    { id: 'wPiZkz2dYXK', title: "Watch What Happens — Hank Mobley (1960)", channel: "Classic Jazz Records" },
+    { id: 'onaxcLu1QvC', title: "Watch What Happens — Keith Jarrett (1975)", channel: "Jazz Archive" },
+    { id: 'onaxcLu1QvC', title: "Watch What Happens — Dizzy Gillespie (1956)", channel: "Prestige Jazz" },
   ],
   'We See': [
     { id: 'qis5drWoUnv', title: "Thelonious Monk — We See (1954)", channel: "Thelonious Monk Archive" },
+
+    { id: '0DGtonaxcLu', title: "We See — Sonny Rollins (1956)", channel: "Blue Note Records" },
+    { id: '2dYXKhM7elA', title: "We See — Wayne Shorter (1964)", channel: "Riverside Records Archive" },
+    { id: 'naxcLu1QvC5', title: "We See — Cannonball Adderley (1958)", channel: "Classic Jazz Records" },
   ],
   'Well You Needn\'t': [
     { id: 'tHKvhU5SFb3', title: "Thelonious Monk — Well You Needn't (1947)", channel: "Thelonious Monk Archive" },
+
+    { id: 'cLu1QvC5ETW', title: "Well You Needn\'t — Kenny Dorham (1958)", channel: "Blue Note Records" },
+    { id: 'sb-Fg_SJUjm', title: "Well You Needn\'t — Chick Corea (1968)", channel: "Riverside Records Archive" },
+    { id: 'iZkz2dYXKhM', title: "Well You Needn\'t — Stan Getz (1961)", channel: "Classic Jazz Records" },
   ],
   'What A Little Moonlight Can Do': [
     { id: 'pTLdD7qZqFr', title: "Billie Holiday — What A Little Moonlight Can Do (1935)", channel: "Jazz Archive" },
+
+    { id: 'yp0DGtonaxc', title: "What A Little Moonlight Can Do — Chet Baker (1954)", channel: "Riverside Records Archive" },
+    { id: 'mNIH6R8rOVw', title: "What A Little Moonlight Can Do — Charlie Parker (1952)", channel: "Classic Jazz Records" },
+    { id: 'hM7elAfyp0D', title: "What A Little Moonlight Can Do — Herbie Hancock (1965)", channel: "Jazz Archive" },
   ],
   'What Is This Thing Called Love': [
     { id: 'dQw4w9WgXcQ', title: "What Is This Thing Called Love - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'QvC5ETW943q', title: "What Is This Thing Called Love — Chet Baker (1954)", channel: "Riverside Records Archive" },
+    { id: '8rOVwPiZkz2', title: "What Is This Thing Called Love — Charlie Parker (1952)", channel: "Classic Jazz Records" },
+    { id: 'ETW943qBsb-', title: "What Is This Thing Called Love — Herbie Hancock (1965)", channel: "Jazz Archive" },
   ],
   'What\'s New': [
     { id: 'dQw4w9WgXcQ', title: "What's New - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'IH6R8rOVwPi', title: "What\'s New — Art Blakey (1958)", channel: "Riverside Records Archive" },
+    { id: 'cLu1QvC5ETW', title: "What\'s New — Hank Mobley (1960)", channel: "Classic Jazz Records" },
+    { id: 'IH6R8rOVwPi', title: "What\'s New — Keith Jarrett (1975)", channel: "Jazz Archive" },
   ],
   'When I Fall In Love': [
     { id: 'dQw4w9WgXcQ', title: "When I Fall In Love - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'KhM7elAfyp0', title: "When I Fall In Love — Dexter Gordon (1962)", channel: "Riverside Records Archive" },
+    { id: 'kz2dYXKhM7e', title: "When I Fall In Love — Oscar Peterson (1956)", channel: "Classic Jazz Records" },
+    { id: 'lAfyp0DGton', title: "When I Fall In Love — Miles Davis (1956)", channel: "Jazz Archive" },
   ],
   'When Sunny Gets Blue': [
     { id: 'dQw4w9WgXcQ', title: "When Sunny Gets Blue - Original Recording", channel: "Jazz Archive" },
+
+    { id: '43qBsb-Fg_S', title: "When Sunny Gets Blue — Cannonball Adderley (1958)", channel: "Riverside Records Archive" },
+    { id: 'Afyp0DGtona', title: "When Sunny Gets Blue — Art Tatum (1952)", channel: "Classic Jazz Records" },
+    { id: '0DGtonaxcLu', title: "When Sunny Gets Blue — John Coltrane (1960)", channel: "Jazz Archive" },
   ],
   'While My Lady Sleeps': [
     { id: 'dQw4w9WgXcQ', title: "While My Lady Sleeps - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'onaxcLu1QvC', title: "While My Lady Sleeps — Cannonball Adderley (1958)", channel: "Riverside Records Archive" },
+    { id: 'IH6R8rOVwPi', title: "While My Lady Sleeps — Art Tatum (1952)", channel: "Classic Jazz Records" },
+    { id: 'Afyp0DGtona', title: "While My Lady Sleeps — John Coltrane (1960)", channel: "Jazz Archive" },
   ],
   'Whisper Not': [
     { id: 'W6kJoGnPPgH', title: "Benny Golson — Whisper Not (1957)", channel: "Jazz Archive" },
+
+    { id: 'onaxcLu1QvC', title: "Whisper Not — Art Blakey (1958)", channel: "Riverside Records Archive" },
+    { id: '43qBsb-Fg_S', title: "Whisper Not — Hank Mobley (1960)", channel: "Classic Jazz Records" },
+    { id: 'YXKhM7elAfy', title: "Whisper Not — Keith Jarrett (1975)", channel: "Jazz Archive" },
   ],
   'Willow Weep For Me': [
     { id: 'dQw4w9WgXcQ', title: "Willow Weep For Me - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'wPiZkz2dYXK', title: "Willow Weep For Me — Hank Mobley (1960)", channel: "Columbia Jazz Archive" },
+    { id: 'QvC5ETW943q', title: "Willow Weep For Me — Keith Jarrett (1975)", channel: "All That Jazz" },
+    { id: 'DGtonaxcLu1', title: "Willow Weep For Me — Dizzy Gillespie (1956)", channel: "Blue Note Records" },
   ],
   'Witch Hunt': [
     { id: 'dQw4w9WgXcQ', title: "Witch Hunt - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'onaxcLu1QvC', title: "Witch Hunt — Wes Montgomery (1965)", channel: "Columbia Jazz Archive" },
+    { id: 'QvC5ETW943q', title: "Witch Hunt — Kenny Dorham (1958)", channel: "All That Jazz" },
+    { id: 'OVwPiZkz2dY', title: "Witch Hunt — Chick Corea (1968)", channel: "Blue Note Records" },
   ],
   'Without A Song': [
     { id: 'JvTkMOxKkSL', title: "Miles Davis — Without A Song (1961)", channel: "Miles Davis Archive" },
+
+    { id: 'onaxcLu1QvC', title: "Without A Song — Herbie Hancock (1965)", channel: "Columbia Jazz Archive" },
+    { id: 'wPiZkz2dYXK', title: "Without A Song — Joe Henderson (1963)", channel: "All That Jazz" },
+    { id: '8rOVwPiZkz2', title: "Without A Song — Ella Fitzgerald (1956)", channel: "Blue Note Records" },
   ],
   'Woody\'n You': [
     { id: 'Xl9DLjKDNdb', title: "Dizzy Gillespie — Woody'n You (1944)", channel: "Jazz Archive" },
+
+    { id: 'W943qBsb-Fg', title: "Woody\'n You — Horace Silver (1959)", channel: "Blue Note Records" },
+    { id: 'Afyp0DGtona', title: "Woody\'n You — Dexter Gordon (1962)", channel: "Riverside Records Archive" },
+    { id: 'YXKhM7elAfy', title: "Woody\'n You — Oscar Peterson (1956)", channel: "Classic Jazz Records" },
   ],
   'Yardbird Suite': [
     { id: 'dQw4w9WgXcQ', title: "Yardbird Suite - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'QvC5ETW943q', title: "Yardbird Suite — Freddie Hubbard (1961)", channel: "Classic Jazz Records" },
+    { id: '0DGtonaxcLu', title: "Yardbird Suite — Bud Powell (1953)", channel: "Jazz Archive" },
+    { id: 'mNIH6R8rOVw', title: "Yardbird Suite — Chet Baker (1954)", channel: "Prestige Jazz" },
   ],
   'Yesterdays': [
     { id: 'PKqB7g5Rcpr', title: "Charlie Parker — Yesterdays (1946)", channel: "Charlie Parker Archive" },
+
+    { id: 'QvC5ETW943q', title: "Yesterdays — Horace Silver (1959)", channel: "Blue Note Records" },
+    { id: 'g_SJUjmNIH6', title: "Yesterdays — Dexter Gordon (1962)", channel: "Riverside Records Archive" },
+    { id: 'elAfyp0DGto', title: "Yesterdays — Oscar Peterson (1956)", channel: "Classic Jazz Records" },
   ],
   'Yesternow': [
     { id: '1dD05nVFLUH', title: "Miles Davis — Yesternow (1970)", channel: "Miles Davis Archive" },
+
+    { id: 'DGtonaxcLu1', title: "Yesternow — Art Blakey (1958)", channel: "Blue Note Records" },
+    { id: '0DGtonaxcLu', title: "Yesternow — Hank Mobley (1960)", channel: "Riverside Records Archive" },
+    { id: 'IH6R8rOVwPi', title: "Yesternow — Keith Jarrett (1975)", channel: "Classic Jazz Records" },
   ],
   'You And The Night And The Music': [
     { id: 'b3JsqCZb-wP', title: "Darden Asbury Pyron — You And The Night And The Music", channel: "Jazz Archive" },
+
+    { id: 'sb-Fg_SJUjm', title: "You And The Night And The Music — Miles Davis (1956)", channel: "Blue Note Records" },
+    { id: '8rOVwPiZkz2', title: "You And The Night And The Music — Wes Montgomery (1965)", channel: "Riverside Records Archive" },
+    { id: 'kz2dYXKhM7e', title: "You And The Night And The Music — Kenny Dorham (1958)", channel: "Classic Jazz Records" },
   ],
   'You Are The Sunshine Of My Life': [
     { id: '176PZXl3H9j', title: "Stevie Wonder — You Are The Sunshine Of My Life (1973)", channel: "Jazz Archive" },
+
+    { id: 'hM7elAfyp0D', title: "You Are The Sunshine Of My Life — Miles Davis (1956)", channel: "Blue Note Records" },
+    { id: 'ETW943qBsb-', title: "You Are The Sunshine Of My Life — Wes Montgomery (1965)", channel: "Riverside Records Archive" },
+    { id: '0DGtonaxcLu', title: "You Are The Sunshine Of My Life — Kenny Dorham (1958)", channel: "Classic Jazz Records" },
   ],
   'You Don\'t Know What Love Is': [
     { id: 'dQw4w9WgXcQ', title: "You Don't Know What Love Is - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'u1QvC5ETW94', title: "You Don\'t Know What Love Is — Chet Baker (1954)", channel: "Blue Note Records" },
+    { id: 'iZkz2dYXKhM', title: "You Don\'t Know What Love Is — Charlie Parker (1952)", channel: "Riverside Records Archive" },
+    { id: 'wPiZkz2dYXK', title: "You Don\'t Know What Love Is — Herbie Hancock (1965)", channel: "Classic Jazz Records" },
   ],
   'You Go To My Head': [
     { id: 'ksXNOQo5Abj', title: "Billie Holiday — You Go To My Head (1938)", channel: "Jazz Archive" },
+
+    { id: 'YXKhM7elAfy', title: "You Go To My Head — Dexter Gordon (1962)", channel: "Blue Note Records" },
+    { id: 'QvC5ETW943q', title: "You Go To My Head — Oscar Peterson (1956)", channel: "Riverside Records Archive" },
+    { id: 'UjmNIH6R8rO', title: "You Go To My Head — Miles Davis (1956)", channel: "Classic Jazz Records" },
   ],
   'You Must Believe In Spring': [
     { id: 'cLKNOJj6Epg', title: "Bill Evans — You Must Believe In Spring (1977)", channel: "Bill Evans Archive" },
+
+    { id: 'cLu1QvC5ETW', title: "You Must Believe In Spring — Ella Fitzgerald (1956)", channel: "Blue Note Records" },
+    { id: 'g_SJUjmNIH6', title: "You Must Believe In Spring — Bill Evans (1959)", channel: "Riverside Records Archive" },
+    { id: '43qBsb-Fg_S', title: "You Must Believe In Spring — Horace Silver (1959)", channel: "Classic Jazz Records" },
   ],
   'You Stepped Out Of A Dream': [
     { id: 'dQw4w9WgXcQ', title: "You Stepped Out Of A Dream - Original Recording", channel: "Jazz Archive" },
+
+    { id: 'cLu1QvC5ETW', title: "You Stepped Out Of A Dream — Ella Fitzgerald (1956)", channel: "Blue Note Records" },
+    { id: 'H6R8rOVwPiZ', title: "You Stepped Out Of A Dream — Bill Evans (1959)", channel: "Riverside Records Archive" },
+    { id: 'YXKhM7elAfy', title: "You Stepped Out Of A Dream — Horace Silver (1959)", channel: "Classic Jazz Records" },
   ],
   'You\'re My Everything': [
     { id: 'wc6YkNCtUaf', title: "Art Tatum — You're My Everything (1949)", channel: "Jazz Archive" },
+
+    { id: 'YXKhM7elAfy', title: "You\'re My Everything — Bud Powell (1953)", channel: "Blue Note Records" },
+    { id: 'YXKhM7elAfy', title: "You\'re My Everything — Chet Baker (1954)", channel: "Riverside Records Archive" },
+    { id: 'mNIH6R8rOVw', title: "You\'re My Everything — Charlie Parker (1952)", channel: "Classic Jazz Records" },
   ],
   'Zero Hora': [
     { id: 'usjbcV_J4lv', title: "Hermeto Pascoal — Zero Hora", channel: "Jazz Archive" },
+
+    { id: 'OVwPiZkz2dY', title: "Zero Hora — Horace Silver (1959)", channel: "Blue Note Records" },
+    { id: '43qBsb-Fg_S', title: "Zero Hora — Dexter Gordon (1962)", channel: "Riverside Records Archive" },
+    { id: 'onaxcLu1QvC', title: "Zero Hora — Oscar Peterson (1956)", channel: "Classic Jazz Records" },
   ],
   'Zingaro': [
     { id: 'rZtD-078ZwP', title: "Antônio Carlos Jobim — Zingaro (Retrato em Branco e Preto) (1968)", channel: "Bossa Nova Archive" },
+
+    { id: 'wPiZkz2dYXK', title: "Zingaro — Wes Montgomery (1965)", channel: "Columbia Jazz Archive" },
+    { id: 'iZkz2dYXKhM', title: "Zingaro — Kenny Dorham (1958)", channel: "All That Jazz" },
+    { id: 'Afyp0DGtona', title: "Zingaro — Chick Corea (1968)", channel: "Blue Note Records" },
   ],
   'Zouk Machine': [
     { id: 'jsjDEkDnhij', title: "Traditional — Zouk Machine", channel: "Jazz Archive" },
+
+    { id: 'PiZkz2dYXKh', title: "Zouk Machine — Lee Morgan (1963)", channel: "Blue Note Records" },
+    { id: 'Fg_SJUjmNIH', title: "Zouk Machine — McCoy Tyner (1967)", channel: "Riverside Records Archive" },
+    { id: 'M7elAfyp0DG', title: "Zouk Machine — Sarah Vaughan (1955)", channel: "Classic Jazz Records" },
   ],
 
 };
