@@ -10,6 +10,27 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'Ngh2k-0DtPM', title: "A Night In Tunisia - Real Jazz Backing Track - Play Along", channel: "Real Jazz Backing Tracks" },
     { id: 'LOmJ9QgqyiI', title: "A Night In Tunisia - Jazz Practice Backing Track", channel: "PRACTICE JAZZ" }
   ],
+  'After You\'ve Gone': [
+    { id: 'OQ4y6XnBCSc', title: "After You've Gone - Backing track / Play-along", channel: "QGVideos" },
+    { id: '-YRB1iFqeg4', title: "After You've Gone - Up Tempo Swinging Backing Track - Organ and Drums", channel: "Phil Wilkinson Music" },
+    { id: 'T-_-8Lv_ePY', title: "After You've Gone - Backing Track with Sheet Music for Tenor Sax", channel: "Yasuhiro Fujii" },
+    { id: 'pKmSwCYVWDA', title: "After you’ve gone backing track, play along, melody, tune", channel: "Django Fakebook" },
+    { id: 'RLyHtjzxRCc', title: "After You've Gone (180 bpm) - Gypsy jazz Backing track / Jazz manouche", channel: "Guitare Improvisation" }
+  ],
+  'Afternoon In Paris': [
+    { id: '5MsgmIB2-Sk', title: "AFTERNOON IN PARIS chord progression - Backing Track Play Along Jazz", channel: "Backingtracks JAZZ" },
+    { id: 'qyLJNugJn9Y', title: "Afternoon In Paris chord progression - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
+    { id: '8hEGGe01zQ4', title: "Afternoon In Paris - Slow Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: 'Y3ZYiubyY6A', title: "Afternoon In Paris (150 BPM) - Backing Track", channel: "Improv' Your Music" },
+    { id: 'A_BDRHbcOI4', title: "Afternoon In Paris - Medium Up Swing || BACKING TRACK", channel: "JGC Play-Alongs" }
+  ],
+  'Airegin': [
+    { id: 'ZQjTgtoG5ks', title: "Airegin chord progression - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
+    { id: 'Dwqjx7naqI8', title: "Jazz Backing Track - Airegin", channel: "Eagleheart Jazz Channel" },
+    { id: '__fT_VE_bt8', title: "Airegin - Medium Up Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: 'pUlwg0c9Et4', title: "Airegin | 200 bpm | Jazz Swing | Play-Along Backing Track", channel: "Edwin’s Jazz Jam" },
+    { id: 'BR1j4Axwg7M', title: "Airegin | 280 bpm | Jazz Swing | Play-Along Backing Track", channel: "Edwin’s Jazz Jam" }
+  ],
   'All Of Me': [
     { id: 'WSMwjeyzv6o', title: "All Of Me - Backing Track Tempo 120 (Aun Chatchai)", channel: "Aun Chatchai" },
     { id: 'ew0zezZ7I4w', title: "All of Me (180 bpm) - Gypsy jazz Backing track / Jazz manouche", channel: "Guitare Improvisation" },
@@ -61,6 +82,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'UmVVZXHf-7U', title: "Along Came Betty - Backing track / Play-along", channel: "QGVideos" },
     { id: 'MfO09GbEAto', title: "Along Came Betty - Medium Slow Swing || BACKING TRACK", channel: "JGC Play-Alongs" }
   ],
+  'Angel Eyes': [
+    { id: 'dKxR6GDZc5Q', title: "ANGEL EYES chord progression - Backing Track Play Along Jazz Standard Bible", channel: "Backingtracks JAZZ" },
+    { id: 'NoFUrvrsesc', title: "Angel Eyes chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: 'ucCPi6fUurw', title: "Angel Eyes - Jazz Standard Backing Track", channel: "PRACTICE JAZZ" },
+    { id: 'k9xDjijxRjM', title: "Angel Eyes (Matt Dennis) - Backing Track with Sheet Music for Tenor Sax", channel: "Yasuhiro Fujii" },
+    { id: '24q9MMWEMco', title: "Angel Eyes (75 BPM) - Backing Track", channel: "Improv' Your Music" }
+  ],
   'Anthropology': [
     { id: 'WdVjyZg0W64', title: "Anthropology - 190 bpm - Bb Rhythm changes (Jazz/Swing feel) : Backing Track", channel: "Guitare Improvisation" },
     { id: 'odDD1f-iymc', title: "Anthropology - 150 bpm - Bb Rhythm changes (Jazz/Swing feel) : Backing Track", channel: "Guitare Improvisation" },
@@ -68,12 +96,40 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'CknPwbTvQf0', title: "ANTHROPOLOGY chord progression - Backing Track Play Along Jazz Standard Bible", channel: "Backingtracks JAZZ" },
     { id: 'KfY_pfW93YU', title: "Anthropology - Medium Up Swing || BACKING TRACK", channel: "JGC Play-Alongs" }
   ],
+  'April In Paris': [
+    { id: 'SM4dzNl1wA4', title: "April In Paris chord progression - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
+    { id: 'N0fXTHq819Q', title: "Jazz Backing Track - April in Paris", channel: "Eagleheart Jazz Channel" },
+    { id: 'MRjXqfmNx_g', title: "April In Paris chord progression (no piano) - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
+    { id: 't6oPrHQ2Hj8', title: "April in Paris play along - backing track (C key score piano - guitar)", channel: "Davide Severino" },
+    { id: 'eWN5_exCM0I', title: "April In Paris - with Intro + Lyrics in F (Female) - Jazz Sing-Along", channel: "Jazz Sing-Along" }
+  ],
   'Ask Me Now': [
     { id: '6FdvmRXUdhw', title: "Ask Me Now - Backing track / Play-along", channel: "QGVideos" },
     { id: 'K44MhAQ6MBg', title: "ASK ME NOW chord progression - Backing Track", channel: "Backingtracks JAZZ" },
     { id: 'ihsYIjHB0UA', title: "Ask Me Now | Jazz Standard Practice Backing Track", channel: "PRACTICE JAZZ" },
     { id: 'A7nZ4jlqapU', title: "Ask Me Now - Ballad || BACKING TRACK", channel: "JGC Play-Alongs" },
     { id: 'M2myGrjnhus', title: "Ask Me Now - Backing Track", channel: "PRACTICE JAZZ" }
+  ],
+  'Au Privave': [
+    { id: '0NQ-85tyXb8', title: "Au Privave chord progression - Backing Track Play Along Jazz Standard Bible The Real Book", channel: "Backingtracks JAZZ" },
+    { id: 'irWtPzRhwYM', title: "Au Privave  Play along - Backing track (C key score violin/guitar/piano)", channel: "Davide Severino" },
+    { id: 'BmwBYWqNsRc', title: "Au Privave - Medium Slow Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: 'bbjpAP0mH_s', title: "Charlie Parker Au Privave play along score and backing track for B flat instrument", channel: "Andrew Finn" },
+    { id: 'BBop0vfVxfk', title: "Au Privave - Backing Track", channel: "PRACTICE JAZZ" }
+  ],
+  'Au Privave (alt)': [
+    { id: '7Tv1rMMcOs4', title: "Charlie Parker - Au Privave (Solo Transcription)", channel: "Roman Nesterov" },
+    { id: 'rdojrvCMlws', title: "Charlie Parker - Au Privave Alt Take (Solo Transcription)", channel: "Roman Nesterov" },
+    { id: 'Z5GuKgNK8Os', title: "Au Privave - Alt Take", channel: "samcrowe2" },
+    { id: 'PspjCr5D8Bc', title: "Au privave", channel: "jptixier" },
+    { id: 'MZkWAbGSxb8', title: "JAMS Jazz Combo - Au Privave", channel: "jujubee63" }
+  ],
+  'Autumn In New York': [
+    { id: 'Ps_CK91VdGo', title: "Autumn In New York chord progression - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
+    { id: 'p6YSeKRioek', title: "Autumn in New York - Backing track / Play-along", channel: "QGVideos" },
+    { id: 'XA_1GXqLCVA', title: "Jazz Backing Track - Autumn In New York", channel: "Eagleheart Jazz Channel" },
+    { id: 'P71MrNn0sPs', title: "Autumn In New York - Backing Track with Intro + Lyrics in C (Female) - Jazz Sing-Along", channel: "Jazz Sing-Along" },
+    { id: 'X9IAHDwgPvw', title: "Autumn In New York Bass Line Play Along Backing Track", channel: "MrSunnybass" }
   ],
   'Autumn Leaves': [
     { id: 'Xjf2kiDO19Y', title: "Autumn leaves / Les feuilles mortes (120 bpm) : Backing track", channel: "Guitare Improvisation" },
@@ -87,12 +143,40 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'zwSfCJcyUks', title: "Autumn Leaves' Jazz Backing Track  (G Major/E Minor) - 'Autumn Leaves'", channel: "Jam Track Paradise I Guitar" },
     { id: 'GNTwT89GOmU', title: "AUTUMN LEAVES chord progression (Gm) (no piano) - Backing Track Jazz Standard Bible", channel: "Backingtracks JAZZ" }
   ],
+  'Back At The Chicken Shack': [
+    { id: 'LKg-pLsUdHw', title: "Back At The Chicken Shack | Backing track", channel: "Constantine Taranenko" },
+    { id: 'D3GhcTDHZb0', title: "Chicken Shack Blues - Backing Track G.", channel: "Julián Cordido. Music, Covers & Backing Tracks." },
+    { id: 'imMCkOd1IU0', title: "Back at the Chicken Shack - Saxophone Music & Backing Track", channel: "Johnny Ferreira" },
+    { id: 'nUtpPeEuhoE', title: "Back At The Chicken Shack - Backing Track (iRealPro)", channel: "The Dalles High School Music" },
+    { id: '3bwBhdRGxG4', title: "CHICKEN SNACK  INSTRUMENT TRACK BACKING TRACK", channel: "FULL SOUL CHANNEL" }
+  ],
+  'Bag\'s Groove': [
+    { id: 'TRlmndeYjjE', title: "BAG'S GROOVE chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: 'dXQ970j7c7w', title: "Bags' Groove / 140 bpm (Jazz/Swing feel) : Backing Track", channel: "Guitare Improvisation" },
+    { id: 'ufGLyWUC1CE', title: "Jazz Backing Track - Bags' Groove", channel: "Eagleheart Jazz Channel" },
+    { id: '72415BWcb54', title: "Bag's Groove (146 BPM) - Backing Track", channel: "Improv' Your Music" },
+    { id: '_s31IpYyWMc', title: "Bag's Groove - Backing Track with Sheet Music for Alto Sax", channel: "Yasuhiro Fujii" }
+  ],
   'Bags\' Groove': [
     { id: 'dXQ970j7c7w', title: "Bags' Groove / 140 bpm (Jazz/Swing feel) : Backing Track", channel: "Guitare Improvisation" },
     { id: 'ufGLyWUC1CE', title: "Jazz Backing Track - Bags' Groove", channel: "Eagleheart Jazz Channel" },
     { id: 'TRlmndeYjjE', title: "BAG'S GROOVE chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
     { id: '-Fn4EPBl3no', title: "Bag's Groove · Backing Track (Bb Version) for Tenor, Soprano Sax & Trumpet", channel: "Lolo García Music" },
     { id: '72415BWcb54', title: "Bag's Groove (146 BPM) - Backing Track", channel: "Improv' Your Music" }
+  ],
+  'Beatrice': [
+    { id: 'SKoPsThRs_w', title: "Beatrice (Sam Rivers) : Backing Track", channel: "Guitare Improvisation" },
+    { id: 'twbKjhmMYQs', title: "Beatrice - Medium Slow Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: 'lRHI1U1nz4g', title: "Beatrice - Backing track / Play-along", channel: "QGVideos" },
+    { id: 'ORSpY2M6p2Y', title: "Beatrice - Backing Track", channel: "PRACTICE JAZZ" },
+    { id: '3XKLKwISjXk', title: "Beatrice Bass Line Play Along Backing Track", channel: "MrSunnybass" }
+  ],
+  'Beautiful Dreamer': [
+    { id: 'ahVrtRSf4Ck', title: "Play with accompaniment : Beautiful Dreamer - elementary version -  | S.Foster", channel: "AccompaU - Music App for Vn.Va.Vc.Ba. Players" },
+    { id: '3V0sDg14aOw', title: "Two Sleepy People (Carmichael) Backing track + music sheet", channel: "Werner Schmedding" },
+    { id: 'bkPXbA3v2PQ', title: "Beautiful Dreamer - Practice Track - Tenor", channel: "Breckinridge Middle School Choir" },
+    { id: '6Rga9Ieqb44', title: "Beautiful Dreamer (Karaoke Backing Track)", channel: "Karaoke Klassics - Topic" },
+    { id: 'BoSPmJDBLW0', title: "beautiful dreamer.", channel: "トウキョウ・アート・シェルター" }
   ],
   'Beautiful Love': [
     { id: 'DOWAaukVfTg', title: "Beautiful Love (Jazz/Swing feel) : Backing Track", channel: "Guitare Improvisation" },
@@ -104,6 +188,20 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'znMSNLznQb0', title: "[Jazz Organ] Beautiful Love (140bpm) - Jazz Standard Backing Track", channel: "PRACTICE JAZZ" },
     { id: '4JfAyHwxtYw', title: "Beautiful Love | 180 bpm | Jazz Swing | Play-Along Backing Track", channel: "Edwin's Jazz Jam" }
   ],
+  'Bess You Is My Woman': [
+    { id: 'TUuy0OjbyUU', title: "Bess, You Is My Woman/backing track/bpm70", channel: "flandria" },
+    { id: 'pW34v6Y5N-0', title: "Bess You Is My Woman (Playalong Version)", channel: "MIDIFine Systems - Topic" },
+    { id: 'X_YYCMNQURo', title: "Bess, You Is My Woman/backing track/bpm60", channel: "flandria" },
+    { id: '4r5ViYFYVcY', title: "Bess, You Is My Woman Now - Miles Davis with Gil Evans", channel: "johnnystaccata" },
+    { id: '2Hl7hguZj1M', title: "Bess, You Is My Woman Now (Karaoke Version from \"Porgy & Bess\")", channel: "Pop Music Workshop - Topic" }
+  ],
+  'Between The Devil And The Deep Blue Sea': [
+    { id: 'bisl_lxo41k', title: "Jazz Backing Track - Between The Devil And The Deep Blue Sea", channel: "Eagleheart Jazz Channel" },
+    { id: 'zFFMQd2VqAo', title: "JazzKara  \"Between The Devil And The Deep Blue Sea\" (Key=Ab)", channel: "JazzKaraCh" },
+    { id: 'WBa9YErB-D0', title: "Between The Devil  And The Deep Blue Sea - Backing + music sheet", channel: "Werner Schmedding" },
+    { id: '6KgER1sodUI', title: "\"Between The Devil And The Deep Blue Sea\" (jazz backing track and play along)", channel: "Klaus Bluetner" },
+    { id: 'wbeRCYM5oZg', title: "Between The Devil  And The Deep Blue Sea - Backing track + score for Bb instruments", channel: "Werner Schmedding" }
+  ],
   'Billie\'s Bounce': [
     { id: 'STALy7OOP6w', title: "Billie's Bounce Backing Track", channel: "BaBoSound" },
     { id: 'AP3WzjLhqIY', title: "Billie's Bounce (Charlie Parker) - Backing Track", channel: "PRACTICE JAZZ" },
@@ -112,6 +210,27 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'c3W_EMQO3BE', title: "Billie's Bounce (160BPM) - Backing track / Play-along", channel: "RA Jazz Transcriptions" },
     { id: 'rPeASWAjzho', title: "Billie's Bounce (Charlie Parker) - Backing Track Tempo 160", channel: "Aun Chatchai" },
     { id: 'txRLLVfj6eY', title: "Billie's Bounce - Play along - Eb instruments", channel: "Mauro Guenza" }
+  ],
+  'Birk\'s Works': [
+    { id: 'LU3ABK8Dzr4', title: "Jazz Backing Track - Birk's Works", channel: "Eagleheart Jazz Channel" },
+    { id: 'a90T28n1kRs', title: "\"Birks' Works\" Fm BLUES (Dizzy Gillespie) I Visual Play-Along Jazz Doblestandard", channel: "Jazz Doblestandard" },
+    { id: 'Tv1BFcnqKBA', title: "Birk’s Works in C- Bass Line Play Backing Track", channel: "MrSunnybass" },
+    { id: 'iB9XoJBFTJ4', title: "Birk's Works (Medium Swing) | Jazz Standard Practice Backing Track", channel: "PRACTICE JAZZ" },
+    { id: 'v7-QkLtRguk', title: "Birk’s Works in F- Bass Line Play Backing Track", channel: "MrSunnybass" }
+  ],
+  'Birks\' Works': [
+    { id: 'a90T28n1kRs', title: "\"Birks' Works\" Fm BLUES (Dizzy Gillespie) I Visual Play-Along Jazz Doblestandard", channel: "Jazz Doblestandard" },
+    { id: 'LU3ABK8Dzr4', title: "Jazz Backing Track - Birk's Works", channel: "Eagleheart Jazz Channel" },
+    { id: 'bdOJn5i-OpM', title: "\"Birks' Works\" FOR PIANO (Dizzy Gillespie) Fm BLUES I Jazz Doblestandard Play-Alongs", channel: "Jazz Doblestandard" },
+    { id: 'iB9XoJBFTJ4', title: "Birk's Works (Medium Swing) | Jazz Standard Practice Backing Track", channel: "PRACTICE JAZZ" },
+    { id: '8ZcWZx-OcNI', title: "\"Birks' Works\" FOR DRUMS (Dizzy Gillespie) Fm BLUES I  Jazz Doblestandard Play-Alongs", channel: "Jazz Doblestandard" }
+  ],
+  'Black Nile': [
+    { id: 'aQeY1q16TMw', title: "Black Nile chord progression - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
+    { id: 'BubjYAs8qIo', title: "Black Nile (Wayne Shorter) - Jazz Standard Backing Track", channel: "PRACTICE JAZZ" },
+    { id: 'sGJIykyueRY', title: "Black Nile - Up Tempo Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: '5sbvX3fbmyc', title: "Black Nile | Wayne Shorter - Backing Track / Play-Along with Lead Sheet", channel: "neajazz" },
+    { id: '3-j9y1qirUs', title: "Black Nile - Backing Track with Sheet Music for Tenor Sax", channel: "Yasuhiro Fujii" }
   ],
   'Black Orpheus': [
     { id: '0TFQ7X9A99k', title: "Black Orpheus (Manhã de Carnaval) - Gypsy jazz backing track / play along", channel: "Clément Reboul" },
@@ -182,12 +301,54 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: '56jVM7hELP4', title: "Jazz Backing Track - Body and Soul", channel: "Eagleheart Jazz Channel" },
     { id: 'x3MCogBc5d0', title: "Body and Soul - Backing track / Play-along", channel: "QGVideos" }
   ],
+  'Bolivia': [
+    { id: 'ePVOXIeB3_8', title: "BOLIVIA chord progression  - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: 'BIF3t6x4vYw', title: "Bolivia - Up Tempo Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: 'eDXQWkZWfXM', title: "Bolivia | Cedar Walton - Backing track / Play-along with Lead Sheet", channel: "neajazz" },
+    { id: 'R5YO2yZW8v8', title: "[JAZZ STANDARD] Bolivia (D, 250bpm, Swing) I Jazz Backing Track", channel: "JAMMATES" },
+    { id: '5g9GUl_rr18', title: "BOLIVIA chord progression (slow) - Backing Track Play Along Jazz Standard Bible", channel: "Backingtracks JAZZ" }
+  ],
+  'Bouncing With Bud': [
+    { id: 'GUKRyPLJpGU', title: "Bouncing With Bud Bass Line Play Along Backing Track", channel: "MrSunnybass" },
+    { id: 'VRSvZOiW5s4', title: "Bouncin' With Bud | 200 bpm | Jazz Swing | Play-Along Backing Track", channel: "Edwin’s Jazz Jam" },
+    { id: 'Y98tp6fBWAk', title: "Bouncin' With Bud | 160 bpm | Jazz Swing | Play-Along Backing Track", channel: "Edwin’s Jazz Jam" },
+    { id: 'DRCg3A8YjJw', title: "Bouncin' With Bud (Jez Brown Double Bass Graham Harvey Piano).", channel: "Double Bass and Piano Tracks" },
+    { id: 'sIA72Wo5tNI', title: "BOUNCING WITH BUD chord progression - Backing Track Play Along Jazz Standard Bible 2 Guitar", channel: "Backingtracks JAZZ" }
+  ],
   'Brazil': [
     { id: 'OVCRBA_RbRs', title: "Brazil - Gypsy jazz Backing track / Jazz manouche", channel: "Guitare Improvisation" },
     { id: 'kLaV6PR_8qw', title: "Triste | Antonio Carlos Jobim - Backing track / Play-along with Lead Sheet", channel: "neajazz" },
     { id: 'K2uOKzY2w8Y', title: "Play Along Manouche - BRAZIL - Gipsy Jazz", channel: "gael rouilhac" },
     { id: 'OPuhKACck_g', title: "Blue Bossa - Smooth Jazz Backing Track", channel: "Play Jazz Tracks" },
     { id: 'Gn7D1GgxOqg', title: "\"A.C. Jobim Cafe\" Brazilian Groove Backing Track in E major ↓ Chords", channel: "TK JAM TRACKS" }
+  ],
+  'Broadway': [
+    { id: 'gLH3-G9G2tE', title: "Broadway chord progression - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
+    { id: 'ysMqRmec4IE', title: "On Broadway (George Benson) : Backing Track", channel: "Guitare Improvisation" },
+    { id: '8vgUilFi6qk', title: "🎸 On Broadway - George Benson Guitar Backing Track with chords and lyrics", channel: "Best Songs Backing Tracks" },
+    { id: '4-rOnWgAnCk', title: "Jazz Backing Track - Broadway", channel: "Eagleheart Jazz Channel" },
+    { id: 'Jgfcq212ryM', title: "Jazz Backing Track - Budo", channel: "Eagleheart Jazz Channel" }
+  ],
+  'Bumpin\' On Sunset': [
+    { id: '3KcqdLLHiLY', title: "Wes Montgomery | Bumpin' on Sunset | Backing Track", channel: "Ethan's Backing Tracks" },
+    { id: 'vGZk4LUp2Vg', title: "Wes Montgomery Bumpin'", channel: "Hip#HoP JazZ funK ReGgAe" },
+    { id: 'dqn3PF_DcSg', title: "Wes Montgomery - Bumpin' On Sunset", channel: "TheAaronSpears" },
+    { id: 'fYY34m60qDs', title: "Canadian Sunset (Jazz/Bossa feel) - 155 bpm : Backing Track", channel: "Guitare Improvisation" },
+    { id: '36hYhFxw53U', title: "BUMPIN' ON SUNSET - WES MONTGOMERY - JAZZ GUITAR", channel: "Gino De Vita" }
+  ],
+  'But Beautiful': [
+    { id: 'ci2P_xTNXOA', title: "But Beautiful chord progression - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
+    { id: '5UTuUq79crY', title: "Jazz Backing Track - But Beautiful", channel: "Eagleheart Jazz Channel" },
+    { id: 'yMUL1iU0lic', title: "BUT BEAUTIFUL chord progression - Backing Track", channel: "Backingtracks JAZZ" },
+    { id: '3AzvIq6e6p8', title: "But Beautiful - a backing track with Intro + Lyrics in F (Male) - Jazz Sing-Along", channel: "Jazz Sing-Along" },
+    { id: '9i-Ujx4yIhU', title: "But Beautiful- a backing track with Intro + Lyrics in C (Female) - Jazz Sing-Along", channel: "Jazz Sing-Along" }
+  ],
+  'But Not For Me': [
+    { id: 'PZ-lLZeT0Fg', title: "But Not For Me (Jazz/Swing feel) - 160 bpm : Backing Track", channel: "Guitare Improvisation" },
+    { id: 'cgwzu-ubxDs', title: "BUT NOT FOR ME chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: 'D1Zi6hKpEh0', title: "But Not For Me | 180 bpm | Jazz Swing | Play-Along Backing Track", channel: "Edwin’s Jazz Jam" },
+    { id: 'p-bMUlvahrM', title: "BUT NOT FOR ME chord progression - Backing Track (no piano)", channel: "Backingtracks JAZZ" },
+    { id: 'ihb8iHM7RpU', title: "But Not For Me - Backing track / Play-along", channel: "QGVideos" }
   ],
   'Bye Bye Blackbird': [
     { id: 'W5hDiZjyXjc', title: "BYE BYE BLACKBIRD chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
@@ -212,6 +373,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'fovnhsoxwog', title: "C Jam Blues", channel: "Mengotto Play Alongs - Topic" },
     { id: 'AwT4FD5m1lA', title: "Jazz Blues in C - Jazz Backing Track / Play-along (110bpm)", channel: "Mobile Friendly Jazz Backing - bF -" },
     { id: 'WmlWrqXxfZc', title: "C-Jam Blues Playalong Track", channel: "B'Town Jazz" }
+  ],
+  'Call Me Irresponsible': [
+    { id: 'GUdVdyeLBLU', title: "Call Me Irresponsible chord progression - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
+    { id: '_8uNRarIHF4', title: "Jazz Backing Track - Call Me Irresponsible", channel: "Eagleheart Jazz Channel" },
+    { id: 'jhJtep375A4', title: "Call Me Irresponsible play-along music sheet for Flute, Violin and C instruments", channel: "Music Library PH" },
+    { id: '_cG964ehh3Y', title: "Michael Bublé : Call Me Irresponsible : C Instruments Playalong Backing Track", channel: "Rewind Music" },
+    { id: 'LjToWnkG4M4', title: "Call me irresponsible -  JAZZ KARAOKE Key Eb", channel: "MishaG9" }
   ],
   'Calypso': [
     { id: 's9uhmAnG7dM', title: "The Everywhere Calypso Bass Line Play Along Backing Track", channel: "MrSunnybass" },
@@ -243,6 +411,27 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'wDdkMywwWqs', title: "DRUMLESS TRACK CARAVAN Big Band Play Along Volume 3 Duke Ellington", channel: "dB Drums & Percussion" },
     { id: 'Qh3dhXhmDqI', title: "Caravan - Play along - C instruments", channel: "Mauro Guenza" }
   ],
+  'Caravan (Ellington)': [
+    { id: 'VMFvYzdMODs', title: "Caravan Duke Ellington & Juan Tizol  1937 Bb Trumpet or Tenor Sax Play Along", channel: "Play Along Central" },
+    { id: 'adNogmZzYw0', title: "Caravan   Duke Ellington & Juan Tizol 1937 Bb Trumpet or Tenor Sax Play Along", channel: "Play Along Central" },
+    { id: '8p80QeeqGuw', title: "Caravan - a backing track with Intro + Lyrics in Gm (Female) - Jazz Sing-Along", channel: "Jazz Sing-Along" },
+    { id: '1GHOQe9MY3M', title: "Caravan (Morrison) - Backing Track for Guitar & Vocals (Live Looper app w/ BIAB sound)", channel: "LiveLooperApp" },
+    { id: 'YAiIPo7H1OI', title: "Caravan Full Backing Track With Scales", channel: "Jazzguitarpirate" }
+  ],
+  'Celia': [
+    { id: '76xwIGwMdM8', title: "Celia - Medium Up Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: '-vIO4AvtCKs', title: "Jazz Backing Track - Celia", channel: "Eagleheart Jazz Channel" },
+    { id: 'nQOmDZ0J4oU', title: "Celia Bass Line Play Along Backing Track", channel: "MrSunnybass" },
+    { id: 'FidxOYaIiOw', title: "Celia [No Piano] - Medium Up Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: 'CgBB5-Bxy0M', title: "BACKING TRACK - CELIA (Bud Powell) (Bb) 160 BPM SWING", channel: "Luc Maes" }
+  ],
+  'Central Park West': [
+    { id: 'W2pUlWZ6Gjg', title: "CENTRAL PARK WEST chord progression - Backing Track Play Along Jazz Standard Bible 2 Guitar", channel: "Backingtracks JAZZ" },
+    { id: 'qQJGLvT1E6Q', title: "Central Park West Backing Track Jazz Ballad - 75bpm", channel: "Backing Track Center" },
+    { id: 'KL6nCNT7V1Y', title: "Central Park West - Jazz Standard Backing Track", channel: "PRACTICE JAZZ" },
+    { id: 'lHTm3n-KMP4', title: "Central Park West (73 BPM) - Backing Track", channel: "Improv' Your Music" },
+    { id: 'JOtv_FromRg', title: "Central Park West – Jazz Ballad Backing Track in B Major | Coltrane Style Practice", channel: "ACME Play-A-Longs" }
+  ],
   'Chelsea Bridge': [
     { id: 'mheXwssgcbc', title: "Chelsea Bridge By Billy Strayhorn | Play -Along | Backing Track", channel: "Michele Paternoster" },
     { id: 'UZYI72f6jFQ', title: "Chelsea Bridge chord progression - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
@@ -262,6 +451,20 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'XXU54SXcPwI', title: "Cherokee Backing Track Bass Line Play Along", channel: "MrSunnybass" },
     { id: 'KtQYxOBg-WI', title: "Cherokee - Playback jazz manouche - Gypsy jazz backing track / play along", channel: "Clément Reboul" }
   ],
+  'Cherokee (alt)': [
+    { id: 'WS0iApZvgF8', title: "Cherokee - Backing Track with Sheet Music for Alto Sax", channel: "Yasuhiro Fujii" },
+    { id: 'LMQA6giIpec', title: "Cherokee 7/4 260bpm", channel: "Jason Palmer" },
+    { id: 'cGFOLpb4BBU', title: "Donna Lee - Backing Track - B Major - BPM190", channel: "Yasuhiro Fujii" },
+    { id: '0Rc23tocC60', title: "Angeline The Baker  - 100 BPM bluegrass backing track", channel: "BBT Bluegrass Backing Tracks" },
+    { id: 'Ul1u5TNZDnw', title: "Crescent chord progression - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" }
+  ],
+  'Close Your Eyes': [
+    { id: '_qnJma0e7VQ', title: "Close Your Eyes (Medium Swing) | Jazz Standard Practice Backing Track", channel: "PRACTICE JAZZ" },
+    { id: 'H_IgK3SU03M', title: "Close Your Eyes Backing Track", channel: "saxsolos" },
+    { id: 'yJ9lcXpMH3E', title: "Close Your Eyes Bolero in Ab- Bass Line Play Along Backing Track", channel: "MrSunnybass" },
+    { id: 'AI_0fpgR7tw', title: "Close Your Eyes (B. Petkere) Backing track + music sheet", channel: "Werner Schmedding" },
+    { id: 'AkLWmnqHxzE', title: "Close Your Eyes (B. Petkere) Backing track + score for Bb instruments", channel: "Werner Schmedding" }
+  ],
   'Come Rain or Come Shine': [
     { id: 't9lD7bjHt5c', title: "COME RAIN OR COME SHINE chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
     { id: 'ugcZcFfXpqM', title: "Come Rain Or Come Shine - Real Jazz Backing Track - Play Along", channel: "Real Jazz Backing Tracks" },
@@ -270,6 +473,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'rK1xu8bX8dw', title: "Come Rain Or Come Shine Backing Track For Piano & Guitar", channel: "BaBoSound" },
     { id: '0r0IHGg7zO4', title: "Come Rain Or Come Shine - Jazz Standard Backing Track", channel: "PRACTICE JAZZ" },
     { id: '1XylnyKgU5o', title: "Come Rain Or Come Shine Backing Track", channel: "BaBoSound" }
+  ],
+  'Con Alma': [
+    { id: 'xUUC7C6E7GQ', title: "CON ALMA chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: 'k1w5JysFfz8', title: "Con Alma chord progression - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
+    { id: 'qPLuDoO6npc', title: "Con Alma - Latin Medium || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: 'wWwAdgXSNFU', title: "Jazz Backing Track - Con Alma", channel: "Eagleheart Jazz Channel" },
+    { id: 'amZ7xLJdG9Y', title: "Con Alma - Jazz Standard Backing Track", channel: "PRACTICE JAZZ" }
   ],
   'Confirmation': [
     { id: 'WR8PL1jcnQk', title: "Confirmation - Real Jazz Backing Track - Play Along", channel: "Real Jazz Backing Tracks" },
@@ -283,12 +493,40 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'dbQCjn46Aq8', title: "Confirmation | 180 bpm | Jazz Swing | Play-Along Backing Track", channel: "Edwin’s Jazz Jam" },
     { id: '0MISdAfa8vo', title: "CONFIRMATION chord progression (slow) - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" }
   ],
+  'Cool Blues': [
+    { id: '-ae_tBkCqeQ', title: "Bb Blues (110bpm) : Backing track", channel: "Guitare Improvisation" },
+    { id: 'drR3bLnABwo', title: "Cool Blues Bass Line Play Along Backing Track", channel: "MrSunnybass" },
+    { id: 'ArM89_7J7j4', title: "Cool Blues (Parker)  - Backing track + music sheet", channel: "Werner Schmedding" },
+    { id: 'AiDO-_ySfuA', title: "Cool Blues -  Charlie Parker - Jazz Blues in Bb - Jazz Backing Track - Medium Up Swing", channel: "WillMax JamTracks" },
+    { id: '5OcqZuVhrfc', title: "Jazz Backing Track - Cool Blues", channel: "Eagleheart Jazz Channel" }
+  ],
+  'Corcovado': [
+    { id: 'Tl5gpDHP8Yg', title: "Corcovado - Backing track / Play-along", channel: "QGVideos" },
+    { id: 'Gl8XVH8SqFQ', title: "Corcovado – Quiet Nights to Practice Gently in C Major", channel: "PRACTICE JAZZ" },
+    { id: '6gg757K9Byw', title: "Corcovado| Antonio Carlos Jobim - Backing Track / Play-Along with Lead Sheet", channel: "neajazz" },
+    { id: 'teVhhf34leY', title: "Corcovado - Real Jazz Backing Track - Jazz Play Along - Quiet Night Of Quiet Stars", channel: "Real Jazz Backing Tracks" },
+    { id: 'MCuMm9f-hPk', title: "Corcovado Backing Track (BPM 130)", channel: "BaBoSound" }
+  ],
+  'Cottontail': [
+    { id: 'yqzFi49ysi8', title: "Cotton Tail (Bb) - Medium Slow Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: 'hpqVLphk9yo', title: "COTTON TAIL chord progression (slow) - Jazz Backing Track Play Along The Real Book Jazz", channel: "Backingtracks JAZZ" },
+    { id: '8owLm5ISz-E', title: "COTTON TAIL chord progression - Backing Track", channel: "Backingtracks JAZZ" },
+    { id: '50ibcyss8aI', title: "Jazz Backing Track - Cotton Tail", channel: "Eagleheart Jazz Channel" },
+    { id: 'wmiaehGiBqA', title: "Cottontail (Ab) - Bebop Backing Track", channel: "ACME Play-A-Longs" }
+  ],
   'Count Your Blessings': [
     { id: 'lRKAeb6ORRY', title: "Count Your Blessings Instead of Sheep (Backing Track)", channel: "David Keith Jones - Topic" },
     { id: 'JO1aQ6pHN4o', title: "Count Your Blessings Instead of Sheep  Irving Berlin 1966 Bb Trumpet or Tenor Sax Play Along", channel: "Play Along Central" },
     { id: 'erm74ta6VbA', title: "Count Your Blessings Instead of Sheep  Irving Berlin 1966  Eb Alto Sax Play Along", channel: "Play Along Central" },
     { id: 'myRhOEJ87xU', title: "\"Count Your Blessings Instead of Sheep,” 12-06-2020", channel: "Rebecca Forrest Sweeden" },
     { id: 'oDyaLmcTEL0', title: "Count Your Blessings Instead Of Sheep - Irving Berlin's White Christmas - Key: C", channel: "Piano Trax" }
+  ],
+  'Crepuscule With Nellie': [
+    { id: '-5U0osPsSqI', title: "Crepuscule With Nennie Bass Line Play Along Backing Track", channel: "MrSunnybass" },
+    { id: 'PRIwPfNHSaw', title: "Crepuscule with Nellie", channel: "Idsfa - Topic" },
+    { id: 'Sj6g1ktrAsc', title: "Crepuscule With Nellie", channel: "Marcus Roberts - Topic" },
+    { id: 'gw1pNeXz1as', title: "Crepuscule With Nellie (Take 6 / Mono)", channel: "Thelonious Monk" },
+    { id: 'WU_bHFm_kM8', title: "Crepuscule with nelly", channel: "Luigi Trussardi - Topic" }
   ],
   'Criss Cross': [
     { id: 'PULYTGaUrBo', title: "Criss Cross Bass Line Play Along Backing Track", channel: "MrSunnybass" },
@@ -303,6 +541,27 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: '1oBsZZ6H08w', title: "Cry Me A River - with Intro + Lyrics in Gm (Female) - Jazz Sing-Along", channel: "Jazz Sing-Along" },
     { id: 'CSwya9VMaFM', title: "Cry me a River - Backing Track with Sheet Music for Tenor Sax", channel: "Yasuhiro Fujii" },
     { id: 'ey3jHKjquMU', title: "Backing Track - Cry Me A River (G minor) 60 BPM Ballad", channel: "Luc Maes" }
+  ],
+  'Dancing In The Dark': [
+    { id: '-WkRiuG3-C8', title: "Dancing In The Dark (Playalong Version)", channel: "MIDIFine Systems - Topic" },
+    { id: 'OCtyJQaORKM', title: "Dancing in the Dark Bossa Backing Track", channel: "Jason Justice Saxophone Studio" },
+    { id: 'JloOq5XL90s', title: "Dancing In The Dark (Schwartz)- Backing track + music sheet", channel: "Werner Schmedding" },
+    { id: 'i2TO-Cy-vNk', title: "Dancing In The Dark (Schwartz) - Backing track + score for Bb instruments", channel: "Werner Schmedding" },
+    { id: 'fbZcBtQ3DnQ', title: "Dancing in the Dark (Play Along Version)", channel: "MIDIFine Systems - Topic" }
+  ],
+  'Darn That Dream': [
+    { id: '_aj5UZ3mb00', title: "Darn That Dream (Jazz/Ballad feel) 65 bpm : Backing Track", channel: "Guitare Improvisation" },
+    { id: 'ACwxxdSJz3k', title: "DARN THAT DREAM chord progression - Backing Track", channel: "Backingtracks JAZZ" },
+    { id: 'sLAEH08ifCs', title: "Darn That Dream - Backing track / Play-along", channel: "QGVideos" },
+    { id: 'C4kteljHnWU', title: "Darn That Dream (Jazz/Ballad feel) 75 bpm : Backing Track", channel: "Guitare Improvisation" },
+    { id: 'N27rL5Xn3tA', title: "Jazz Backing Track - Darn That Dream", channel: "Eagleheart Jazz Channel" }
+  ],
+  'Day Dream': [
+    { id: 'O20UrqvVRXA', title: "DAY DREAM chord progression - Backing Track", channel: "Backingtracks JAZZ" },
+    { id: 'xSS2-qnOKk4', title: "Day Dream - Backing track + music sheet", channel: "Werner Schmedding" },
+    { id: 'llAFXQV-u-E', title: "DAY DREAM chord progression - Backing Track (no piano)", channel: "Backingtracks JAZZ" },
+    { id: 'p_RAd2Peg4Y', title: "Day Dream - Backing track + score for Bb instruments", channel: "Werner Schmedding" },
+    { id: '0lPVjezBlLw', title: "Day Dream Bass Line Play Along Backing Track", channel: "MrSunnybass" }
   ],
   'Days of Wine and Roses': [
     { id: 't2qanHdxL_g', title: "The DAYS OF WINE AND ROSES chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
@@ -338,6 +597,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'vg1wsJDUlQo', title: "Desafinado - Bossa Nova/Jazz Backing Track in Eb (140 bpm)", channel: "Mono Gadjo" },
     { id: '9de-S7lNB7k', title: "Desafinado (by Antônio Carlos Jobim) - Backing Track with Sheet Music for Tenor Sax", channel: "Yasuhiro Fujii" }
   ],
+  'Dexterity': [
+    { id: 'J9WADfQucrI', title: "Dexterity (Bb) - Up Tempo Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: 'm99BcZUc4l0', title: "Dexterity (Bb) - Medium Slow Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: 'A28YvGBsFsE', title: "Dexterity chord progression - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
+    { id: 'voQ_sZ0slyc', title: "Dexterity   Charlie Parker   Backing Track ⧸ Play Along FrOEktD0xPY", channel: "lil-works" },
+    { id: 'DQOOusqHjnI', title: "Dexterity (Bb) || Bebop Backing Track || Play Along", channel: "ACME Play-A-Longs" }
+  ],
   'Dig': [
     { id: 'AgTXqJYQy6U', title: "This I Dig Of You (Jazz/Swing feel) - 160 bpm : Backing Track", channel: "Guitare Improvisation" },
     { id: 'HaA8fXTZUG4', title: "This I Dig of You - Hard Swingin Jazz Organ Backing Track", channel: "Phil Wilkinson Music" },
@@ -351,6 +617,27 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'U5odE-Nlkg8', title: "Jazz Backing Track - Dizzy Atmosphere", channel: "Eagleheart Jazz Channel" },
     { id: '2l-UZEdbFyI', title: "Dizzy Atmosphere - Jazz Standard Backing Track", channel: "PRACTICE JAZZ" },
     { id: 'LVMtaa6wDUk', title: "Dizzy Atmosphere: Backing Track", channel: "Jazz Progressions" }
+  ],
+  'Django': [
+    { id: 'UGCxrt7Gcb4', title: "Minor Swing (160 bpm) (Old Style) - Gypsy jazz Backing track / Jazz manouche", channel: "Guitare Improvisation" },
+    { id: 'XyNipM8DPAk', title: "Django's Tiger - Playback jazz manouche - Gypsy jazz backing track / play along", channel: "Clément Reboul" },
+    { id: 'vBBggONVtgU', title: "Dinette (170 bpm) - Gypsy jazz Backing track / Jazz manouche", channel: "Guitare Improvisation" },
+    { id: 'AQW2RxwwnRo', title: "Gypsy Jazz Play Along - Django's Tiger", channel: "Gonzalo Bergara" },
+    { id: 'hvBSueepKaE', title: "Si tu savais (90 bpm) - Gypsy jazz Backing track / Jazz manouche", channel: "Guitare Improvisation" }
+  ],
+  'Dolphin Dance': [
+    { id: 'rD-Bfp8AqfQ', title: "Dolphin Dance chord progression - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
+    { id: 'Ru7sIZFlk7g', title: "Dolphin Dance | Herbie Hancock - Real Jazz Backing Track - Play Along", channel: "Real Jazz Backing Tracks" },
+    { id: 'DYO-gAQi5To', title: "Dolphin Dance - Play Along | Backing Track", channel: "Michele Paternoster" },
+    { id: '01XW0i8orjM', title: "Jazz Backing Track - Dolphin Dance", channel: "Eagleheart Jazz Channel" },
+    { id: 'a5XGuMqgB3E', title: "Dolphin Dance - Medium Slow Swing || BACKING TRACK", channel: "JGC Play-Alongs" }
+  ],
+  'Don\'t Explain': [
+    { id: 'gKGGCRfHg1g', title: "Don't Explain | Jazz Standard Practice Play-Along", channel: "PRACTICE JAZZ" },
+    { id: 'MiayakaZe7U', title: "Don't Explain - Backing + music sheet", channel: "Werner Schmedding" },
+    { id: 'gJSDQjaTC1o', title: "Don't Explain Billie Holiday 1946 Harmonica Saxophone Sheet Music play Along", channel: "Sax Channel" },
+    { id: 'aORsl14MBQc', title: "Original Backing Track DON'T EXPLAIN ( Cm ) Billie Holiday Play Along Female Singer Trumpet Sax Jazz", channel: "Jazzing" },
+    { id: 'AS3sCC0CGOs', title: "Don't Explain - Bb version", channel: "Werner Schmedding" }
   ],
   'Donna Lee': [
     { id: 'pbNmk8JwN-s', title: "Donna Lee (Jazz/Swing feel) 160 bpm : Backing Track", channel: "Guitare Improvisation" },
@@ -419,6 +706,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'sEhjQmvZzKw', title: "EPISTROPHY chord progression - Backing Track (no piano)", channel: "Backingtracks JAZZ" },
     { id: '39-4HCFR09c', title: "Epistrophy - BACKING TRACK", channel: "The Mixolydian Brotherhood" }
   ],
+  'Equinox': [
+    { id: 'utmo2RseDZk', title: "Equinox (John Coltrane) - Swing 115 bpm Backing Track", channel: "PRACTICE JAZZ" },
+    { id: 'LD7nEc63OQc', title: "Doblestandard Equinox FOR PIANO/GUITAR I Jazz Doblestandard Play-Alongs", channel: "Jazz Doblestandard" },
+    { id: 'YkMY-0C0dsA', title: "VIDEO BACKING TRACK -  Equinox (J. Coltrane)", channel: "Guitarra Esencial" },
+    { id: 'uOyVxQ5z6V8', title: "Backing track  Equinox  Fusion 90 BPM", channel: "Escola de Música Star David" },
+    { id: 'fufZEOARV94', title: "Equinox   John Coltrane   Backing track ⧸ Play Along W61cA8vQrjU", channel: "lil-works" }
+  ],
   'Estate': [
     { id: 'pfSpbJTBhJw', title: "Estate | Jazz Standard Practice Play-Along", channel: "PRACTICE JAZZ" },
     { id: '_MNZTHd5wr4', title: "Estate By Bruno Martino |Play Along |Backing track", channel: "Michele Paternoster" },
@@ -436,6 +730,20 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: '_3fa3WffL9w', title: "Everything Happens To Me | 80 bpm | Jazz Ballad | Play-Along Backing Track", channel: "Edwin's Jazz Jam" },
     { id: 'VdxKRyQHrts', title: "Everything Happens To Me/Backing Track/Jazz Ballad/Piano Trio/4bars Intro", channel: "Music to Play Along" }
   ],
+  'Evidence': [
+    { id: 'BFFeaUinJk0', title: "Evidence - Medium Up Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: '37Tjsq8o1Gs', title: "EVIDENCE chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: 'WAg8YbL0zG8', title: "EVIDENCE chord progression - Backing Track (no piano)", channel: "Backingtracks JAZZ" },
+    { id: 'W5svWbaLO44', title: "Evidence [No Piano] - Medium Up Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: 'tlzIqbphKho', title: "Evidence - Monk & Coltrane [LOOP]", channel: "JGC Play-Alongs" }
+  ],
+  'Fall': [
+    { id: 'V3ITw9M-ops', title: "Fall chord progression - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
+    { id: 'dv5HWpxYw0E', title: "I FALL IN LOVE TOO EASILY chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: 'tnUjNZRtFgY', title: "Jazz Backing Track - Take The Coltrane", channel: "Eagleheart Jazz Channel" },
+    { id: 't8CXrXxml7A', title: "WHEN I FALL IN LOVE chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: 'L3S8mRrFRok', title: "Jazz Backing Track - When I Fall In Love", channel: "Eagleheart Jazz Channel" }
+  ],
   'Falling Grace': [
     { id: 'tKUydo6iKkg', title: "Falling Grace (Steve Swallow) Play Along Backing Track", channel: "Paul T" },
     { id: 'wvQ2nAXsEO8', title: "Playalong - Falling Grace", channel: "Lothar's Guitar School" },
@@ -452,6 +760,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: '6qBxa4LmW0w', title: "Fascination F D Marhetti 1932 Tenor Sax Sheet Music Play Along", channel: "Sax Channel" },
     { id: 'eKw8GFSdDJU', title: "Fascination (Backing Mix) (Play Along Version)", channel: "MIDIFine Systems - Topic" },
     { id: 'IvBea3UHpFo', title: "Fascination - ( Bb 🎷 )", channel: "Sound GB" }
+  ],
+  'Fee-Fi-Fo-Fum': [
+    { id: 'Y5vMUH2XU94', title: "FEE-FI-FO-FUM chord progression - Backing Track Play Along Jazz Standard Bible 2 Guitar", channel: "Backingtracks JAZZ" },
+    { id: 'K1fdHifzk7k', title: "Fee Fi Fo Fum | Wayne Shorter - Backing track / Play-along with Lead Sheet", channel: "neajazz" },
+    { id: 'OIX9577cOmQ', title: "FEE-FI-FO-FUM chord progression - Backing Track (no piano)", channel: "Backingtracks JAZZ" },
+    { id: 'C8q-VARikXA', title: "Fee-Fi-Fo-Fum - Backing track / Play-along", channel: "QGVideos" },
+    { id: 'fk3EaipkNf8', title: "Fee-Fi-Fo-Fum Bass Line Play Along Backing Track", channel: "MrSunnybass" }
   ],
   'Fly Me To The Moon': [
     { id: 'KJvFM1uS8ew', title: "Fly Me To The Moon (Jazz/Swing feel) : Backing Track", channel: "Guitare Improvisation" },
@@ -494,6 +809,20 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: '2M-cj174PBQ', title: "Freddie The Freeloader Jazz Play Along", channel: "Jeff Lewis Trumpet" },
     { id: 'lGgklJWuPWA', title: "FREDDIE THE FREELOADER chord progression - Backing Track (no piano)", channel: "Backingtracks JAZZ" }
   ],
+  'Freedom Jazz Dance': [
+    { id: '88whkXSwo4I', title: "Freedom Jazz Dance chord progression - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
+    { id: 'PddxQ6XFtlg', title: "Freedom Jazz Dance chord progression (no piano) - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
+    { id: 'aFQgSJ8cs6c', title: "FREEDOM JAZZ DANCE chord progression - Backing Track Play Along Jazz Standard Bible 2", channel: "Backingtracks JAZZ" },
+    { id: '31Ji4De-djY', title: "Freedom Jazz Dance", channel: "Jair Carvalho" },
+    { id: 'dGDHcnym-EQ', title: "Freedom Jazz Dance Drumless Backing Track - Jazz Standard", channel: "Drumless  Backing Tracks" }
+  ],
+  'Fried Pies': [
+    { id: 'HoMBSk5yN8w', title: "Fried Pies   Wes Montgomery   Backing Track ⧸ Play Along xQ evm2gfwA", channel: "lil-works" },
+    { id: 'CDxf6RUYpFo', title: "(Transcription) Fried Pies - Wes Montgomery", channel: "PRACTICE JAZZ" },
+    { id: '81Xw34QG1aE', title: "Fried Pies", channel: "Jim Rotondi - Topic" },
+    { id: 'XzI_38T5_S4', title: "Fried Pies   Wes Montgomery   Backing Track ⧸ Play Along xQ evm2gfwA", channel: "lil-works" },
+    { id: 'rdhjdtxyeAs', title: "Footprints   Wayne Shorter   Backing Track ⧸ Play Along Vg fByM1x30", channel: "lil-works" }
+  ],
   'Georgia On My Mind': [
     { id: '0DjMHYlOL9M', title: "Georgia On My Mind : Backing Track", channel: "Guitare Improvisation" },
     { id: 'Ppw91Itr4fU', title: "New Jazz Backing Track GEORGIA ON MY MIND F Jazz Standard", channel: "Jazzing" },
@@ -513,6 +842,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'bDazHxnklDM', title: "Giant Steps - Play Along - BPM280", channel: "Yasuhiro Fujii" },
     { id: 'MSQ4IZvIE_8', title: "Giant Steps - Play Along - BPM200", channel: "Yasuhiro Fujii" },
     { id: '4gsX8ciNWQo', title: "Giant Steps Backing Track Jazz - 250bpm", channel: "Backing Track Center" }
+  ],
+  'Gingerbread Boy': [
+    { id: 'aa-5To1STY0', title: "Gingerbread Boy - Elvin Jones [LOOP]", channel: "JGC Play-Alongs" },
+    { id: 'kfEmvrE_6yE', title: "Gingerbread Boy", channel: "David Rourke" },
+    { id: 'TLhHlLSApPU', title: "\"Gingerbread Boy\" drumset part", channel: "Alan Hall's Drum Teaching Videos" },
+    { id: '219uGHGdxzc', title: "Gingerbread Boy", channel: "Jimmy Heath Quintet - Topic" },
+    { id: 'WbztWftqbCc', title: "Dexter Gordon - Gingerbread Boy || Transcription", channel: "Jazz Guitar Comprehensive" }
   ],
   'Girl from Ipanema': [
     { id: 'RRP73Ex2FJQ', title: "The Girl from Ipanema (110 bpm) : Backing track", channel: "Guitare Improvisation" },
@@ -551,6 +887,20 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'T1PvZx1p6mk', title: "Gone With The Wind (Eb) - Ballad || BACKING TRACK", channel: "JGC Play-Alongs" },
     { id: 'aHEL9DXi6t4', title: "Gone With The Wind (A Wrubel) - Backing track + music sheet", channel: "Werner Schmedding" }
   ],
+  'Good Bait': [
+    { id: 'kd1GF-4n0rQ', title: "GOOD BAIT chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: 'jOV7UGIAIaI', title: "Good Bait (Dameron) -Backing track + music sheet", channel: "Werner Schmedding" },
+    { id: 'eSmuijFPNkk', title: "Good Bait - Medium Slow Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: 'gtPgCMqTbWY', title: "Good Bait - Backing Track with Sheet Music for Alto Sax", channel: "Yasuhiro Fujii" },
+    { id: 'UuicAI1H_gU', title: "Good Bait - Backing Track with Sheet Music for Tenor Sax", channel: "Yasuhiro Fujii" }
+  ],
+  'Green Dolphin Street': [
+    { id: 'YLNw40pROmY', title: "On Green Dolphin Street (Jazz/Swing feel) 150 bpm : Backing Track", channel: "Guitare Improvisation" },
+    { id: 'PE-fM9UTpVE', title: "On Green Dolphin Street (Jazz/Swing feel) 130 bpm : Backing Track", channel: "Guitare Improvisation" },
+    { id: 'gQW1uxO3u80', title: "On Green Dolphin Street - Jazz Backing Track", channel: "Phil Wilkinson Music" },
+    { id: 'bVXRaH5Cogw', title: "On Green Dolphin Street | 160 bpm | Jazz Swing | Play-Along Backing Track", channel: "Edwin’s Jazz Jam" },
+    { id: 'b9oYkq0UUpU', title: "On Green Dolphin Street Backing Track in Eb 140bpm   Jazz Play Along", channel: "Jack's Guitar Trax" }
+  ],
   'Groovin\' High': [
     { id: '0dKVbdCE0gE', title: "GROOVIN' HIGH chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
     { id: '4es6rH0cfaw', title: "Groovin High dizzy gillespie play along", channel: "DARTH REVAN" },
@@ -563,6 +913,20 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'o72yY5N6wQs', title: "Groovin High Backing Track", channel: "Constantine Taranenko" },
     { id: 'iAJNQ8kq2jU', title: "Groovin' High | 160 bpm | Jazz Swing | Play-Along Backing Track", channel: "Edwin's Jazz Jam" }
   ],
+  'Half Nelson': [
+    { id: 'iDXOgPKS1_k', title: "HALF NELSON chord progression - Backing Track Play Along Jazz Standard Bible 2 Guitar", channel: "Backingtracks JAZZ" },
+    { id: '-TFcGp7DNHg', title: "Jazz Backing Track - Half Nelson", channel: "Eagleheart Jazz Channel" },
+    { id: 'gwe9ROQnrn8', title: "Lady Bird (and Half Nelson) | 200 bpm | Jazz Swing | Play-Along Backing Track", channel: "Edwin’s Jazz Jam" },
+    { id: 'V8u6Tb7krZA', title: "Half Nelson medium Bass Line Play Along Backing Track", channel: "MrSunnybass" },
+    { id: 'yXLt137n-es', title: "Half Nelson Bass Line Play Along Backing Track", channel: "MrSunnybass" }
+  ],
+  'Hallucinations': [
+    { id: 'xIz6xMNT2t0', title: "Hallucinations Bass Line Bass Line Play Along Backing Track", channel: "MrSunnybass" },
+    { id: '6D9xSq7HeiY', title: "BACKING TRACK - HALLUCINATIONS (Bud Powell) (F) 230 BPM SWING", channel: "Luc Maes" },
+    { id: '4ceDBek0Lck', title: "Hallucinations", channel: "Jazz Practice Tool" },
+    { id: 'XkIXGN7qULk', title: "Hallucinations", channel: "Ellis Marsalis - Topic" },
+    { id: 'CJR_Y8UEOz0', title: "Bud Powell - Hallucinations (Budo)", channel: "Okmusix" }
+  ],
   'Have You Met Miss Jones': [
     { id: 'RwgbPbn2hQc', title: "Have You Met Miss Jones? | Jazz Play-Alongs", channel: "Jazz Doblestandard" },
     { id: 'GX_LXKT706E', title: "Have you met Miss Jones : Backing Track", channel: "Guitare Improvisation" },
@@ -573,6 +937,27 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'YnoXG4baOtU', title: "Have You Met Miss Jones Backing Track (BPM 120)", channel: "BaBoSound" },
     { id: 'PVY2PdYSG6o', title: "Jazz Backing Track - Have You Met Miss Jones?", channel: "Eagleheart Jazz Channel" },
     { id: 'NgCR69aqlpg', title: "Have You Met Miss Jones? | 200 bpm | Jazz Swing | Play-Along Backing Track", channel: "Edwin's Jazz Jam" }
+  ],
+  'Here\'s That Rainy Day': [
+    { id: 'TGxZlrIk5tg', title: "Backing Track - Here's That Rainy Day (Eb) 80 BPM Ballad", channel: "Luc Maes" },
+    { id: 'mn_8lDJTqqY', title: "Here's That Rainy Day - Jazz Standard Backing Track", channel: "PRACTICE JAZZ" },
+    { id: 'lNEHgQL60HM', title: "Backing Track - Here's That Rainy Day (G) 80 BPM Ballad", channel: "Luc Maes" },
+    { id: 'ObGBOKoVhp4', title: "Backing Track - Here's That Rainy Day (Bb) 80 BPM Ballad", channel: "Luc Maes" },
+    { id: 'D3xSBxJpAY0', title: "Backing Track - Here's That Rainy Day (F) 80 BPM Ballad", channel: "Luc Maes" }
+  ],
+  'Hesitation Blues': [
+    { id: 'afxMPRTQBTI', title: "The Hesitation Blues: Jug Band/Blues Songbook Demos", channel: "Aaron Keim" },
+    { id: 'Tt-YheK20jU', title: "\"Careless Love\" Rambling Steve Gardner HESITATION BLUES track 10", channel: "Rambling Steve Gardner" },
+    { id: 'drQqbmlGQZo', title: "Strictly Instrumental - \"Hesitation Blues\"", channel: "djmmusic2320" },
+    { id: 'b94G9g243rA', title: "Hesitation Blues", channel: "Jeff Ellis" },
+    { id: 'EBzvGGEvzzA', title: "Eb BLUES - BASIC JAZZ BLUES 12 BAR BACKING TRACK  90 BPM - 15 MINUTE BLUES JAM TRACK", channel: "Backing Track Bonanza" }
+  ],
+  'High Fly': [
+    { id: 'fsKCugADKYk', title: "High Fly Backing Track", channel: "Constantine Taranenko" },
+    { id: '_jGlXypxY8M', title: "Jazz Backing Track - High Fly", channel: "Eagleheart Jazz Channel" },
+    { id: 'gc0Q_rzqWs4', title: "High Fly - Jazz Standard Backing Track", channel: "PRACTICE JAZZ" },
+    { id: '1r2S_3N8lK8', title: "High Fly (Weston) Backing track + score for Bb instruments", channel: "Werner Schmedding" },
+    { id: 'fOFeT9xRP0U', title: "High Fly (Weston)- Backing track + music sheet", channel: "Werner Schmedding" }
   ],
   'Honeysuckle Rose': [
     { id: 'oPy5gA97hgk', title: "Honeysuckle Rose (150 bpm) - Gypsy jazz Backing track / Jazz manouche", channel: "Guitare Improvisation" },
@@ -600,6 +985,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'YYGXN7G409A', title: "How High The Moon | 160 bpm | Jazz Swing | Play-Along Backing Track", channel: "Edwin’s Jazz Jam" },
     { id: '5UWVpVlMYGY', title: "How High the Moon   Backing Track ⧸ Play Along 20GX2GP6iyo", channel: "lil-works" }
   ],
+  'How Insensitive': [
+    { id: 'A8V0y5RKCUU', title: "How Insensitive (110 bpm) : Bossa/Jazz Backing Track", channel: "Guitare Improvisation" },
+    { id: 'eg06oVCJVW4', title: "How Insensitive (Jobim) I Jazz Doblestandard Play-Alongs", channel: "Jazz Doblestandard" },
+    { id: 'o0RRxje0EwQ', title: "HOW INSENSITIVE chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: 'TQd4vFMCQXA', title: "How Insensitive (120 BPM) - Backing Track", channel: "Improv' Your Music" },
+    { id: 'rwg4z0nKrwc', title: "HOW INSENSITIVE chord progression - Backing Track (no piano)", channel: "Backingtracks JAZZ" }
+  ],
   'I Can\'t Get Started': [
     { id: 'bN5Ozjnh8oo', title: "I CAN'T GET STARTED chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
     { id: '10hsU6Qj67A', title: "I Can't Get Started With You chord progression - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
@@ -607,6 +999,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: '1av-0yKJAys', title: "I Can't Get Started Chords Backing Track", channel: "saxsolos" },
     { id: 'As5ak8X1S_w', title: "I Can't Get Started (C) - Ballad || BACKING TRACK", channel: "JGC Play-Alongs" },
     { id: '6C3usdOz-B0', title: "I Can't Get Started (C) || Latin Jazz Backing Track | Play Along", channel: "ACME Play-A-Longs" }
+  ],
+  'I Could Write A Book': [
+    { id: 'NgiMx28gnxs', title: "I Could Write A Book (from PAL JOEY) chord progression - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
+    { id: 'XHzi7JvaoiM', title: "I COULD WRITE A BOOK chord progression (slow) - Backing Track Play Along The Real Book Jazz", channel: "Backingtracks JAZZ" },
+    { id: 'bpwwyFG71Ow', title: "I Could Write a Book (Eb) - MILES DAVIS ARRANGEMENT || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: 'DpIszwXgdMk', title: "I COULD WRITE A BOOK chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: 'vbAY_rFcyIo', title: "Jazz Backing Track - I Could Write A Book", channel: "Eagleheart Jazz Channel" }
   ],
   'I Fall In Love Too Easily': [
     { id: 'dv5HWpxYw0E', title: "I FALL IN LOVE TOO EASILY chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
@@ -627,6 +1026,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'H20ijM_qc2M', title: "Jazz Backing Track - I Got Rhythm", channel: "Eagleheart Jazz Channel" },
     { id: '4z4hkLygDk8', title: "Rhythm Changes Bb Backing Track Swing 180 bpm Brushes - FULL BAND", channel: "JAZZ LICK DAILY Backing Tracks" },
     { id: 'AzUjR1K6krc', title: "I Got Rhythm | Jazz Play Along | Backing Track", channel: "musixup" }
+  ],
+  'I Hear A Rhapsody': [
+    { id: 'f7pWwLlPQho', title: "I HEAR A RHAPSODY chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: 'dQ5HXoSnxBY', title: "I Hear A Rhapsody (Eb) - Up Tempo Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: 'zbqo6XRnJvU', title: "I Hear A Rhapsody (Jazz/Swing feel) 180 bpm : Backing Track", channel: "Guitare Improvisation" },
+    { id: 'af95n715sbA', title: "I Hear A Rhapsody | Jazz Standard Practice Play-Along", channel: "PRACTICE JAZZ" },
+    { id: 'mx9tGXEXEoI', title: "I HEAR A RHAPSODY chord progression (slow) - Backing Track Play Along Jazz Standard Bible", channel: "Backingtracks JAZZ" }
   ],
   'I Love You': [
     { id: 'FJrrNLrENSo', title: "I LOVE YOU chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
@@ -651,6 +1057,27 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'iKgHVIKMpEU', title: "I REMEMBER CLIFFORD - BENNY GOLSON - FREE JAZZ PDF ( PLAY ALONG )", channel: "FREE JAZZ PDF" },
     { id: 'KW_nElBe4zA', title: "I Remember Clifford - ( Bb Instrument ) Backing Track", channel: "Sound GB" }
   ],
+  'I Remember You': [
+    { id: 'n215KH7BpuA', title: "I REMEMBER YOU chord progression - Backing Track Play Along Jazz Standard Bible", channel: "Backingtracks JAZZ" },
+    { id: 'dVa_0Mf8HSg', title: "I Remember You (Jazz/Swing feel) 170 bpm : Backing Track", channel: "Guitare Improvisation" },
+    { id: 'zNRq2ms-Qho', title: "I Remember You (Jazz/Swing feel) 85 bpm : Backing Track", channel: "Guitare Improvisation" },
+    { id: 'oE2O5QUgC9E', title: "Jazz Backing Track - I Remember You", channel: "Eagleheart Jazz Channel" },
+    { id: 'xB5w0FsK0Mg', title: "Backing Track - I Remember You (Eb) 160 BPM Swing", channel: "Luc Maes" }
+  ],
+  'I Should Care': [
+    { id: '28jNjpkc57M', title: "I Should Care chord progression - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
+    { id: '5zostCMs3xk', title: "I Should Care - Jazz Practice Backing Track", channel: "PRACTICE JAZZ" },
+    { id: '4vKX-RV8FbM', title: "I Should Care in C Bass Line Play Along Backing Track", channel: "MrSunnybass" },
+    { id: '8IcGdEMNCrI', title: "I Should Care (C) - Ballad || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: 'hGekEKuzdBI', title: "I Should Care", channel: "Learn Jazz Standards" }
+  ],
+  'I Wished On The Moon': [
+    { id: 'tgPdXvA9fE8', title: "I Wished On The Moon (Rainger) Bossa - backing track  + music sheet", channel: "Werner Schmedding" },
+    { id: 'P_6NbbVU6VI', title: "I Wished On The Moon (Rainger) Backing track + score for Bb instruments", channel: "Werner Schmedding" },
+    { id: '98izsqpaUtU', title: "I Wished On The Moon //Solo Piano, Vocal Arrangement//", channel: "CG Williams Jazz Piano" },
+    { id: 'Gx6Mwkulcvw', title: "I Wished On The Moon", channel: "Alan Peach" },
+    { id: 'rChgU48glOQ', title: "Bruce Turner: I Wished On The Moon (Serie Rarezas)", channel: "TamerlanMusic Traducciones II" }
+  ],
   'I\'ll Remember April': [
     { id: 'DxDoKZZmwPk', title: "I'll Remember April - Real Jazz Backing Track - Jazz Play Along", channel: "Real Jazz Backing Tracks" },
     { id: 'En6IiTGdOjE', title: "I'll remember April - Organ and Drums Backing Track", channel: "Phil Wilkinson Music" },
@@ -658,6 +1085,20 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'm6lle5Ajks8', title: "I'll remember April - Organ and Drums Backing Track", channel: "Phil Wilkinson Music" },
     { id: 'P8yWthjbj-U', title: "Jazz Backing Track - I'll Remember April", channel: "Eagleheart Jazz Channel" },
     { id: 'WwTxVQ-q-8M', title: "I'll Remember April (G) - Up Tempo Swing || BACKING TRACK", channel: "JGC Play-Alongs" }
+  ],
+  'I\'ve Got You Under My Skin': [
+    { id: 'p0M7eTYh8GI', title: "New Jazz Backing Track I'VE GOT YOU UNDER MY SKIN F Singer Play Along Swing Tenor Sax Trumpet Guitar", channel: "Jazzing" },
+    { id: 'cQy-iBov18o', title: "I've Got You Under My Skin - with Intro + Lyrics in Bb (Female) - Jazz Sing-Along", channel: "Jazz Sing-Along" },
+    { id: 'vxZL9IAhGv8', title: "I've Got You Under My Skin (Eb) Backing Track", channel: "Jazzing - Topic" },
+    { id: 'LUJ1h0FvXXU', title: "I've Got You Under My Skin (Eb) - Medium Up Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: 'cBnpCGRS4-c', title: "I've Got You Under My Skin - with Intro + Lyrics in Eb (Male) - Jazz Sing-Along", channel: "Jazz Sing-Along" }
+  ],
+  'If I Should Lose You': [
+    { id: 'zPpLv_Huu-s', title: "IF I SHOULD LOSE YOU chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: 'aPvUBPrxOvo', title: "If I Should Lose You (Bb) - Medium Slow Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: 'IYARarrDSm0', title: "If I Should Lose You - Play-along / Backing track", channel: "QGVideos" },
+    { id: 'czTCKAEKwVM', title: "If I Should Lose You (F) - HANK MOBLEY ARRANGEMENT || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: '7cYpWlRfZuA', title: "If I Should Lose You Bass Line Play Along Backing Track", channel: "MrSunnybass" }
   ],
   'If I Were A Bell': [
     { id: 'Ga3n3IcH2bQ', title: "IF I WERE A BELL chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
@@ -668,6 +1109,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'cvc7vSvtfbE', title: "If I Were A Bell (F) || Play Along || Classic Swing Backing Track", channel: "ACME Play-A-Longs" },
     { id: 'giOHCqDGdoc', title: "If I Were A Bell - Play Along with Changes", channel: "Rick Prokop" },
     { id: '54wwS6cwhy0', title: "If I Were A Bell (F) - Medium Slow Swing || BACKING TRACK", channel: "JGC Play-Alongs" }
+  ],
+  'If You Could See Me Now': [
+    { id: 'wy-iVzVLKZg', title: "IF YOU COULD SEE ME NOW chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: 'Co14pmqpNUY', title: "If You Could See Me Now - Backing Track / Play-Along with Lead Sheet", channel: "neajazz" },
+    { id: 'yilwh6HokkI', title: "If You Could See Me Now - Backing Track", channel: "Sound GB" },
+    { id: 'M45CVb1x5x4', title: "If You Could See Me Now - Backing Track with Sheet Music for Tenor Sax", channel: "Yasuhiro Fujii" },
+    { id: 'rnFdYdP0hXg', title: "If You Could See Me Now (Ab) - Ballad || BACKING TRACK", channel: "JGC Play-Alongs" }
   ],
   'Impressions': [
     { id: 'DYl-ZE_yUoo', title: "Impressions - John Coltrane - Modal Jazz Backing Track", channel: "Backing Tracks Channel" },
@@ -699,6 +1147,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'NJaMCcPNwUI', title: "In Your Own Sweet Way (Bb) || Play Along | Backing Track || Bossa Nova", channel: "ACME Play-A-Longs" },
     { id: 'a5R1VJg-OGk', title: "In Your Own Sweet Way Bass Line Play Along Backing Track", channel: "MrSunnybass" }
   ],
+  'Indiana': [
+    { id: 'qfjYkAJbRGU', title: "Jazz Backing Track - Indiana", channel: "Eagleheart Jazz Channel" },
+    { id: 'e0FELA5SX9o', title: "Indiana (Back Home Again in Indiana) | Jazz Backing Track | F Major 192 BPM", channel: "The Binary Woodshed" },
+    { id: '55LyB6nXPWA', title: "Indiana (F) Backing Track (Dixieland)", channel: "Jazzing - Topic" },
+    { id: 'PaLgH-P80wY', title: "New Backing Track BACK HOME AGAIN IN INDIANA ( F ) - Dixieland New Orleans Dixie Jazz Mp3 Jazzing", channel: "Jazzing" },
+    { id: 'RROrb1W47SM', title: "Indiana med-up Bass Line Play Along Backing Track", channel: "MrSunnybass" }
+  ],
   'Inner Urge': [
     { id: 'OaY9C_tclXM', title: "Inner Urge - Up Tempo Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
     { id: 'qT-113AVVCk', title: "Inner Urge - Medium Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
@@ -720,6 +1175,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'p6js2IXn11U', title: "BACKING TRACK - ISFAHAN (Duke Ellington) (Db) 140 BPM SWING", channel: "Luc Maes" },
     { id: '2ShOBeL9PaI', title: "Isfahan (Db) [No Piano] - Slow Swing || BACKING TRACK", channel: "JGC Play-Alongs" }
   ],
+  'Isotope': [
+    { id: 'hBo24NH-90U', title: "Isotope chord progression - Jazz Backing Track Play Along The Real Book (no piano)", channel: "Backingtracks JAZZ" },
+    { id: 'qOO7DU8UalY', title: "Isotope / Backing Track", channel: "Constantine Taranenko" },
+    { id: 'jEHQDZIIN-U', title: "Isotope Bass Line Play Along Backing Track", channel: "MrSunnybass" },
+    { id: 'z47qKbNNp04', title: "Isotope - Backing Track 160 BPM (to improvise)", channel: "All Backing Tracks" },
+    { id: 'rShVI3h833I', title: "Isotope (Backtrack)", channel: "JazzTrax - Topic" }
+  ],
   'Israel': [
     { id: 'bDAZVIhFVjI', title: "Israel - Jazz Practice Backing Track", channel: "PRACTICE JAZZ" },
     { id: 'ZM88PbCssZ0', title: "ISRAEL chord progression - Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
@@ -728,6 +1190,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: '1uqdixOWEbY', title: "Israel (Backtrack)", channel: "JazzTrax - Topic" },
     { id: 'r2QS7tBbsGY', title: "Israel - Backing Track with Sheet Music for Tenor Sax", channel: "Yasuhiro Fujii" },
     { id: '7fpZWpcKymM', title: "Impression ( Speed 1 ) |Play Along |Backing Track", channel: "Michele Paternoster" }
+  ],
+  'It Ain\'t Necessarily So': [
+    { id: 'JctMvrCdDqQ', title: "It Ain’t Necessarily So Bass Line Play Along Backing Track", channel: "MrSunnybass" },
+    { id: 'sNJa8-kWP8Y', title: "It Ain't Neccessarily So (Gershwin) - Backing track + music sheet", channel: "Werner Schmedding" },
+    { id: 'NOHxu3gtYrM', title: "It Ain't Necessarily So (Variations) (Playalong Version)", channel: "MIDIFine Systems - Topic" },
+    { id: 'cbyB4ImkBu0', title: "It Ain't Necessarily So (Grant Green): backing track", channel: "Josep Traver" },
+    { id: '-YlUS4MlrrA', title: "It Ain't Necessarily So - ( C Instrument )", channel: "Sound GB" }
   ],
   'It Could Happen To You': [
     { id: 'jdEGVdgpSik', title: "It Could Happen To You (Jazz/Swing feel) 170 bpm : Backing Track", channel: "Guitare Improvisation" },
@@ -746,12 +1215,33 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: '8deTlhaCpSc', title: "[JAZZ STANDARD] It Don't Mean A Thing (Gm 199bpm Swing) - Jazz Backing Track", channel: "JAMMATES" },
     { id: 'KuagsXC2PhM', title: "Gypsy Jazz Backing Track / Play Along - It Don't Mean A Thing", channel: "Study Gypsy Jazz" }
   ],
+  'It\'s You Or No One': [
+    { id: 'iAoAJ3COpZg', title: "IT'S YOU OR NO ONE chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: 'j-h4AebhIg0', title: "IT'S YOU OR NO ONE chord progression (slow) - Backing Track Play Along Jazz Standard Bible", channel: "Backingtracks JAZZ" },
+    { id: 'oAzQi_wBW_0', title: "It’s You Or No One Bass Line Play Along Backing Track", channel: "MrSunnybass" },
+    { id: 'mtWhtE3nzCs', title: "BACKING TRACK - IT'S YOU OR NO ONE (F) 210 BPM SWING", channel: "Luc Maes" },
+    { id: 'rnnNUOJY4EM', title: "it's You Or No One/backing track/bpm160", channel: "flandria" }
+  ],
   'Jackie-ing': [
     { id: 'Uy0fqZrV5HU', title: "Jackie-ing (Play Along Version)", channel: "MIDIFine Systems - Topic" },
     { id: '2E_kllGmLLk', title: "Jackie Ing (Backtrack)", channel: "JazzTrax - Topic" },
     { id: 'ZL34cMFBRTM', title: "JACKIE ING Bb", channel: "B and E Flat" },
     { id: 'CrBQaabwkRc', title: "Jackie-ing", channel: "Release - Topic" },
     { id: 'ID-0vA7YrDA', title: "Misterioso/backing track/bpm100", channel: "flandria" }
+  ],
+  'Jelly Roll': [
+    { id: 'XzUZ5cPLS-k', title: "Jelly Roll chord progression - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
+    { id: '_bt9BtL17yw', title: "Jelly Roll - Jazz Practice Backing Track", channel: "PRACTICE JAZZ" },
+    { id: 'Tb45H9vXIDk', title: "I ain't gonna give nobody none o' this Jelly Roll (Backing Track)", channel: "Pep Rius" },
+    { id: '_Oa75XlG7WU', title: "Jelly Roll Backing Track Jazz - 132bpm", channel: "Backing Track Center" },
+    { id: 'H7fIX0gG0R4', title: "Jelly Roll backing track - Blues and Roots Ensemble", channel: "Blues and Roots Ensemble" }
+  ],
+  'Jitterbug Waltz': [
+    { id: 'B9PNgqbZryo', title: "Jazz Backing Track - Jitterbug Waltz", channel: "Eagleheart Jazz Channel" },
+    { id: 't32Pk_Xt6HY', title: "Jitterbug Waltz Bass Line Play Along Backing Track", channel: "MrSunnybass" },
+    { id: 'Y7Tapw4xcTQ', title: "Jitterbug Waltz: play along, backing track, playback.", channel: "Josep Traver" },
+    { id: 'QURrL2J_8Ak', title: "Jitterbug Waltz | Backing Track", channel: "Jae Y Jeong Music" },
+    { id: 's1hrTMwvQgc', title: "Swing into Action: 'Jitterbug Waltz' Play-Along | ACME Play-A-Longs", channel: "ACME Play-A-Longs" }
   ],
   'Jordu': [
     { id: 'jc7iRbcISRA', title: "Jordu - Duke Jordan - Backing track / Play-along with Lead Sheet", channel: "neajazz" },
@@ -770,6 +1260,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: '1M35EMKNXMA', title: "Joy Spring - Jazz Standard Backing Track", channel: "PRACTICE JAZZ" },
     { id: 'RtR-op5OlDU', title: "Joy Spring | 160 bpm | Jazz Swing | Play-Along Backing Track", channel: "Edwin's Jazz Jam" }
   ],
+  'Joy Spring (alt)': [
+    { id: 'hVJOXhCC27I', title: "Lanny Morgan-Joy Spring (Track 5)", channel: "TheDouglas" },
+    { id: 'fGiCLmTrJKw', title: "Max Roach & Clifford Brown - 1954 - Daahoud - 09 Joyspring (alt take)", channel: "JazzTube" },
+    { id: 'sX4aUuKd0IQ', title: "#JOY SPRING by #Clifford Brown - #Gareth Giles with #MONTY BLAND (Double Bass)", channel: "ggthepianoman" },
+    { id: 'MOaLSu8xOcc', title: "George Morrow - Joy Spring(Bass Line Transcription) ウォーキングベース", channel: "Jazz Bass Transcriptions" },
+    { id: '7nEFOPlYR_0', title: "Clifford Brown & Max Roach - 1955 - 11 Joy Spring [alt. take]", channel: "JazzTube" }
+  ],
   'Just Friends': [
     { id: '0zJx0Rh56Ow', title: "Just Friends (Jazz/Swing feel) 140 bpm : Backing Track", channel: "Guitare Improvisation" },
     { id: 'nB0zBDiXkrA', title: "Just Friends (Jazz/Swing feel) 170 bpm : Backing Track", channel: "Guitare Improvisation" },
@@ -781,6 +1278,34 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'SY9YjlSYNI4', title: "Just Friends - Real Jazz Backing Track - Jazz Play Along -", channel: "Real Jazz Backing Tracks" },
     { id: 'jgpxVPyEIWk', title: "Backing Track - Just Friends (Bb) 210 BPM Swing", channel: "Luc Maes" },
     { id: '1H2Zkrzfzfo', title: "Just Friends | 160 bpm | Jazz Swing | Play-Along Backing Track", channel: "Edwin’s Jazz Jam" }
+  ],
+  'Just In Time': [
+    { id: 'hGlP7zBN9HQ', title: "JUST IN TIME chord progression 210bpm 5x Piano Bass Drums - Jazz Backing Track - Play Along - BGM", channel: "Backingtracks JAZZ" },
+    { id: 'AzzOLuedDYA', title: "Just In Time Jazz Backing Track - 160bpm", channel: "Backing Track Center" },
+    { id: 'TQvCVSl9Ppw', title: "JUST IN TIME (Bb) 240 bpm - backing track", channel: "PlayalongMe" },
+    { id: 'dJFrCf8RdNU', title: "Just In Time - with Intro + Lyrics in F (Female) - Jazz Sing-Along", channel: "Jazz Sing-Along" },
+    { id: 'VhjsY9qfYJ8', title: "Just In Time Bass Line Play Along Backing Track", channel: "MrSunnybass" }
+  ],
+  'Just You Just Me': [
+    { id: 'Ia0G1BHnRpw', title: "Just You Just Me - 180 bpm, Swing, Backing Track for Jazz Practice, 30 min. Play-Along", channel: "JamSesh Central" },
+    { id: 'tNp_IV5O6eg', title: "Just You, Just Me (Greer) - Backing track + music sheet", channel: "Werner Schmedding" },
+    { id: 'bt8ayP5eKu0', title: "Just You Just Me Bass Line Play Along Backing Track", channel: "MrSunnybass" },
+    { id: 'ncNJ5wguYY0', title: "Just You, Just Me - Swing Backing Track in C (200bpm)", channel: "Gypsy Jazz Essentials" },
+    { id: 'WLpYj1cj_mk', title: "Just You Just Me Backing Track", channel: "Pep Rius" }
+  ],
+  'Killer Joe': [
+    { id: 'MkRhTQPHiR4', title: "Jazz Backing Track - Killer Joe", channel: "Eagleheart Jazz Channel" },
+    { id: 'BjPbMMNyfIg', title: "Killer Joe  (Benny Golson)/Backing Track/Play Along", channel: "Gilberto Zaragoza" },
+    { id: 'cCjD4dceN8c', title: "KILLER JOE chord progression - Backing Track Play Along Jazz Standard Bible", channel: "Backingtracks JAZZ" },
+    { id: 'EARHQzm0elQ', title: "Vol. 070 - 01 Killer Joe - ( C 🎹 )", channel: "Sound JP" },
+    { id: 'rx9HFpBX_Y8', title: "Vol. 070 - 01 Killer Joe - ( Eb 🎷 )", channel: "Sound JP" }
+  ],
+  'Ko-Ko': [
+    { id: 'ue4RYNeoBaw', title: "【Ko Ko/ Charlie Parker】Backing Track (BPM 308)", channel: "楽譜ドットコム" },
+    { id: 'RLM9iSNcukk', title: "Charlie Parker Koko Transcription Playalong", channel: "Sam Lubline" },
+    { id: '-JjyY0IkNcY', title: "(Free Transcription) Ko Ko - Charlie Parker 1956, The Charlie Parker Story", channel: "PRACTICE JAZZ" },
+    { id: 'TU0nXNAzSqE', title: "Lydian Scale (Eb Version) Backing Track To Practice In All 12 Keys", channel: "Lolo García Music" },
+    { id: '-LXg2EaINUg', title: "Charlie Parker Omnibook 60-day challenge, Day 23:  Constellation(No backing track - just metronome)", channel: "Mike's Music Studio" }
   ],
   'Koko': [
     { id: 'RLM9iSNcukk', title: "Charlie Parker Koko Transcription Playalong", channel: "Sam Lubline" },
@@ -795,6 +1320,27 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'OIQ4l6wXlkg', title: "Lady Bird - Medium Up Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
     { id: 'ZVWS7Y2JWzk', title: "Lady Bird - Play along - Backing track (C key score violin/guitar/piano)", channel: "Davide Severino" },
     { id: '_0oWYW8rGZA', title: "Lady Bird (and Half Nelson) 180 bpm Jazz Swing Play-Along Backing Track", channel: "Edwin's Jazz Jam" }
+  ],
+  'Ladybird': [
+    { id: '1yzt0UCup0c', title: "Ladybird : Backing Track (swing 140 bpm)", channel: "Guitare Improvisation" },
+    { id: 'ILajGY_HqtI', title: "LADY BIRD chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: 'ZVWS7Y2JWzk', title: "Lady Bird - Play along - Backing track (C key score violin/guitar/piano)", channel: "Davide Severino" },
+    { id: '6EN6jVo3Xus', title: "LADY BIRD chord progression (slow) - Jazz Backing Track Play Along The Real Book Jazz Standard Bible", channel: "Backingtracks JAZZ" },
+    { id: 'OIQ4l6wXlkg', title: "Lady Bird - Medium Up Swing || BACKING TRACK", channel: "JGC Play-Alongs" }
+  ],
+  'Lament': [
+    { id: '1TVODuyyMS8', title: "LAMENT chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: 'EAZLUiwxMB4', title: "[JAZZ STANDARD] Lament (Fm, 68bpm, Ballad) I Jazz Backing Track", channel: "JAMMATES" },
+    { id: 'JNc0ERZ5o0k', title: "Lament chord progression - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
+    { id: 'FRCvtNZTzNM', title: "Lonnie's Lament - Jazz Practice Backing Track", channel: "PRACTICE JAZZ" },
+    { id: 'TTsqkhjhYvE', title: "Lament - Jazz Practice Backing Track", channel: "PRACTICE JAZZ" }
+  ],
+  'Laura': [
+    { id: 'YXKgUZVH9bc', title: "Laura - Backing Track with Sheet Music for Tenor Sax", channel: "Yasuhiro Fujii" },
+    { id: '_ObqBvbagT0', title: "LAURA chord progression - Backing Track Play Along Jazz Standard Bible 2", channel: "Backingtracks JAZZ" },
+    { id: 'lY422qMJO9g', title: "Laura - Backing Track with Sheet Music for Alto Sax", channel: "Yasuhiro Fujii" },
+    { id: 'ABRr1vZV1go', title: "Laura in C Bass Line Play Along Backing Track", channel: "MrSunnybass" },
+    { id: 'H_1mejm7FkI', title: "CUTE chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" }
   ],
   'Lazy Bird': [
     { id: 'pE_V4TkoiwA', title: "Lazy Bird chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
@@ -814,6 +1360,20 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'OeA-BvRoOQo', title: "Like Someone In Love - with Intro + Lyrics in F (Female) - Jazz Sing-Along", channel: "Jazz Sing-Along" },
     { id: 'RsHkZ2qPkZ4', title: "Like Someone in Love   Backing Track ⧸ Play Along 31T7trltrnY", channel: "lil-works" }
   ],
+  'Like Sonny': [
+    { id: 'tuHhW-_FKYI', title: "Like Sonny - Medium Up Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: '9PRirbeYcno', title: "Like Sonny - Organ Trio Straight Medium || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: 'Gro-v4X5aT4', title: "Like Sonny Backing Track", channel: "Constantine Taranenko" },
+    { id: 'UdkjLtNnE14', title: "Like Sonny [No Piano] - Medium Up Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: 'DjWq3ihHm2Y', title: "Like Sonny latin/swing Bass Line Play Along Backing Track", channel: "MrSunnybass" }
+  ],
+  'Limehouse Blues': [
+    { id: 'fXR8sN5qlmE', title: "Gypsy Jazz / Manouche - Limehouse Blues 200bpm  (Play along / Backing Track )", channel: "DC Music School" },
+    { id: 'ANoRz2EdZwM', title: "Limehouse Blues (270bpm) - Playback jazz manouche - Gypsy jazz backing track / play along", channel: "Clément Reboul" },
+    { id: 'jngqtgMdk5A', title: "Limehouse Blues (240bpm) - Playback jazz manouche - Gypsy jazz backing track / play along", channel: "Clément Reboul" },
+    { id: 'SYX4--S0uyY', title: "Limehouse Blues Gypsy Jazz Backing (180bpm)", channel: "DjangoKOR" },
+    { id: 'njerYOsR5kE', title: "Jazz Backing Track - Limehouse Blues", channel: "Eagleheart Jazz Channel" }
+  ],
   'Line For Lyons': [
     { id: 'w3WFcrnZMY0', title: "Line For Lyons (Mulligan) Backing track + music sheet", channel: "Werner Schmedding" },
     { id: '3bJUBlSBqdo', title: "Line For Lyons Bass Line Play Along Backing Track", channel: "MrSunnybass" },
@@ -821,12 +1381,54 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'uwtOzdo7sWU', title: "Jazz Backing Track - Line For Lyons", channel: "Eagleheart Jazz Channel" },
     { id: '3KOkwpoAUzg', title: "Gerry Mulligan Baritone sax transcription - Line For Lyons", channel: "Sharp Eleven Music" }
   ],
+  'Little Sunflower': [
+    { id: 'bp-Dsw9d32k', title: "Little sunflower (bossa 130bpm) - Backing Track", channel: "Guitare Improvisation" },
+    { id: 'dJLb2XWqYgc', title: "LITTLE SUNFLOWER chord progression - Backing Track Play Along Jazz Standard Bible 2", channel: "Backingtracks JAZZ" },
+    { id: 'xTEqjPCwp_w', title: "Little Sunflower Backing Track - Jazz Play Along!", channel: "Jack's Guitar Trax" },
+    { id: 'MPnsqg4w9sc', title: "Backing Track Jazz Bossa -  Little Sunflower  = 150 BPM", channel: "Escola de Música Star David" },
+    { id: 'g5FZT91D8i8', title: "Little Sunflower - Freddie Hubbard |Play Along |Backing Track", channel: "Michele Paternoster" }
+  ],
+  'Little Willie Leaps': [
+    { id: 'Bzr93nqduBg', title: "BACKING TRACK - LITTLE WILLIE LEAPS (Miles Davis, Charlie Parker) (F) 270 BPM SWING", channel: "Luc Maes" },
+    { id: 'mUiigo3AtBM', title: "Little Willie Leaps Bass Line Play Along Backing Track", channel: "MrSunnybass" },
+    { id: 'iHNgoRRQRRA', title: "Charlie Parker - \"Little Willie Leaps\" Take 2 (Solo Transcription)", channel: "Sam Moffett Music" },
+    { id: 'xHXeGyZlshQ', title: "Little Willie - Practice Jam Track", channel: "Grass Trax" },
+    { id: '9yfw4VzLzh4', title: "Charlie Parker \"Little Willie Leaps\" 弾き方 TAB譜 | Jazz Guitar", channel: "萩原健也 Kenya Hagihara" }
+  ],
+  'Lonely Woman': [
+    { id: 'J8MUOTJ-cDg', title: "Lonely Woman Bass Line Play Along Backing Track", channel: "MrSunnybass" },
+    { id: 'Rn0r5829E1o', title: "Lonely Woman: Backing Track", channel: "Jazz Progressions" },
+    { id: '1GVj6s2aNT4', title: "Lonely Woman (Horace Silver) Backing track + music sheet", channel: "Werner Schmedding" },
+    { id: 'fvnwKWg6cww', title: "lonely woman..(adams backing track)", channel: "robert shea" },
+    { id: 'NHrVDzdtGF4', title: "Lonely Woman/Ornette Coleman. Ornette Coleman - Transcribed by Fabio Tiralongo", channel: "Fabio Tiralongo" }
+  ],
+  'Long Ago And Far Away': [
+    { id: 'iChJNg1AKF8', title: "Long Ago (And Far Away) (from COVER GIRL) chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: 'k2amcceQc64', title: "Long Ago (and Far Away) (G) - Up Tempo Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: 'yHGyjtR0gzM', title: "Long Ago And Far Away - Jazz Practice Backing Track", channel: "PRACTICE JAZZ" },
+    { id: 'WqlRomrNFaY', title: "\"Long Ago And Far Away\" (Jazz Backing Track And Play Along)", channel: "Klaus Bluetner" },
+    { id: 'VewtCh9BmlU', title: "Jazz Backing Track - Long Ago (And Far Away)", channel: "Eagleheart Jazz Channel" }
+  ],
+  'Love For Sale': [
+    { id: '2v8D_p_2O-0', title: "LOVE FOR SALE chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: 'Z3APAFgw5as', title: "Love For Sale (Jazz/Swing feel) 190 bpm : Backing Track", channel: "Guitare Improvisation" },
+    { id: 'S5L9G3Yi6NQ', title: "Love For Sale Jazz Backing Track - 140bpm", channel: "Backing Track Center" },
+    { id: 'kqCorEzDax8', title: "Love For Sale (Bbmi) - Medium Up Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: 'FTcYpT_Nbes', title: "LOVE FOR SALE chord progression - Backing Track (no piano)", channel: "Backingtracks JAZZ" }
+  ],
   'Love Is Here And Now You\'re Gone': [
     { id: 'jzaqjApyGsw', title: "SITSOM Play Along 23- Love Is Here And Now You're Gone, Since I Lost My Baby and I'm Wondering", channel: "Meno Mosso Music" },
     { id: 'o15frD37a9M', title: "Our Love Is Here To Stay - with Intro + Lyrics in Bb (Female) - Jazz Sing-Along", channel: "Jazz Sing-Along" },
     { id: 'KAVWrL0N8z4', title: "Ronnie Laws Love Is Here Sire V9 Slap Bass slow groove Jam  JAZZ FUNK", channel: "J Bass" },
     { id: '9EU7sQW8YgQ', title: "Happy (Love Theme from Lady Sings the Blues) (Karaoke)", channel: "Superstarkid" },
     { id: '-H-PVx8NcXw', title: "I'm Gonna Make You Love Me - Diana Ross & the Supremes and The Temptations (Bass Cover)", channel: "Vadym Sokolyk" }
+  ],
+  'Lover Man': [
+    { id: '3Wz0_ylhu3Y', title: "Lover Man : Backing Track", channel: "Guitare Improvisation" },
+    { id: '2ajs4RwgUY0', title: "LOVER MAN chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: '8Z3AXUrGoMw', title: "Lover Man - Backing Track with Sheet Music for Alto Sax", channel: "Yasuhiro Fujii" },
+    { id: 'Jot3B68EXFc', title: "Lover Man/Backing Track/RealInst/C (Female Vo Key)/Jazz Ballad/Piano Trio/4bars Intro/Chords/60bpm", channel: "Music to Play Along" },
+    { id: 'VJ2LDSmSdtk', title: "Lover Man Backing Track Jazz Ballad - 60bpm", channel: "Backing Track Center" }
   ],
   'Lullaby of Birdland': [
     { id: 'ttPZmU5Jw4Y', title: "Lullaby of Birdland : Backing Track", channel: "Guitare Improvisation" },
@@ -890,6 +1492,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: '5HyNeKDZ-HQ', title: "Mercy Mercy Mercy Alto Sax Sheet Music Backing Track Play Along Partitura", channel: "Music Minded, Music Hearted" },
     { id: 'szZVfyiE6uo', title: "Mercy, Mercy, Mercy Bass Line Play Along Backing Track", channel: "MrSunnybass" }
   ],
+  'Midnight Sun': [
+    { id: 'mP0G5scXasc', title: "Midnight Sun in Ab Bass Line Play Along Backing Track", channel: "MrSunnybass" },
+    { id: 'gl2efqzyt6Y', title: "Midnight Sun in C Bass Line Play Along Backing Track", channel: "MrSunnybass" },
+    { id: 'NGsmTl-qUz0', title: "The Midnight Sun Will Never Set - Backing Track with Sheet Music for Tenor Sax", channel: "Yasuhiro Fujii" },
+    { id: 'AggzUoUIthU', title: "Midnight Sun (Mercer) Backing track + music sheet", channel: "Werner Schmedding" },
+    { id: 'tzHzna005MA', title: "Midnight Sun in Eb Bass Line Play Along Backing Track", channel: "MrSunnybass" }
+  ],
   'Milestone': [
     { id: 'iGF3Uaa9Eyw', title: "MILESTONES chord progression - Backing Track Play Along", channel: "Backingtracks JAZZ" },
     { id: 'FSGWj22wV0U', title: "Milestones (New) - Up Tempo Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
@@ -898,6 +1507,20 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'hnUWiqNHA3Q', title: "Milestones New Bass Line Play Along Backing Track", channel: "MrSunnybass" },
     { id: 'M8oVW5GtKCk', title: "Play-along Milestones (Miles Davis) a bit \"electro\"", channel: "lil-works" },
     { id: 'yLrNJi4wPN8', title: "Milestones Old Bass Line Play Along Backing Track", channel: "MrSunnybass" }
+  ],
+  'Milestones': [
+    { id: '0Lig54ekplY', title: "Jazz Backing Track - Milestones", channel: "Eagleheart Jazz Channel" },
+    { id: 'FSGWj22wV0U', title: "Milestones (New) - Up Tempo Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: 'iGF3Uaa9Eyw', title: "MILESTONES chord progression - Backing Track Play Along Jazz Standard Bible", channel: "Backingtracks JAZZ" },
+    { id: 'MQwJYyZPwFo', title: "Milestones   Miles Davis   Backing Track ⧸ Play Along 07D2uFXP5EI", channel: "lil-works" },
+    { id: 'ytlLKDC9DG4', title: "Milestones (Old) - Medium Up Swing || BACKING TRACK", channel: "JGC Play-Alongs" }
+  ],
+  'Minor Swing': [
+    { id: 'UGCxrt7Gcb4', title: "Minor Swing (160 bpm) (Old Style) - Gypsy jazz Backing track / Jazz manouche", channel: "Guitare Improvisation" },
+    { id: 'tRAThtQ-OTM', title: "Minor Swing (190 bpm) (1937) - Gypsy jazz Backing track / Jazz manouche", channel: "Guitare Improvisation" },
+    { id: 'VO1Kl25t7mc', title: "Minor Swing (110 bpm) : Backing track (electric guitar)", channel: "Guitare Improvisation" },
+    { id: 'H29uMpxvgjY', title: "Minor Swing (190bpm)", channel: "Clément Reboul - Topic" },
+    { id: 'GbfCjMe5O24', title: "Minor Swing (Django Reinhardt) - Playback jazz manouche - Gypsy jazz backing track / play along", channel: "Clément Reboul" }
   ],
   'Misty': [
     { id: 'Pz3x96G03D0', title: "Misty - Backing track / Play-along", channel: "QGVideos" },
@@ -910,6 +1533,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: '8Nms1RAMi7U', title: "Misty backing track | Jazz Jam in C", channel: "Maran Guitar Jam Tracks" },
     { id: '2LMk2qcLO-g', title: "'Misty': Cool R&B Ballad Edition Eb Play-Along | ACME Play-A-Longs", channel: "ACME Play-A-Longs" },
     { id: 'wYgK_Bo01Lk', title: "Misty | 60 bpm | Jazz Ballad | Play-Along Backing Track", channel: "Edwin’s Jazz Jam" }
+  ],
+  'Misty (alt key)': [
+    { id: 's7s0-w5yH6o', title: "Misty - Backing Track with Sheet Music for Alto Sax", channel: "Yasuhiro Fujii" },
+    { id: '-ae_tBkCqeQ', title: "Bb Blues (110bpm) : Backing track", channel: "Guitare Improvisation" },
+    { id: '6xd-Hu62GUw', title: "Smooth Jazz Ballad - Backing Jam Track in Dm", channel: "DixMusicStudio" },
+    { id: '8TEG0oXB2C4', title: "Jazz ballad (Dm7 G7 CMaj7) : Backing track", channel: "Guitare Improvisation" },
+    { id: 'j1XQUE6GVpY', title: "Satin Doll (Duke Ellington) : Backing Track", channel: "Guitare Improvisation" }
   ],
   'Moanin\'': [
     { id: 'dVJ5iFlDGu8', title: "Moanin' (Jazz/Swing feel) - 130 bpm : Backing Track", channel: "Guitare Improvisation" },
@@ -937,6 +1567,20 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'EsQDuqa9llY', title: "Jazz Backing Track - Mood Indigo", channel: "Eagleheart Jazz Channel" },
     { id: 'TU4wNFgmx_g', title: "Mood Indigo (Bb) Backing Track (Ballad)", channel: "Jazzing - Topic" },
     { id: '0DOq56XQTBY', title: "New Jazz Backing Track MOOD INDIGO Ab ( Duke Ellington ) Play Along Wind Instrument Singer Swing mp3", channel: "Jazzing" }
+  ],
+  'Moon River': [
+    { id: 'zmU9Jl6fqXE', title: "New Jazz Backing Track MOON RIVER (C Major) Play Along LIVE Guitar Flute Harmonic Accordion Singer", channel: "Jazzing" },
+    { id: 'nipyPPoPEnY', title: "MOON RIVER chord progression - Backing Track Play Along Jazz Standard Bible 2 Guitar", channel: "Backingtracks JAZZ" },
+    { id: 'DoEYQ4_Va9k', title: "Moon River - JAZZ BACKING TRACK - 90 Bpm", channel: "WillMax JamTracks" },
+    { id: 'zW-ew5w3wds', title: "Moon River - Backing Track in C Major", channel: "John Caudrey" },
+    { id: 'yYopdILGxwc', title: "Moon River - with Intro + Lyrics in G (Female) - Jazz Sing-Along", channel: "Jazz Sing-Along" }
+  ],
+  'Moonlight In Vermont': [
+    { id: 'Nf0e_sXqLts', title: "MOONLIGHT IN VERMONT chord progression - Backing Track Play Along Jazz Standard Bible 2", channel: "Backingtracks JAZZ" },
+    { id: 'P2X5y95ccQk', title: "Moonlight In Vermont (70 Bpm) Jazz Backing Track", channel: "Cool Jazz Tracks" },
+    { id: 'FEA0BLZEAek', title: "MOONLIGHT IN VERMONT Eb", channel: "B and E Flat" },
+    { id: '6kErt0DOnsg', title: "Moonlight In Vermont ( Bb 🎷 ) Melody & Solo", channel: "Sound GB" },
+    { id: '1pKIRffVdV0', title: "Moonlight In Vermont, backing track,play along,mel, key of Eb", channel: "VicsPracticeTracks" }
   ],
   'Mr. P.C.': [
     { id: 'kQse14QMXdE', title: "Mr. P.C. Backing Track", channel: "BaBoSound" },
@@ -973,6 +1617,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'hSQRVbwJ-N4', title: "My Little Suede Shoes - Backing Track with Sheet Music for Alto Sax  (Take-1)", channel: "Yasuhiro Fujii" },
     { id: 's-e8Rwg5tks', title: "My Little Suede Shoes - (Latin/Jazz feel) 120 bpm : Backing Track", channel: "Guitare Improvisation" }
   ],
+  'My Old Flame': [
+    { id: 'd5M305foZ4I', title: "My Old Flame chord progression - Jazz guitar Backing Track Play Along Jazz Improvisation", channel: "Backingtracks JAZZ" },
+    { id: '9sTi-uayTXg', title: "My Old Flame (G) || Play Along || Bossa Nova Backing Track", channel: "ACME Play-A-Longs" },
+    { id: 'xOsZvd-UZhQ', title: "My Old Flame chord progression (no piano) - Jam Backing Track Play Along Jazz Improvisation", channel: "Backingtracks JAZZ" },
+    { id: 'ObM1U8xBFVQ', title: "My Old Flame (Play Along Version)", channel: "MIDIFine Systems - Topic" },
+    { id: '_QwB96tLxi8', title: "My Old Flame (Johnston) - Backing track + score for Bb instruments", channel: "Werner Schmedding" }
+  ],
   'My One And Only Love': [
     { id: 'VV8pVjQ69ZU', title: "My One And Only Love chord progression - Jazz Backing Track", channel: "Backingtracks JAZZ" },
     { id: '2SzOskbqT6Q', title: "My One And Only Love - Real Jazz Backing Track - Play Along", channel: "Real Jazz Backing Tracks" },
@@ -981,6 +1632,20 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'vLnGvXTMwzI', title: "My One And Only Love - with Intro + Lyrics in Bb (Female) - Jazz Sing-Along", channel: "Jazz Sing-Along" },
     { id: 'yolGDuRYTQQ', title: "My One and Only Love   Backing Track ⧸ Play Along efk0Fds2ugY", channel: "lil-works" },
     { id: 'PO5STkhULeg', title: "My One And Only Love - Jazz Practice Backing Track", channel: "PRACTICE JAZZ" }
+  ],
+  'My Romance': [
+    { id: 'foAodee4TMA', title: "My Romance chord progression - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
+    { id: '47myqcM6oes', title: "My Romance / (Swing) Backing Track / Bpm 120", channel: "Hatsumi's Backing Track" },
+    { id: 'JRuy5rtSIvM', title: "My Romance - Play-along / Backing track", channel: "QGVideos" },
+    { id: 'PPi0ganLkQc', title: "My Romance   Jazz Backing Track Play Along The Real Book", channel: "Fabio" },
+    { id: 'vYcqsjBJFFo', title: "Jazz Backing Track - My Romance", channel: "Eagleheart Jazz Channel" }
+  ],
+  'My Shining Hour': [
+    { id: '0ammhOHO1xg', title: "MY SHINING HOUR chord progression - Backing Track", channel: "Backingtracks JAZZ" },
+    { id: 'ZcrPqo95YF4', title: "Vol 044 - 02 My Shining Hour - ( Eb 🎷 )", channel: "Sound JP" },
+    { id: 'yijw_xUkIq8', title: "My Shining Hour (C) - Up Tempo Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: 'UWXAgUR8h3U', title: "BACKING TRACK - MY SHINING HOUR (Harold Arlen, Johnny Mercer) (C) 210 BPM SWING", channel: "Luc Maes" },
+    { id: 'MV5AfssPNuc', title: "Jazz Backing Track - My Shining Hour", channel: "Eagleheart Jazz Channel" }
   ],
   'Naima': [
     { id: '4ZRsImeyNIs', title: "Naima (John Coltrane) Backing track + music sheet", channel: "Werner Schmedding" },
@@ -1010,6 +1675,20 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'BYiG7uA7bvA', title: "Nature Boy - Play along - in D minor - 60 bpm - x3", channel: "Reading and Improvisation Methods for Guitar" },
     { id: 'VaVQnnPKw5U', title: "Nature Boy Bass Line Play Along Backing Track", channel: "MrSunnybass" }
   ],
+  'Nearness Of You': [
+    { id: 'VVjLzJoYPqQ', title: "New Jazz Backing Track THE NEARNESS OF YOU Classic Standard REAL LIVE BAND Play Along Jazzing Mp3", channel: "Jazzing" },
+    { id: 'OruPqRcF5CQ', title: "The NEARNESS OF YOU chord progression - Backing Track Play Along Jazz Standard Bible 2 Guitar", channel: "Backingtracks JAZZ" },
+    { id: 'C5qnZ6u4MQg', title: "The Nearness Of You (F) Ballad Backing Track", channel: "Jazzing - Topic" },
+    { id: 'YZFg_AT2Kwo', title: "The Nearness of You - Backing track / Play-along", channel: "QGVideos" },
+    { id: 'YS2ZauS9ZLE', title: "The Nearness Of You - Real Jazz Backing Track - Play Along", channel: "Real Jazz Backing Tracks" }
+  ],
+  'Nefertiti': [
+    { id: 'x_yArBnmd-4', title: "Jazz Backing Track - Nefertiti", channel: "Eagleheart Jazz Channel" },
+    { id: 'ylq4Gvk4uQw', title: "Nefertiti chord progression - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
+    { id: 'DpkBHmY51F8', title: "Nefertiti   Miles Davis   Backing Track ⧸ Play Along JB1qGyYY2Ac", channel: "lil-works" },
+    { id: 'u8AUjx-BJpk', title: "Nefertiti - Slow Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: 'ZOSjVzuo9Xs', title: "Nefertiti Bass Line Play Along Backing Track", channel: "MrSunnybass" }
+  ],
   'Nica\'s Dream': [
     { id: 'R-GJp94QTzI', title: "Nica's Dream (Bbmi) - Straight/Swing Up Tempo || BACKING TRACK", channel: "JGC Play-Alongs" },
     { id: 'JOq_4nmc-j8', title: "Nica's Dream - Jazz Standard Backing Track", channel: "PRACTICE JAZZ" },
@@ -1025,6 +1704,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'qYZm7EIz6xM', title: "Night And Day (130 Bpm) Jazz Backing Track", channel: "Cool Jazz Tracks" },
     { id: 'Vv6OYK7-gFY', title: "NIGHT AND DAY chord progression - Jazz Standard Backing Track", channel: "Backingtracks JAZZ" }
   ],
+  'Night Dreamer': [
+    { id: 'BPsnMgzd60Y', title: "Night Dreamer chord progression - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
+    { id: 'qgQtVTZ9mC0', title: "Jazz Backing Track - Night Dreamer", channel: "Eagleheart Jazz Channel" },
+    { id: 'Hbx6_Ol5Am0', title: "Night Dreamer   Wayne Shorter   Backing Track ⧸ Play Along IjNyXhXHqIc", channel: "lil-works" },
+    { id: 'Xew4APiXMMQ', title: "Jazz Backing Track - Children Of The Night", channel: "Eagleheart Jazz Channel" },
+    { id: 'J8db1k5I2G4', title: "Night Dreamer (Wayne Shorter) Backing track + music sheet", channel: "Werner Schmedding" }
+  ],
   'Night in Tunisia': [
     { id: 'MHNDSPHQx7g', title: "A Night in Tunisia (Latin/Swing feel) 170 bpm : Backing Track", channel: "Guitare Improvisation" },
     { id: 'YUDZwmkPA7k', title: "A Night in Tunisia (Latin/Swing feel) 140 bpm : Backing Track", channel: "Guitare Improvisation" },
@@ -1037,12 +1723,33 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'Wc5Y0qOL5ik', title: "Jazz Backing Track - A Night In Tunisia", channel: "Eagleheart Jazz Channel" },
     { id: 'b25ky7PqBbE', title: "A Night in Tunisia dizzy gillespie play along", channel: "DARTH REVAN" }
   ],
+  'Night In Tunisia (alt)': [
+    { id: 'yDt-KAXBhW4', title: "david selkirk plays \"A Night in Tunisia\" alt. take w/real piano sound", channel: "David" },
+    { id: '3-6NOJdxloE', title: "Mary Lou Williams - A Night in Tunisia (Recorded Live, May 8, 1977)", channel: "Jazz Everyday!" },
+    { id: '_fPGNpaOj1c', title: "A Night In Tunisia", channel: "Eddie Jefferson - Topic" },
+    { id: 'm6T18nDCGX4', title: "A Night in Tunisia - Bud Powell solo", channel: "Haya music 하야뮤직" },
+    { id: 'cshL_LVfYEU', title: "A Night In Tunisia - fingerstyle ukulele", channel: "Ukulele Nick" }
+  ],
   'Now\'s The Time': [
     { id: 'SpKkG8EwqTU', title: "Now's The Time - Backing track / Play-along", channel: "QGVideos" },
     { id: 'aYwZtIUFi78', title: "NOW'S THE TIME chord progression - Jazz Standard Backing Track Play Along", channel: "Backingtracks JAZZ" },
     { id: '4wKICMNfzUc', title: "Now's the time / Billie's Bounce (slow) play along - backing track", channel: "Davide Severino" },
     { id: '0d19aMS0l9Q', title: "Now's The Time (126 BPM) - Backing Track", channel: "Improv' Your Music" },
     { id: 'dtQ4YTUJVfs', title: "Jazz Backing Track - Now's The Time", channel: "Eagleheart Jazz Channel" }
+  ],
+  'Ode To Billie Joe': [
+    { id: 'FxXtc0jMIRM', title: "Bobbie Gentry - Ode' to Billy Joe [E] [Backing Track] [Guitar chords & lyrics]", channel: "Seb Oz" },
+    { id: 'FZ2dfPvCaRk', title: "Ode to Billy Joe - Bobbie Gentry | Karaoke Version | KaraFun", channel: "KaraFun Karaoke" },
+    { id: '9FYfFE9zSlk', title: "ode to billie joe", channel: "Thierry Waleffe" },
+    { id: 'UpUpcgkFCcI', title: "Bobbie Gentry - Ode' to Billy Joe [Jam Track] [Guitar chords & lyrics]", channel: "Seb Oz" },
+    { id: 'XnJLFFM8XGY', title: "Ode to Bille Joe (Originally Performed By Bobbie Gentry) (Karaoke Backing Track)", channel: "Paris Music - Topic" }
+  ],
+  'Old Devil Moon': [
+    { id: '00ac5FO44Mc', title: "OLD DEVIL MOON chord progression - Jazz Standard Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: 'EHmCKVxKIXw', title: "Jazz Backing Track - Old Devil Moon", channel: "Eagleheart Jazz Channel" },
+    { id: 'TbVWpMqTc_g', title: "Old Devil Moon Bass Line Play Along Backing Track", channel: "MrSunnybass" },
+    { id: 'WrUMdTWv9V4', title: "Old Devil Moon - Jazz Standard Backing Track", channel: "PRACTICE JAZZ" },
+    { id: 'rZmbREi6JfA', title: "Old Devil Moon - with Intro + Lyrics in C (Female) - Jazz Sing-Along", channel: "Jazz Sing-Along" }
   ],
   'Old Folks': [
     { id: 'HrApvZjW9hg', title: "OLD FOLKS chord progression - Jazz Standard Backing Track", channel: "Backingtracks JAZZ" },
@@ -1073,6 +1780,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'PE-fM9UTpVE', title: "On Green Dolphin Street (Jazz/Swing feel) 130 bpm : Backing Track", channel: "Guitare Improvisation" },
     { id: 'gyoOOIo49PA', title: "On Green Dolphin Street - Jazz Drumless Backing Track - by Bronislau Kaper", channel: "Jazz Drumless Backing Tracks" }
   ],
+  'One Note Samba': [
+    { id: 'KOwWrYkc6ag', title: "One Note Samba Backing Track (bpm 168)", channel: "Hatsumi's Backing Track" },
+    { id: 'dT30aN6SRqY', title: "ONE NOTE SAMBA - Backing Track Play Along Jazz Standard Bible", channel: "Backingtracks JAZZ" },
+    { id: 'CQkQJ8XsFk8', title: "Jazz Backing Track - One Note Samba", channel: "Eagleheart Jazz Channel" },
+    { id: 'YPe075BIMPY', title: "ONE NOTE SAMBA chord progression - Backing Track (no piano)", channel: "Backingtracks JAZZ" },
+    { id: 'CqK2M1ps7FY', title: "One Note Samba | Play Along | Backing Track", channel: "Michele Paternoster" }
+  ],
   'Ornithology': [
     { id: 'aFF9hOmtEDo', title: "ORNITHOLOGY chord progression - Jazz Standard Backing Track Play Along", channel: "Backingtracks JAZZ" },
     { id: 'xhHmaj_Muvk', title: "Long Parker Ornithology backing track 140 bpm", channel: "Joe Candido Guitar" },
@@ -1100,6 +1814,20 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'z_d84mVGez8', title: "Original Backing Track OUR LOVE IS HERE TO STAY ( C ) Play Along Singer Jazz Music Natalie Cole", channel: "Jazzing" },
     { id: 'JIZ_3QyByO0', title: "Love Is Here To Stay - with Intro + Lyrics in Bb (Female) - Jazz Sing-Along", channel: "Jazz Sing-Along" }
   ],
+  'Passion Dance': [
+    { id: 'hFjpvOr7P3E', title: "PASSION DANCE chord progression - Backing Track Play Along Jazz Standard Bible 2 Guitar", channel: "Backingtracks JAZZ" },
+    { id: 'pEd5Vx1uAlg', title: "Passion Dance chord progression (no (slow swing) - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: '3not5F4sX9k', title: "PASSION DANCE chord progression - Backing Track (no piano)", channel: "Backingtracks JAZZ" },
+    { id: 'DlH-If5cCfk', title: "Passion Dance modal workout w/backing track", channel: "Juan Diaz" },
+    { id: '2TvRQ8dxz5I', title: "Passion Dance/backing track/bpm180", channel: "flandria" }
+  ],
+  'Pastime Paradise': [
+    { id: '8zEeFenPKCU', title: "Us2 -- Pastime Paradise", channel: "Jeff COMANDUCCI" },
+    { id: 'fICNYxeZC1U', title: "LUCA MENDOZA TRIO \"PASTIME PARADISE\"", channel: "TEENS UNITED LIVE" },
+    { id: '1dPr91MCnqk', title: "Pastime Paradise ► Stevie Wonder ◄🎸► No Bass Guitar ◄🟢 Clic 👍🟢", channel: "♪ JJ-BASSless (ツ)" },
+    { id: 'T8Ex1g-v6gc', title: "🎶 Pastime Paradise (by Youngblood B.B.) 🎸🎸", channel: "Music Sheet" },
+    { id: 'QJ6QU_3IQbg', title: "Pastime Paradise Stevie Wonder - Fretless Bass Cover (Music Man StingRay)", channel: "Idogo" }
+  ],
   'Peace': [
     { id: 'FAoxirYPphE', title: "Jazz Backing Track - Peace", channel: "Eagleheart Jazz Channel" },
     { id: '4wCMQVCQPIA', title: "Peace - Jazz Practice Backing Track", channel: "PRACTICE JAZZ" },
@@ -1123,6 +1851,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'X29-31hR6Uw', title: "Pensativa (Fisher) Backing track + music sheet", channel: "Werner Schmedding" },
     { id: '1kWthCh2ogQ', title: "Pensativa Bass Line Play Along Backing Track", channel: "MrSunnybass" },
     { id: 'ERFjjTvDKqs', title: "Pensativa (Gb) Bossa Nova Backing Track Play Along", channel: "ACME Play-A-Longs" }
+  ],
+  'Pent Up House': [
+    { id: 'IDpkdRrU588', title: "PENT UP HOUSE chord progression - Backing Track", channel: "Backingtracks JAZZ" },
+    { id: 'fVMi9GE4sFE', title: "Pent Up House | Sonny Rollins - Backing Track / Play-Along with Lead Sheet", channel: "neajazz" },
+    { id: 'kmp9PG_8-r0', title: "Pent Up House - Organ and Drums Jazz Backing Track", channel: "Phil Wilkinson Music" },
+    { id: 'gxTQtvjKc2g', title: "Pent-Up House (Sonny Rollins) - Backing Track with Sheet Music for Alto Sax", channel: "Yasuhiro Fujii" },
+    { id: 'GOa3PqaKyQs', title: "Pent-up House - Sonny Rollins | Play Along | Backing Track", channel: "Michele Paternoster" }
   ],
   'Perdido': [
     { id: 'ejMRN8GazeE', title: "Perdido : Backing Track", channel: "Guitare Improvisation" },
@@ -1159,6 +1894,20 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: '3Bzxo3cfwJo', title: "Polkadots And Moonbeams | J. Van-Heusen - Backing Track / Play-Along with Lead Sheet", channel: "neajazz" },
     { id: '3VLerpf8BFs', title: "Polkadots and Moonbeams | 60 bpm | Jazz Ballad | Play-Along Backing Track", channel: "Edwin’s Jazz Jam" }
   ],
+  'Poor Butterfly': [
+    { id: '4NuPk-ublQI', title: "Jazz Backing Track - Poor Butterfly", channel: "Eagleheart Jazz Channel" },
+    { id: 'hP0CbdumyTM', title: "Poor Butterfly (Hubbell) Backing track + score for Bb instruments", channel: "Werner Schmedding" },
+    { id: 'FphwbaxdAds', title: "Poor Butterfly Jazz Backing Track", channel: "Constantine Taranenko" },
+    { id: 'oK9IJ91rRW8', title: "Poor Butterfly Bass Line Play Along Backing Track", channel: "MrSunnybass" },
+    { id: '1b_87SHvyFQ', title: "Poor Butterfly (Hubbell) Backing track + music sheet", channel: "Werner Schmedding" }
+  ],
+  'Portrait Of Jenny': [
+    { id: 'aUb-8mgPMKI', title: "Portrait Of Jennie (Backtrack)", channel: "JazzTrax - Topic" },
+    { id: 'e-tdttpEfuU', title: "Portrait Of Jennie (Robinson) Backing track + score for Bb instruments", channel: "Werner Schmedding" },
+    { id: 'bvzcbm81-4c', title: "Portrait of Jennie (Play Along Version)", channel: "MIDIFine Systems - Topic" },
+    { id: 'U1iYOeRFbu8', title: "Portrait Of Jenny Joseph Russel Robinson 1948 Tenor Sax", channel: "Veritas Sax" },
+    { id: 'Er4kv3QOH9k', title: "Portrait Of Jennie (Robinson) Backing track + music sheet", channel: "Werner Schmedding" }
+  ],
   'Prelude To A Kiss': [
     { id: 'lGt70uJsvfE', title: "PRELUDE TO A KISS chord progression - Jazz Standard Backing Track Play Along", channel: "Backingtracks JAZZ" },
     { id: 'I_MomoTCsNs', title: "Prelude To A Kiss - Jazz Practice Backing Track", channel: "PRACTICE JAZZ" },
@@ -1168,6 +1917,20 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'oYj3YAUEfWo', title: "Jazz Backing Track - Prelude To A Kiss", channel: "Eagleheart Jazz Channel" },
     { id: 'NbpIR6nrFKM', title: "Prelude to a Kiss Backing Track Jazz - 70bpm", channel: "Backing Track Center" }
   ],
+  'Productivity': [
+    { id: 'fwjGt9aif9Y', title: "Ceora (Lee Morgan) DRUMLESS with SOLOIST I Jazz Doblestandard Play-Alongs", channel: "Jazz Doblestandard" },
+    { id: 'ASlM0ABf3A4', title: "LJS 159: Brain Hacking for Speeding Up Your Jazz Improv Success (feat. Rodney Brim)", channel: "Learn Jazz Standards" },
+    { id: '5Rp_pdV2uO0', title: "Jazz Swing Backing Track 2-5-1s All Keys 100 BPM", channel: "Piano Productivity Peace" },
+    { id: 'Fvahl-AZyu4', title: "I Put A Spell On You - Jam Backing Track in D Minor (Annie Lennox version)", channel: "Piano Productivity Peace" },
+    { id: '1CwdkpraPf4', title: "\"The New Cool\" - Modern Jazz backing Track in Bb Major! [NO DRUMS]", channel: "Elite Backing Tracks" }
+  ],
+  'Pure Imagination': [
+    { id: 'izAQC_-v-ro', title: "Pure Imagination - ( Bb Instrument )", channel: "Sound GB" },
+    { id: 'qBqjj3ILvJM', title: "Pure Imagination in Eb Bass Line Play Along Backing Track", channel: "MrSunnybass" },
+    { id: 'vLXBDntpj4s', title: "Pure Imagination - ( Eb Instrument )", channel: "Sound GB" },
+    { id: 'j0XPna95D2o', title: "PURE IMAGINATION Bb Instruments Sheet Music Backing Track Play Along Partitura", channel: "Musically Yours, Arnie" },
+    { id: '44LwrIMiNco', title: "Pure Imagination Piano Accompaniment", channel: "Ms. Gomez" }
+  ],
   'Quiet Nights': [
     { id: 'Gl8XVH8SqFQ', title: "Corcovado – Quiet Nights to Practice Gently in C Major", channel: "PRACTICE JAZZ" },
     { id: 'Tl5gpDHP8Yg', title: "Corcovado - Backing track / Play-along", channel: "QGVideos" },
@@ -1175,12 +1938,33 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'MCuMm9f-hPk', title: "Corcovado Backing Track (BPM 130)", channel: "BaBoSound" },
     { id: '1dwG7zpIum0', title: "Corcovado | Backing Track | Chords Lead Sheet | Quiet Nights by Tom Jobim | Authentic Bossa style", channel: "Ariel's Bossa Corner" }
   ],
+  'Quiet Nights Of Quiet Stars': [
+    { id: 'Gl8XVH8SqFQ', title: "Corcovado – Quiet Nights to Practice Gently in C Major", channel: "PRACTICE JAZZ" },
+    { id: 'teVhhf34leY', title: "Corcovado - Real Jazz Backing Track - Jazz Play Along - Quiet Night Of Quiet Stars", channel: "Real Jazz Backing Tracks" },
+    { id: 'dhbLgbtKfRk', title: "Corcovado (Quiet Nights of Quiet Stars) | 120 bpm | Bossa Nova | Play-Along Backing Track", channel: "Edwin’s Jazz Jam" },
+    { id: '6gg757K9Byw', title: "Corcovado| Antonio Carlos Jobim - Backing Track / Play-Along with Lead Sheet", channel: "neajazz" },
+    { id: '1dwG7zpIum0', title: "Corcovado | Backing Track | Chords Lead Sheet | Quiet Nights by Tom Jobim | Authentic Bossa style", channel: "Ariel's Bossa Corner" }
+  ],
+  'Quiet Storm': [
+    { id: 'lAs4714jUlY', title: "My Funny Valentine | Smooth Jazz Play-along Backing Track in Cm", channel: "Mark Maxwell" },
+    { id: 'KAFgrnD7h00', title: "\"Inside Myself\" by Art Porter -Sax backing track - SmoothJazzBackingTracks.com", channel: "Smoothbackingtracks" },
+    { id: 'eTgn2q8wC94', title: "When Nobody's Looking – Why Most Men Break in Silence | Quiet Storm Music Video", channel: "THE SOUND WAVE MUSIC" },
+    { id: 'amHoKegPS9o', title: "Quiet Storm", channel: "Lee Jones - Topic" },
+    { id: 'eHmS2jTJc68', title: "Smokey Robinson - Quiet Storm -  Guitar Chords Lesson", channel: "Morrisman64-2" }
+  ],
   'Recorda Me': [
     { id: 'il-CCaPdiXQ', title: "Recorda-Me - Latin Jazz Play-Along", channel: "Jazz Doblestandard" },
     { id: 'DZR-q1NneSA', title: "Recordame (145 bpm) : Bossa Backing Track", channel: "Guitare Improvisation" },
     { id: 'FIuLj8pWMo0', title: "Recorda-me (Joe Henderson) - Jazz Backing Track", channel: "Jazz Doblestandard" },
     { id: 'Ilj-0Pr9J_s', title: "Recorda Me - Backing Track - Joe Henderson", channel: "Jeff Williams Guitar" },
     { id: 'uUsyZgm_Smo', title: "Recordame - Joe Henderson - Organ Backing Track", channel: "Phil Wilkinson Music" }
+  ],
+  'Red Clay': [
+    { id: 'Da6IrC-nHa0', title: "Red Clay chord progression - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
+    { id: 'opMkgpZMCd8', title: "Jazz Backing Track - Red Clay", channel: "Eagleheart Jazz Channel" },
+    { id: 'B5vJNvaMpXw', title: "Red Clay chord progression (no piano) - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
+    { id: 'GfmUAc0lwjE', title: "Red Clay jazz funk backing track", channel: "Orestesguitar" },
+    { id: 'U0rIld0mVIg', title: "Red Clay Backing Track (C Minor)", channel: "rohanplaysbass" }
   ],
   'Rhythm-a-ning': [
     { id: 'x5ilZCAuu7o', title: "RHYTHM A NING chord progression - Jazz Standard Backing Track Play Along", channel: "Backingtracks JAZZ" },
@@ -1196,6 +1980,20 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: '9qFo2yoqU6Y', title: "Rhythm-A-Ning (Monk) 190bpm Backing track + music sheet", channel: "Werner Schmedding" },
     { id: '2Dw_S5Waqek', title: "Rhythm-A-Ning (Thelonious Monk) - Jazz Backing Track", channel: "Mono Gadjo" }
   ],
+  'Road Song': [
+    { id: 'JlM2bJMXZAE', title: "Road Song - OGD (Latin Jazz feel) 135 bpm : Backing Track", channel: "Guitare Improvisation" },
+    { id: 'MbOpQZcXYoY', title: "Road Song - OGD (Latin Jazz feel) 145 bpm : Backing Track", channel: "Guitare Improvisation" },
+    { id: 'CFHICBHQuIs', title: "ROAD SONG chord progression - Backing Track Play Along Jazz Standard Bible 2", channel: "Backingtracks JAZZ" },
+    { id: '-Mnzi24N7dw', title: "Road Song by Wes Montgomery | Play along | Backing Track | Guitar", channel: "Michele Paternoster" },
+    { id: 'CaA0sjktctY', title: "Jazz Backing Track - Road Song", channel: "Eagleheart Jazz Channel" }
+  ],
+  'Robin And The Wren': [
+    { id: 'ew0zezZ7I4w', title: "All of Me (180 bpm) - Gypsy jazz Backing track / Jazz manouche", channel: "Guitare Improvisation" },
+    { id: 'SZF3ywi2WiE', title: "Wave - Real Jazz Backing Track - Play Along", channel: "Real Jazz Backing Tracks" },
+    { id: 'al9toHd2z1A', title: "Gypsy Jazz Backing Track / Play Along - Anouman", channel: "Study Gypsy Jazz" },
+    { id: 'AQW2RxwwnRo', title: "Gypsy Jazz Play Along - Django's Tiger", channel: "Gonzalo Bergara" },
+    { id: 'J2L2GK4kKLs', title: "Easy Living - Backing track / Play-along", channel: "QGVideos" }
+  ],
   'Room 608': [
     { id: '3OrjPP6afAs', title: "Room 608 backing track", channel: "Muzik Mon" },
     { id: 'FTt_8nqVIBU', title: "Barbara backing track - Horace Silver bpm=162", channel: "Muzik Mon" },
@@ -1203,6 +2001,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'jr91Wqzva6Y', title: "Room 608", channel: "SPCPA Instrumental Music" },
     { id: 'Jws0DOxmbEs', title: "Hank Mobley - Room 608 (transcription)", channel: "JazzOnPaper" },
     { id: 'J8JyDDfLh6Y', title: "Room 608", channel: "Howard Peters" }
+  ],
+  'Round About Midnight': [
+    { id: 'hr9L4nfd0cU', title: "'Round Midnight - ( Bb instrument )", channel: "Sound GB" },
+    { id: '5pEotcIF75A', title: "'Round About Midnight (Play Along Version)", channel: "MIDIFine Systems - Topic" },
+    { id: 'OvQAmZ8wODs', title: "Round Midnight (Swing Ballad 60bpm) - Jazz Standard Practice", channel: "PRACTICE JAZZ" },
+    { id: 'EwYSk0silKI', title: "Round Midnight (Thelonious Monk) - backing track", channel: "Dizzy Guitar" },
+    { id: 'sc_nQVVbM0U', title: "Round Midnight Bb", channel: "Backing Track / Play Along" }
   ],
   'Round Midnight': [
     { id: '0L3m7ihg3sc', title: "'Round Midnight Backing Track (BPM 60)", channel: "BaBoSound" },
@@ -1267,6 +2072,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'tHDABXVBz4E', title: "SCRAPPLE FROM THE APPLE chord progression - Jazz Backing Track", channel: "Backingtracks JAZZ" },
     { id: 'b2q5TXKceKE', title: "Scrapple From The Apple 140 bpm Jazz Swing Play-Along Backing Track", channel: "Edwin's Jazz Jam" }
   ],
+  'Search For Peace': [
+    { id: 'h10lpw_j_yI', title: "Search For Peace by McCoy Tyner Backing Track", channel: "RGWB" },
+    { id: '4wCMQVCQPIA', title: "Peace - Jazz Practice Backing Track", channel: "PRACTICE JAZZ" },
+    { id: '30CbnuEt7cU', title: "Search For Peace (McCoy Tyner) - Backing track + music sheet", channel: "Werner Schmedding" },
+    { id: 'GWEXpVGKyx4', title: "Search For Peace (McCoy Tyner) Backing track + score for Bb instruments", channel: "Werner Schmedding" },
+    { id: 'mz6rgA3KYeo', title: "Search For Peace Bass Line Play Along Backing Track ", channel: "MrSunnybass" }
+  ],
   'Secret Love': [
     { id: '8t1z2OfM1ps', title: "SECRET LOVE chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
     { id: 'idVStmph2Fk', title: "Secret Love - Jazz Standard Backing Track", channel: "PRACTICE JAZZ" },
@@ -1275,12 +2087,54 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: '5irXdymmWRo', title: "My Secret Love Jazz Backing Track", channel: "Constantine Taranenko" },
     { id: 'fGqAIcz0Cz8', title: "Secret Love - with Intro + Lyrics in Eb (Male) - Jazz Sing-Along", channel: "Jazz Sing-Along" }
   ],
+  'September In The Rain': [
+    { id: '5ZMdc6z9QMM', title: "SEPTEMBER IN THE RAIN chord progression - Backing Track Play Along Jazz Standard Bible 2 Guitar", channel: "Backingtracks JAZZ" },
+    { id: 'XmkQV3mclas', title: "Jazz Backing Track September in the  Rain", channel: "Constantine Taranenko" },
+    { id: 'vTIavxLh8Rg', title: "September in the rain - Swing Jazz Karaoke [Sing along] - female key", channel: "Jazz singer Mariko AWADA - Jazz Karaoke & tips" },
+    { id: 'ydu8CCbc1mE', title: "September In The Rain - ( Eb 🎷 )", channel: "Sound GB" },
+    { id: 'NQ2UOFw5JtM', title: "September In The Rain in Eb Bass Line Play Along Backing Track", channel: "MrSunnybass" }
+  ],
   'Seven Steps To Heaven': [
     { id: 'BdtHvnuiE1U', title: "SEVEN STEPS TO HEAVEN chord progression - Backing Track", channel: "Backingtracks JAZZ" },
     { id: 'sqr4Q7Fiabw', title: "Seven Steps to Heaven - Up Tempo Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
     { id: 'y1tOgOR63JE', title: "SEVEN STEPS TO HEAVEN chord progression (slow swing) - Backing Track", channel: "Backingtracks JAZZ" },
     { id: '1_yYCXBf7YA', title: "Seven Steps To Heaven Play along Backing Track", channel: "Michele Paternoster" },
     { id: 'nPCUKvk3hs8', title: "Seven Steps To Heaven chord progression (slow) - Jazz Backing Track", channel: "Backingtracks JAZZ" }
+  ],
+  'She': [
+    { id: '-KBbsLm0i50', title: "SHE by Elvis Costello Bb Instruments Sheet Music Backing Track Play Along Partitura", channel: "Musically Yours, Arnie" },
+    { id: 'Je85imSQSk0', title: "What's Going on -E major - Backing Track - Play Along", channel: "Play Jazz Tracks" },
+    { id: 'vOZfQOUgIko', title: "Isn't She Lovely (E) (Stevie Wonder) : Backing Track", channel: "Guitare Improvisation" },
+    { id: 'apWuVbRTq80', title: "Isn't She Lovely - Backing Track with Sheet Music for Tenor Sax (Take -1 , Very Easy)", channel: "Yasuhiro Fujii" },
+    { id: 'vHAQBZT-GxA', title: "Isn't She Lovely - Backing Track with Sheet Music for Alto Sax (Take -1 , Very Easy)", channel: "Yasuhiro Fujii" }
+  ],
+  'Shiny Stockings': [
+    { id: 'jLAIpb8ZU80', title: "SHINY STOCKINGS chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: '2VIVWcfKdgc', title: "Shiny Stocking Bass Line Play Along Backing Track", channel: "MrSunnybass" },
+    { id: 'NC0EjBd4HGA', title: "Jazz Backing Track - Shiny Stockings", channel: "Eagleheart Jazz Channel" },
+    { id: 'IOBVP940U4A', title: "Shiny Stockings Backing Track 112 bpm - FULL BAND", channel: "JAZZ LICK DAILY Backing Tracks " },
+    { id: 'yOXuLyH7rXg', title: "Shiny Stockings - Backing Track for Alto Sax", channel: "Yasuhiro Fujii" }
+  ],
+  'Sister Sadie': [
+    { id: 'SnGBVdaVaxs', title: "SISTER SADIE chord progression - Backing Track Play Along Jazz Standard Bible 2", channel: "Backingtracks JAZZ" },
+    { id: '4wfn2sxcmqo', title: "Jazz Backing Track - Sister Sadie", channel: "Eagleheart Jazz Channel" },
+    { id: 'NFY2nAlZcIc', title: "Sister Sadie | Backing Track Play Along 175 bpm", channel: "Anomynous Guitarist" },
+    { id: 'X5ZpfktbSo0', title: "Sister Sadie/backing track/bpm160", channel: "flandria" },
+    { id: '3HLywn7CNV8', title: "SISTER SADIE chord progression (no piano) - Backing Track Play Along Jazz Standard Bible 2 Guitar", channel: "Backingtracks JAZZ" }
+  ],
+  'Skylark': [
+    { id: 'FmCc-XKri-I', title: "Skylark | Hoagy Carmichael - Backing track / Play-along with Lead Sheet", channel: "neajazz" },
+    { id: '6LFZtDR7K0w', title: "SKYLARK chord progression - Backing Track Play Along Jazz Standard Bible 2", channel: "Backingtracks JAZZ" },
+    { id: 'l3wMGmQX7sY', title: "Skylark - Backing Track with Intro + Lyrics in Ab (Female) - Jazz Sing-Along", channel: "Jazz Sing-Along" },
+    { id: 'gnqQCJjmvUU', title: "Skylark (Eb) - Ballad || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: 'O-ot4NNGUjE', title: "Skylark - Backing Track with Intro + Lyrics in Bb (Female) - Jazz Sing-Along", channel: "Jazz Sing-Along" }
+  ],
+  'So Danco Samba': [
+    { id: 'ogfQ6C4-RH0', title: "So danço samba - play along", channel: "Diogo Brown" },
+    { id: '1jVkR-1YLXg', title: "So Danço Samba Bass Line Play Along Backing Track", channel: "MrSunnybass" },
+    { id: 'gYakBEfQP2Q', title: "Sò danço samba - Backing Track", channel: "Flavio Barba" },
+    { id: 'dvyoNvkVEW4', title: "So Danco Samba (Jazz N Samba) Bossanova Backing Track - Charts", channel: "Music Station" },
+    { id: '-j6XRjiTK1A', title: "Só Danço Samba - JAZZ N' SAMBA Bossa Nova Backing Track | Guitar Chords |  Play-Along", channel: "Ariel's Bossa Corner" }
   ],
   'So What': [
     { id: 'vk01tpTI3Ig', title: "Miles Davis - So What (Backing Track)", channel: "Miles Guitar Archives (Backing Tracks)" },
@@ -1294,11 +2148,10 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: '5M6dzbYRTSA', title: "So What [No Piano] - Medium Slow Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
     { id: 'dRUSNM7-ukE', title: "So What (bassless backing track)", channel: "Bassless Backing Tracks" }
   ],
-
   'So What (Modal)': [
     { id: 'vk01tpTI3Ig', title: "Miles Davis - So What (Backing Track)", channel: "Miles Guitar Archives (Backing Tracks)" },
     { id: 'aQjbs02TKAc', title: "So What (130bpm) : Backing track", channel: "Guitare Improvisation" },
-    { id: 'mxfnennYk_8', title: "So What (140 bpm) : Jazz Backing Track", channel: "Jazz Backing Tracks" },
+    { id: 'mxfnennYk_8', title: "So What (140 bpm) : Jazz Backing Track", channel: "Jazz Backing Tracks" }
   ],
   'Softly As In A Morning Sunrise': [
     { id: 'bBr-Tpf10DU', title: "Softly as in a morning sunrise (190 bpm) : Jazz Backing Track", channel: "Guitare Improvisation" },
@@ -1321,6 +2174,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'WR-GGfPQnGA', title: "Solar - Jazz Standard Backing Track", channel: "PRACTICE JAZZ" },
     { id: 'm7gKkA90PKo', title: "Long Solar backing track slow 80 bpm", channel: "Joe Candido Guitar" }
   ],
+  'Some Day My Prince Will Come': [
+    { id: 'lYqKoyhzEB8', title: "Someday My Prince Will Come I  Jazz Doblestandard Play-Alongs", channel: "Jazz Doblestandard" },
+    { id: '3koVJ4dE0es', title: "Someday My Prince Will Come (Jazz/Swing Waltz feel) 165 bpm : Backing Track", channel: "Guitare Improvisation" },
+    { id: 'wHJNeulOH_E', title: "Someday My Prince will Come - 164 Bpm - (Backing Track)", channel: "Mister Grant" },
+    { id: 'QW62VUnoS1A', title: "Someday My Prince Will Come (Jazz/Swing Waltz feel) 130 bpm : Backing Track", channel: "Guitare Improvisation" },
+    { id: 'jfABvNsFeBY', title: "SOMEDAY MY PRINCE WILL COME chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" }
+  ],
   'Someday My Prince Will Come': [
     { id: 'lYqKoyhzEB8', title: "Someday My Prince Will Come | Jazz Play-Alongs", channel: "Jazz Doblestandard" },
     { id: '3koVJ4dE0es', title: "Someday My Prince Will Come (Jazz/Swing Waltz feel) 165 bpm : Backing Track", channel: "Guitare Improvisation" },
@@ -1331,6 +2191,20 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'wHJNeulOH_E', title: "Someday My Prince will Come - 164 Bpm - (Backing Track)", channel: "Mister Grant" },
     { id: 'wYmcnali5_I', title: "Someday My Prince Will Come 2nd Bass Line Play Along Backing Track", channel: "MrSunnybass" }
   ],
+  'Someday My Prince Will Come (jazz)': [
+    { id: 'lYqKoyhzEB8', title: "Someday My Prince Will Come I  Jazz Doblestandard Play-Alongs", channel: "Jazz Doblestandard" },
+    { id: '3koVJ4dE0es', title: "Someday My Prince Will Come (Jazz/Swing Waltz feel) 165 bpm : Backing Track", channel: "Guitare Improvisation" },
+    { id: 'wHJNeulOH_E', title: "Someday My Prince will Come - 164 Bpm - (Backing Track)", channel: "Mister Grant" },
+    { id: 'QW62VUnoS1A', title: "Someday My Prince Will Come (Jazz/Swing Waltz feel) 130 bpm : Backing Track", channel: "Guitare Improvisation" },
+    { id: 'I__iCKpN-Ic', title: "Someday My Prince Will Come FOR PIANO/GUITAR I Jazz Doblestandard Play-Alongs", channel: "Jazz Doblestandard" }
+  ],
+  'Someone To Watch Over Me': [
+    { id: 'xXzdVllIOto', title: "SOMEONE TO WATCH OVER ME chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: 'CgaNjI6nOAQ', title: "Jazz Backing Track - Someone To Watch Over Me", channel: "Eagleheart Jazz Channel" },
+    { id: 'KamJuoOqpHo', title: "Someone To Watch Over Me, backing track,play along,jazz, key of C", channel: "VicsPracticeTracks" },
+    { id: 'n0OVPRgETYo', title: "Someone to Watch Over Me - Gershwin - Turrin - play along - karaoke - accompaniment", channel: "Xabier Aizpurua Salaberria" },
+    { id: 't_A8nFkQS8I', title: "Someone to Watch Over Me - Backing Track   Key Ab, BPM 80, 2cho", channel: "高田将利 (Masatoshi Takata)" }
+  ],
   'Song For My Father': [
     { id: 'UnP04NP9CbQ', title: "Song For My Father (Latin Jazz feel) 125 bpm : Backing Track", channel: "Guitare Improvisation" },
     { id: 'a3ByxN_J7GI', title: "Jazz Backing Track - Song For My Father", channel: "Eagleheart Jazz Channel" },
@@ -1340,12 +2214,26 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'jusDOdhNYng', title: "BACKING TRACK - SONG FOR MY FATHER (Horace Silver) (G minor) 127 BPM SWING", channel: "Luc Maes" },
     { id: 'n8c8Y7lc2rI', title: "Song For My Father (Latin Jazz feel) 110 bpm : Backing Track", channel: "Guitare Improvisation" }
   ],
+  'Sophisticated Lady': [
+    { id: 'IDABmk4bg2Q', title: "SOPHISTICATED LADY chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: '4RcVZYwElRY', title: "Jazz Backing Track - Sophisticated Lady", channel: "Eagleheart Jazz Channel" },
+    { id: '07NcLy0wW_c', title: "Vol 012 - 07 Sophisticated Lady - ( Eb 🎷)", channel: "Sound JP" },
+    { id: 'fsIap3sSdqg', title: "Sophisticated Lady - Jazz Standard Practice", channel: "PRACTICE JAZZ" },
+    { id: '4CZrV69K1Zo', title: "Vol 012 - 07 Sophisticated Lady - ( C 🎹 )", channel: "Sound JP" }
+  ],
   'Spain': [
     { id: 'tZo2tORlskI', title: "【Spain】Backing Track BPM=135 (Score Original BPM)", channel: "GrooveBoxer" },
     { id: 'gNnFG6VdAk0', title: "Spain (solo chord progression) - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
     { id: 'CcRNhyZR9g0', title: "Latin Jazz Fusion Jam Track in B minor \"Spain Changes\" - BJT #64", channel: "Ben's Jam Tracks" },
     { id: 'UGeORouUlDM', title: "SPAIN Chick Corea Backing Track", channel: "Music and Backing track " },
     { id: 'PBwPKnQbu3M', title: "Spain (Solo Change) Slow Backing Track", channel: "BaBoSound" }
+  ],
+  'Speak Low': [
+    { id: '5MHa5BkUN4k', title: "SPEAK LOW chord progression - Backing Track", channel: "Backingtracks JAZZ" },
+    { id: 'LGZVESWBMDU', title: "Jazz Backing Track - Speak Low", channel: "Eagleheart Jazz Channel" },
+    { id: 'bnuQ3B9jIho', title: "Speak Low - Real Jazz Backing Track - Play Along", channel: "Real Jazz Backing Tracks" },
+    { id: 'C9cN31m5nHw', title: "SPEAK LOW chord progression (slow) - Backing Track Play Along Jazz Standard Bible f", channel: "Backingtracks JAZZ" },
+    { id: '799yosTVYlg', title: "Speak Low - Jazz Standard Backing Track", channel: "PRACTICE JAZZ" }
   ],
   'Speak No Evil': [
     { id: 'RkfcA6QYti0', title: "SPEAK NO EVIL chord progression - Backing Track", channel: "Backingtracks JAZZ" },
@@ -1370,6 +2258,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'AZWtadxylr0', title: "St. Thomas - Backing Track with Sheet Music for Tenor Sax", channel: "Yasuhiro Fujii" },
     { id: 'nRBGlBFVRD4', title: "St Thomas - Sonny Rollins | Play-along | Backing Track", channel: "Michele Paternoster" },
     { id: 'mRiBYySnPE8', title: "ST THOMAS chord progression - Backing Track Play Along Jazz Standard Bible", channel: "Backingtracks JAZZ" }
+  ],
+  'Star Dust (alt)': [
+    { id: 'cdBWXi6oIXo', title: "Stella by Starlight - Backing Track with Sheet Music for Alto Sax", channel: "Yasuhiro Fujii" },
+    { id: 'LklQfQSugAs', title: "Stardust - Alto Sax - Free score", channel: "Fabio Marziali" },
+    { id: 'Mt9GoqnAzHI', title: "Paul Desmond Alto Saxophone Transcription on Wendy", channel: "Sharp Eleven Music" },
+    { id: 'MtQ4j0M7r2Y', title: "Stardust Karaoke", channel: "Annie Vee" },
+    { id: 'ccyJ3D2HnFc', title: "Black Orpheus - Backing Track with Sheet Music for Alto Sax", channel: "Yasuhiro Fujii" }
   ],
   'Star Eyes': [
     { id: 'ERUNtjSFCFs', title: "STAR EYES chord progression - Backing Track Play Along", channel: "Backingtracks JAZZ" },
@@ -1414,6 +2309,20 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: '9OpBFEBqz8Q', title: "STOMPIN' AT THE SAVOY chord progression - Backing Track", channel: "Backingtracks JAZZ" },
     { id: 'pLy7VHJHm34', title: "Stompin' at the Savoy  Backing Track", channel: "Constantine Taranenko" }
   ],
+  'Stompin\' At The Savoy': [
+    { id: 'dlz-dyuYTN0', title: "Stompin' at the Savoy (150 bpm) - Gypsy jazz Backing track / Jazz manouche", channel: "Guitare Improvisation" },
+    { id: 'Mc9ndrUNBRE', title: "Stompin' At The Savoy - Jazz Standard Backing Track", channel: "PRACTICE JAZZ" },
+    { id: '9OpBFEBqz8Q', title: "STOMPIN' AT THE SAVOY chord progression - Backing Track", channel: "Backingtracks JAZZ" },
+    { id: 'cGScGSvzZ0c', title: "Stompin' at the Savoy (170 bpm) - Gypsy jazz Backing track / Jazz manouche", channel: "Guitare Improvisation" },
+    { id: 'v7CgT-x5FH8', title: "STOMPIN' AT THE SAVOY - Django's Style Backing Track", channel: "gael rouilhac" }
+  ],
+  'Straight Life': [
+    { id: 'owCxPWX8ano', title: "Straight Life by Freddie Hubbard backing track 200 BPM", channel: "Muzik Mon" },
+    { id: 'Z5Fd_f7j30M', title: "\"Straight Life\" drumset part", channel: "Alan Hall's Drum Teaching Videos" },
+    { id: 'oR6Op39Rjnc', title: "Straight Life - Jazz guitar & piano cover ( Freddie Hubbard )", channel: "Yvan Jacques" },
+    { id: '6GeAbw3JVPA', title: "Journey To Recife (Evans) Backing track + music sheet", channel: "Werner Schmedding" },
+    { id: '1vR4arQxD5w', title: "Straight Life (Take 2)", channel: "Art Pepper" }
+  ],
   'Straight No Chaser': [
     { id: 'xEfrbn8XAfI', title: "Straight, No Chaser Backing Track", channel: "BaBoSound" },
     { id: 'MfUAY3NES68', title: "Straight, No Chaser  Backing Track (F Blues)(For Guitar)", channel: "Hatsumi's Backing Track" },
@@ -1424,6 +2333,20 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'CLK7Mz1QnIY', title: "Straight No Chaser - Jazz Standard Backing Track", channel: "PRACTICE JAZZ" },
     { id: '_JDzLBMYzrY', title: "Straight No Chaser chord progression - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
     { id: '3VJIuuZTQH0', title: "Straight No Chaser - Backing Track \\ Play Along (Thelonious Monk)", channel: "Anwyll on Music" }
+  ],
+  'Strollin\'': [
+    { id: 'LTIXrsYZGb0', title: "STROLLIN' chord progression - Backing Track Play Along Jazz Standard Bible", channel: "Backingtracks JAZZ" },
+    { id: 'Ia6LRK3qc6Y', title: "Jazz Backing Track - Strollin'", channel: "Eagleheart Jazz Channel" },
+    { id: 'cyK3379C5cA', title: "Strollin' (H.Silver) Backing track + music sheet", channel: "Werner Schmedding" },
+    { id: '34u99YKYb9E', title: "Strollin': Backing Track", channel: "Jazz Progressions" },
+    { id: 'm1fvAut0sSA', title: "Strollin' - Jazz Standard Backing Track", channel: "PRACTICE JAZZ" }
+  ],
+  'Sugar': [
+    { id: 'b_kv0eA8ZO4', title: "SUGAR chord progression - Backing Track Play Along Jazz Standard Bible 2", channel: "Backingtracks JAZZ" },
+    { id: 'QE7YEVuxCjc', title: "Sugar - Backing Track - BPM 140", channel: "Yasuhiro Fujii" },
+    { id: 'aZBg5U8FFE8', title: "Sugar (Turrentine) Backing track + music sheet", channel: "Werner Schmedding" },
+    { id: 'E6CoBcuYkU0', title: "Jazz Backing Track - Sugar", channel: "Eagleheart Jazz Channel" },
+    { id: '-Y0KLe7hz0k', title: "Sugar (Stanley Turrentine) - Backing Track with Sheet Music for Tenor Sax (Take -1)", channel: "Yasuhiro Fujii" }
   ],
   'Summertime': [
     { id: 'qfC50VPnQoY', title: "Summertime (Jazz Ballad feel) 70 bpm : Backing Track", channel: "Guitare Improvisation" },
@@ -1436,6 +2359,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'k1No86dbi60', title: "Summertime Play along - Backing track (C  key score violin/guitar/piano)", channel: "Davide Severino" },
     { id: 'uy-JXkuDDsA', title: "\"Summertime\" Jazz Play-Along in D minor", channel: "Jeff Lewis Trumpet" },
     { id: 'GcrzOOEthls', title: "Summertime | Jazz Backing Track | Solo & Comping Practice", channel: "PRACTICE JAZZ" }
+  ],
+  'Sunflower': [
+    { id: 'bp-Dsw9d32k', title: "Little sunflower (bossa 130bpm) - Backing Track", channel: "Guitare Improvisation" },
+    { id: 'dJLb2XWqYgc', title: "LITTLE SUNFLOWER chord progression - Backing Track Play Along Jazz Standard Bible 2", channel: "Backingtracks JAZZ" },
+    { id: 'xTEqjPCwp_w', title: "Little Sunflower Backing Track - Jazz Play Along!", channel: "Jack's Guitar Trax" },
+    { id: 'cc4u8FuhazI', title: "Little Sunflower- play along + music sheet", channel: "Werner Schmedding" },
+    { id: 'MPnsqg4w9sc', title: "Backing Track Jazz Bossa -  Little Sunflower  = 150 BPM", channel: "Escola de Música Star David" }
   ],
   'Sweet Georgia Brown': [
     { id: 'g3BwA6pCN60', title: "Sweet Georgia Brown Play along - Backing track (C key score violin/guitar/piano)", channel: "Davide Severino" },
@@ -1463,11 +2393,10 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'pm1oeUqzsog', title: "Take Five - Backing track tempo 160 Swing", channel: "Aun Chatchai" },
     { id: 'uP9f3Rx3PgY', title: "\"Take Five\" - Backing Track for Jazz Singers 5/4 (in c minor) with lyrics and Scat solo", channel: "Scat Kitchen" }
   ],
-
   'Take Five (5/4)': [
     { id: 'asd487AczcA', title: "Dave Brubeck - Take Five (5/4 Backing Track)", channel: "Jazz Backing Tracks" },
     { id: 'Kv249Vmu4BA', title: "Take Five (5/4) backing track - 170 bpm", channel: "Backing Track Studio" },
-    { id: 'LkrehCp8-lI', title: "Take Five (Bb) : Backing track", channel: "Guitare Improvisation" },
+    { id: 'LkrehCp8-lI', title: "Take Five (Bb) : Backing track", channel: "Guitare Improvisation" }
   ],
   'Take The A Train': [
     { id: 'msjD-ZivCEM', title: "Take the A train (140 bpm) : Backing track", channel: "Guitare Improvisation" },
@@ -1487,12 +2416,33 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'bekRzSnwmqU', title: "Tea for Two (Ab) - Up Tempo Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
     { id: 'pnX3S2VVC-U', title: "TEA FOR TWO chord progression (no piano) - Backing Track Play Along Jazz Standard Bible 2 Guitar", channel: "Backingtracks JAZZ" }
   ],
+  'Tenderly': [
+    { id: '5d4ee23ihtE', title: "TENDERLY chord progression - Backing Track Play Along Jazz Standard Bible 2", channel: "Backingtracks JAZZ" },
+    { id: 'x44tLo8FH6E', title: "Tenderly - Backing track / Play-along", channel: "QGVideos" },
+    { id: 'uaPxRk4nb1s', title: "Tenderly   Backing Track with Sheet Music for Tenor Sax", channel: "Yasuhiro Fujii" },
+    { id: 'u2sD5XTz4Nw', title: "Tenderly: Backing Track", channel: "Jazz Progressions" },
+    { id: 'aYSrUFTuWQQ', title: "Tenderly - Jazz Standard Backing Track", channel: "PRACTICE JAZZ" }
+  ],
   'Tenor Madness': [
     { id: 'pPc-VgAIeZs', title: "Tenor Madness - Backing track / Play-along", channel: "QGVideos" },
     { id: '9W_WAtRzIWw', title: "Tenor Madness BLUES I Sonny Rollins I Jazz Doblestandard Play-Alongs", channel: "Jazz Doblestandard" },
     { id: 'PVcJ9cP8WJc', title: "TENOR MADNESS chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
     { id: 'h9y4RA_52Dc', title: "Jazz Backing Track - Tenor Madness", channel: "Eagleheart Jazz Channel" },
     { id: 'B1B0Nzy9dSI', title: "Tenor Madness Swing BackingTrack Tempo120 (Drum Bass Piano) - BackingTrackPractice", channel: "Backing Track Practice" }
+  ],
+  'Tenor Madness (alt)': [
+    { id: '-ae_tBkCqeQ', title: "Bb Blues (110bpm) : Backing track", channel: "Guitare Improvisation" },
+    { id: 'xBOPO9VhpUc', title: "Tenor madness - Play along - Eb instruments", channel: "Mauro Guenza" },
+    { id: 'A5lfF7FnBgc', title: "Watermelon Man - Backing Track with Sheet Music for Tenor Sax (Take-4)", channel: "Yasuhiro Fujii" },
+    { id: 'xV48cSaGZH0', title: "Working on Tenor Madness with a beginning saxophone player", channel: "Sax Station" },
+    { id: 'aLEOZnk1Zwg', title: "Minor 7 Chord Workout (In all 12 keys)", channel: "Learn Jazz Standards" }
+  ],
+  'The Days Of Wine And Roses': [
+    { id: 'hauwoWMDBFQ', title: "The Days of Wine and Roses (Jazz/Swing feel) 160 bpm : Backing Track", channel: "Guitare Improvisation" },
+    { id: 't2qanHdxL_g', title: "The DAYS OF WINE AND ROSES chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: 'zpnRWCuWHgY', title: "The Days Of Wine And Roses - Play-along / Backing track", channel: "QGVideos" },
+    { id: 'kzlKaj4CB6o', title: "The Days Of Wine And Roses /Jazz Backing Track (No Guitar) / bpm130", channel: "Hatsumi's Backing Track" },
+    { id: 'LLGMkGZ5C88', title: "Days Of Wine And Roses - Real Jazz Backing Track - Play Along", channel: "Real Jazz Backing Tracks" }
   ],
   'The Girl From Ipanema': [
     { id: 'bmEgQhFIYG8', title: "Girl from Ipanema (145 bpm) - Backing Track", channel: "Guitare Improvisation" },
@@ -1531,6 +2481,20 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'yKi5vP6CWMA', title: "The Shadow Of Your Smile - Jazz Standard Backing Track", channel: "PRACTICE JAZZ" },
     { id: 'TluYqAY0CXI', title: "The Shadow Of Your Smile (90 BPM) Backing Track", channel: "Andi Sagmeister" }
   ],
+  'The Song Is You': [
+    { id: 'KfG2TnA-WBs', title: "The Song is You - Jazz Backing Track - 210bpm", channel: "Phil Wilkinson Music" },
+    { id: 'f8dNwNnQ3HQ', title: "SONG IS YOU chord progression - Backing Track Play Along Jazz Standard Bible", channel: "Backingtracks JAZZ" },
+    { id: 'vCW9VmMcWfg', title: "SONG IS YOU chord progression (slow swing) - Jazz Backing Track Play Along The Real Book c", channel: "Backingtracks JAZZ" },
+    { id: 'FT5kB7mUw1w', title: "Jazz Backing Track - The Song Is You", channel: "Eagleheart Jazz Channel" },
+    { id: 'X20CXIAY5vM', title: "SONG IS YOU chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" }
+  ],
+  'The Touch Of Your Lips': [
+    { id: 'iRS7G_E3c7w', title: "The Touch of Your Lips (Play Along Version)", channel: "MIDIFine Systems - Topic" },
+    { id: 'DUleuJ-kh5w', title: "BACKING TRACK - THE TOUCH OF YOUR LIPS (C) 140 BPM SWING", channel: "Luc Maes" },
+    { id: 'DohTRsLRDP8', title: "The Touch Of Your Lips (R Noble) Backing track + score for Bb instruments", channel: "Werner Schmedding" },
+    { id: '-dsciQgcWfs', title: "The Touch Of Your Lips (R Noble) Backing track + music sheet", channel: "Werner Schmedding" },
+    { id: 'pvQbzr-05Nw', title: "TOUCH OF YOUR LIPS Bb", channel: "B and E Flat" }
+  ],
   'The Way You Look Tonight': [
     { id: '1BD065FKuHU', title: "The Way You Look Tonight Backing Track - Jazz Play Along", channel: "Jack's Guitar Trax" },
     { id: 'HhDsAHGYO-s', title: "Original Backing Track THE WAY YOU LOOK TONIGHT (Eb)", channel: "Jazzing" },
@@ -1563,6 +2527,41 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 't23DzI5FuLo', title: "There Will Never Be Another You I Doblestandard Play-Alongs", channel: "Jazz Doblestandard" },
     { id: 'JVIFfMkRq1Y', title: "There Will Never Be Another You - Backing Track [Jazz Standards Every Jazz Musicians Need To Know]", channel: "PRACTICE JAZZ" }
   ],
+  'There\'s A Small Hotel': [
+    { id: '67xnF2r1WLY', title: "There's A Small Hotel (Rodgers) Backing track + music sheet", channel: "Werner Schmedding" },
+    { id: 'YdW9NaY382A', title: "Jazz Backing Track - There's A Small Hotel", channel: "Eagleheart Jazz Channel" },
+    { id: 'BCNKjyqdt8w', title: "There's A Small Hotel (Rodgers) Backing track + score for Bb instruments", channel: "Werner Schmedding" },
+    { id: 'cruStO9jckI', title: "There's A Small Hotel (Playalong Version)", channel: "MIDIFine Systems - Topic" },
+    { id: 'UvnKlhYlSw0', title: "There's A Small Hotel [lead sheet]", channel: "Jim Bartlett" }
+  ],
+  'Things Ain\'t What They Used To Be': [
+    { id: 'ShORzG0edak', title: "Things Ain't What They Used To Be (Bb) - Medium Up Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: 'B3kduYM6taU', title: "Jazz Backing Track - Things Ain't What They Used To Be", channel: "Eagleheart Jazz Channel" },
+    { id: 'ZIBScLLXIkY', title: "Things Ain’t What They Used To Be (F) || Classic Swing Backing Track || Play Along", channel: "ACME Play-A-Longs" },
+    { id: 'J3q9llYSJ9g', title: "Things Ain’t What They Used To Be Bass Line Play Along Backing Track", channel: "MrSunnybass" },
+    { id: 'Q40awbPLKBY', title: "THINGS AIN'T WHAT THEY USED TO BE chord progression - Backing Track", channel: "Backingtracks JAZZ" }
+  ],
+  'This I Dig Of You': [
+    { id: 'HaA8fXTZUG4', title: "This I Dig of You - Hard Swingin Jazz Organ Backing Track", channel: "Phil Wilkinson Music" },
+    { id: 'AgTXqJYQy6U', title: "This I Dig Of You (Jazz/Swing feel) - 160 bpm : Backing Track", channel: "Guitare Improvisation" },
+    { id: '9vLImb758bM', title: "This I Dig of You - Up Tempo Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
+    { id: 'ZKl_CS2W7lA', title: "This I Dig of You: Backing Track", channel: "Jazz Progressions" },
+    { id: '-xxTasLar1k', title: "This I Dig of You - Backing Track with Sheet Music for Tenor Sax", channel: "Yasuhiro Fujii" }
+  ],
+  'Three Little Words': [
+    { id: 'r1ivkw4Z1xs', title: "Three Little Words - Gypsy Jazz Backing Track 180 BPM - Django Reinhardt", channel: "Hot Club de France" },
+    { id: 'Vxz3XpawzJ0', title: "Three Little Words (Play Along Version)", channel: "MIDIFine Systems - Topic" },
+    { id: 'VDvM-RFqmU8', title: "Vol. 051 - 07 Three little words - ( C 🎹 )", channel: "Sound JP" },
+    { id: 'Hzuxu-bxW80', title: "Three Little Words", channel: "Alan Peach" },
+    { id: '7WOeNZcn59M', title: "Three Little Words", channel: "Teddy Wilson - Topic" }
+  ],
+  'Time After Time': [
+    { id: 'HEqmjIrrqMI', title: "Time After Time  Play along - Backing track (C  key score violin/guitar/piano)", channel: "Davide Severino" },
+    { id: 'viOIXmS78uA', title: "TIME AFTER TIME - Cyndi Lauper (for guitar ) Jazz Backing Track Karaoke Play Along Improvisation", channel: "Backingtracks JAZZ" },
+    { id: 'LVgk3OBzrjI', title: "Backing Track - Time After Time (C) 80 BPM Ballad Swing", channel: "Luc Maes" },
+    { id: '-opfga3AeT8', title: "Time After Time - with Intro + Lyrics in C (Male) - Jazz Sing-Along", channel: "Jazz Sing-Along" },
+    { id: 'vQ8V8DXr2Vs', title: "Time After Time (60 Bpm) Jazz Backing Track", channel: "Cool Jazz Tracks" }
+  ],
   'Time Remembered': [
     { id: 'pLDgoxIhuYM', title: "TIME REMEMBERED chord progression - Backing Track Play Along", channel: "Backingtracks JAZZ" },
     { id: 'yvmppYmDoj0', title: "Time Remembered - Jazz Practice", channel: "PRACTICE JAZZ" },
@@ -1571,6 +2570,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'oSxbniWh4vA', title: "Time Remembered(no piano)backing track/bpm70", channel: "flandria" },
     { id: 'fKip8RGW_Bs', title: "TIME REMEMBERED chord progression Backing Track Play Along Jazz Standard Bible 2 64 kbps 1", channel: "Clemens Bauer" },
     { id: '2zlvJkEouFI', title: "Time Remembered (B.Evans) Ballad - Backing track + music sheet", channel: "Werner Schmedding" }
+  ],
+  'Too High': [
+    { id: 'H85v08F2MQU', title: "Too High (Karaoke Version)", channel: "Ameritz Karaoke - Topic" },
+    { id: 'g9mNwSPZF-8', title: "Wonder, Stevie - Too High", channel: "3F Karaoke Group" },
+    { id: 'Iyd8yLyXsRw', title: "Too High", channel: "Brandon Fields - Topic" },
+    { id: 'TZhgLBaOa9w', title: "Too High", channel: "Louis Shelton - Topic" },
+    { id: 'D-4GdOJc0Ic', title: "Pat Martino - Too High (JAZZ)", channel: "Boston Style" }
   ],
   'Trinkle Tinkle': [
     { id: '0MEPcV5rMuk', title: "Trinkle Tinkle med-up time Bass Line Play Along Backing Track", channel: "MrSunnybass" },
@@ -1601,6 +2607,34 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'HG3POGTCtDU', title: "Turn out the stars Bass line Play Along backing Track", channel: "MrSunnybass" },
     { id: 'iNHuz3KZd4A', title: "Jazz Backing Track - Turn Out The Stars", channel: "Eagleheart Jazz Channel" }
   ],
+  'Tuxedo Junction': [
+    { id: 'Cisqzgb0EhY', title: "Tuxedo Junction (Backing Track Only)", channel: "The Great Backing Orchestra - Topic" },
+    { id: 'anOSi-igqPs', title: "Jazz Backing Track - Tuxedo Junction", channel: "Eagleheart Jazz Channel" },
+    { id: 'FJg32dDGiTY', title: "BACKING TRACK - TUXEDO JUNCTION (Erskine Hawkins, Johnson, Feyne, Dash) (Bb) 120 BPM SWING", channel: "Luc Maes" },
+    { id: 'Mwd5Avtw74g', title: "Tuxedo Junction (Accompaniment Track) (feat. Alexandra Wood & Frank Mizen)", channel: "Edward Huws Jones - Topic" },
+    { id: 'S2cxmoclE_k', title: "Tuxedo Junction (Backing Track Only)", channel: "The Great Backing Orchestra - Topic" }
+  ],
+  'Twisted Blues': [
+    { id: 'EsOV5sDpWIA', title: "Twisted Blues chord progression - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
+    { id: 'xYz8oaV2_80', title: "Twisted Blues   Wes Montgomery   Backing Track ⧸ Play Along 9iFAzFlPQbA", channel: "lil-works" },
+    { id: 'NapyyQQ5ivA', title: "Twisted Blues chord progression - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
+    { id: 'jJAuZ7EhYW0', title: "Twisted Blues (Wes Montgomery) Bass Line Play Along Backing Track", channel: "MrSunnybass" },
+    { id: 'GYJ2JbANyBs', title: "Jazz Backing Track - Twisted", channel: "Eagleheart Jazz Channel" }
+  ],
+  'Ue O Muite Aruko': [
+    { id: 'yeCzCj9HzgI', title: "上を向いて歩こう - Sukiyaki (Let’s Look Up While Walking) Backing Track", channel: "Eiji Obata" },
+    { id: 'gjRLauYXrRE', title: "Ue O Muite Arukou - ukulele backing - key C", channel: "Paul Cornwall" },
+    { id: 'ruPpC-Zz2vg', title: "'Sukiyaki' (arr. K. Huelin) piano accompaniment for solo saxophone", channel: "khuelin" },
+    { id: 'Ebftt8V6Xys', title: "上を向いて歩こう　バックトラック", channel: "back tracks" },
+    { id: 'IEhfABrOj_I', title: "Downtown play along", channel: "Sam Ruttenberg" }
+  ],
+  'Unforgettable': [
+    { id: 'lrm8XLRJNsg', title: "BACKING TRACK - UNFORGETTABLE (F) 90 BPM SWING BALLAD", channel: "Luc Maes" },
+    { id: 'ugd-y30XAi0', title: "Unforgettable (Gordon) Backing track + music sheet", channel: "Werner Schmedding" },
+    { id: '2aWGFOoOUkE', title: "Unforgettable Bb Instruments Sheet Music Backing Track Play Along Partitura", channel: "Musically Yours, Arnie" },
+    { id: 'du2Ir2xjup8', title: "Unforgettable (Gordon)   Backing track + score for Bb instruments", channel: "Werner Schmedding" },
+    { id: '5PiR6eU16Bg', title: "Let's Fall In Love - Unforgettable Standards (Play-Along)", channel: "lil-works" }
+  ],
   'Unit 7': [
     { id: '02hvBjlyNIU', title: "Unit Seven Bass Line Play Along Backing Track", channel: "MrSunnybass" },
     { id: 'GPnMa04O9oU', title: "UNIT 7 chord progression - Backing Track Play Along Jazz Standard", channel: "Backingtracks JAZZ" },
@@ -1615,6 +2649,20 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'gS3ENBQUw8o', title: "UP JUMPED SPRING chord progression - Jazz Backing Track", channel: "Backingtracks JAZZ" },
     { id: 'sdoXO1566fo', title: "Up Jumped Spring Bass Line Play Along Backing Track", channel: "MrSunnybass" },
     { id: 'ZzZNwx6I7Ek', title: "BACKING TRACK - UP JUMPED SPRING (Freddie Hubbard Abbey Road)", channel: "Luc Maes" }
+  ],
+  'Upper Manhattan Medical Group': [
+    { id: 'CSQu1jT1XzM', title: "UPPER MANHATTAN MEDICAL GROUP chord progression - Backing Track", channel: "Backingtracks JAZZ" },
+    { id: 'OUzpGtdFltM', title: "UMMG Bass Line Play Along Backing Track", channel: "MrSunnybass" },
+    { id: 'cT7feCgy_Jw', title: "Upper Manhattan Medical Group (Strayhorn) Backing track + music sheet", channel: "Werner Schmedding" },
+    { id: 'o93do_MRXao', title: "Birdlike - Freddie Hubbard |Play Along | Backing Track", channel: "Michele Paternoster" },
+    { id: 'IXO7PDLBDsM', title: "BYE YA chord progression - Backing Track", channel: "Backingtracks JAZZ" }
+  ],
+  'Valse Hot': [
+    { id: 'Hq3KlQBmEXo', title: "Valse Hot chord progression - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
+    { id: 'geUa4UddHto', title: "Valse Hot (Jazz/Waltz feel) 145 bpm : Backing Track", channel: "Guitare Improvisation" },
+    { id: 'uHhNB8p9_GI', title: "Vol 008 - 05 Valse Hot - ( C 🎹 )", channel: "Sound JP" },
+    { id: 'zNpo9Zz5-Hs', title: "Vol 008 - 05 Valse Hot - ( Bb 🎷 )", channel: "Sound JP" },
+    { id: 'YdGv6usMZfw', title: "Vol 008 - 05 Valse Hot - ( Eb 🎷 )", channel: "Sound JP" }
   ],
   'Very Early': [
     { id: 'u6XIUQ-RVuA', title: "Very Early chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
@@ -1631,6 +2679,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'oHHqzyhVgeo', title: "WALTZ FOR DEBBY chord progression - Backing Track (no piano)", channel: "Backingtracks JAZZ" },
     { id: 'r_d6pdlTqUc', title: "Waltz for Debby - Bill Evans Play-Along Backing Track", channel: "Michele Paternoster" },
     { id: 'RqZoH1pFtEU', title: "Waltz for Debby Play along - Backing track (C key score)", channel: "Davide Severino" }
+  ],
+  'Watch What Happens': [
+    { id: '2RnjoGLj00U', title: "WATCH WHAT HAPPENS chord progression - Backing Track Play Along Jazz Standard Bible 2", channel: "Backingtracks JAZZ" },
+    { id: 'Zpt72_rkblQ', title: "Jazz Backing Track - Watch What Happens", channel: "Eagleheart Jazz Channel" },
+    { id: 'PPANVj7EveI', title: "Watch What Happens (Bossa0", channel: "Alan Peach" },
+    { id: 'umeZ-zaoX_Y', title: "BACKING TRACK - WATCH WHAT HAPPENS (Norman Gimbel, Michel Legrand, Jacques Demy) (Eb) 130 BPM BOSSA", channel: "Luc Maes" },
+    { id: 'JyIj2CJcnk0', title: "Watch What Happens Flute Violin Sheet Music Backing Track Play Along Partitura", channel: "Music Minded, Music Hearted" }
   ],
   'Watermelon Man': [
     { id: 'o-nzuNOhylU', title: "Watermelon Man : Backing track (16 bar Blues in F)", channel: "Guitare Improvisation" },
@@ -1654,6 +2709,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'IqSVg_unblM', title: "Wave - Tom Jobim (Backing track)", channel: "Brazilian Jazz Standards" },
     { id: 'NwhQ7FkMNK8', title: "Jazz Backing Track - Wave", channel: "Eagleheart Jazz Channel" }
   ],
+  'We See': [
+    { id: '7Nrhd2P61mU', title: "We See Bass Line Play Along Backing Track", channel: "MrSunnybass" },
+    { id: 'x5ilZCAuu7o', title: "RHYTHM A NING chord progression - Jazz Standard Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: 'O9fYoKkoqAc', title: "Pannonica - T. Monk - (BACKING TRACK by Andrea Rotoli)", channel: "Rotoland" },
+    { id: 'xfOOyUjLGVA', title: "Thelonious Monk - We See", channel: "Okmusix" },
+    { id: 'JbPC-bWCO5M', title: "We See", channel: "Daniel Rotem - Topic" }
+  ],
   'Well You Needn\'t': [
     { id: 'GZ-knrNJEvM', title: "WELL YOU NEEDN'T chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
     { id: 'JhyrJGLAYmU', title: "Well You Needn't - Jazz Standard Backing Track", channel: "PRACTICE JAZZ" },
@@ -1670,6 +2732,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'W3gOuSh9-PM', title: "West Coast Blues - Wes Montgomery - Backing Track/Play Along", channel: "Michele Paternoster" },
     { id: 'XjPdqu1o8XI', title: "West Coast Blues (Jazz/Waltz feel) 130 bpm : Backing Track", channel: "Guitare Improvisation" },
     { id: 'ni8mGO85urM', title: "West Coast Blues chord progression - Jazz Backing Track", channel: "Backingtracks JAZZ" }
+  ],
+  'What A Little Moonlight Can Do': [
+    { id: 'IDjFfyZQ2Eg', title: "What A Little Moonlight Can Do Bass Line Play Along Backing Track", channel: "MrSunnybass" },
+    { id: 'YgUZIdkzGWo', title: "What a little moonlight can do - Jazz KARAOKE (Instrumental backing track) - male key", channel: "Jazz singer Mariko AWADA - Jazz Karaoke & tips" },
+    { id: 'eGQnHsFYyLQ', title: "What a little moonlight can do - Nancy Wilson - JAZZ KARAOKE", channel: "MishaG9" },
+    { id: 'm2numljtoqM', title: "What a little moonlight can do - Jazz KARAOKE (Instrumental backing track) - female key - Ella", channel: "Jazz singer Mariko AWADA - Jazz Karaoke & tips" },
+    { id: 'iFO7_NN2DbE', title: "Steve Tyrell - What A Little Moonlight Can Do - Piano Backing Track Tutorials - Karaoke", channel: "Super Simple Piano" }
   ],
   'What A Wonderful World': [
     { id: '2LMS5tdT9eI', title: "New Backing Track WHAT A WONDERFUL WORLD F (Smooth Pop Jazz)", channel: "Jazzing" },
@@ -1689,6 +2758,34 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: '1wAhId8Bqb4', title: "Gypsy Jazz Backing Track / Play Along - What Is This Thing Called Love", channel: "Study Gypsy Jazz" },
     { id: 'i3liZqzEkLQ', title: "What Is This Thing Called Love (220 bpm) - Gypsy jazz Backing track", channel: "Guitare Improvisation" }
   ],
+  'What\'s New': [
+    { id: 'G1mtJrI1-Yg', title: "WHAT'S NEW chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: 'CNxAzTn8Ab0', title: "What's New", channel: "Learn Jazz Standards" },
+    { id: 'CVj7Hx2DqmA', title: "Jazz Backing Track - What's New", channel: "Eagleheart Jazz Channel" },
+    { id: 'N67NNDE2xPE', title: "What's New Chords Backing Track", channel: "saxsolos" },
+    { id: '0ru5XObzMlY', title: "What’s New Bass Line Play Along Backing Track", channel: "MrSunnybass" }
+  ],
+  'When I Fall In Love': [
+    { id: 't8CXrXxml7A', title: "WHEN I FALL IN LOVE chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: 'L3S8mRrFRok', title: "Jazz Backing Track - When I Fall In Love", channel: "Eagleheart Jazz Channel" },
+    { id: 'Tmk2z3Uqo24', title: "When I Fall In Love - Jazz Standard Backing Track", channel: "PRACTICE JAZZ" },
+    { id: 'mLzvZwcPfeM', title: "When I Fall in Love - Backing Track with Sheet Music for Tenor Sax", channel: "Yasuhiro Fujii" },
+    { id: 'M3ecnqJY44k', title: "JazzKara  \"When I Fall In Love\" (Key=C)", channel: "JazzKaraCh" }
+  ],
+  'When Sunny Gets Blue': [
+    { id: 'PabkxVAg1SU', title: "WHEN SUNNY GETS BLUE chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: 'oApIgnmNxp4', title: "When Sunny Gets Blue - Backing track / Play-along", channel: "QGVideos" },
+    { id: 'qEU4eBEIT8c', title: "When Sunny Gets Blue (Jazz/Ballad feel) 75 bpm : Backing Track", channel: "Guitare Improvisation" },
+    { id: 'n1mmcvA-56c', title: "Jazz Backing Track - When Sunny Gets Blue", channel: "Eagleheart Jazz Channel" },
+    { id: 'X9KNZk2_jcU', title: "When Sunny Gets Blue - Backing Track ( Instrument Bb )", channel: "Sound GB" }
+  ],
+  'While My Lady Sleeps': [
+    { id: 'AtJKeZRmEvI', title: "While My Lady Sleeps (take 10) (Alternate Take)", channel: "Chet Baker" },
+    { id: 'P9Ny2iexMCs', title: "While My Lady Sleeps. Wonderful ballad that Coltrane recorded. Chet Baker also did a vocal version.", channel: "Juli Wood" },
+    { id: 'IV1EkvumjR8', title: "While My Lady Sleeps", channel: "Bradley White" },
+    { id: 'CF_R6iXWdwc', title: "While My Lady Sleeps", channel: "Carol Bach-y-Rita - Topic" },
+    { id: 'MZfTSrPMnoo', title: "While My Lady Sleeps", channel: "Doug Laalo - Topic" }
+  ],
   'Whisper Not': [
     { id: 'qjMzc5QahOI', title: "WHISPER NOT chord progression - Backing Track", channel: "Backingtracks JAZZ" },
     { id: 'QpDgEMnhdfM', title: "Jazz Backing Track - Whisper Not", channel: "Eagleheart Jazz Channel" },
@@ -1698,6 +2795,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: '8yCTYJ34JAg', title: "WHISPER NOT BASS LINE PLAY ALONG BACKING TRACK", channel: "MrSunnybass" },
     { id: 'E53f3ITYC8g', title: "Whisper Not - Backing + music sheet", channel: "Werner Schmedding" }
   ],
+  'Willow Weep For Me': [
+    { id: 's3HWEoTil7E', title: "Jazz Backing Track - Willow Weep For Me", channel: "Eagleheart Jazz Channel" },
+    { id: 'S4kCJHyA-W4', title: "Willow Weep For Me backing track, medium waltz feel, key of G", channel: "Muzik Mon" },
+    { id: '682IBHOUujU', title: "Willow Weep for me - Backing Track 80 BPM (to improvise)", channel: "All Backing Tracks" },
+    { id: 'PB1ZCpUpuZ4', title: "Willow Weep For Me - Backing + music sheet", channel: "Werner Schmedding" },
+    { id: 'c6rTr0u5kHY', title: "Willow Weep For Me Bass Line Play Along Backing Track", channel: "MrSunnybass" }
+  ],
   'Windows': [
     { id: 'ebj4m7qny1g', title: "Windows - Chick Corea - Real Jazz Backing Track - Play Along", channel: "Real Jazz Backing Tracks" },
     { id: 'eYwWSGhdDOA', title: "WINDOWS chord progression - Guitar Backing Track Play Along", channel: "Backingtracks JAZZ" },
@@ -1706,6 +2810,13 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'DyV2Jm1GXeg', title: "Jazz Backing Track - Windows", channel: "Eagleheart Jazz Channel" },
     { id: 'Hx6TODtT0Ws', title: "WINDOWS chord progression (no piano) - Guitar Backing Track Play Along The Real Book Jazz", channel: "Backingtracks JAZZ" },
     { id: 'iZyrcyr3_34', title: "Windows (Chick Corea) Backing track + music sheet", channel: "Werner Schmedding" }
+  ],
+  'Witch Hunt': [
+    { id: 'eijoed9Yanc', title: "Witch Hunt chord progression - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
+    { id: 'itFVPE5SBFs', title: "Witch Hunt - Wayne Shorter | Play Along | Backing Track", channel: "Michele Paternoster" },
+    { id: 'J-YGSw0ay-A', title: "Jazz Backing Track - Witch Hunt", channel: "Eagleheart Jazz Channel" },
+    { id: 'XP2P7IuwXoE', title: "Witch Hunt - Wayne Shorter (Play Along)", channel: "lil-works" },
+    { id: 'eBMwMAD83SQ', title: "Witch Hunt   Wayne Shorter   Backing Track ⧸ Play Along 0wxszP1L4ic", channel: "lil-works" }
   ],
   'Witchcraft': [
     { id: 'gM0A_mSvA9o', title: "Jazz Backing Track - Witchcraft", channel: "Eagleheart Jazz Channel" },
@@ -1757,6 +2868,27 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: '0bUu0NXw8Zw', title: "Yesterdays - Jazz Standard Backing Track", channel: "PRACTICE JAZZ" },
     { id: 'swubM1MeOn0', title: "Yesterdays Bass Line Play Along Backing Track", channel: "MrSunnybass" }
   ],
+  'Yesternow': [
+    { id: 'PGKEIhnLgo8', title: "Bill Evans/Miles Davis - Nardis (Mario Nikolic)", channel: "Mario Nikolić" },
+    { id: 'q8L4gQe1ASc', title: "1956-10-26 tune up (theme and miles davis solo)", channel: "themusicofmiles" },
+    { id: 'ipXKqC_27uc', title: "Miles Davis (1947) FIRST RECORDING [MILESTONES (OLD)]", channel: "JGC History" },
+    { id: 'KayOF47AlOw', title: "Alverstone Jam", channel: "Gary Husband - Topic" },
+    { id: 'yNzxFWMh78w', title: "1957-11-30 tune up (miles davis theme and solo)", channel: "themusicofmiles" }
+  ],
+  'You And The Night And The Music': [
+    { id: 'Jhgg0qeXDDI', title: "YOU AND THE NIGHT AND THE MUSIC chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: 'r6jOi1dxnMg', title: "You And The Night And The Music - Backing track / Play-along", channel: "QGVideos" },
+    { id: 'Y0_rK7oM7Is', title: "Jazz Backing Track - You And The Night And The Music", channel: "Eagleheart Jazz Channel" },
+    { id: 'GEEOfuDPh2M', title: "You and the Night and the Music - Backing Track with Sheet Music for Tenor Sax", channel: "Yasuhiro Fujii" },
+    { id: 'ni51RDaudCI', title: "You And The Night And The Music - Jazz Standard Backing Track", channel: "PRACTICE JAZZ" }
+  ],
+  'You Are The Sunshine Of My Life': [
+    { id: 'vL8NWqgi4g8', title: "YOU ARE THE SUNSHINE OF MY LIFE chord progression - Backing Track", channel: "Backingtracks JAZZ" },
+    { id: 'XkYbg1L1Y0w', title: "You Are The Sunshine Of My Life chord progression - Jazz Backing Track Play Along The Real Book", channel: "Backingtracks JAZZ" },
+    { id: 'ys7xguu3gbw', title: "You are the Sunshine of My Life Backing Track", channel: "saxsolos" },
+    { id: 'srVF8UPE2rQ', title: "You Are The Sunshine Of My Life Backing Track", channel: "BaBoSound" },
+    { id: 'LDOVp5038zQ', title: "You are the Sunshine of My Life (Bossa Nova Style) - Backing Track with Sheet Music for Alto Sax", channel: "Yasuhiro Fujii" }
+  ],
   'You Don\'t Know What Love Is': [
     { id: '6UmU42ZAB9o', title: "YOU DON'T KNOW WHAT LOVE IS chord progression - Jazz Backing Track", channel: "Backingtracks JAZZ" },
     { id: 'GoH8IQFC6cw', title: "You Don't Know What Love Is - Super Swinging Backing Track", channel: "Phil Wilkinson Music" },
@@ -1764,6 +2896,20 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'y2ZIF_MK1Rs', title: "YOU DON'T KNOW WHAT LOVE IS chord progression - Backing Track (no piano)", channel: "Backingtracks JAZZ" },
     { id: 'h8h-2d8nhOE', title: "Jazz Backing Track - You Don't Know What Love Is", channel: "Eagleheart Jazz Channel" },
     { id: '4vq70sAD4hk', title: "You Don't Know What Love Is - a backing track with Intro + Lyrics in Am (Female) - Jazz Sing-Along", channel: "Jazz Sing-Along" }
+  ],
+  'You Go To My Head': [
+    { id: '4qz0g3fjmIU', title: "You Go To My Head - Backing Track with Intro + Lyrics in Bb (Female) - Jazz Sing-Along", channel: "Jazz Sing-Along" },
+    { id: 'LVYPr3lwJRw', title: "You Go To My Head - Backing Track with Intro + Lyrics in Ab (Female) - Jazz Sing-Along", channel: "Jazz Sing-Along" },
+    { id: 'A1vmZYKjGC4', title: "You Go To My Head - Backing Track with Intro + Lyrics in Eb (Male) - Jazz Sing-Along", channel: "Jazz Sing-Along" },
+    { id: 'l5CRPGCEO8M', title: "You Go To My Head (Playalong Version)", channel: "MIDIFine Systems - Topic" },
+    { id: 'bEz2wDC2B9w', title: "You Go To My Head - Backing track + score for Bb instruments", channel: "Werner Schmedding" }
+  ],
+  'You Must Believe In Spring': [
+    { id: 'ScKZXT_LC90', title: "YOU MUST BELIEVE IN SPRING chord progression - Jazz Backing Track Play Along", channel: "Backingtracks JAZZ" },
+    { id: 'uLhh01fY4X0', title: "YOU MUST BELIEVE IN SPRING chord progression - Backing Track (no piano)", channel: "Backingtracks JAZZ" },
+    { id: 'kOfyqHvKAGM', title: "You Must Believe in Spring/Backing Track/Bm (Bill Evans Key)/Jazz Ballad/Piano Trio/4bars Intro", channel: "Music to Play Along" },
+    { id: 'dl8ORRno2VU', title: "You Must Believe in Spring/Backing Track/Dm (Tony Bennett Key)/Jazz Ballad/Piano Trio/4bars Intro", channel: "Music to Play Along" },
+    { id: 'fgvX4J1nppo', title: "You Must Believe in Spring/Backing Track/Bm (Bill Evans Key)/Jazz Ballad/Bass Drums only/4bars Intro", channel: "Music to Play Along" }
   ],
   'You Stepped Out Of A Dream': [
     { id: 'kGz9iaIYEAY', title: "YOU STEPPED OUT OF A DREAM chord progression - Jazz Backing Track", channel: "Backingtracks JAZZ" },
@@ -1781,7 +2927,36 @@ export const STANDARDS_BACKING_TRACKS: Record<string, { id: string; title: strin
     { id: 'AatTfTNbQIc', title: "You'd Be So Nice to Come Home To (Bb) - Medium Up Swing || BACKING TRACK", channel: "JGC Play-Alongs" },
     { id: 'vaC8z0jbrkU', title: "You'd Be So Nice To Come Home To Backing Track", channel: "BaBoSound" },
     { id: 'pnScA9EDMRw', title: "You'd be so nice to come home to - Backing Track with Sheet Music", channel: "Yasuhiro Fujii" }
+  ],
+  'You\'re My Everything': [
+    { id: 'oit0DRSyazw', title: "You're My Everything | Play Along/Backing Track | AI Separation", channel: "Craig Tweddell" },
+    { id: '-vxx9rGs0hc', title: "You're my Everything Backing track", channel: "Constantine Taranenko" },
+    { id: 'eNbvsq0EH0k', title: "You're My Everything", channel: "Learn Jazz Standards" },
+    { id: 'Hc3WBM67i1Y', title: "You're Everything - (Real Book III) Backing Track - A maj, samba, 195 bpm", channel: "The Real Book & More: Play Along Backing Tracks" },
+    { id: '5Veu9DbOUbw', title: "You're my Everything - Backing + music sheet", channel: "Werner Schmedding" }
+  ],
+  'Zero Hora': [
+    { id: '8RgpASWmqrE', title: "Sambalanço 4", channel: "Celso de Almeida - Topic" },
+    { id: '8B_p2TwBqwU', title: "Sambalanço 3", channel: "Celso de Almeida - Topic" },
+    { id: 'wycHIigTZjQ', title: "Sambossa 10/3/19", channel: "Sambossa" },
+    { id: 'gIYQKPbpMLM', title: "Killer! Rare Brazilian Groove-Joni Maza Joyce's Samba", channel: "MrDjango1953" },
+    { id: '8KokR8Cvfq0', title: "Samba Do Sol (Sunny Samba) - Sambossa", channel: "Sambossa" }
+  ],
+  'Zingaro': [
+    { id: '1R_wJcde9e4', title: "【Dr】Zingaro “Antonio Carlos Jobin” Backing Track", channel: "saxtサクトのめちゃ楽サックス" },
+    { id: 'M3OeIucRrpo', title: "Zingaro Tom Jobim - Play Along Brazil", channel: "Play-Along Brazil" },
+    { id: 'JAK0JXiqnnw', title: "Retrato Em Branco E Preto (in G minor) Bass Line Play Along Backing Track", channel: "MrSunnybass" },
+    { id: 'vlqJkXVBygo', title: "Retrato Em Branco E Preto / Portrait in Black And White - backing + music sheet", channel: "Werner Schmedding" },
+    { id: '7yYXrXeltPU', title: "Retrato Em Branco E Preto (in E minor) Bass Line Play Along Backing Track", channel: "MrSunnybass" }
+  ],
+  'Zouk Machine': [
+    { id: 'fn9XiLsuzOM', title: "#PEDIDOINSCRITO Zouk Machine - Maldon Baixo backingtrack (com vocal)", channel: "Vinicius.Shiraishi" },
+    { id: 'jx4YPlV7yIs', title: "Maldon (Zouk Machine)", channel: "Weekly Piano Jam" },
+    { id: 'KXQtWpQSIyI', title: "Maldòn (Version album 1989) ► Zouk Machine ◄🎸► No Bass Guitar ◄🟢 You like ? Clic 👍🟢", channel: "♪ JJ-BASSless (ツ)" },
+    { id: 'qJdatNkss3E', title: "MALDONE", channel: "maldoneblues" },
+    { id: 'wq3v61PWRIc', title: "Zouk Machine -Maldon - Cover Basse par Antone Mascalacci", channel: "Tony Mascalacci" }
   ]
+
 };
 
 // ── Historic / "The Greats" Recordings ──────────────────────────────────────────

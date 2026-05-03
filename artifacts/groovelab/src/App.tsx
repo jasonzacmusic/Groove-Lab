@@ -6,6 +6,7 @@ import NotFound from "@/pages/not-found";
 import { Layout } from "@/components/Layout";
 import { AudioEngineProvider } from "@/context/AudioEngineContext";
 import { PlayerProvider } from "@/context/PlayerContext";
+import { YouTubePlaybackProvider } from "@/context/YouTubePlaybackContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { ThemeProvider } from "next-themes";
 
@@ -70,11 +71,13 @@ function App() {
         <TooltipProvider>
           <AuthProvider>
             <PlayerProvider>
+              <YouTubePlaybackProvider>
               <AudioEngineProvider>
                 <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
                   <Router />
                 </WouterRouter>
               </AudioEngineProvider>
+              </YouTubePlaybackProvider>
             </PlayerProvider>
           </AuthProvider>
           <Toaster />

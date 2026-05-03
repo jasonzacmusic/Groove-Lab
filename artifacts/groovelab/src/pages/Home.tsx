@@ -1,16 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'wouter';
-import { useGetTaxonomy } from '@workspace/api-client-react';
-import { useQuery } from '@tanstack/react-query';
-import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { usePlayer } from '@/context/PlayerContext';
+import { Input } from '@/components/ui/input';
 import {
   Compass, Play, Music, Timer, Cpu, Piano, BookOpen,
-  GraduationCap, Radio, Star,
+  GraduationCap, Radio, Star, Search as SearchIcon,
 } from 'lucide-react';
 import { YouTubeInline } from '@/components/YouTubeInline';
 import {
@@ -18,8 +12,6 @@ import {
   tempoLabel, getGenreByTempo, type TempoBucket,
 } from '@/data/genre-videos';
 import { KEY_BACKING_TRACKS } from '@/data/chord-videos';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 // Build key tracks from the chord-videos KEY_BACKING_TRACKS
 const KEY_TRACKS = Object.entries(KEY_BACKING_TRACKS)
@@ -37,12 +29,24 @@ const TOOLS = [
 
 // KEY_TRACKS built above from KEY_BACKING_TRACKS
 
-// ── Backing-track browser (genre dropdown × tempo tabs) ─────────────────────
+// ── Backing-track browser (genre pills + tempo tabs + search) ────────────
 function BackingTrackBrowser() {
   const [genre, setGenre] = useState<string>(GENRES[0]);
   const [bucket, setBucket] = useState<TempoBucket>('medium');
+  const [query, setQuery] = useState('');
 
-  // Counts per bucket for the current genre — used to disable empty tabs.
+  // Per-genre totals — shown in the pill so the user knows how rich each genre is.
+  const genreTotals = useMemo(() => {
+    const out: Record<string, number> = {};
+    for (const g of GENRES) {
+      out[g] = TEMPO_BUCKETS.reduce(
+        (s, b) => s + (GENRE_VIDEO_LIBRARY_BY_TEMPO[g]?.[b]?.length || 0),
+        0,
+      );
+    }
+    return out;
+  }, []);
+
   const counts = useMemo(() => {
     return TEMPO_BUCKETS.reduce((acc, b) => {
       acc[b] = getGenreByTempo(genre, b).length;
@@ -50,35 +54,50 @@ function BackingTrackBrowser() {
     }, {} as Record<TempoBucket, number>);
   }, [genre]);
 
-  // Videos to render — first 9 from the active bucket via getGenreByTempo().
-  const videos = useMemo(() => getGenreByTempo(genre, bucket).slice(0, 9), [genre, bucket]);
+  const videos = useMemo(() => {
+    const list = getGenreByTempo(genre, bucket);
+    const q = query.trim().toLowerCase();
+    const filtered = q
+      ? list.filter(v =>
+          v.title.toLowerCase().includes(q) ||
+          (v.channel || '').toLowerCase().includes(q),
+        )
+      : list;
+    return filtered.slice(0, 12);
+  }, [genre, bucket, query]);
+
+  const totalForGenre = genreTotals[genre] || 0;
 
   return (
     <section>
       <h2 className="font-serif text-2xl mb-2 flex items-center gap-2">
-        <Star className="w-5 h-5 text-primary" /> Backing Tracks by Genre & Tempo
+        <Star className="w-5 h-5 text-primary" /> Find Your Loop — by Genre & Tempo
       </h2>
       <p className="text-sm text-muted-foreground mb-4">
-        Curated YouTube backing tracks across {GENRES.length} genres, organized by tempo. Plays inline.
+        Browse {GENRES.length} genres, all with 100+ curated YouTube backing tracks. Pick a vibe, pick a tempo, hit play. Only one plays at a time.
       </p>
 
-      {/* Genre dropdown */}
-      <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
-        <div className="flex items-center gap-2">
-          <label className="text-xs uppercase font-bold text-muted-foreground tracking-wider">Genre</label>
-          <Select value={genre} onValueChange={setGenre}>
-            <SelectTrigger className="w-[200px] h-9">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {GENRES.map((g) => (
-                <SelectItem key={g} value={g}>{g}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+      {/* Genre pills (always visible, easier than a dropdown) */}
+      <div className="flex flex-wrap gap-2 mb-4">
+        {GENRES.map((g) => {
+          const active = genre === g;
+          return (
+            <button
+              key={g}
+              onClick={() => setGenre(g)}
+              className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors
+                ${active
+                  ? 'bg-primary text-primary-foreground border-primary'
+                  : 'bg-muted/30 text-foreground/80 border-border hover:bg-muted/60 hover:border-primary/40'}`}
+            >
+              {g} <span className={`ml-1 ${active ? 'opacity-80' : 'opacity-50'}`}>· {genreTotals[g]}</span>
+            </button>
+          );
+        })}
+      </div>
 
-        {/* Tempo tabs */}
+      {/* Tempo tabs + search */}
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
         <div className="flex flex-wrap gap-1.5">
           {TEMPO_BUCKETS.map((b) => {
             const n = counts[b];
@@ -97,7 +116,20 @@ function BackingTrackBrowser() {
             );
           })}
         </div>
+        <div className="relative flex-1 sm:max-w-xs sm:ml-auto">
+          <SearchIcon className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={`Search in ${genre}…`}
+            className="h-9 pl-8 text-xs"
+          />
+        </div>
       </div>
+
+      <p className="text-[11px] text-muted-foreground mb-3">
+        Showing {videos.length} of {totalForGenre} {genre} tracks{query ? ` matching “${query}”` : ''}.
+      </p>
 
       {videos.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -111,7 +143,9 @@ function BackingTrackBrowser() {
       ) : (
         <div className="rounded-lg border border-dashed border-border bg-muted/20 p-6 text-center">
           <p className="text-xs text-muted-foreground">
-            No {tempoLabel(bucket).toLowerCase()} tracks for {genre} yet — try another tempo bucket.
+            {query
+              ? `No matches for “${query}” in ${genre} ${tempoLabel(bucket).toLowerCase()} — try another tempo or clear the search.`
+              : `No ${tempoLabel(bucket).toLowerCase()} tracks for ${genre} yet — try another tempo bucket.`}
           </p>
         </div>
       )}
@@ -120,17 +154,6 @@ function BackingTrackBrowser() {
 }
 
 export default function Home() {
-  const { data: taxonomy } = useGetTaxonomy();
-  // Fetch from the REAL audio loops endpoint (5,429 loops), not the old YouTube loops
-  const { data: loopsData, isLoading } = useQuery({
-    queryKey: ['audio-loops-home'],
-    queryFn: async () => {
-      const res = await fetch('/api/audio-loops?limit=8&sort=most_played');
-      return res.json();
-    },
-  });
-  const { playLoop } = usePlayer();
-
   return (
     <div className="p-4 md:p-8 space-y-8 max-w-7xl mx-auto">
       {/* Hero */}
@@ -163,85 +186,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Drum Loops from Database */}
-      <section>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="font-serif text-2xl flex items-center gap-2">
-            <Play className="w-5 h-5 text-primary" /> Drum Loops & Backing Tracks
-          </h2>
-          <Link href="/loop-library">
-            <Button variant="outline" size="sm">View All</Button>
-          </Link>
-        </div>
-
-        {/* Genre pills */}
-        <ScrollArea className="w-full whitespace-nowrap pb-3">
-          <div className="flex w-max space-x-2">
-            {taxonomy?.genres?.slice(0, 12).map((g) => (
-              <Link key={g.id} href={`/explore`}>
-                <Badge variant="outline" className="cursor-pointer hover:bg-primary/10 hover:border-primary/50">
-                  {g.name}
-                </Badge>
-              </Link>
-            ))}
-          </div>
-          <ScrollBar orientation="horizontal" className="hidden" />
-        </ScrollArea>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-3">
-          {isLoading ? (
-            Array.from({ length: 4 }).map((_, i) => (
-              <Card key={i} className="overflow-hidden">
-                <Skeleton className="h-40 w-full" />
-                <CardContent className="p-3 space-y-2">
-                  <Skeleton className="h-4 w-3/4" />
-                  <Skeleton className="h-3 w-1/2" />
-                </CardContent>
-              </Card>
-            ))
-          ) : (
-            loopsData?.loops?.map((loop: any) => (
-              <Link key={loop.id} href="/loop-library">
-              <Card className="overflow-hidden hover:border-primary/50 transition-colors cursor-pointer group">
-                <div className="aspect-video relative bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
-                  <Music className="w-10 h-10 text-primary/40 group-hover:text-primary/60 transition-colors" />
-                  <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Play className="w-10 h-10 text-white" fill="currentColor" />
-                  </div>
-                  {loop.genre && (
-                    <Badge className="absolute top-2 left-2 text-[9px] bg-primary/80">{loop.genre}</Badge>
-                  )}
-                  {loop.feel && (
-                    <Badge variant="outline" className="absolute top-2 right-2 text-[9px] bg-background/80">{loop.feel}</Badge>
-                  )}
-                </div>
-                <CardContent className="p-3">
-                  <div className="flex items-center gap-1.5 mb-1.5">
-                    <Avatar className="w-5 h-5 flex-shrink-0">
-                      <AvatarFallback className="text-[8px] bg-primary/20 text-primary font-bold">{loop.artist?.substring(0, 2).toUpperCase() || 'GK'}</AvatarFallback>
-                    </Avatar>
-                    <span className="text-xs font-medium truncate">{loop.artist || 'Unknown Artist'}</span>
-                  </div>
-                  <h4 className="font-medium text-sm truncate">{loop.grooveName || loop.title}</h4>
-                  {loop.collection && (
-                    <p className="text-[10px] text-muted-foreground truncate mt-0.5">
-                      📁 {loop.collection.replace(/_/g, ' ')}
-                    </p>
-                  )}
-                  <div className="flex items-center gap-1.5 mt-2">
-                    {loop.bpm && <Badge variant="secondary" className="font-mono text-[9px]">{loop.bpm} BPM</Badge>}
-                    {loop.timeSignature && <Badge variant="outline" className="font-mono text-[9px]">{loop.timeSignature}</Badge>}
-                    {loop.sectionType && loop.sectionType !== 'full_loop' && <Badge variant="outline" className="text-[9px] text-primary border-primary/30">{loop.sectionType}</Badge>}
-                  </div>
-                </CardContent>
-              </Card>
-              </Link>
-            ))
-          )}
-        </div>
-      </section>
-
-      {/* Backing Tracks by Genre & Tempo — curated inline YouTube embeds */}
+      {/* Backing Tracks by Genre & Tempo — curated inline YouTube embeds.
+         Audio WAV loops live on their own page (/loop-library), not here. */}
       <BackingTrackBrowser />
 
       {/* Backing Tracks by Key — show only keys with curated videos */}
