@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useRef, useState, useCallback } from 'react';
 import * as Tone from 'tone';
-import { useSequencerStore, Kit, Instrument } from '../store/sequencer';
+import { useSequencerStore, Kit, Instrument, Velocity, velocityToGain } from '../store/sequencer';
 
 interface AudioEngineContextType {
   isInitialized: boolean;
@@ -352,7 +352,7 @@ export const AudioEngineProvider: React.FC<{ children: React.ReactNode }> = ({ c
             }, time);
 
             if (sliceData && sliceData.instrument) {
-              triggerInstrument(sliceData.instrument, time, currentState.selectedKit);
+              triggerInstrument(sliceData.instrument, time, currentState.selectedKit, sliceData.velocity);
             }
           }, Tone.Ticks(eventTimeTicks));
 
@@ -373,16 +373,17 @@ export const AudioEngineProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
   // ---------- triggerInstrument ----------
 
-  const triggerInstrument = (instrument: Instrument, time: number, kit: Kit) => {
+  const triggerInstrument = (instrument: Instrument, time: number, kit: Kit, velocity?: Velocity) => {
     const synth = synths.current[instrument];
     if (!synth) return;
+    const v = velocityToGain(velocity);
 
     if (synth instanceof Tone.MembraneSynth) {
-      synth.triggerAttackRelease(getPitch(instrument, kit), '8n', time);
+      synth.triggerAttackRelease(getPitch(instrument, kit), '8n', time, v);
     } else if (synth instanceof Tone.NoiseSynth) {
-      synth.triggerAttackRelease('16n', time);
+      synth.triggerAttackRelease('16n', time, v);
     } else if (synth instanceof Tone.MetalSynth) {
-      synth.triggerAttackRelease(getPitch(instrument, kit), '16n', time);
+      synth.triggerAttackRelease(getPitch(instrument, kit), '16n', time, v);
     }
   };
 

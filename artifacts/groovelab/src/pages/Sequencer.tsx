@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useSequencerStore, Instrument } from '../store/sequencer';
+import { useSequencerStore, Instrument, Hit } from '../store/sequencer';
 import { useAudioEngine } from '../context/AudioEngineContext';
 import { usePracticeTracker } from '@/hooks/use-practice-tracker';
 import { Button } from '@/components/ui/button';
@@ -416,7 +416,7 @@ const GROOVE_PRESETS: GroovePreset[] = [
 
 interface PizzaBeatProps {
   beatIndex: number;
-  slices: { instrument: Instrument | null }[];
+  slices: Hit[];
   subdivisionCount: number;
   currentStep: number;
   globalStartIndex: number;
@@ -488,33 +488,72 @@ function PizzaBeat({
           const largeArc = endAngle - startAngle > 180 ? 1 : 0;
           const d = `M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z`;
 
+          // ── Velocity → visual emphasis (Beat Scholar style) ──
+          // ghost (0) = faint/translucent, normal (1) = default, accent (2) = bright + glow
+          const vel = slice.velocity;
+          const isGhost = vel === 0;
+          const isAccent = vel === 2;
+
           let fill = 'transparent';
           if (isPlaying && color) {
             fill = color;
           } else if (isPlaying) {
             fill = 'rgba(226,168,50,0.25)';
           } else if (color) {
-            fill = color + 'cc';
+            // alpha based on velocity: ghost=33, normal=cc, accent=ff
+            const alphaHex = isGhost ? '55' : isAccent ? 'ff' : 'cc';
+            fill = color + alphaHex;
           }
 
+          // Accent halo overlay (bright outer ring)
+          const accentGlow = isAccent && color
+            ? `drop-shadow(0 0 8px ${color}) drop-shadow(0 0 4px ${color})`
+            : color
+              ? `drop-shadow(0 0 3px ${color}66)`
+              : undefined;
+
           return (
-            <path
-              key={i}
-              d={d}
-              fill={fill}
-              stroke={isPlaying ? '#e2a832' : 'rgba(255,255,255,0.15)'}
-              strokeWidth={isPlaying ? 2 : 0.5}
-              style={{
-                cursor: 'pointer',
-                transition: 'fill 0.06s ease',
-                filter: isPlaying
-                  ? 'drop-shadow(0 0 8px rgba(226,168,50,0.6))'
-                  : color
-                    ? `drop-shadow(0 0 3px ${color}66)`
-                    : undefined,
-              }}
-              onClick={() => onSliceClick(beatIndex, i)}
-            />
+            <g key={i}>
+              <path
+                d={d}
+                fill={fill}
+                stroke={
+                  isPlaying ? '#e2a832' : isAccent ? color || 'rgba(255,255,255,0.3)' : 'rgba(255,255,255,0.15)'
+                }
+                strokeWidth={isPlaying ? 2 : isAccent ? 1.4 : 0.5}
+                style={{
+                  cursor: 'pointer',
+                  transition: 'fill 0.06s ease',
+                  filter: isPlaying
+                    ? 'drop-shadow(0 0 8px rgba(226,168,50,0.6))'
+                    : accentGlow,
+                  opacity: isGhost && !isPlaying ? 0.55 : 1,
+                }}
+                onClick={() => onSliceClick(beatIndex, i)}
+              />
+              {/* Accent indicator: small bright dot at the slice tip */}
+              {isAccent && color && (
+                <circle
+                  cx={cx + (r * 0.7) * Math.cos((((startAngle + endAngle) / 2) * Math.PI) / 180)}
+                  cy={cy + (r * 0.7) * Math.sin((((startAngle + endAngle) / 2) * Math.PI) / 180)}
+                  r={2.2}
+                  fill="#fff"
+                  style={{ pointerEvents: 'none', filter: `drop-shadow(0 0 3px ${color})` }}
+                />
+              )}
+              {/* Ghost indicator: tiny hollow ring */}
+              {isGhost && color && (
+                <circle
+                  cx={cx + (r * 0.6) * Math.cos((((startAngle + endAngle) / 2) * Math.PI) / 180)}
+                  cy={cy + (r * 0.6) * Math.sin((((startAngle + endAngle) / 2) * Math.PI) / 180)}
+                  r={1.5}
+                  fill="none"
+                  stroke={color}
+                  strokeWidth={0.8}
+                  style={{ pointerEvents: 'none', opacity: 0.7 }}
+                />
+              )}
+            </g>
           );
         })}
 
@@ -586,7 +625,7 @@ function arcPath(cx: number, cy: number, r: number, startDeg: number, endDeg: nu
 
 interface RadialViewProps {
   instruments: string[];
-  beats: { instrument: Instrument | null }[][];
+  beats: Hit[][];
   subdivisions: number[];
   currentStep: number;
   onSliceClick: (beatIndex: number, sliceIndex: number, instrument: string) => void;
@@ -647,31 +686,48 @@ function RadialView({ instruments, beats, subdivisions, currentStep, onSliceClic
                 const sliceData = beats[step.beatIndex]?.[step.sliceIndex];
                 const hasHit = sliceData?.instrument === inst;
                 const isPlaying = currentStep === globalIdx;
+                // Velocity for this hit (only meaningful when hasHit)
+                const vel = sliceData?.velocity;
+                const isGhost = hasHit && vel === 0;
+                const isAccent = hasHit && vel === 2;
 
                 let fill = 'transparent';
                 if (hasHit && isPlaying) {
                   fill = color;
                 } else if (hasHit) {
-                  fill = color + 'bb';
+                  // alpha by velocity: ghost faint, accent fully opaque
+                  const alpha = isGhost ? '44' : isAccent ? 'ff' : 'bb';
+                  fill = color + alpha;
                 } else if (isPlaying) {
                   fill = 'rgba(226,168,50,0.18)';
                 }
+
+                const accentFilter = isAccent
+                  ? `drop-shadow(0 0 6px ${color}) drop-shadow(0 0 3px ${color})`
+                  : hasHit
+                    ? `drop-shadow(0 0 2px ${color}44)`
+                    : undefined;
 
                 return (
                   <path
                     key={`${inst}-${globalIdx}`}
                     d={arcPath(cx, cy, outerR, startDeg, endDeg, RING_W)}
                     fill={fill}
-                    stroke={isPlaying && hasHit ? '#e2a832' : 'rgba(255,255,255,0.08)'}
-                    strokeWidth={isPlaying && hasHit ? 1.5 : 0.5}
+                    stroke={
+                      isPlaying && hasHit
+                        ? '#e2a832'
+                        : isAccent
+                          ? color
+                          : 'rgba(255,255,255,0.08)'
+                    }
+                    strokeWidth={isPlaying && hasHit ? 1.5 : isAccent ? 1.2 : 0.5}
                     style={{
                       cursor: 'pointer',
                       transition: 'fill 0.06s ease',
                       filter: isPlaying && hasHit
                         ? 'drop-shadow(0 0 6px rgba(226,168,50,0.5))'
-                        : hasHit
-                          ? `drop-shadow(0 0 2px ${color}44)`
-                          : undefined,
+                        : accentFilter,
+                      opacity: isGhost && !isPlaying ? 0.5 : 1,
                     }}
                     onClick={() => onSliceClick(step.beatIndex, step.sliceIndex, inst)}
                   />

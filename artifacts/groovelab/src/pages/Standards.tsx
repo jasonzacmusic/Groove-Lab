@@ -331,6 +331,11 @@ export default function Standards() {
   const [showMelody, setShowMelody] = useState(false);
   const [melodyEnabled, setMelodyEnabled] = useState(false);
   const [currentMelodyNoteIdx, setCurrentMelodyNoteIdx] = useState(-1);
+  const [countInEnabled, setCountInEnabled] = useState(true);
+  const [countInBeat, setCountInBeat] = useState(-1); // -1 = no count-in active, 0-3 = which click
+  const [mutePiano, setMutePiano] = useState(false);
+  const [muteBass, setMuteBass] = useState(false);
+  const [muteDrums, setMuteDrums] = useState(false);
 
   // Refs for instruments
   const pianoRef = useRef<Tone.Sampler | null>(null);
@@ -339,10 +344,19 @@ export default function Standards() {
   const hihatRef = useRef<Tone.NoiseSynth | null>(null);
   const kickRef = useRef<Tone.MembraneSynth | null>(null);
   const melodyRef = useRef<Tone.Synth | null>(null);
+  const clickRef = useRef<Tone.MembraneSynth | null>(null);
+  const pianoVolRef = useRef<Tone.Volume | null>(null);
+  const bassVolRef = useRef<Tone.Volume | null>(null);
+  const drumsVolRef = useRef<Tone.Volume | null>(null);
   const transportStartedRef = useRef(false);
   const isLoopingRef = useRef(false);
   const melodyEnabledRef = useRef(false);
   const chartRef = useRef<HTMLDivElement>(null);
+
+  // Apply mute changes in real-time without restarting playback
+  useEffect(() => { if (pianoVolRef.current) pianoVolRef.current.mute = mutePiano; }, [mutePiano]);
+  useEffect(() => { if (bassVolRef.current) bassVolRef.current.mute = muteBass; }, [muteBass]);
+  useEffect(() => { if (drumsVolRef.current) drumsVolRef.current.mute = muteDrums; }, [muteDrums]);
 
   // Keep melody ref in sync
   useEffect(() => { melodyEnabledRef.current = melodyEnabled; }, [melodyEnabled]);
@@ -477,14 +491,27 @@ export default function Standards() {
     rideRef.current?.dispose();
     hihatRef.current?.dispose();
     kickRef.current?.dispose();
+    clickRef.current?.dispose();
+    pianoVolRef.current?.dispose();
+    bassVolRef.current?.dispose();
+    drumsVolRef.current?.dispose();
 
     setSamplerLoading(true);
+
+    // ── Per-track Volume nodes (mute/solo bus, iReal Pro style) ──
+    // Each track group routes through its own Volume so we can mute live.
+    pianoVolRef.current = new Tone.Volume(0).toDestination();
+    pianoVolRef.current.mute = mutePiano;
+    bassVolRef.current = new Tone.Volume(0).toDestination();
+    bassVolRef.current.mute = muteBass;
+    drumsVolRef.current = new Tone.Volume(0).toDestination();
+    drumsVolRef.current.mute = muteDrums;
 
     // Salamander Grand Piano sampler (hosted by Tone.js project)
     // Uses multi-sampled real piano with velocity layers
     // Longer release for natural sustain, gentle reverb for jazz hall feel
     const baseUrl = 'https://tonejs.github.io/audio/salamander/';
-    const pianoReverb = new Tone.Reverb({ decay: 1.8, wet: 0.18 }).toDestination();
+    const pianoReverb = new Tone.Reverb({ decay: 1.8, wet: 0.18 }).connect(pianoVolRef.current);
     pianoRef.current = new Tone.Sampler({
       urls: {
         A1: 'A1.mp3', A2: 'A2.mp3', A3: 'A3.mp3', A4: 'A4.mp3', A5: 'A5.mp3',
@@ -502,42 +529,38 @@ export default function Standards() {
     }).connect(pianoReverb);
 
     // Upright jazz bass — warm, round, plucked acoustic character
-    // Uses triangle wave (warm fundamental) with gentle low-pass filter
-    // and a fast attack + medium decay to simulate finger plucking
     bassRef.current = new Tone.MonoSynth({
-      oscillator: { type: 'triangle' }, // warm, round — closest to upright bass
+      oscillator: { type: 'triangle' },
       filter: { type: 'lowpass', frequency: 400, Q: 1, rolloff: -12 },
       envelope: { attack: 0.005, decay: 0.6, sustain: 0.15, release: 0.4 },
       filterEnvelope: { attack: 0.005, decay: 0.2, sustain: 0.2, release: 0.3, baseFrequency: 120, octaves: 1.8 },
       volume: -4,
-    }).toDestination();
+    }).connect(bassVolRef.current);
 
-    // Jazz ride cymbal — white noise with long shimmer decay through a
-    // high-pass filter chain (avoids harsh MetalSynth FM artifacts).
-    // NoiseSynth triggerAttackRelease(duration, time, vel) — no pitch arg.
-    const rideHpf = new Tone.Filter({ type: 'highpass', frequency: 7000, Q: 0.6 }).toDestination();
+    // Jazz ride cymbal — white noise through high-pass filter
+    const rideHpf = new Tone.Filter({ type: 'highpass', frequency: 7000, Q: 0.6 }).connect(drumsVolRef.current);
     rideRef.current = new Tone.NoiseSynth({
       noise: { type: 'white' },
       envelope: { attack: 0.001, decay: 1.2, sustain: 0, release: 0.4 },
       volume: -22,
     }).connect(rideHpf);
 
-    // Jazz hihat / cross-stick — very short white-noise burst through tight HPF
-    const hihatHpf = new Tone.Filter({ type: 'highpass', frequency: 9000, Q: 1 }).toDestination();
+    // Jazz hihat / cross-stick
+    const hihatHpf = new Tone.Filter({ type: 'highpass', frequency: 9000, Q: 1 }).connect(drumsVolRef.current);
     hihatRef.current = new Tone.NoiseSynth({
       noise: { type: 'white' },
       envelope: { attack: 0.001, decay: 0.05, sustain: 0, release: 0.02 },
       volume: -28,
     }).connect(hihatHpf);
 
-    // Jazz kick - warm thump with MembraneSynth
+    // Jazz kick
     kickRef.current = new Tone.MembraneSynth({
       pitchDecay: 0.05,
       octaves: 4,
       oscillator: { type: 'sine' },
       envelope: { attack: 0.001, decay: 0.2, sustain: 0, release: 0.2 },
       volume: -14,
-    }).toDestination();
+    }).connect(drumsVolRef.current);
 
     // Melody synth — soft sine wave, distinct from piano comping
     melodyRef.current = new Tone.Synth({
@@ -546,9 +569,18 @@ export default function Standards() {
       volume: -6,
     }).toDestination();
 
+    // Count-in click — short, bright wood-block style tick (NOT muted with drums)
+    clickRef.current = new Tone.MembraneSynth({
+      pitchDecay: 0.008,
+      octaves: 2,
+      oscillator: { type: 'square' },
+      envelope: { attack: 0.001, decay: 0.05, sustain: 0, release: 0.05 },
+      volume: -8,
+    }).toDestination();
+
     // If sampler doesn't load in 5s, fall back to ready state anyway
     setTimeout(() => { setSamplerLoading(false); setSamplerReady(true); }, 5000);
-  }, []);
+  }, [mutePiano, muteBass, muteDrums]);
 
   // ── Dispose instruments ────────────────────────────────────────────────────────
   const disposeInstruments = useCallback(() => {
@@ -558,6 +590,10 @@ export default function Standards() {
     hihatRef.current?.dispose(); hihatRef.current = null;
     melodyRef.current?.dispose(); melodyRef.current = null;
     kickRef.current?.dispose(); kickRef.current = null;
+    clickRef.current?.dispose(); clickRef.current = null;
+    pianoVolRef.current?.dispose(); pianoVolRef.current = null;
+    bassVolRef.current?.dispose(); bassVolRef.current = null;
+    drumsVolRef.current?.dispose(); drumsVolRef.current = null;
   }, []);
 
   // ── Schedule one chorus of music ───────────────────────────────────────────────
@@ -765,8 +801,10 @@ export default function Standards() {
 
   // ── Playback ───────────────────────────────────────────────────────────────────
   const stopPlayback = useCallback(() => {
-    Tone.getTransport().stop();
-    Tone.getTransport().cancel();
+    const t = Tone.getTransport();
+    t.stop();
+    t.cancel();
+    t.loop = false; // reset loop flag so future plays start clean
     disposeInstruments();
     transportStartedRef.current = false;
     setIsPlaying(false);
@@ -774,6 +812,7 @@ export default function Standards() {
     setCurrentBarIdx(-1);
     setCurrentMelodyNoteIdx(-1);
     setChorusCount(1);
+    setCountInBeat(-1);
   }, [disposeInstruments]);
 
   const playChords = useCallback(async () => {
@@ -792,7 +831,28 @@ export default function Standards() {
       transport.swing = selectedGroove.swing / 100;
       transport.swingSubdivision = '8n';
 
-      const { totalBeats } = scheduleChorus(0, transposedChords, groove);
+      // ── Count-in: 4 bright clicks at beats 0..3 (high pitch on beat 1) ──
+      // The chorus starts at beat `countInBeats`. Loop range is set to skip count-in
+      // on subsequent iterations (iReal Pro behavior).
+      const countInBeats = countInEnabled ? 4 : 0;
+      if (countInEnabled) {
+        for (let c = 0; c < 4; c++) {
+          const isDownbeat = c === 0;
+          const cIdx = c;
+          transport.schedule((time) => {
+            if (clickRef.current) {
+              clickRef.current.triggerAttackRelease(isDownbeat ? 'C5' : 'G4', '32n', time, isDownbeat ? 0.9 : 0.6);
+            }
+            Tone.getDraw().schedule(() => setCountInBeat(cIdx), time);
+          }, `0:${c}:0`);
+        }
+        // Clear count-in indicator when chorus starts
+        transport.schedule((time) => {
+          Tone.getDraw().schedule(() => setCountInBeat(-1), time);
+        }, `0:${countInBeats}:0`);
+      }
+
+      const { totalBeats } = scheduleChorus(countInBeats, transposedChords, groove);
 
       // Schedule melody if enabled
       if (melodyEnabledRef.current && selectedStandard) {
@@ -826,44 +886,37 @@ export default function Standards() {
               Tone.getDraw().schedule(() => {
                 setCurrentMelodyNoteIdx(noteIdx);
               }, time);
-            }, `0:${note.beat}:0`);
+            }, `0:${countInBeats + note.beat}:0`);
           });
         }
       }
 
-      // Schedule end or loop
-      transport.schedule((time) => {
-        Tone.getDraw().schedule(() => {
-          if (isLoopingRef.current) {
-            // Stop, re-schedule, and restart
-            transport.stop();
-            transport.cancel();
+      // ── Gapless loop using Tone.Transport.loop ──
+      // loopStart = countInBeats (so count-in plays once, then loop skips it)
+      // loopEnd = countInBeats + totalBeats
+      // Transport will wrap position automatically — all events inside the
+      // loop range will replay sample-accurately, no setTimeout cascade.
+      if (isLoopingRef.current) {
+        transport.loop = true;
+        transport.loopStart = `0:${countInBeats}:0`;
+        transport.loopEnd = `0:${countInBeats + totalBeats}:0`;
+
+        // Bump chorus counter at each wrap (fires every loop iteration)
+        const chorusInterval = totalBeats * (60 / bpm);
+        transport.scheduleRepeat((time) => {
+          Tone.getDraw().schedule(() => {
             setChorusCount(prev => prev + 1);
-            const { totalBeats: newTotal } = scheduleChorus(0, transposedChords, groove);
-            transport.schedule((time2) => {
-              Tone.getDraw().schedule(() => {
-                if (isLoopingRef.current) {
-                  // Keep looping by retriggering play
-                  setIsPlaying(false);
-                  setTimeout(() => {
-                    // re-enter playChords would be complex, so just loop once more inline
-                    transport.stop();
-                    transport.cancel();
-                    scheduleChorus(0, transposedChords, groove);
-                    transport.start();
-                  }, 50);
-                  setIsPlaying(true);
-                } else {
-                  stopPlayback();
-                }
-              }, time2);
-            }, `0:${newTotal}:0`);
-            transport.start();
-          } else {
+          }, time);
+        }, chorusInterval, countInBeats * (60 / bpm) + chorusInterval);
+      } else {
+        // Single-pass: stop when chorus ends
+        transport.loop = false;
+        transport.scheduleOnce((time) => {
+          Tone.getDraw().schedule(() => {
             stopPlayback();
-          }
-        }, time);
-      }, `0:${totalBeats}:0`);
+          }, time);
+        }, `0:${countInBeats + totalBeats}:0`);
+      }
 
       setIsPlaying(true);
       setChorusCount(1);
@@ -874,7 +927,7 @@ export default function Standards() {
       stopPlayback();
       return;
     }
-  }, [isPlaying, stopPlayback, createInstruments, transposedChords, bpm, groove, selectedGroove, scheduleChorus]);
+  }, [isPlaying, stopPlayback, createInstruments, transposedChords, bpm, groove, selectedGroove, scheduleChorus, countInEnabled, selectedStandard, transposition]);
 
   // Cleanup on unmount
   useEffect(() => {
@@ -1190,10 +1243,74 @@ export default function Standards() {
                 {melodyEnabled ? 'Melody On' : 'Melody Off'}
               </Button>
 
-              {/* Chorus counter */}
+              {/* ── Count-in toggle ── */}
+              <Button
+                variant="ghost"
+                size="sm"
+                className={`h-8 px-2 text-xs ${
+                  countInEnabled
+                    ? 'text-amber-400 bg-amber-900/30 hover:bg-amber-900/50'
+                    : 'text-[#8a7a68] hover:text-[#e8d5b5] hover:bg-[#5a4a38]'
+                }`}
+                onClick={() => setCountInEnabled(prev => !prev)}
+                title="Play 4-beat count-in before song starts (skipped on loop)"
+              >
+                <span className="font-mono font-bold">1·2·3·4</span>
+              </Button>
+
+              {/* ── Per-track mixer (Piano / Bass / Drums) ── */}
+              <div className="w-px h-6 bg-[#5a4a38] hidden md:block" />
+              <div className="flex items-center gap-1">
+                <span className="text-[10px] text-[#8a7a68] font-mono mr-1">MIX</span>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className={`h-7 w-9 px-0 text-[10px] font-bold border ${
+                    mutePiano
+                      ? 'text-red-400 bg-red-900/30 border-red-700 hover:bg-red-900/50'
+                      : 'text-[#e8d5b5] bg-[#2a2018] border-[#5a4a38] hover:bg-[#5a4a38]'
+                  }`}
+                  onClick={() => setMutePiano(prev => !prev)}
+                  title={mutePiano ? 'Unmute piano' : 'Mute piano'}
+                >
+                  {mutePiano ? 'P̶' : 'P'}
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className={`h-7 w-9 px-0 text-[10px] font-bold border ${
+                    muteBass
+                      ? 'text-red-400 bg-red-900/30 border-red-700 hover:bg-red-900/50'
+                      : 'text-[#e8d5b5] bg-[#2a2018] border-[#5a4a38] hover:bg-[#5a4a38]'
+                  }`}
+                  onClick={() => setMuteBass(prev => !prev)}
+                  title={muteBass ? 'Unmute bass' : 'Mute bass (great for bassists practicing)'}
+                >
+                  {muteBass ? 'B̶' : 'B'}
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className={`h-7 w-9 px-0 text-[10px] font-bold border ${
+                    muteDrums
+                      ? 'text-red-400 bg-red-900/30 border-red-700 hover:bg-red-900/50'
+                      : 'text-[#e8d5b5] bg-[#2a2018] border-[#5a4a38] hover:bg-[#5a4a38]'
+                  }`}
+                  onClick={() => setMuteDrums(prev => !prev)}
+                  title={muteDrums ? 'Unmute drums' : 'Mute drums'}
+                >
+                  {muteDrums ? 'D̶' : 'D'}
+                </Button>
+              </div>
+
+              {/* Chorus counter / count-in indicator */}
               {isPlaying && (
                 <span className="text-[11px] text-[#8a7a68] font-mono ml-auto">
-                  Chorus {chorusCount} / {isLooping ? '\u221e' : '1'}
+                  {countInBeat >= 0 ? (
+                    <span className="text-amber-400 font-bold">Count-in: {countInBeat + 1}</span>
+                  ) : (
+                    <>Chorus {chorusCount} / {isLooping ? '\u221e' : '1'}</>
+                  )}
                 </span>
               )}
             </div>
