@@ -232,7 +232,28 @@ export default function Chords() {
             const displayKey = transAmt !== 0 ? transposeChordSymbol(origKey, transAmt) : origKey;
             const genre = prog.genre?.name ?? 'jazz';
             const progName = prog.name;
-            const curatedVideos = CHORD_PROGRESSION_VIDEOS[prog.progressionType ?? ''] || [];
+            // DB stores progressionType as snake_case codes (jazz_ii_v_i, blues_12bar, …);
+            // CHORD_PROGRESSION_VIDEOS is keyed by display strings. Translate first.
+            const PROGRESSION_TYPE_TO_VIDEO_KEY: Record<string, string> = {
+              jazz_ii_v_i: 'ii-V-I',
+              ii_v_i: 'ii-V-I',
+              blues_12bar: 'Blues Progression',
+              blues: 'Blues Progression',
+              rhythm_changes: 'Rhythm Changes',
+              modal: 'Modal',
+              i_vi_ii_v: 'I-vi-ii-V',
+              pop: 'I-vi-ii-V',
+              funk: 'Funk',
+              reggae: 'Reggae',
+              latin: 'Latin',
+              neo_soul: 'Neo Soul',
+              afrobeat: 'Afrobeat',
+              gospel: 'Gospel',
+              rnb: 'R&B',
+            };
+            const ptype = (prog.progressionType ?? '').toLowerCase();
+            const videoKey = PROGRESSION_TYPE_TO_VIDEO_KEY[ptype] ?? prog.progressionType ?? '';
+            const curatedVideos = CHORD_PROGRESSION_VIDEOS[videoKey] || [];
             const genreVideos = GENRE_VIDEO_LIBRARY[genre.charAt(0).toUpperCase() + genre.slice(1)] || GENRE_VIDEO_LIBRARY[genre] || [];
 
             return (

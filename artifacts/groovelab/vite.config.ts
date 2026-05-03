@@ -2,10 +2,13 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
+import { apiHandlersPlugin } from "./vite-api-plugin";
+
+const apiDir = path.resolve(import.meta.dirname, "..", "..", "api");
 
 export default defineConfig({
   base: process.env.BASE_PATH ?? "/",
-  plugins: [react(), tailwindcss()],
+  plugins: [react(), tailwindcss(), apiHandlersPlugin(apiDir)],
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "src"),

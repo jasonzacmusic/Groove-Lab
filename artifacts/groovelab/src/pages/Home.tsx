@@ -162,7 +162,7 @@ export default function Home() {
           Welcome to <span className="text-primary">The Groove Kit</span>
         </h1>
         <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-          Music education platform with drum loops, backing tracks, chord progressions, and practice tools.
+          Curated YouTube backing tracks by genre and key, plus chord progressions and practice tools.
         </p>
       </section>
 
@@ -223,24 +223,24 @@ export default function Home() {
             </CardContent>
           </Card>
         </Link>
-        <Link href="/explore">
+        <Link href="/chords">
           <Card className="hover:border-primary/50 transition-all cursor-pointer">
             <CardContent className="p-6 flex items-center gap-4">
-              <Compass className="w-10 h-10 text-primary flex-shrink-0" />
+              <Piano className="w-10 h-10 text-primary flex-shrink-0" />
               <div>
-                <h3 className="font-serif text-lg">Explore Loops</h3>
-                <p className="text-sm text-muted-foreground">Browse by genre, BPM, time signature</p>
+                <h3 className="font-serif text-lg">Chord Lab</h3>
+                <p className="text-sm text-muted-foreground">Progressions with curated YouTube backing videos</p>
               </div>
             </CardContent>
           </Card>
         </Link>
-        <Link href="/creators">
+        <Link href="/standards">
           <Card className="hover:border-primary/50 transition-all cursor-pointer">
             <CardContent className="p-6 flex items-center gap-4">
-              <Music className="w-10 h-10 text-primary flex-shrink-0" />
+              <BookOpen className="w-10 h-10 text-primary flex-shrink-0" />
               <div>
-                <h3 className="font-serif text-lg">Creators</h3>
-                <p className="text-sm text-muted-foreground">Discover drum loop creators</p>
+                <h3 className="font-serif text-lg">Jazz Standards</h3>
+                <p className="text-sm text-muted-foreground">Real Book charts with backing tracks</p>
               </div>
             </CardContent>
           </Card>
