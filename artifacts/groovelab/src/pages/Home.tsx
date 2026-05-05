@@ -5,12 +5,12 @@ import { Input } from '@/components/ui/input';
 import {
   Compass, Music, Timer, Cpu, Piano, BookOpen,
   GraduationCap, Radio, Star, Search as SearchIcon, Headphones, Youtube,
-  SlidersHorizontal,
+  SlidersHorizontal, Drum, Layers,
 } from 'lucide-react';
 import { YouTubeInline } from '@/components/YouTubeInline';
 import {
   GENRES, TEMPO_BUCKETS, GENRE_VIDEO_LIBRARY_BY_TEMPO,
-  tempoLabel, getGenreByTempo, type TempoBucket,
+  tempoLabel, type GenreVideo, type TempoBucket,
 } from '@/data/genre-videos';
 import { KEY_BACKING_TRACKS } from '@/data/chord-videos';
 
@@ -30,50 +30,107 @@ const TOOLS = [
 
 // KEY_TRACKS built above from KEY_BACKING_TRACKS
 
-function useGenreTotals() {
+type LoopMode = 'drums' | 'harmony';
+type VideoWithMeta = GenreVideo & { genre: string; bucket: TempoBucket };
+
+const DRUM_KEYWORDS = /\b(drum|drums|drummer|beat|beats|percussion|tabla|cajon|djembe|conga|bongo|metronome|rhythm)\b|drum loop|groove loop/i;
+const DRUMLESS_KEYWORDS = /\b(no drums?|without drums?|drumless)\b/i;
+
+function isDrumLoop(video: GenreVideo): boolean {
+  const haystack = `${video.title} ${video.channel}`;
+  return DRUM_KEYWORDS.test(haystack) && !DRUMLESS_KEYWORDS.test(haystack);
+}
+
+function useLoopCatalog() {
   return useMemo(() => {
-    const totals: Record<string, number> = {};
-    let all = 0;
+    const allVideos: VideoWithMeta[] = [];
     for (const g of GENRES) {
-      const n = TEMPO_BUCKETS.reduce(
-        (s, b) => s + (GENRE_VIDEO_LIBRARY_BY_TEMPO[g]?.[b]?.length || 0),
-        0,
-      );
-      totals[g] = n;
-      all += n;
+      for (const b of TEMPO_BUCKETS) {
+        for (const video of GENRE_VIDEO_LIBRARY_BY_TEMPO[g]?.[b] || []) {
+          allVideos.push({ ...video, genre: g, bucket: b });
+        }
+      }
     }
-    return { totals, all };
+
+    const seen = new Set<string>();
+    const uniqueVideos = allVideos.filter((video) => {
+      if (seen.has(video.id)) return false;
+      seen.add(video.id);
+      return true;
+    });
+
+    const drums = uniqueVideos.filter(isDrumLoop);
+    const harmony = uniqueVideos.filter((video) => !isDrumLoop(video));
+
+    const totalsByMode = { drums: drums.length, harmony: harmony.length };
+    const totalsByGenre: Record<LoopMode, Record<string, number>> = { drums: {}, harmony: {} };
+    const totalsByBucket: Record<LoopMode, Record<TempoBucket, number>> = {
+      drums: { slow: 0, medium: 0, fast: 0, veryFast: 0 },
+      harmony: { slow: 0, medium: 0, fast: 0, veryFast: 0 },
+    };
+
+    for (const mode of ['drums', 'harmony'] as const) {
+      const list = mode === 'drums' ? drums : harmony;
+      for (const video of list) {
+        totalsByGenre[mode][video.genre] = (totalsByGenre[mode][video.genre] || 0) + 1;
+        totalsByBucket[mode][video.bucket] += 1;
+      }
+    }
+
+    return { drums, harmony, totalsByMode, totalsByGenre, totalsByBucket };
   }, []);
 }
 
 // ── Backing-track browser (genre pills + tempo tabs + search) ────────────
 function BackingTrackBrowser() {
-  const [genre, setGenre] = useState<string>(GENRES[0]);
+  const [mode, setMode] = useState<LoopMode>('drums');
+  const [genre, setGenre] = useState<string>('All');
   const [bucket, setBucket] = useState<TempoBucket>('medium');
   const [query, setQuery] = useState('');
 
-  const { totals: genreTotals } = useGenreTotals();
+  const catalog = useLoopCatalog();
+  const activeList = mode === 'drums' ? catalog.drums : catalog.harmony;
+  const modeLabel = mode === 'drums' ? 'drum/percussion loops' : 'harmony/chord-progression loops';
+
+  const availableGenres = useMemo(() => {
+    const list = GENRES.filter((g) => (catalog.totalsByGenre[mode][g] || 0) > 0);
+    return ['All', ...list];
+  }, [catalog.totalsByGenre, mode]);
 
   const counts = useMemo(() => {
-    return TEMPO_BUCKETS.reduce((acc, b) => {
-      acc[b] = getGenreByTempo(genre, b).length;
-      return acc;
-    }, {} as Record<TempoBucket, number>);
-  }, [genre]);
+    const out: Record<TempoBucket, number> = { slow: 0, medium: 0, fast: 0, veryFast: 0 };
+    for (const video of activeList) {
+      if (genre !== 'All' && video.genre !== genre) continue;
+      out[video.bucket] += 1;
+    }
+    return out;
+  }, [activeList, genre]);
 
   const videos = useMemo(() => {
-    const list = getGenreByTempo(genre, bucket);
     const q = query.trim().toLowerCase();
-    const filtered = q
-      ? list.filter(v =>
+    const filtered = activeList
+      .filter((v) => genre === 'All' || v.genre === genre)
+      .filter((v) => v.bucket === bucket)
+      .filter((v) =>
+        q
+          ? v.genre.toLowerCase().includes(q) ||
           v.title.toLowerCase().includes(q) ||
-          (v.channel || '').toLowerCase().includes(q),
-        )
-      : list;
+          (v.channel || '').toLowerCase().includes(q)
+          : true,
+      );
     return filtered.slice(0, 12);
-  }, [genre, bucket, query]);
+  }, [activeList, genre, bucket, query]);
 
-  const totalForGenre = genreTotals[genre] || 0;
+  const totalForSelection = useMemo(() => {
+    return activeList.filter((v) => genre === 'All' || v.genre === genre).length;
+  }, [activeList, genre]);
+
+  const handleModeChange = (nextMode: LoopMode) => {
+    setMode(nextMode);
+    setGenre('All');
+    setBucket('medium');
+    setQuery('');
+  };
 
   return (
     <section className="space-y-4">
@@ -83,7 +140,7 @@ function BackingTrackBrowser() {
             <Star className="w-5 h-5 text-primary" /> Find YouTube Loops
           </h2>
           <p className="text-sm text-muted-foreground mt-1 max-w-2xl">
-            Browse curated YouTube backing tracks by genre and tempo. These are video loops only; audio files live in the separate Audio Loops section.
+            Choose rhythm-only drum/percussion loops or harmony loops for chord-progressions, vamps, blues, jazz, pop, and more.
           </p>
         </div>
         <Link href="/loop-library">
@@ -94,9 +151,57 @@ function BackingTrackBrowser() {
         </Link>
       </div>
 
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        {[
+          {
+            id: 'drums' as const,
+            title: 'Only Drums & Percussion',
+            description: 'Grooves, drum loops, beats, tabla, percussion, metronome-style rhythm tracks.',
+            icon: Drum,
+            count: catalog.totalsByMode.drums,
+          },
+          {
+            id: 'harmony' as const,
+            title: 'Harmony & Chord Progressions',
+            description: 'Blues, jazz, pop, R&B, rock and key-centered backing tracks for harmonic practice.',
+            icon: Layers,
+            count: catalog.totalsByMode.harmony,
+          },
+        ].map((item) => {
+          const active = mode === item.id;
+          const Icon = item.icon;
+          return (
+            <button
+              key={item.id}
+              onClick={() => handleModeChange(item.id)}
+              className={`rounded-md border p-4 text-left transition-colors
+                ${active
+                  ? 'border-primary bg-primary/10 text-foreground'
+                  : 'border-border bg-muted/15 text-foreground/80 hover:border-primary/50 hover:bg-muted/30'}`}
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex gap-3">
+                  <div className={`mt-0.5 flex h-10 w-10 items-center justify-center rounded-md ${active ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'}`}>
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <span className="block text-base font-semibold leading-tight">{item.title}</span>
+                    <span className="mt-1 block text-xs text-muted-foreground">{item.description}</span>
+                  </div>
+                </div>
+                <span className={`shrink-0 rounded-md px-2 py-1 text-xs font-medium ${active ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'}`}>
+                  {item.count}
+                </span>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-2">
-        {GENRES.map((g) => {
+        {availableGenres.map((g) => {
           const active = genre === g;
+          const count = g === 'All' ? activeList.length : catalog.totalsByGenre[mode][g] || 0;
           return (
             <button
               key={g}
@@ -108,7 +213,7 @@ function BackingTrackBrowser() {
             >
               <span className="block text-sm font-medium leading-tight">{g}</span>
               <span className={`block text-[11px] mt-1 ${active ? 'opacity-80' : 'text-muted-foreground'}`}>
-                {genreTotals[g]} YouTube loops
+                {count} {mode === 'drums' ? 'rhythm' : 'harmony'} loops
               </span>
             </button>
           );
@@ -139,14 +244,14 @@ function BackingTrackBrowser() {
           <Input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder={`Search ${genre} YouTube loops`}
+            placeholder={`Search ${modeLabel}`}
             className="h-9 pl-8 text-xs"
           />
         </div>
       </div>
 
       <p className="text-[11px] text-muted-foreground mb-3">
-        Showing {videos.length} of {totalForGenre} {genre} tracks{query ? ` matching “${query}”` : ''}.
+        Showing {videos.length} of {totalForSelection} {genre === 'All' ? modeLabel : `${genre} ${modeLabel}`}{query ? ` matching “${query}”` : ''}.
       </p>
 
       {videos.length > 0 ? (
@@ -172,7 +277,7 @@ function BackingTrackBrowser() {
 }
 
 export default function Home() {
-  const { all: youtubeLoopCount } = useGenreTotals();
+  const catalog = useLoopCatalog();
 
   return (
     <div className="p-4 md:p-8 space-y-8 max-w-7xl mx-auto">
@@ -185,20 +290,20 @@ export default function Home() {
               YouTube loop finder
             </div>
             <h1 className="font-serif text-4xl md:text-5xl mb-3">
-              Find a YouTube loop and start practicing.
+              Find the right YouTube loop and start practicing.
             </h1>
             <p className="text-muted-foreground text-lg max-w-2xl">
-              The home page is for curated YouTube backing tracks: genre, tempo, key, chords, standards, and play-alongs. Native audio files stay in Audio Loops.
+              Start with rhythm-only drum and percussion loops, or jump into harmonic backing tracks for chord-progressions, blues, jazz, pop, and standards. Native audio files stay in Audio Loops.
             </p>
           </div>
           <div className="grid grid-cols-3 gap-2 lg:w-[420px]">
             <div className="rounded-md border border-border bg-muted/20 p-3">
-              <p className="text-2xl font-semibold">{youtubeLoopCount.toLocaleString()}</p>
-              <p className="text-[11px] text-muted-foreground">Genre loops</p>
+              <p className="text-2xl font-semibold">{catalog.totalsByMode.drums.toLocaleString()}</p>
+              <p className="text-[11px] text-muted-foreground">Drum loops</p>
             </div>
             <div className="rounded-md border border-border bg-muted/20 p-3">
-              <p className="text-2xl font-semibold">{GENRES.length}</p>
-              <p className="text-[11px] text-muted-foreground">Genres</p>
+              <p className="text-2xl font-semibold">{catalog.totalsByMode.harmony.toLocaleString()}</p>
+              <p className="text-[11px] text-muted-foreground">Harmony loops</p>
             </div>
             <div className="rounded-md border border-border bg-muted/20 p-3">
               <p className="text-2xl font-semibold">{KEY_TRACKS.length}</p>
