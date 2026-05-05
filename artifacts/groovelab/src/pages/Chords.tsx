@@ -58,6 +58,9 @@ const KEY_TRACKS = Object.entries(KEY_BACKING_TRACKS)
   .filter(([, videos]) => videos.length > 0)
   .map(([key, videos]) => ({ key, video: videos[0] }));
 
+const INITIAL_VISIBLE_COUNT = 96;
+const LOAD_MORE_COUNT = 96;
+
 function isDrumLoop(video: GenreVideo): boolean {
   const haystack = `${video.title} ${video.channel}`;
   return DRUM_KEYWORDS.test(haystack) && !DRUMLESS_KEYWORDS.test(haystack);
@@ -164,7 +167,7 @@ export default function Chords() {
   const [family, setFamily] = useState('All');
   const [bucket, setBucket] = useState<TempoBucket | 'All'>('All');
   const [query, setQuery] = useState('');
-  const [visibleCount, setVisibleCount] = useState(24);
+  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT);
 
   const genresWithCounts = useMemo(
     () => GENRES.filter((g) => (stats.byGenre[g] || 0) > 0),
@@ -194,7 +197,7 @@ export default function Chords() {
     setFamily('All');
     setBucket('All');
     setQuery('');
-    setVisibleCount(24);
+    setVisibleCount(INITIAL_VISIBLE_COUNT);
   };
 
   return (
@@ -227,8 +230,6 @@ export default function Chords() {
         </div>
       </section>
 
-      <FeaturedProgressions />
-
       <section className="rounded-md border border-border bg-card/60 p-4 md:p-5 space-y-4">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           <div>
@@ -253,13 +254,13 @@ export default function Chords() {
               value={query}
               onChange={(e) => {
                 setQuery(e.target.value);
-                setVisibleCount(24);
+                setVisibleCount(INITIAL_VISIBLE_COUNT);
               }}
               placeholder="Search blues, ii-V-I, neo soul, channel name..."
               className="pl-9"
             />
           </div>
-          <Select value={family} onValueChange={(v) => { setFamily(v); setVisibleCount(24); }}>
+          <Select value={family} onValueChange={(v) => { setFamily(v); setVisibleCount(INITIAL_VISIBLE_COUNT); }}>
             <SelectTrigger>
               <SelectValue placeholder="Progression family" />
             </SelectTrigger>
@@ -271,7 +272,7 @@ export default function Chords() {
               ))}
             </SelectContent>
           </Select>
-          <Select value={bucket} onValueChange={(v) => { setBucket(v as TempoBucket | 'All'); setVisibleCount(24); }}>
+          <Select value={bucket} onValueChange={(v) => { setBucket(v as TempoBucket | 'All'); setVisibleCount(INITIAL_VISIBLE_COUNT); }}>
             <SelectTrigger>
               <SelectValue placeholder="Tempo" />
             </SelectTrigger>
@@ -287,7 +288,7 @@ export default function Chords() {
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-2">
           <button
             type="button"
-            onClick={() => { setGenre('All'); setVisibleCount(24); }}
+            onClick={() => { setGenre('All'); setVisibleCount(INITIAL_VISIBLE_COUNT); }}
             className={`min-h-14 rounded-md border px-3 py-2 text-left transition-colors ${genre === 'All' ? 'border-primary bg-primary text-primary-foreground' : 'border-border bg-muted/20 hover:bg-muted/50'}`}
           >
             <span className="block text-sm font-medium">All</span>
@@ -297,7 +298,7 @@ export default function Chords() {
             <button
               type="button"
               key={g}
-              onClick={() => { setGenre(g); setVisibleCount(24); }}
+              onClick={() => { setGenre(g); setVisibleCount(INITIAL_VISIBLE_COUNT); }}
               className={`min-h-14 rounded-md border px-3 py-2 text-left transition-colors ${genre === g ? 'border-primary bg-primary text-primary-foreground' : 'border-border bg-muted/20 hover:bg-muted/50'}`}
             >
               <span className="block text-sm font-medium">{g}</span>
@@ -312,11 +313,25 @@ export default function Chords() {
           </div>
         )}
 
-        <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-          <Badge variant="secondary">{filteredVideos.length.toLocaleString()} matching loops</Badge>
+        <div className="flex flex-col gap-3 rounded-md border border-border bg-background/40 p-3 md:flex-row md:items-center md:justify-between">
+          <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+          <Badge variant="secondary">
+            Showing {Math.min(visibleVideos.length, filteredVideos.length).toLocaleString()} of {filteredVideos.length.toLocaleString()} matching loops
+          </Badge>
           {genre !== 'All' && <Badge variant="outline">{genre}</Badge>}
           {family !== 'All' && <Badge variant="outline">{family}</Badge>}
           {bucket !== 'All' && <Badge variant="outline">{tempoLabel(bucket)}</Badge>}
+          </div>
+          {visibleCount < filteredVideos.length && (
+            <div className="flex flex-wrap gap-2">
+              <Button variant="outline" size="sm" onClick={() => setVisibleCount((n) => n + LOAD_MORE_COUNT)}>
+                Show {Math.min(LOAD_MORE_COUNT, filteredVideos.length - visibleCount)} more
+              </Button>
+              <Button size="sm" onClick={() => setVisibleCount(filteredVideos.length)}>
+                Show all {filteredVideos.length.toLocaleString()}
+              </Button>
+            </div>
+          )}
         </div>
 
         {visibleVideos.length > 0 ? (
@@ -337,9 +352,12 @@ export default function Chords() {
               ))}
             </div>
             {visibleCount < filteredVideos.length && (
-              <div className="flex justify-center pt-2">
-                <Button onClick={() => setVisibleCount((n) => n + 24)}>
-                  Load 24 more
+              <div className="flex flex-col items-center justify-center gap-2 rounded-md border border-border bg-muted/15 p-4 text-center">
+                <p className="text-sm text-muted-foreground">
+                  Showing {visibleVideos.length.toLocaleString()} of {filteredVideos.length.toLocaleString()} matching harmony loops.
+                </p>
+                <Button onClick={() => setVisibleCount((n) => n + LOAD_MORE_COUNT)}>
+                  Load {Math.min(LOAD_MORE_COUNT, filteredVideos.length - visibleCount)} more
                 </Button>
               </div>
             )}
@@ -352,6 +370,8 @@ export default function Chords() {
           </div>
         )}
       </section>
+
+      <FeaturedProgressions />
 
       <section className="space-y-3 pb-8">
         <div>
