@@ -3,8 +3,9 @@ import { Link } from 'wouter';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import {
-  Compass, Play, Music, Timer, Cpu, Piano, BookOpen,
-  GraduationCap, Radio, Star, Search as SearchIcon,
+  Compass, Music, Timer, Cpu, Piano, BookOpen,
+  GraduationCap, Radio, Star, Search as SearchIcon, Headphones, Youtube,
+  SlidersHorizontal,
 } from 'lucide-react';
 import { YouTubeInline } from '@/components/YouTubeInline';
 import {
@@ -29,23 +30,29 @@ const TOOLS = [
 
 // KEY_TRACKS built above from KEY_BACKING_TRACKS
 
+function useGenreTotals() {
+  return useMemo(() => {
+    const totals: Record<string, number> = {};
+    let all = 0;
+    for (const g of GENRES) {
+      const n = TEMPO_BUCKETS.reduce(
+        (s, b) => s + (GENRE_VIDEO_LIBRARY_BY_TEMPO[g]?.[b]?.length || 0),
+        0,
+      );
+      totals[g] = n;
+      all += n;
+    }
+    return { totals, all };
+  }, []);
+}
+
 // ── Backing-track browser (genre pills + tempo tabs + search) ────────────
 function BackingTrackBrowser() {
   const [genre, setGenre] = useState<string>(GENRES[0]);
   const [bucket, setBucket] = useState<TempoBucket>('medium');
   const [query, setQuery] = useState('');
 
-  // Per-genre totals — shown in the pill so the user knows how rich each genre is.
-  const genreTotals = useMemo(() => {
-    const out: Record<string, number> = {};
-    for (const g of GENRES) {
-      out[g] = TEMPO_BUCKETS.reduce(
-        (s, b) => s + (GENRE_VIDEO_LIBRARY_BY_TEMPO[g]?.[b]?.length || 0),
-        0,
-      );
-    }
-    return out;
-  }, []);
+  const { totals: genreTotals } = useGenreTotals();
 
   const counts = useMemo(() => {
     return TEMPO_BUCKETS.reduce((acc, b) => {
@@ -69,35 +76,46 @@ function BackingTrackBrowser() {
   const totalForGenre = genreTotals[genre] || 0;
 
   return (
-    <section>
-      <h2 className="font-serif text-2xl mb-2 flex items-center gap-2">
-        <Star className="w-5 h-5 text-primary" /> Backing Tracks — by Genre & Tempo
-      </h2>
-      <p className="text-sm text-muted-foreground mb-4">
-        Browse {GENRES.length} genres of curated YouTube backing tracks. Pick a vibe, pick a tempo, hit play. Only one plays at a time.
-      </p>
+    <section className="space-y-4">
+      <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+        <div>
+          <h2 className="font-serif text-2xl md:text-3xl flex items-center gap-2">
+            <Star className="w-5 h-5 text-primary" /> Find YouTube Loops
+          </h2>
+          <p className="text-sm text-muted-foreground mt-1 max-w-2xl">
+            Browse curated YouTube backing tracks by genre and tempo. These are video loops only; audio files live in the separate Audio Loops section.
+          </p>
+        </div>
+        <Link href="/loop-library">
+          <button className="inline-flex h-9 items-center gap-2 rounded-md border border-border bg-muted/30 px-3 text-xs font-medium text-muted-foreground hover:border-primary/50 hover:text-foreground">
+            <Headphones className="h-4 w-4" />
+            Audio Loops
+          </button>
+        </Link>
+      </div>
 
-      {/* Genre pills (always visible, easier than a dropdown) */}
-      <div className="flex flex-wrap gap-2 mb-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-2">
         {GENRES.map((g) => {
           const active = genre === g;
           return (
             <button
               key={g}
               onClick={() => setGenre(g)}
-              className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors
+              className={`min-h-16 rounded-md border px-3 py-2 text-left transition-colors
                 ${active
                   ? 'bg-primary text-primary-foreground border-primary'
-                  : 'bg-muted/30 text-foreground/80 border-border hover:bg-muted/60 hover:border-primary/40'}`}
+                  : 'bg-muted/20 text-foreground/80 border-border hover:bg-muted/60 hover:border-primary/40'}`}
             >
-              {g} <span className={`ml-1 ${active ? 'opacity-80' : 'opacity-50'}`}>· {genreTotals[g]}</span>
+              <span className="block text-sm font-medium leading-tight">{g}</span>
+              <span className={`block text-[11px] mt-1 ${active ? 'opacity-80' : 'text-muted-foreground'}`}>
+                {genreTotals[g]} YouTube loops
+              </span>
             </button>
           );
         })}
       </div>
 
-      {/* Tempo tabs + search */}
-      <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3">
         <div className="flex flex-wrap gap-1.5">
           {TEMPO_BUCKETS.map((b) => {
             const n = counts[b];
@@ -107,7 +125,7 @@ function BackingTrackBrowser() {
                 key={b}
                 onClick={() => setBucket(b)}
                 disabled={n === 0}
-                className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors
+                className={`inline-flex h-9 items-center rounded-md px-3 text-xs font-medium transition-colors
                   ${active ? 'bg-primary text-primary-foreground' : 'bg-muted/50 text-muted-foreground hover:bg-muted'}
                   ${n === 0 ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'}`}
               >
@@ -121,7 +139,7 @@ function BackingTrackBrowser() {
           <Input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder={`Search in ${genre}…`}
+            placeholder={`Search ${genre} YouTube loops`}
             className="h-9 pl-8 text-xs"
           />
         </div>
@@ -154,35 +172,39 @@ function BackingTrackBrowser() {
 }
 
 export default function Home() {
+  const { all: youtubeLoopCount } = useGenreTotals();
+
   return (
     <div className="p-4 md:p-8 space-y-8 max-w-7xl mx-auto">
       {/* Hero */}
-      <section className="text-center py-6 md:py-10">
-        <h1 className="font-serif text-4xl md:text-5xl mb-3">
-          Welcome to <span className="text-primary">The Groove Kit</span>
-        </h1>
-        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-          Curated YouTube backing tracks by genre and key, plus chord progressions and practice tools.
-        </p>
-      </section>
-
-      {/* Quick Tools */}
-      <section>
-        <h2 className="font-serif text-2xl mb-4 flex items-center gap-2">
-          <Compass className="w-5 h-5 text-primary" /> Practice Tools
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-          {TOOLS.map((tool) => (
-            <Link key={tool.path} href={tool.path}>
-              <Card className="hover:border-primary/50 transition-all cursor-pointer h-full group">
-                <CardContent className="p-4 text-center">
-                  <tool.icon className={`w-8 h-8 mx-auto mb-2 ${tool.color} group-hover:scale-110 transition-transform`} />
-                  <h3 className="font-serif font-medium text-sm">{tool.name}</h3>
-                  <p className="text-[10px] text-muted-foreground mt-1">{tool.desc}</p>
-                </CardContent>
-              </Card>
-            </Link>
-          ))}
+      <section className="py-4 md:py-8">
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 rounded-md border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-medium text-primary mb-4">
+              <Youtube className="h-4 w-4" />
+              YouTube loop finder
+            </div>
+            <h1 className="font-serif text-4xl md:text-5xl mb-3">
+              Find a YouTube loop and start practicing.
+            </h1>
+            <p className="text-muted-foreground text-lg max-w-2xl">
+              The home page is for curated YouTube backing tracks: genre, tempo, key, chords, standards, and play-alongs. Native audio files stay in Audio Loops.
+            </p>
+          </div>
+          <div className="grid grid-cols-3 gap-2 lg:w-[420px]">
+            <div className="rounded-md border border-border bg-muted/20 p-3">
+              <p className="text-2xl font-semibold">{youtubeLoopCount.toLocaleString()}</p>
+              <p className="text-[11px] text-muted-foreground">Genre loops</p>
+            </div>
+            <div className="rounded-md border border-border bg-muted/20 p-3">
+              <p className="text-2xl font-semibold">{GENRES.length}</p>
+              <p className="text-[11px] text-muted-foreground">Genres</p>
+            </div>
+            <div className="rounded-md border border-border bg-muted/20 p-3">
+              <p className="text-2xl font-semibold">{KEY_TRACKS.length}</p>
+              <p className="text-[11px] text-muted-foreground">Keys</p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -209,8 +231,39 @@ export default function Home() {
         </section>
       )}
 
+      {/* Tools stay secondary to the YouTube finder. */}
+      <section>
+        <h2 className="font-serif text-2xl mb-4 flex items-center gap-2">
+          <SlidersHorizontal className="w-5 h-5 text-primary" /> Practice Tools
+        </h2>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+          {TOOLS.map((tool) => (
+            <Link key={tool.path} href={tool.path}>
+              <Card className="hover:border-primary/50 transition-all cursor-pointer h-full group">
+                <CardContent className="p-4 text-center">
+                  <tool.icon className={`w-8 h-8 mx-auto mb-2 ${tool.color} group-hover:scale-110 transition-transform`} />
+                  <h3 className="font-serif font-medium text-sm">{tool.name}</h3>
+                  <p className="text-[10px] text-muted-foreground mt-1">{tool.desc}</p>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </section>
+
       {/* Quick Links */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-4 pb-8">
+        <Link href="/loop-library">
+          <Card className="hover:border-primary/50 transition-all cursor-pointer">
+            <CardContent className="p-6 flex items-center gap-4">
+              <Headphones className="w-10 h-10 text-primary flex-shrink-0" />
+              <div>
+                <h3 className="font-serif text-lg">Audio Loops</h3>
+                <p className="text-sm text-muted-foreground">Separate native audio-file library</p>
+              </div>
+            </CardContent>
+          </Card>
+        </Link>
         <Link href="/live">
           <Card className="hover:border-primary/50 transition-all cursor-pointer">
             <CardContent className="p-6 flex items-center gap-4">
@@ -218,17 +271,6 @@ export default function Home() {
               <div>
                 <h3 className="font-serif text-lg">Live Sessions</h3>
                 <p className="text-sm text-muted-foreground">Host or join a synchronized practice room</p>
-              </div>
-            </CardContent>
-          </Card>
-        </Link>
-        <Link href="/chords">
-          <Card className="hover:border-primary/50 transition-all cursor-pointer">
-            <CardContent className="p-6 flex items-center gap-4">
-              <Piano className="w-10 h-10 text-primary flex-shrink-0" />
-              <div>
-                <h3 className="font-serif text-lg">Chord Lab</h3>
-                <p className="text-sm text-muted-foreground">Progressions with curated YouTube backing videos</p>
               </div>
             </CardContent>
           </Card>

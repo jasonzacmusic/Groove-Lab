@@ -18,8 +18,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 const NAV_ITEMS = [
-  { path: '/', label: 'Explore', icon: Compass },
-  { path: '/loop-library', label: 'Loop Library', icon: Headphones },
+  { path: '/', label: 'YouTube Loops', icon: Compass },
+  { path: '/loop-library', label: 'Audio Loops', icon: Headphones },
   { path: '/song-builder', label: 'Song Builder', icon: ListMusic },
   { path: '/sequencer', label: 'Sequencer', icon: Music },
   { path: '/metronome', label: 'Metronome', icon: Timer },
@@ -74,7 +74,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
           <div className="flex-1 max-w-xl mx-4 hidden md:block">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-              <Input placeholder="Search loops, creators, standards..." className="w-full pl-9 bg-muted/50 border-none focus-visible:ring-1 focus-visible:ring-primary" />
+              <Input placeholder="Search YouTube loops, standards, chords..." className="w-full pl-9 bg-muted/50 border-none focus-visible:ring-1 focus-visible:ring-primary" />
             </div>
           </div>
 
@@ -170,7 +170,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
               <div className="w-10 h-10 bg-muted rounded flex items-center justify-center">
                 <Music className="w-5 h-5 text-muted-foreground" />
               </div>
-              <p className="text-sm text-muted-foreground">Select a loop to play</p>
+              <p className="text-sm text-muted-foreground">Select a YouTube loop or audio loop to play</p>
             </div>
           </div>
         )}
