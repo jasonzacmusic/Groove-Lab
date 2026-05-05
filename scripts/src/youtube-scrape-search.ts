@@ -18,6 +18,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { getYouTubeFetchInit } from "./youtube-proxy";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -64,6 +65,7 @@ async function searchYouTube(query: string, maxResults = 10): Promise<VideoResul
   while (attempt < 3) {
     try {
       const res = await fetch(url, {
+        ...getYouTubeFetchInit(),
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -17,6 +17,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { getYouTubeFetchInit } from "./youtube-proxy";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -67,7 +68,7 @@ async function searchYouTube(query: string, maxResults: number = 5): Promise<Vid
   const url = `https://www.googleapis.com/youtube/v3/search?${params}`;
 
   try {
-    const res = await fetch(url);
+    const res = await fetch(url, getYouTubeFetchInit());
     if (!res.ok) {
       const err = await res.json() as YouTubeApiError;
       if (err.error?.errors?.[0]?.reason === 'quotaExceeded' || err.error?.errors?.[0]?.reason === 'rateLimitExceeded') {
