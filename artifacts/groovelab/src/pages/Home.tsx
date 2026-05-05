@@ -13,6 +13,7 @@ import {
   tempoLabel, type GenreVideo, type TempoBucket,
 } from '@/data/genre-videos';
 import { KEY_BACKING_TRACKS } from '@/data/chord-videos';
+import { classifyYouTubeLoop } from '@/lib/youtube-loop-classifier';
 
 // Build key tracks from the chord-videos KEY_BACKING_TRACKS
 const KEY_TRACKS = Object.entries(KEY_BACKING_TRACKS)
@@ -33,14 +34,6 @@ const TOOLS = [
 type LoopMode = 'drums' | 'harmony';
 type VideoWithMeta = GenreVideo & { genre: string; bucket: TempoBucket };
 
-const DRUM_KEYWORDS = /\b(drum|drums|drummer|beat|beats|percussion|tabla|cajon|djembe|conga|bongo|metronome|rhythm)\b|drum loop|groove loop/i;
-const DRUMLESS_KEYWORDS = /\b(no drums?|without drums?|drumless)\b/i;
-
-function isDrumLoop(video: GenreVideo): boolean {
-  const haystack = `${video.title} ${video.channel}`;
-  return DRUM_KEYWORDS.test(haystack) && !DRUMLESS_KEYWORDS.test(haystack);
-}
-
 function useLoopCatalog() {
   return useMemo(() => {
     const allVideos: VideoWithMeta[] = [];
@@ -59,8 +52,12 @@ function useLoopCatalog() {
       return true;
     });
 
-    const drums = uniqueVideos.filter(isDrumLoop);
-    const harmony = uniqueVideos.filter((video) => !isDrumLoop(video));
+    const classified = uniqueVideos.map((video) => ({
+      video,
+      classification: classifyYouTubeLoop(video),
+    }));
+    const drums = classified.filter((item) => item.classification === 'drums').map((item) => item.video);
+    const harmony = classified.filter((item) => item.classification === 'harmony').map((item) => item.video);
 
     const totalsByMode = { drums: drums.length, harmony: harmony.length };
     const totalsByGenre: Record<LoopMode, Record<string, number>> = { drums: {}, harmony: {} };
@@ -90,7 +87,7 @@ function BackingTrackBrowser() {
 
   const catalog = useLoopCatalog();
   const activeList = mode === 'drums' ? catalog.drums : catalog.harmony;
-  const modeLabel = mode === 'drums' ? 'drum/percussion loops' : 'harmony/chord-progression loops';
+  const modeLabel = mode === 'drums' ? 'strict rhythm-only loops' : 'harmony/chord-progression loops';
 
   const availableGenres = useMemo(() => {
     const list = GENRES.filter((g) => (catalog.totalsByGenre[mode][g] || 0) > 0);
@@ -140,7 +137,7 @@ function BackingTrackBrowser() {
             <Star className="w-5 h-5 text-primary" /> Find YouTube Loops
           </h2>
           <p className="text-sm text-muted-foreground mt-1 max-w-2xl">
-            Choose rhythm-only drum/percussion loops or harmony loops for chord-progressions, vamps, blues, jazz, pop, and more.
+            Choose strict drum/percussion-only loops or harmonic backing tracks for chord progressions, vamps, blues, jazz, pop, and more.
           </p>
         </div>
         <Link href="/loop-library">
@@ -156,14 +153,14 @@ function BackingTrackBrowser() {
           {
             id: 'drums' as const,
             title: 'Only Drums & Percussion',
-            description: 'Grooves, drum loops, beats, tabla, percussion, metronome-style rhythm tracks.',
+            description: 'Strict rhythm-only tracks: drum loops, drum metronomes, tabla, cajon, congas, and percussion.',
             icon: Drum,
             count: catalog.totalsByMode.drums,
           },
           {
             id: 'harmony' as const,
             title: 'Harmony & Chord Progressions',
-            description: 'Blues, jazz, pop, R&B, rock and key-centered backing tracks for harmonic practice.',
+            description: 'Backing tracks with chords, keys, vamps, blues, jazz, pop, R&B, rock, and harmonic movement.',
             icon: Layers,
             count: catalog.totalsByMode.harmony,
           },
@@ -293,7 +290,7 @@ export default function Home() {
               Find the right YouTube loop and start practicing.
             </h1>
             <p className="text-muted-foreground text-lg max-w-2xl">
-              Start with rhythm-only drum and percussion loops, or jump into harmonic backing tracks for chord-progressions, blues, jazz, pop, and standards. Native audio files stay in Audio Loops.
+              Start with strict drum and percussion-only loops, or jump into harmonic backing tracks for chord progressions, blues, jazz, pop, and standards. Native audio files stay in Audio Loops.
             </p>
           </div>
           <div className="grid grid-cols-3 gap-2 lg:w-[420px]">
