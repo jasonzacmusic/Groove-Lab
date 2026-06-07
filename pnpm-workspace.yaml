@@ -3,6 +3,10 @@ packages:
   - lib/*
   - lib/integrations/*
   - scripts
+allowBuilds:
+  esbuild: true
+
+autoInstallPeers: false
 
 catalog:
   '@tailwindcss/vite': ^4.1.14
@@ -23,8 +27,6 @@ catalog:
   tsx: ^4.21.0
   vite: ^7.3.0
   zod: ^3.25.76
-
-autoInstallPeers: false
 
 onlyBuiltDependencies:
   - '@swc/core'
